@@ -15,7 +15,13 @@ class CreateChecksTable extends Migration
     {
         Schema::create('checks', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('idea_id')->unsigned();
             $table->timestamps();
+
+            //外部キー
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('idea_id')->references('id')->on('ideas')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

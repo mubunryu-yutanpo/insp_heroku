@@ -15,7 +15,17 @@ class CreateIdeasTable extends Migration
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('category_id')->unsigned();
+            $table->string('name');
+            $table->text('summary');
+            $table->text('description');
+            $table->bigInteger('price');
             $table->timestamps();
+
+            //外部キー
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
