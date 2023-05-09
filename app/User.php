@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'introduction', 'avatar'
     ];
 
     /**
@@ -36,4 +36,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //他のモデル（テーブル）との関係性
+    public function idea(){
+        return $this->hasMany('App\Idea');
+    }
+    public function check(){
+        return $this->hasMany('App\Check');
+    }
+    public function purchase(){
+        return $this->hasMany('App\Purchase');
+    }
+    public function review(){
+        return $this->hasMany('App\Review');
+    }
 }
