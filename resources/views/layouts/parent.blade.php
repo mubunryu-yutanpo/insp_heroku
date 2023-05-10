@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'home')</title>
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body>
     @section('header')
@@ -18,7 +19,7 @@
 
             <nav class="c-header__nav">
             @if(Route::has('login'))
-                <ul class="c-header__nav__list">
+              <ul class="c-header__nav__list">
                 <li class="c-header__nav__item">
                     <a href="/" class="c-header__nav__link">HOME</a>
                 </li>
@@ -54,7 +55,7 @@
                     </li>
                 @endif
                 @endauth
-            </ul>
+              </ul>
             @endif
             </nav>
 
@@ -76,10 +77,10 @@
     
 
     @section('footer')
-      <footer id="footer" class="l-footer">
+      <div id="footer">
         <footer-component></footer-component>
-      </footer>
-    @show   
+      </div>
+    @show
 
 <script src="{{ asset('js/app.js') }}"></script>
 </body>

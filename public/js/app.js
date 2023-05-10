@@ -1916,7 +1916,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'FooterComponent'
+  data: function data() {
+    return {
+      isFixed: false
+    };
+  },
+  mounted: function mounted() {
+    // サイズが変更されてもイベントが発火するように設定
+    window.addEventListener('resize', this.heightCheck);
+    this.heightCheck();
+  },
+  methods: {
+    heightCheck: function heightCheck() {
+      var footer = document.querySelector('.l-footer');
+      // コンテンツの高さがウィンドウの高さより大きいか判定
+      var result = window.innerHeight > footer.offsetTop + footer.offsetHeight;
+      this.isFixed = result;
+    }
+  }
 });
 
 /***/ }),
@@ -36215,20 +36232,16 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "footer",
+    {
+      staticClass: "l-footer",
+      style: { position: _vm.isFixed ? "fixed" : "static" },
+    },
+    [_c("p", [_vm._v("© 2023 Inspiration. All rights reserved.")])]
+  )
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", {}, [
-      _c("p", { staticStyle: { color: "#fff" } }, [
-        _vm._v("© 2023 Inspiration. All rights reserved."),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
