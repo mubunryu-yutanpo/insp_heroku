@@ -29,6 +29,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/{id}/profEdit', 'MypageController@update')->name('prof_update');
     // 気になるリスト一覧(気になるボタン押下時のルートに関して)
     Route::get('/{id}/checklist', 'MypageController@checklist')->name('check_list');
+    // 退会
+    Route::get('/{id}/withdrow', 'MypageController@withdrow')->name('withdrow');
+    Route::post('/{id}/withdrow', 'MypageController@destroy')->name('destroy');
 
     // =================アイデア関連=======================
     // アイデア新規投稿

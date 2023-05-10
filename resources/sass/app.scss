@@ -1,8 +1,17 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
+// Fandation
+@import 'Fandation/_variables.scss';
+
+// Layouts
+@import 'Layouts/header.scss';
+@import 'Layouts/main.scss';
+@import 'Layouts/footer.scss';
+
+// Object
+
+
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
