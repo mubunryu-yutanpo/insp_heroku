@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
-#header {
-  background: #494949;
+.l-header {
+  background: #faf6e9;
 }
 
 .l-footer {

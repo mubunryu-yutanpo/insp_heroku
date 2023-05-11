@@ -40,7 +40,7 @@
                     <a href="{{ route('ideas.bought', Auth::user('id') ) }}" class="c-header__nav__link">購入したアイデア</a>
                 </li>
                 <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">ログアウト</a>
+                    <a href="{{ route('logout') }}" class="c-header__nav__link">ログアウト</a>
                 </li>
                 <li class="c-header__nav__item">
                     <a href="{{ route('prof.edit', Auth::user('id') ) }}" class="c-header__nav__link">プロフィール編集</a>

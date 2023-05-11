@@ -17,7 +17,7 @@ class CreateReviewsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('idea_id')->unsigned();
-            $table->text('comment')->nullable();
+            $table->string('comment')->nullable();
             $table->bigInteger('score')->nullable();
             $table->timestamps();
 

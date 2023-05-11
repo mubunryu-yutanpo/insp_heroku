@@ -17,8 +17,8 @@ class CreateIdeasTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();
-            $table->string('name');
-            $table->text('summary');
+            $table->string('title');
+            $table->string('summary');
             $table->text('description');
             $table->bigInteger('price');
             $table->timestamps();

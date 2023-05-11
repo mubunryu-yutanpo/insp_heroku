@@ -17,39 +17,42 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 //全ユーザーのアイデア一覧画面
+Route::get('/index', 'HomeController@index')->name('index');
 
 
 Route::group(['middleware' => 'auth'], function(){
     // =================マイページ関連=====================
-    Route::get('/mypage', 'MypageController@mypage')->name('mypage');
+    Route::get('/mypage', 'MypagesController@mypage')->name('mypage');
     // プロフ編集
-    Route::get('/{id}/profEdit', 'MypageController@edit')->name('prof_edit');
-    Route::post('/{id}/profEdit', 'MypageController@update')->name('prof_update');
+    Route::get('/{id}/profEdit', 'MypagesController@edit')->name('prof.edit');
+    Route::post('/{id}/profEdit', 'MypagesController@update')->name('prof.update');
     // 気になるリスト一覧(気になるボタン押下時のルートに関して)
-    Route::get('/{id}/checklist', 'MypageController@checklist')->name('check_list');
+    Route::get('/{id}/checklist', 'MypagesController@checklist')->name('checklist');
     // 退会
-    Route::get('/{id}/withdrow', 'MypageController@withdrow')->name('withdrow');
-    Route::post('/{id}/withdrow', 'MypageController@destroy')->name('destroy');
+    Route::get('/{id}/withdrow', 'MypagesController@withdrow')->name('withdrow');
+    Route::post('/{id}/withdrow', 'MypagesController@destroy')->name('destroy');
 
     // =================アイデア関連=======================
     // アイデア新規投稿
-    Route::get('/new', 'IdeaController@new')->name('ideas.new');
-    Route::post('/new/create', 'IdeaController@create')->name('ideas.create');
+    Route::get('/new', 'IdeasController@new')->name('ideas.new');
+    Route::post('/new/create', 'IdeasController@create')->name('ideas.create');
     // アイデア詳細
-    Route::get('/{id}/idea', 'IdeaController@show')->name('ideas.show');
+    Route::get('/{id}/idea', 'IdeasController@show')->name('ideas.show');
     // アイデア編集
-    Route::get('/{id}/ideaEdit', 'IdeaController@edit')->name('ideas.edit');
-    Route::post('/{id}/ideaEdit', 'IdeaController@update')->name('ideas.update');
+    Route::get('/{id}/ideaEdit', 'IdeasController@edit')->name('ideas.edit');
+    Route::post('/{id}/ideaEdit', 'IdeasController@update')->name('ideas.update');
     // 自分が投稿したアイデア一覧
-    Route::get('/{id}/posted', 'IdeaController@posted')->name('ideas.mypost');
+    Route::get('/{id}/posted', 'IdeasController@posted')->name('ideas.mypost');
     // 購入したアイデア一覧
-    Route::get('/{id}/bought', 'IdeaController@bought')->name('ideas.bought');
+    Route::get('/{id}/bought', 'IdeasController@bought')->name('ideas.bought');
     // レビュー一覧
-    Route::get('/{id}/review', 'IdeaController@review')->name('ideas.review');
+    Route::get('/{id}/review', 'IdeasController@review')->name('ideas.review');
 
     // =================JSONデータ用=======================
-    Route::get('/ideas/json', 'IdeaController@json')->name('ideas.json');
+    Route::get('/ideas/json', 'IdeasController@json')->name('ideas.json');
+
+    // ======================ログアウト============================
+    Route::get('/logout', 'HomeController@logout')->name('logout');
 
     });

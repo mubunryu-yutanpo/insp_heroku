@@ -1961,9 +1961,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       isOpen: false,
-      imageSrc: 'images/menubutton.png',
+      imageSrc: '/images/menubutton.png',
       //初期はメニューアイコンを出す
-      closeImageSrc: 'images/close.png' // MENU閉じるボタンアイコン
+      closeImageSrc: '/images/close.png' // MENU閉じるボタンアイコン
     };
   },
 
@@ -1975,7 +1975,7 @@ __webpack_require__.r(__webpack_exports__);
 
       // メニューボタンのアイコン画像パスを切り替え
       this.isOpen = !this.isOpen;
-      this.imageSrc = this.isOpen ? this.closeImageSrc : 'images/menubutton.png';
+      this.imageSrc = this.isOpen ? this.closeImageSrc : '/images/menubutton.png';
     }
   }
 });
