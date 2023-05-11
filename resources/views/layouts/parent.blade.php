@@ -10,7 +10,7 @@
     @section('header')
       <header id="header" class="l-header">
         <div class="c-header-logo">
-          <img src="images/logo.png" alt="" class="c-header-logo__image">
+          <img src="{{ asset('images/logo.png') }}" alt="" class="c-header-logo__image">
         </div>
 
         <div class="p-header__container">
@@ -24,34 +24,34 @@
                     <a href="/" class="c-header__nav__link">HOME</a>
                 </li>
                 <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">アイデア一覧</a>
+                    <a href="{{ route('index') }}" class="c-header__nav__link">アイデア一覧</a>
                 </li>
                 @auth
                 <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">マイページ</a>
+                    <a href="{{ route('mypage') }}" class="c-header__nav__link">マイページ</a>
                 </li>
                 <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">アイデアを投稿</a>
+                    <a href="{{ route('ideas.new') }}" class="c-header__nav__link">アイデアを投稿</a>
                 </li>
                 <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">気になるリスト</a>
+                    <a href="{{ route('checklist', Auth::user('id') ) }}" class="c-header__nav__link">気になるリスト</a>
                 </li>
                 <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">購入したアイデア</a>
+                    <a href="{{ route('ideas.bought', Auth::user('id') ) }}" class="c-header__nav__link">購入したアイデア</a>
                 </li>
                 <li class="c-header__nav__item">
                     <a href="#" class="c-header__nav__link">ログアウト</a>
                 </li>
                 <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">プロフィール編集</a>
+                    <a href="{{ route('prof.edit', Auth::user('id') ) }}" class="c-header__nav__link">プロフィール編集</a>
                 </li>
                 @else
                 <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">ログイン</a>
+                    <a href="{{ route('login') }}" class="c-header__nav__link">ログイン</a>
                 </li>
                 @if(Route::has('register'))
                     <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">登録</a>
+                    <a href="{{ route('legister') }}" class="c-header__nav__link">登録</a>
                     </li>
                 @endif
                 @endauth

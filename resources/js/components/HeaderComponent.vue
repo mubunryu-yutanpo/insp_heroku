@@ -13,8 +13,8 @@
     data() {
       return{
         isOpen : false,
-        imageSrc : 'images/menubutton.png', //初期はメニューアイコンを出す
-        closeImageSrc: 'images/close.png', // MENU閉じるボタンアイコン
+        imageSrc : '/images/menubutton.png', //初期はメニューアイコンを出す
+        closeImageSrc: '/images/close.png', // MENU閉じるボタンアイコン
       }
     },
 
@@ -26,7 +26,7 @@
 
         // メニューボタンのアイコン画像パスを切り替え
         this.isOpen = !this.isOpen;
-        this.imageSrc = this.isOpen ? this.closeImageSrc : 'images/menubutton.png';
+        this.imageSrc = this.isOpen ? this.closeImageSrc : '/images/menubutton.png';
       }
     }
   };
