@@ -17,6 +17,6 @@ class Idea extends Model
         return $this->hasMany('App\Purchase');
     }
     public function review(){
-        return $this->belongsTo('App\Review');
+        return $this->hasMany('App\Review');
     }
 }
