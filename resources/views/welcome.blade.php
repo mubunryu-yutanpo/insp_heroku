@@ -6,7 +6,9 @@
     @section('header')
 
     @section('main')
-      <h1 class="">mainのてすと</h1>
+      <div id="app">
+        <example-component/>
+      </div>
     @endsection
 
     @section('footer')

@@ -51,7 +51,7 @@
                 </li>
                 @if(Route::has('register'))
                     <li class="c-header__nav__item">
-                    <a href="{{ route('legister') }}" class="c-header__nav__link">登録</a>
+                    <a href="#" class="c-header__nav__link">登録</a>
                     </li>
                 @endif
                 @endauth
