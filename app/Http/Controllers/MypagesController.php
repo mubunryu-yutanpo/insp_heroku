@@ -24,7 +24,7 @@ class MypagesController extends Controller
 
         //=========気になるリスト取得=========
 
-        $checklist = null;
+        $checkList = null;
         // 気になるのデータを最新5件まで取得
         $checks = Check::where('user_id', $user_id)
                   ->orderBy('created_at', 'desc')
@@ -32,12 +32,12 @@ class MypagesController extends Controller
                   ->get();
 
         if($checks->isNotEmpty()){
-            $checklist = $checks;
+            $checkList = $checks;
         }
 
         //=========投稿したアイデア取得=========
 
-        $postlist = null;
+        $postList = null;
         // 投稿したアイデアを最新の5件まで取得
         $posts = Idea::where('user_id', $user_id)
                  ->orderBy('created_at', 'desc')
@@ -45,13 +45,26 @@ class MypagesController extends Controller
                  ->get();
 
         if($posts->isNotEmpty()){
-            $postlist = $posts;
+            $postList = $posts;
+        }
+        
+        //=========購入したアイデア取得=========
+        
+        $boughtList = null;
+        // 購入したアイデア最新5件表示
+        $boughts = $user->purchase()
+                   ->with('idea')
+                   ->get()
+                   ->sortByDesc('created_at')
+                   ->take(5);
+        
+        if($boughts->isNotEmpty()){
+        $boughtList = $boughts;
         }
         
         //=========レビュー取得=========
         
         $reviewlist = null;
-
         // 投稿に対するレビューのデータを最新5件まで取得
         $reviews = $user->idea()
                   ->with('review')
@@ -64,22 +77,25 @@ class MypagesController extends Controller
                   ->take(5);
 
         if($reviews->isNotEmpty()){
-            $reviewlist = $reviews;
+            $reviewList = $reviews;
         }
 
-
-        //=========購入したアイデア取得=========
-        // 購入したアイデア最新5件表示
-
-
-        return view('mypage/mypage', compact('user','checklist', 'postlist', 'reviewlist'));
+        return view('mypage/mypage', compact('user','checkList', 'postList', 'boughtList', 'reviewList'));
     }
 
 
     // 気になる一覧へ
     public function checklist($id){
         $user = Auth::user();
-        return view('mypage/checklist', compact('user'));
+        $user_id = $user->id;
+
+        $list = null;
+        // 気になるアイデアがある場合はそのデータを変数に
+        $checks = Check::where('user_id', $user_id)->get();
+        if($checks->isNotEmpty()){
+            $list = $checks;
+        }
+        return view('mypage/checklist', compact('user', 'list'));
     }
 
     // プロフィール編集画面へ
