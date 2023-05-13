@@ -19,6 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 })->where('any', '.*');
 
+Route::get('/withdrow', function() {
+    return view('welcome');
+});
 
 Auth::routes();
 

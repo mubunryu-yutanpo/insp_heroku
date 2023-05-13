@@ -8,16 +8,21 @@
 </head>
 <body>
     @section('header')
+      <!-- フラッシュメッセージ -->
+      @if (session('flash_message'))
+      <div class="alert alert-primary text-center" role="alert">
+        {{ session('flash_message') }}
+      </div>
+      @endif
+
       <header id="header" class="l-header">
-        <div class="c-header-logo">
-          <img src="{{ asset('images/logo.png') }}" alt="" class="c-header-logo__image">
-        </div>
 
         <div class="p-header__container">
             
             <header-component></header-component>
+            <example-component />
 
-            <nav class="c-header__nav">
+            <!-- <nav class="c-header__nav">
             @if(Route::has('login'))
               <ul class="c-header__nav__list">
                 <li class="c-header__nav__item">
@@ -57,18 +62,12 @@
                 @endauth
               </ul>
             @endif
-            </nav>
+            </nav> -->
 
         </div>
       </header>
     @show
     
-    <!-- フラッシュメッセージ -->
-     @if (session('flash_message'))
-      <div class="alert alert-primary text-center" role="alert">
-        {{ session('flash_message') }}
-      </div>
-    @endif
     
     
     <main id="main" class="l-main">

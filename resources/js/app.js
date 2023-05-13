@@ -45,6 +45,25 @@ import axios from 'axios';
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import ExampleComponent from './components/ExampleComponent.vue';
+import TestComponent from './components/TestComponent';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  state: {
+    // state の定義
+  },
+  mutations: {
+    // mutations の定義
+  },
+  actions: {
+    // actions の定義
+  },
+  getters: {
+    // getters の定義
+  }
+});
 
 Vue.use(VueRouter);
 
@@ -52,6 +71,10 @@ const routes = [
     {
         path: '/',
         component: ExampleComponent
+    },
+    {
+        path: '/test',
+        component: TestComponent
     }
 ];
 
@@ -61,11 +84,13 @@ const router = new VueRouter({
 });
 
 const app = new Vue({
-    el: '#app',
+    el: '#header',
     router,
+    store,
     components: {
         HeaderComponent,
         FooterComponent,
-        ExampleComponent
+        ExampleComponent,
+        TestComponent
     }
 });

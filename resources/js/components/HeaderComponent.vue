@@ -1,8 +1,14 @@
 <template>
-  <div class="c-header__menu js-menu-button">
-    <button class="c-header__menu__button" @click="this.toggleNav">
-      <img :src="imageSrc" alt="" class="c-header__menu__button__image">
-    </button>
+  <div>
+    <div class="c-header-logo">
+      <img src="/images/logo.png" alt="" class="c-header-logo__image">
+    </div>
+
+    <div class="c-header__menu js-menu-button">
+      <button class="c-header__menu__button" @click="this.toggleNav">
+        <img :src="imageSrc" alt="" class="c-header__menu__button__image">
+      </button>
+    </div>
   </div>
 </template>
 
