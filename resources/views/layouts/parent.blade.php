@@ -22,47 +22,6 @@
             <header-component></header-component>
             <example-component />
 
-            <!-- <nav class="c-header__nav">
-            @if(Route::has('login'))
-              <ul class="c-header__nav__list">
-                <li class="c-header__nav__item">
-                    <a href="/" class="c-header__nav__link">HOME</a>
-                </li>
-                <li class="c-header__nav__item">
-                    <a href="{{ route('index') }}" class="c-header__nav__link">アイデア一覧</a>
-                </li>
-                @auth
-                <li class="c-header__nav__item">
-                    <a href="{{ route('mypage') }}" class="c-header__nav__link">マイページ</a>
-                </li>
-                <li class="c-header__nav__item">
-                    <a href="{{ route('ideas.new') }}" class="c-header__nav__link">アイデアを投稿</a>
-                </li>
-                <li class="c-header__nav__item">
-                    <a href="{{ route('checklist', Auth::user('id') ) }}" class="c-header__nav__link">気になるリスト</a>
-                </li>
-                <li class="c-header__nav__item">
-                    <a href="{{ route('ideas.bought', Auth::user('id') ) }}" class="c-header__nav__link">購入したアイデア</a>
-                </li>
-                <li class="c-header__nav__item">
-                    <a href="{{ route('logout') }}" class="c-header__nav__link">ログアウト</a>
-                </li>
-                <li class="c-header__nav__item">
-                    <a href="{{ route('prof.edit', Auth::user('id') ) }}" class="c-header__nav__link">プロフィール編集</a>
-                </li>
-                @else
-                <li class="c-header__nav__item">
-                    <a href="{{ route('login') }}" class="c-header__nav__link">ログイン</a>
-                </li>
-                @if(Route::has('register'))
-                    <li class="c-header__nav__item">
-                    <a href="#" class="c-header__nav__link">登録</a>
-                    </li>
-                @endif
-                @endauth
-              </ul>
-            @endif
-            </nav> -->
 
         </div>
       </header>

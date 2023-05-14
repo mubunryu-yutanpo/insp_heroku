@@ -46,6 +46,7 @@ import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import ExampleComponent from './components/ExampleComponent.vue';
 import TestComponent from './components/TestComponent';
+import MypageComponent from './components/MypageComponent';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
@@ -75,6 +76,10 @@ const routes = [
     {
         path: '/test',
         component: TestComponent
+    },
+    {
+        path: '/mypage',
+        component: MypageComponent
     }
 ];
 
@@ -83,7 +88,7 @@ const router = new VueRouter({
     routes
 });
 
-const app = new Vue({
+const header = new Vue({
     el: '#header',
     router,
     store,
@@ -92,5 +97,14 @@ const app = new Vue({
         FooterComponent,
         ExampleComponent,
         TestComponent
+    }
+});
+
+const mypage = new Vue({
+    el: '#main',
+    router,
+    store,
+    components: {
+        MypageComponent
     }
 });
