@@ -17,9 +17,15 @@ use App\Review;
 
 class MypagesController extends Controller
 {
+    //test
+    public function test(){
+        return response()->json([ 'message' => 'てすとおｋ']);
+    }
+
     // マイページへ
     public function mypage(){
         $user = Auth::user();
+        dd($user);
         $user_id = $user->id;
 
         //=========気になるリスト取得=========
@@ -86,12 +92,8 @@ class MypagesController extends Controller
             'postList'   => $postList,
             'boughtList' => $boughtList,
             'reviewList' => $reviewList,
-            'api_token'  => $user->remember_token
         ];
 
-        //dd('呼んだ？');
-
-        //return view('mypage/mypage', compact('user','checkList', 'postList', 'boughtList', 'reviewList'));
         return response()->json($data);
     }
 

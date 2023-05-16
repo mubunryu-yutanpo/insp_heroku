@@ -96,7 +96,6 @@ const header = new Vue({
         HeaderComponent,
         FooterComponent,
         ExampleComponent,
-        TestComponent
     }
 });
 
@@ -105,6 +104,7 @@ const mypage = new Vue({
     router,
     store,
     components: {
-        MypageComponent
+        MypageComponent,
+        TestComponent
     }
 });

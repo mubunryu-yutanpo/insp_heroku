@@ -6,7 +6,7 @@
     @section('header')
 
     @section('main')
-      <h1>testdayo-n</h1>
+      <test-component />
     @endsection
 
     @section('footer')

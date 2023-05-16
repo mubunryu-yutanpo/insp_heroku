@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -25,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/mypage';
+    protected $redirectTo = '/api/mypage';
 
     /**
      * Create a new controller instance.
@@ -36,4 +37,14 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    // protected function authenticated(Request $request, $user)
+    // {
+    //     // ログインが成功したら、APIトークンを生成して返す
+    //     $apiToken = $user->createToken('api_token')->plainTextToken;
+    //     return response()->json([
+    //         'access_token' => $apiToken,
+    //         'token_type' => 'Bearer',
+    //     ]);
+    // }
 }

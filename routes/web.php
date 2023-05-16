@@ -24,23 +24,12 @@ Auth::routes();
 //全ユーザーのアイデア一覧画面
 Route::get('/index', 'HomeController@index')->name('index');
 
-// API
-// Route::middleware('auth:api')->group(function() {
-//     Route::get('/mypage', 'Api\MypagesController@mypage')->name('mypage.api');
-//     Route::get('/{id}/profEdit', 'Api\MypagesController@edit')->name('prof.edit.api');
-//     Route::post('/{id}/profEdit', 'Api\MypagesController@update')->name('prof.update.api');
-//     Route::get('/{id}/checklist', 'Api\MypagesController@checklist')->name('checklist.api');
-//     Route::get('/{id}/withdrow', 'Api\MypagesController@withdrow')->name('withdrow.api');
-//     Route::post('/{id}/withdrow', 'Api\MypagesController@destroy')->name('destroy.api');
-// });
-
-
 
 Route::group(['middleware' => 'auth'], function(){
     // =================マイページ関連=====================
     //Route::get('/mypage', 'MypagesController@mypage')->name('mypage');
     Route::get('/mypage', function(){
-        return view('/mypage/mypage');
+        return view('/mypage/mypage')->name('mypage');
     });
     // プロフ編集
     Route::get('/{id}/profEdit', 'MypagesController@edit')->name('prof.edit');

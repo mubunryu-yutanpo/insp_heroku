@@ -13,11 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::middleware('api')->group(function () {
+    Route::get('/test', 'Api\MypagesController@test');
+});
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->group(function() {
+
+Route::middleware('api')->group(function() {
     Route::get('/mypage', 'Api\MypagesController@mypage')->name('mypage.api');
     Route::get('/{id}/profEdit', 'Api\MypagesController@edit')->name('prof.edit.api');
     Route::post('/{id}/profEdit', 'Api\MypagesController@update')->name('prof.update.api');
