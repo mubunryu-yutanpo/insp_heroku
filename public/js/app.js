@@ -2098,11 +2098,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var _this = this;
-    var token = localStorage.getItem('api_token');
+    // const token = localStorage.getItem('api_token');
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/mypage', {
-      headers: {
-        Authorization: "Bearer ".concat(token)
-      }
+      // headers: {
+      // Authorization: `Bearer ${token}`
+      // }
     }).then(function (response) {
       console.log('れすぽんすの' + response.data);
       _this.user = response.data.user;
@@ -2659,7 +2659,7 @@ var render = function () {
               "router-link",
               {
                 staticClass: "c-header__nav__link",
-                attrs: { to: { name: "index" } },
+                attrs: { to: { name: "ideas.index" } },
               },
               [_vm._v("アイデア一覧")]
             ),
@@ -2788,38 +2788,28 @@ var render = function () {
               ],
               1
             )
-          : _c(
-              "li",
-              { staticClass: "c-header__nav__item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-header__nav__link",
-                    attrs: { to: { name: "login" } },
-                  },
-                  [_vm._v("ログイン")]
-                ),
-              ],
-              1
-            ),
+          : _c("li", { staticClass: "c-header__nav__item" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "c-header__nav__link",
+                  attrs: { href: "/login" },
+                },
+                [_vm._v("ログイン")]
+              ),
+            ]),
         _vm._v(" "),
         _vm.$store.getters.isLogin
-          ? _c(
-              "li",
-              { staticClass: "c-header__nav__item" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-header__nav__link",
-                    attrs: { to: { name: "register" } },
-                  },
-                  [_vm._v("登録")]
-                ),
-              ],
-              1
-            )
+          ? _c("li", { staticClass: "c-header__nav__item" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "c-header__nav__link",
+                  attrs: { href: "/register" },
+                },
+                [_vm._v("登録")]
+              ),
+            ])
           : _vm._e(),
       ]),
     ]),
@@ -18340,10 +18330,14 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_8__["default"].Store({
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var routes = [{
   path: '/',
-  component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_TestComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
   path: '/test',
   component: _components_TestComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
+}, {
+  path: '/ideas/index',
+  name: 'ideas.index',
+  component: _components_MypageComponent__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
   path: '/mypage',
   component: _components_MypageComponent__WEBPACK_IMPORTED_MODULE_7__["default"]

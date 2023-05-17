@@ -17,17 +17,17 @@ Route::middleware('api')->group(function () {
     Route::get('/test', 'Api\MypagesController@test');
 });
 
+Route::get('/user',function (Request $request) {
+	
+	$users = App\User::all();
+	
+	return response()->json(['users' => $users]);
+
+});
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 
-Route::middleware('api')->group(function() {
-    Route::get('/mypage', 'Api\MypagesController@mypage')->name('mypage.api');
-    Route::get('/{id}/profEdit', 'Api\MypagesController@edit')->name('prof.edit.api');
-    Route::post('/{id}/profEdit', 'Api\MypagesController@update')->name('prof.update.api');
-    Route::get('/{id}/checklist', 'Api\MypagesController@checklist')->name('checklist.api');
-    Route::get('/{id}/withdrow', 'Api\MypagesController@withdrow')->name('withdrow.api');
-    Route::post('/{id}/withdrow', 'Api\MypagesController@destroy')->name('destroy.api');
-});

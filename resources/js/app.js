@@ -71,11 +71,16 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: '/',
-        component: ExampleComponent
+        component: TestComponent
     },
     {
         path: '/test',
         component: TestComponent
+    },
+    {
+      path: '/ideas/index',
+      name: 'ideas.index',
+      component: MypageComponent
     },
     {
         path: '/mypage',

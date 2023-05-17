@@ -46,11 +46,11 @@
       };
     },
     mounted() {
-        const token = localStorage.getItem('api_token');
+        // const token = localStorage.getItem('api_token');
         axios.get('/api/mypage', {
-            headers: {
-            Authorization: `Bearer ${token}`
-            }
+            // headers: {
+            // Authorization: `Bearer ${token}`
+            // }
         })
         .then(response => {
             console.log('れすぽんすの' + response.data);

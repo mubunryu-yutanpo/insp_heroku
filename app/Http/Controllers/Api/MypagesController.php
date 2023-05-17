@@ -25,7 +25,6 @@ class MypagesController extends Controller
     // マイページへ
     public function mypage(){
         $user = Auth::user();
-        dd($user);
         $user_id = $user->id;
 
         //=========気になるリスト取得=========
@@ -70,7 +69,7 @@ class MypagesController extends Controller
         
         //=========レビュー取得=========
         
-        $reviewlist = null;
+        $reviewList = null;
         // 投稿に対するレビューのデータを最新5件まで取得
         $reviews = $user->idea()
                   ->with('review')

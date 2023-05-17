@@ -6,11 +6,9 @@
     @section('header')
 
     @section('main')
-      <test-component />
+      <router-view><router-view>
+      <!-- rooter-viewを書いていないからルートに対応するあれが出てこないんだと思う -->
     @endsection
 
     @section('footer')
 
-    <!-- たぶんルートはGPTさんので出来てるくさい。
-    あとはそのルートで飛んできたときに対応のメソッドが発火するのか
-　　propsとかのデータの受け渡しはどうするのか -->

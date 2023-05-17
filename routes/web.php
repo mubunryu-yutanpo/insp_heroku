@@ -11,34 +11,34 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', function () {
     return view('welcome');
-})->where('any', '.*');
+});
+
+// Route::get('/', function () {
+//     return view('welcome');
+// })->where('any', '.*');
 
 Auth::routes();
 
 //全ユーザーのアイデア一覧画面
-Route::get('/index', 'HomeController@index')->name('index');
+Route::get('/index', 'HomeController@index')->name('ideas.index');
 
 
 Route::group(['middleware' => 'auth'], function(){
     // =================マイページ関連=====================
-    //Route::get('/mypage', 'MypagesController@mypage')->name('mypage');
-    Route::get('/mypage', function(){
-        return view('/mypage/mypage')->name('mypage');
-    });
+    Route::get('/mypage', 'HomeController@mypage')->name('mypage');
+    // Route::get('/mypage', function(){
+    //     return view('/mypage/mypage')->name('mypage');
+    // });
     // プロフ編集
-    Route::get('/{id}/profEdit', 'MypagesController@edit')->name('prof.edit');
-    Route::post('/{id}/profEdit', 'MypagesController@update')->name('prof.update');
+    Route::get('/{id}/profEdit', 'HomeController@prof')->name('prof.edit');
+    Route::post('/{id}/profEdit', 'HomeController@update')->name('prof.update');
     // 気になるリスト一覧(気になるボタン押下時のルートに関して)
-    Route::get('/{id}/checklist', 'MypagesController@checklist')->name('checklist');
+    Route::get('/{id}/checklist', 'HomeController@checklist')->name('checklist');
     // 退会
-    Route::get('/{id}/withdrow', 'MypagesController@withdrow')->name('withdrow');
-    Route::post('/{id}/withdrow', 'MypagesController@destroy')->name('destroy');
+    Route::get('/{id}/withdrow', 'HomeController@withdrow')->name('withdrow');
+    Route::post('/{id}/withdrow', 'HomeController@destroy')->name('destroy');
 
     // =================アイデア関連=======================
     // アイデア新規投稿
@@ -63,3 +63,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/logout', 'HomeController@logout')->name('logout');
 
     });
+
+    Route::middleware('api')->group(function() {
+        Route::get('/api/mypage', 'Api\MypagesController@mypage')->name('mypage.api');
+        Route::get('/{id}/profEdit', 'Api\MypagesController@edit')->name('prof.edit.api');
+        Route::post('/{id}/profEdit', 'Api\MypagesController@update')->name('prof.update.api');
+        Route::get('/{id}/checklist', 'Api\MypagesController@checklist')->name('checklist.api');
+        Route::get('/{id}/withdrow', 'Api\MypagesController@withdrow')->name('withdrow.api');
+        Route::post('/{id}/withdrow', 'Api\MypagesController@destroy')->name('destroy.api');
+    });
+    
