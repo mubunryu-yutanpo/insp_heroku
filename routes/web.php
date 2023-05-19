@@ -20,7 +20,8 @@ Route::get('/', function () {
 // })->where('any', '.*');
 
 Auth::routes();
-
+// Authの認証
+Route::get('/api/checkLogin', 'HomeController@checkAuth');
 //全ユーザーのアイデア一覧画面
 Route::get('/index', 'HomeController@index')->name('ideas.index');
 

@@ -39,7 +39,7 @@ class IdeasController extends Controller
         return redirect('mypage')->with('flash_message', __('registered!'));
     }
 
-    // ========アイデア編集画面========
+    // ========アイデア編集画面へ========
     public function ideaEdit($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -90,7 +90,7 @@ class IdeasController extends Controller
     }
 
 
-    // ========アイデア削除========
+    // ========アイデア削除処理========
     public function ideaDelete($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -113,29 +113,116 @@ class IdeasController extends Controller
 
     // アイデア詳細画面へ
     public function ideaDetail($id){
-        // 気になるボタンがある
         // 自分が購入したことがあるアイデアは購入できない（これと次のでフラグをもったらいいかな）
         // 購入してないときは「アイデアの内容」欄は「購入後に表示されます」になる
         // 購入済みの各ユーザーからのレビュー・点数が表示される
         // 点数の平均点が表示される
         //return response->json();
         return view('ideas/idea');
+        // ここ終わったらルート直さないとダメ
+    }
+
+    // 気になる登録・登録解除処理
+    public function toggleCheck($id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        // 既にチェックされているかを判別し登録or解除
+        $user_id = Auth::user()->id;
+        $checked = Check::where('user_id', $user_id)->where('idea_id', $id)->first();
+
+        if($checked !== null){
+            $checked->delete();
+        }else{
+            $check = new Check;
+            $check->fill([
+                'user_id' => $user_id,
+                'idea_id' => $id,
+            ])->save();
+        }
+    }
+    
+    // 気になるリストへ
+    public function checkIdeas($id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        $checkIdeas = null;
+        $checks = Check::where('user_id', $id)->get();
+
+        if ($checks->isNotEmpty()) {
+            $idea_ids = $checks->pluck('idea_id')->toArray();
+            $ideas = Idea::whereIn('id', $ideaI_ids)->paginate(10);
+            $checkIdeas = $ideas;
+        }
+
+        $data = [
+            'checkIdeas' => $checkIdeas,
+        ];
+
+        return response()->json($data);
     }
 
 
-    // // 購入したアイデアへ
-    // public function bought($id){
-    //     return view('ideas/bought');
-    // }
+    // 購入したアイデア取得処理
+    public function boughtIdeas($id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
 
-    // // 投稿したアイデア一覧へ
-    // public function posted($id){
-    //     return view('ideas/posted');
-    // }
+        $user = Auth::user();
+        $boughtList = null;
+        // 自分が購入したアイデアを1ページ10件表示するように取得
+        $boughts = $user->purchase()
+                   ->with('idea')
+                   ->paginate(10);
+        
+        if($boughts->isNotEmpty()){
+            $boughtList = $boughts;
+        }
 
-    // // レビュー一覧へ
-    // public function review($id){
-    //     return view('ideas/review');
-    // }
+        $data = [
+            'boughtList' => $boughtList,
+        ];
+
+        return response()->json($data);
+    }
+
+    // 投稿したアイデア一覧へ
+    public function indexPosts($id){
+
+        $postsList = null;
+
+        $posts = Idea::where('user_id', $id)->paginate(10);
+        if($posts->isNotEmpty() ){
+            $postsList = $posts;
+        }
+
+        $data = [
+            'postsList' => $postsList,
+        ];
+
+        return response()->json($data);
+    }
+
+    // レビュー一覧へ
+    public function indexReviews(){
+        $reviewList = null;
+        $reviews = Review::paginate(10);
+        $theIdea = $reviews->with('idea')->get();
+
+        if($reviews->isNotEmpty()){
+            $reviewList = $reviews;
+        }
+
+        $data = [
+            'reviewList' => $reviewList,
+            'theIdea'    => $theIdea,
+        ];
+
+        return response()->json($data);
+    }
 
 }

@@ -132,5 +132,16 @@ class HomeController extends Controller
         return redirect('/')->with('flash_message', 'ログアウトしました');
     }
 
+    // ログインチェック
+    public function checkAuth(){
+        $auth = auth()->check();
+
+        $data = [
+            'authenticated' => $auth,
+        ];
+
+        return response()->json($data);
+    }
+
 
 }

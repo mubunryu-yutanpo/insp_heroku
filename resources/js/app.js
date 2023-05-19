@@ -40,76 +40,98 @@
 // });
 
 import Vue from 'vue';
-import VueRouter from 'vue-router';
-import axios from 'axios';
+// import { default as store } from './store/store.js'; // Vuexストアのインポート
+// import { default as router } from './router/router.js'; // Vue Routerのインポート
+
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import ExampleComponent from './components/ExampleComponent.vue';
-import TestComponent from './components/TestComponent';
-import MypageComponent from './components/MypageComponent';
+import TestComponent from './components/TestComponent.vue';
+import MypageComponent from './components/MypageComponent.vue';
+import axios from 'axios';
+import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
-
-const store = new Vuex.Store({
-  state: {
-    // state の定義
-  },
-  mutations: {
-    // mutations の定義
-  },
-  actions: {
-    // actions の定義
-  },
-  getters: {
-    // getters の定義
-  }
-});
-
 Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/',
-        component: TestComponent
-    },
-    {
-        path: '/test',
-        component: TestComponent
-    },
-    {
-      path: '/ideas/index',
-      name: 'ideas.index',
-      component: MypageComponent
-    },
-    {
-        path: '/mypage',
-        component: MypageComponent
-    }
+  {
+    path: '/',
+    component: TestComponent
+  },
+  {
+    path: '/test',
+    component: TestComponent
+  },
+  {
+    path: '/ideas/index',
+    name: 'ideas.index',
+    component: MypageComponent
+  },
+  {
+    path: '/mypage',
+    component: MypageComponent
+  }
 ];
 
 const router = new VueRouter({
-    mode: 'history',
-    routes
+  mode: 'history',
+  routes
 });
 
-const header = new Vue({
-    el: '#header',
-    router,
-    store,
-    components: {
-        HeaderComponent,
-        FooterComponent,
-        ExampleComponent,
-    }
+const store = new Vuex.Store({
+  state: {
+    isLogin: false,
+  },
+  mutations: {
+    SET_LOGIN_STATUS(state, isLoggedIn) {
+      state.isLogin = isLoggedIn;
+    },
+  },
+  actions: {
+    async checkLoginStatus({ commit }) {
+      try {
+        const response = await axios.get('/api/checkLogin');
+
+        if (response.data.authenticated) {
+          console.log('ログインしてるらしい');
+          commit('SET_LOGIN_STATUS', true);
+        } else {
+          console.log('ログインしてない');
+          commit('SET_LOGIN_STATUS', false);
+        }
+      } catch (error) {
+        console.error('ログイン状態の取得に失敗しました', error);
+        console.log('ログインしているかどうか:', state.isLogin);
+      }
+    },
+  },
+  getters: {
+    isLogin: (state) => state.isLogin,
+  },
 });
 
 const mypage = new Vue({
-    el: '#main',
-    router,
-    store,
-    components: {
-        MypageComponent,
-        TestComponent
-    }
+  el: '#main',
+  router,
+  store,
+  components: {
+    MypageComponent,
+    TestComponent,
+  },
+});
+
+const header = new Vue({
+  el: '#header',
+  router,
+  store,
+  components: {
+    HeaderComponent,
+    FooterComponent,
+    ExampleComponent,
+  },
+  mounted() {
+    this.$store.dispatch('checkLoginStatus');
+  },
 });

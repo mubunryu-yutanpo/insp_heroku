@@ -20,7 +20,6 @@
         <div class="p-header__container">
             
             <header-component></header-component>
-            <example-component />
 
 
         </div>
