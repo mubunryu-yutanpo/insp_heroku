@@ -16,11 +16,19 @@ use App\Review;
 
 class IdeasController extends Controller
 {
+    // コントローラーのプロパティを定義
+    protected $user;
+    protected $user_id;
+
+    public function __construct(){
+        $this->user = Auth::user();
+        $this->user_id = $this->user->id;
+    }
+
     // ========アイデア新規投稿処理========
     public function ideaPost(ValidRequest $request)
     {
         $idea = new Idea;
-        $user_id = Auth::user()->id;
         
         // 既存のカテゴリーを取得または作成
         // $category = Category::firstOrCreate(['name' => $request->category]);
@@ -28,7 +36,7 @@ class IdeasController extends Controller
     
         // DBに保存
         $idea->fill([
-            'user_id'     => $user_id,
+            'user_id'     => $this->user_id,
             'category_id' => $request->category_id,
             'name'        => $request->name,
             'summary'     => $request->summary,
@@ -54,7 +62,7 @@ class IdeasController extends Controller
         $idea = Idea::find($id);
 
         $data = [
-            'idea'      => $idea,
+            'idea'    => $idea,
             'canEdit' => $canEdit,
         ];
 
@@ -69,7 +77,6 @@ class IdeasController extends Controller
         }
 
         $idea = Idea::find($id);
-        $user_id = $idea->user_id;
 
         // アイデアの所持者とアクセスしているユーザーが異なる場合、リダイレクトする
         if ($user_id !== Auth::user()->id) {
@@ -78,7 +85,7 @@ class IdeasController extends Controller
 
         // DB情報更新
         $idea->update([
-            'user_id'     => $user_id,
+            'user_id'     => $this->user_id,
             'category_id' => $request->category_id,
             'name'        => $request->name,
             'summary'     => $request->summary,
@@ -97,10 +104,15 @@ class IdeasController extends Controller
         }
 
         $idea = Idea::find($id);
-        $user_id = $idea->user_id;
+        $owner_id = $idea->user_id;
 
-        // アイデアの所持者とアクセスしているユーザーが異なる場合、リダイレクトする
-        if ($user_id !== Auth::user()->id) {
+        // アイデアが存在しない場合
+        if (!$idea) {
+            return redirect('/')->with('flash_message', '失敗しました');
+        }
+
+        // アイデアの所持者とアクセスしているユーザーが異なる場合
+        if ($owner_id !== $this->user_id) {
             return redirect('/')->with('flash_message', '失敗しました');
         }
 
@@ -112,14 +124,24 @@ class IdeasController extends Controller
     
 
     // アイデア詳細画面へ
+
     public function ideaDetail($id){
-        // 自分が購入したことがあるアイデアは購入できない（これと次のでフラグをもったらいいかな）
-        // 購入してないときは「アイデアの内容」欄は「購入後に表示されます」になる
-        // 購入済みの各ユーザーからのレビュー・点数が表示される
-        // 点数の平均点が表示される
-        //return response->json();
-        return view('ideas/idea');
-        // ここ終わったらルート直さないとダメ
+        $canBuy = true;
+        $boughtIdea = Purchase::where('user_id', $this->user_id)->where('idea_id', $id)->first();
+        if($boughtIdea !== null){
+            $canBuy = false;
+        }
+        $reviews = Review::where('idea_id', $id)->get();
+        // 平均点を算出
+        $averageScore = $reviews->avg('score');
+
+        $data = [
+            'canBuy'       => $canBuy,
+            'reviews'      => $reviews,
+            'averageScore' => $averageScore,
+        ];
+        
+        return response()->json($data);
     }
 
     // 気になる登録・登録解除処理
@@ -129,15 +151,14 @@ class IdeasController extends Controller
         }
 
         // 既にチェックされているかを判別し登録or解除
-        $user_id = Auth::user()->id;
-        $checked = Check::where('user_id', $user_id)->where('idea_id', $id)->first();
+        $checked = Check::where('user_id', $this->user_id)->where('idea_id', $id)->first();
 
         if($checked !== null){
             $checked->delete();
         }else{
             $check = new Check;
             $check->fill([
-                'user_id' => $user_id,
+                'user_id' => $this->user_id,
                 'idea_id' => $id,
             ])->save();
         }
@@ -172,10 +193,10 @@ class IdeasController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
-        $user = Auth::user();
         $boughtList = null;
         // 自分が購入したアイデアを1ページ10件表示するように取得
-        $boughts = $user->purchase()
+        $boughts = $this->user
+                   ->purchase()
                    ->with('idea')
                    ->paginate(10);
         
@@ -226,3 +247,5 @@ class IdeasController extends Controller
     }
 
 }
+
+        // ※ルート直さないとダメ
