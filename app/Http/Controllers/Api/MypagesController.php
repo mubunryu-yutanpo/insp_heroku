@@ -22,12 +22,13 @@ class MypagesController extends Controller
         return response()->json([ 'message' => 'てすとおｋ']);
     }
 
-    // マイページへ
+    // ========マイページへ========
+
     public function mypage(){
         $user = Auth::user();
         $user_id = $user->id;
 
-        //=========気になるリスト取得=========
+        // -- 気になるリスト取得 --
 
         $checkList = null;
         // 気になるのデータを最新5件まで取得
@@ -40,7 +41,7 @@ class MypagesController extends Controller
             $checkList = $checks;
         }
 
-        //=========投稿したアイデア取得=========
+        // -- 投稿したアイデア取得 --
 
         $postList = null;
         // 投稿したアイデアを最新の5件まで取得
@@ -53,7 +54,7 @@ class MypagesController extends Controller
             $postList = $posts;
         }
         
-        //=========購入したアイデア取得=========
+        // -- 購入したアイデア取得 --
         
         $boughtList = null;
         // 購入したアイデア最新5件表示
@@ -67,7 +68,7 @@ class MypagesController extends Controller
         $boughtList = $boughts;
         }
         
-        //=========レビュー取得=========
+        // -- レビュー取得 --
         
         $reviewList = null;
         // 投稿に対するレビューのデータを最新5件まで取得
@@ -97,7 +98,8 @@ class MypagesController extends Controller
     }
 
 
-    // 気になる一覧へ
+    // ========気になる一覧へ========
+
     public function checklist($id){
         $user = Auth::user();
         $user_id = $user->id;
@@ -111,13 +113,15 @@ class MypagesController extends Controller
         return view('mypage/checklist', compact('user', 'list'));
     }
 
-    // プロフィール編集画面へ
+    // ========プロフィール編集画面へ========
+
     public function edit($id){
         $user = Auth::user();
         return view('mypage/prof', compact('user'));
     }
 
-    // プロフィール編集処理
+    // ========プロフィール編集処理========
+
     public function update(ValidRequest $request, $id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -145,13 +149,15 @@ class MypagesController extends Controller
    
     }
 
-    // 退会ページへ
+    // ========退会ページへ========
+
     public function withdrow($id){
         $user = Auth::user();
         return view('mypage/withdrow', compact('user'));
     }
 
-    // 退会処理
+    // ========退会処理========
+    
     public function destroy($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));

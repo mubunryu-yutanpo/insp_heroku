@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,17 +14,31 @@ use App\Idea;
 use App\Purchase;
 use App\Review;
 
-
 class IdeasController extends Controller
 {
+
     // コントローラーのプロパティを定義
     protected $user;
     protected $user_id;
 
     public function __construct(){
+        $this->middleware('auth')->except('index');
+
         $this->user = Auth::user();
-        $this->user_id = $this->user->id;
+        $this->user_id = $this->user ? $this->user->id : null;
     }
+
+    // ========アイデア一覧========
+    public function index(){
+        $ideas = Idea::all();
+
+        $data = [
+            'ideas' => $ideas,
+        ];
+
+        return response()->json($data);
+    }
+
 
     // ========アイデア新規投稿処理========
     public function ideaPost(ValidRequest $request)
@@ -123,7 +138,7 @@ class IdeasController extends Controller
 
     
 
-    // アイデア詳細画面へ
+    // ========アイデア詳細画面へ========
 
     public function ideaDetail($id){
         $canBuy = true;
@@ -144,7 +159,7 @@ class IdeasController extends Controller
         return response()->json($data);
     }
 
-    // 気になる登録・登録解除処理
+    // ========気になる登録・登録解除処理========
     public function toggleCheck($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -164,7 +179,7 @@ class IdeasController extends Controller
         }
     }
     
-    // 気になるリストへ
+    // ========気になるリストへ========
     public function checkIdeas($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -187,7 +202,7 @@ class IdeasController extends Controller
     }
 
 
-    // 購入したアイデア取得処理
+    // ========購入したアイデア取得処理========
     public function boughtIdeas($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -211,7 +226,7 @@ class IdeasController extends Controller
         return response()->json($data);
     }
 
-    // 投稿したアイデア一覧へ
+    // ========投稿したアイデア一覧へ========
     public function indexPosts($id){
 
         $postsList = null;
@@ -228,7 +243,7 @@ class IdeasController extends Controller
         return response()->json($data);
     }
 
-    // レビュー一覧へ
+    // ========レビュー一覧へ========
     public function indexReviews(){
         $reviewList = null;
         $reviews = Review::paginate(10);
@@ -247,5 +262,3 @@ class IdeasController extends Controller
     }
 
 }
-
-        // ※ルート直さないとダメ

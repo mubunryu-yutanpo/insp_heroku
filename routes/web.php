@@ -15,9 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/', function () {
-//     return view('welcome');
-// })->where('any', '.*');
 
 Auth::routes();
 // Authの認証
@@ -27,46 +24,53 @@ Route::get('/index', 'HomeController@index')->name('ideas.index');
 
 
 Route::group(['middleware' => 'auth'], function(){
-    // =================マイページ関連=====================
-    Route::get('/mypage', 'HomeController@mypage')->name('mypage');
-    // Route::get('/mypage', function(){
-    //     return view('/mypage/mypage')->name('mypage');
-    // });
-    // プロフ編集
-    Route::get('/{id}/profEdit', 'HomeController@prof')->name('prof.edit');
-    Route::post('/{id}/profEdit', 'HomeController@update')->name('prof.update');
-    // 気になるリスト一覧(気になるボタン押下時のルートに関して)
-    Route::get('/{id}/checklist', 'HomeController@checklist')->name('checklist');
-    // 退会
-    Route::get('/{id}/withdrow', 'HomeController@withdrow')->name('withdrow');
-    Route::post('/{id}/withdrow', 'HomeController@destroy')->name('destroy');
 
-    // =================アイデア関連=======================
-    // アイデア新規投稿
-    Route::get('/new', 'IdeasController@new')->name('ideas.new');
-    Route::post('/new/create', 'IdeasController@create')->name('ideas.create');
-    // アイデア詳細
-    Route::get('/{id}/idea', 'IdeasController@show')->name('ideas.show');
-    // アイデア編集
-    Route::get('/{id}/ideaEdit', 'IdeasController@edit')->name('ideas.edit');
-    Route::post('/{id}/ideaEdit', 'IdeasController@update')->name('ideas.update');
-    // 自分が投稿したアイデア一覧
-    Route::get('/{id}/posted', 'IdeasController@posted')->name('ideas.mypost');
-    // 購入したアイデア一覧
-    Route::get('/{id}/bought', 'IdeasController@bought')->name('ideas.bought');
-    // レビュー一覧
-    Route::get('/{id}/review', 'IdeasController@review')->name('ideas.review');
+    Route::get('/mypage', function () {
+        return view('mypage');
+    })->where('any', '.*');
 
-    // =================JSONデータ用=======================
-    Route::get('/ideas/json', 'IdeasController@json')->name('ideas.json');
-
-    // ======================ログアウト============================
     Route::get('/logout', 'HomeController@logout')->name('logout');
+
+    
+
+    // =================マイページ関連=====================
+    // Route::get('/mypage', 'HomeController@mypage')->name('mypage');
+    // // プロフ編集
+    // Route::get('/{id}/profEdit', 'HomeController@prof')->name('prof.edit');
+    // Route::post('/{id}/profEdit', 'HomeController@update')->name('prof.update');
+    // // 気になるリスト一覧(気になるボタン押下時のルートに関して)
+    // Route::get('/{id}/checklist', 'HomeController@checklist')->name('checklist');
+    // // 退会
+    // Route::get('/{id}/withdrow', 'HomeController@withdrow')->name('withdrow');
+    // Route::post('/{id}/withdrow', 'HomeController@destroy')->name('destroy');
+
+    // // =================アイデア関連=======================
+    // // アイデア新規投稿
+    // Route::get('/new', 'IdeasController@new')->name('ideas.new');
+    // Route::post('/new/create', 'IdeasController@create')->name('ideas.create');
+    // // アイデア詳細
+    // Route::get('/{id}/idea', 'IdeasController@show')->name('ideas.show');
+    // // アイデア編集
+    // Route::get('/{id}/ideaEdit', 'IdeasController@edit')->name('ideas.edit');
+    // Route::post('/{id}/ideaEdit', 'IdeasController@update')->name('ideas.update');
+    // // 自分が投稿したアイデア一覧
+    // Route::get('/{id}/posted', 'IdeasController@posted')->name('ideas.mypost');
+    // // 購入したアイデア一覧
+    // Route::get('/{id}/bought', 'IdeasController@bought')->name('ideas.bought');
+    // // レビュー一覧
+    // Route::get('/{id}/review', 'IdeasController@review')->name('ideas.review');
+
+    // // =================JSONデータ用=======================
+    // Route::get('/ideas/json', 'IdeasController@json')->name('ideas.json');
+
+    // // ======================ログアウト============================
 
     });
 
     Route::middleware('api')->group(function() {
-        Route::get('/api/mypage', 'Api\MypagesController@mypage')->name('mypage.api');
+        Route::get('/api/mypage', 'Api\MypagesController@mypage');
+        Route::get('/api/ideas/index', 'Api\IdeasController@index');
+
         Route::get('/{id}/profEdit', 'Api\MypagesController@edit')->name('prof.edit.api');
         Route::post('/{id}/profEdit', 'Api\MypagesController@update')->name('prof.update.api');
         Route::get('/{id}/checklist', 'Api\MypagesController@checklist')->name('checklist.api');

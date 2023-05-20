@@ -6,7 +6,7 @@
 
 @section('main')
   <h2>マイページだわ</h2>
-  <mypage-component />
+  <router-view />
 @endsection
 
 @section('footer')

@@ -42,12 +42,13 @@
 import Vue from 'vue';
 // import { default as store } from './store/store.js'; // Vuexストアのインポート
 // import { default as router } from './router/router.js'; // Vue Routerのインポート
+import ExampleComponent from './components/ExampleComponent.vue';
+import TestComponent from './components/TestComponent.vue';
 
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
-import ExampleComponent from './components/ExampleComponent.vue';
-import TestComponent from './components/TestComponent.vue';
 import MypageComponent from './components/MypageComponent.vue';
+import IdeasIndexComponent from './components/IdeasIndexComponent.vue';
 import axios from 'axios';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
@@ -57,20 +58,13 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    component: TestComponent
-  },
-  {
-    path: '/test',
-    component: TestComponent
-  },
-  {
     path: '/ideas/index',
     name: 'ideas.index',
-    component: MypageComponent
+    component: IdeasIndexComponent
   },
   {
     path: '/mypage',
+    name: 'mypage',
     component: MypageComponent
   }
 ];
@@ -128,10 +122,16 @@ const header = new Vue({
   store,
   components: {
     HeaderComponent,
-    FooterComponent,
-    ExampleComponent,
   },
   mounted() {
     this.$store.dispatch('checkLoginStatus');
   },
 });
+
+const footer = new Vue({
+    el: '#footer',
+    router,
+    components: {
+        FooterComponent,
+    },
+})

@@ -31,7 +31,7 @@
           <router-link :to="{ name: 'ideas.bought', params: { id: $store.getters.userId } }" class="c-header__nav__link">購入したアイデア</router-link>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
-          <router-link :to="{ name: 'logout' }" class="c-header__nav__link">ログアウト</router-link>
+          <a href="/logout" class="c-header__nav__link">ログアウト</a>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
           <router-link :to="{ name: 'prof.edit', params: { id: $store.getters.userId } }" class="c-header__nav__link">プロフィール編集</router-link>

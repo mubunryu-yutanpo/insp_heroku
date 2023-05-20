@@ -28,6 +28,12 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/mypage';
 
+    // protected function redirectTo()
+    // {
+    //     $this->guard()->logout(); // ログアウト
+    //     return action('MypagesController@mypage'); // mypage()メソッドを呼び出す
+    // }
+
     /**
      * Create a new controller instance.
      *

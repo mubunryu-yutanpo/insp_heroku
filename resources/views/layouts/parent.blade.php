@@ -18,10 +18,7 @@
       <header id="header" class="l-header">
 
         <div class="p-header__container">
-            
             <header-component></header-component>
-
-
         </div>
       </header>
     @show
