@@ -14,6 +14,7 @@
     data() {
       return {
         ideas: [],
+
       };
     },
     mounted() {
@@ -21,7 +22,7 @@
     },
     methods: {
       fetchIdeas() {
-        axios.get('/api/ideas/index')
+        axios.get('/api/ideas')
           .then(response => {
             this.ideas = response.data.ideas;
           })

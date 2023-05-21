@@ -68,13 +68,11 @@ Route::group(['middleware' => 'auth'], function(){
     });
 
     Route::middleware('api')->group(function() {
-        Route::get('/api/mypage', 'Api\MypagesController@mypage');
-        Route::get('/api/ideas/index', 'Api\IdeasController@index');
-
-        Route::get('/{id}/profEdit', 'Api\MypagesController@edit')->name('prof.edit.api');
-        Route::post('/{id}/profEdit', 'Api\MypagesController@update')->name('prof.update.api');
-        Route::get('/{id}/checklist', 'Api\MypagesController@checklist')->name('checklist.api');
-        Route::get('/{id}/withdrow', 'Api\MypagesController@withdrow')->name('withdrow.api');
-        Route::post('/{id}/withdrow', 'Api\MypagesController@destroy')->name('destroy.api');
+        Route::get('/api/mypage', 'Api\ApiController@mypage');
+        Route::get('/api/{id}/checks', 'Api\ApiController@checks');
+        Route::get('/api/{id}/boughts', 'Api\ApiController@boughts');
+        Route::get('/api/{id}/myPosts', 'Api\ApiController@myPosts');
+        Route::get('/api/reviews', 'Api\ApiController@reviews');
+        Route::get('/api/ideas', 'Api\ApiController@ideas');
     });
     

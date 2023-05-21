@@ -48,7 +48,12 @@ import TestComponent from './components/TestComponent.vue';
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import MypageComponent from './components/MypageComponent.vue';
-import IdeasIndexComponent from './components/IdeasIndexComponent.vue';
+import IdeasComponent from './components/IdeasComponent.vue';
+import ReviewsComponent from './components/ReviewsComponent';
+import MyPostsComponent from './components/MyPostsComponent';
+import ChecksComponent from './components/ChecksComponent';
+import BoughtsComponent from './components/BoughtsComponent';
+
 import axios from 'axios';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
@@ -58,15 +63,42 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/ideas/index',
-    name: 'ideas.index',
-    component: IdeasIndexComponent
+    // マイページ
+    path: '/api/mypage',
+    name: 'api.mypage',
+    component: MypageComponent
   },
   {
-    path: '/mypage',
-    name: 'mypage',
-    component: MypageComponent
-  }
+    // アイデアの一覧
+    path: '/api/ideas',
+    name: 'api.ideas',
+    component: IdeasComponent
+  },
+  {
+    // レビュー一覧
+    path: '/api/reviews',
+    name: 'api.reviews',
+    component: ReviewsComponent
+  },
+  {
+    // 投稿したアイデア一覧
+    path: '/api/myposts',
+    name: 'api.myposts',
+    component: MyPostsComponent
+  },
+  {
+    // 気になる一覧
+    path: '/api/checks',
+    name: 'api.checks',
+    component: ChecksComponent
+  },
+  {
+    // 購入したアイデア一覧
+    path: '/api/boughts',
+    name: 'api.boughts',
+    component: BoughtsComponent
+  },
+
 ];
 
 const router = new VueRouter({

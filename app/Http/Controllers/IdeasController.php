@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,20 +28,9 @@ class IdeasController extends Controller
         $this->user_id = $this->user ? $this->user->id : null;
     }
 
-    // ========アイデア一覧========
-    public function index(){
-        $ideas = Idea::all();
-
-        $data = [
-            'ideas' => $ideas,
-        ];
-
-        return response()->json($data);
-    }
-
 
     // ========アイデア新規投稿処理========
-    public function ideaPost(ValidRequest $request)
+    public function ideaNew(ValidRequest $request)
     {
         $idea = new Idea;
         
@@ -179,86 +168,5 @@ class IdeasController extends Controller
         }
     }
     
-    // ========気になるリストへ========
-    public function checkIdeas($id){
-        if(!ctype_digit($id)){
-            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
-        }
-
-        $checkIdeas = null;
-        $checks = Check::where('user_id', $id)->get();
-
-        if ($checks->isNotEmpty()) {
-            $idea_ids = $checks->pluck('idea_id')->toArray();
-            $ideas = Idea::whereIn('id', $ideaI_ids)->paginate(10);
-            $checkIdeas = $ideas;
-        }
-
-        $data = [
-            'checkIdeas' => $checkIdeas,
-        ];
-
-        return response()->json($data);
-    }
-
-
-    // ========購入したアイデア取得処理========
-    public function boughtIdeas($id){
-        if(!ctype_digit($id)){
-            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
-        }
-
-        $boughtList = null;
-        // 自分が購入したアイデアを1ページ10件表示するように取得
-        $boughts = $this->user
-                   ->purchase()
-                   ->with('idea')
-                   ->paginate(10);
-        
-        if($boughts->isNotEmpty()){
-            $boughtList = $boughts;
-        }
-
-        $data = [
-            'boughtList' => $boughtList,
-        ];
-
-        return response()->json($data);
-    }
-
-    // ========投稿したアイデア一覧へ========
-    public function indexPosts($id){
-
-        $postsList = null;
-
-        $posts = Idea::where('user_id', $id)->paginate(10);
-        if($posts->isNotEmpty() ){
-            $postsList = $posts;
-        }
-
-        $data = [
-            'postsList' => $postsList,
-        ];
-
-        return response()->json($data);
-    }
-
-    // ========レビュー一覧へ========
-    public function indexReviews(){
-        $reviewList = null;
-        $reviews = Review::paginate(10);
-        $theIdea = $reviews->with('idea')->get();
-
-        if($reviews->isNotEmpty()){
-            $reviewList = $reviews;
-        }
-
-        $data = [
-            'reviewList' => $reviewList,
-            'theIdea'    => $theIdea,
-        ];
-
-        return response()->json($data);
-    }
 
 }

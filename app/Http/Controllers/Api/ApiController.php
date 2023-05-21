@@ -15,12 +15,8 @@ use App\Purchase;
 use App\Review;
 
 
-class MypagesController extends Controller
+class ApiController extends Controller
 {
-    //test
-    public function test(){
-        return response()->json([ 'message' => 'てすとおｋ']);
-    }
 
     // ========マイページへ========
 
@@ -98,73 +94,100 @@ class MypagesController extends Controller
     }
 
 
-    // ========気になる一覧へ========
-
-    public function checklist($id){
-        $user = Auth::user();
-        $user_id = $user->id;
-
-        $list = null;
-        // 気になるアイデアがある場合はそのデータを変数に
-        $checks = Check::where('user_id', $user_id)->get();
-        if($checks->isNotEmpty()){
-            $list = $checks;
-        }
-        return view('mypage/checklist', compact('user', 'list'));
-    }
-
-    // ========プロフィール編集画面へ========
-
-    public function edit($id){
-        $user = Auth::user();
-        return view('mypage/prof', compact('user'));
-    }
-
-    // ========プロフィール編集処理========
-
-    public function update(ValidRequest $request, $id){
+    // ========気になるリストへ========
+    public function checks($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
-        // アバター画像のパス名を変数に
-        if($request->avatar !== null){
-            $avatar = $request->file('avatar');
-            $filename = $avatar->getClientOriginalName();
-            $avatar->move(public_path('updates'), $filename);
-        }else{
-            $filename = 'default-avatar.png';
+        $checkIdeas = null;
+        $checks = Check::where('user_id', $id)->get();
+
+        if ($checks->isNotEmpty()) {
+            $idea_ids = $checks->pluck('idea_id')->toArray();
+            $ideas = Idea::whereIn('id', $ideaI_ids)->paginate(10);
+            $checkIdeas = $ideas;
         }
 
-        // 情報を更新
-        User::where('id', $id)->update([
-            'name'         => $request->name,
-            'email'        => $request->email,
-            'password'     => Hash::make($request->password),
-            'introduction' => $request->introduction,
-            'avatar'       => '/updates/'.$filename,
-        ]);
+        $data = [
+            'checkIdeas' => $checkIdeas,
+        ];
 
-        return redirect('/mypage')->with('flash_message', '情報を更新しました');
-   
+        return response()->json($data);
     }
 
-    // ========退会ページへ========
 
-    public function withdrow($id){
-        $user = Auth::user();
-        return view('mypage/withdrow', compact('user'));
+    // ========購入したアイデア取得処理========
+    public function boughts($id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        $boughtList = null;
+        // 自分が購入したアイデアを1ページ10件表示するように取得
+        $boughts = $this->user
+                   ->purchase()
+                   ->with('idea')
+                   ->paginate(10);
+        
+        if($boughts->isNotEmpty()){
+            $boughtList = $boughts;
+        }
+
+        $data = [
+            'boughtList' => $boughtList,
+        ];
+
+        return response()->json($data);
     }
 
-    // ========退会処理========
+    // ========投稿したアイデア一覧へ========
+    public function myPosts($id){
+
+        $postsList = null;
+
+        $posts = Idea::where('user_id', $id)->paginate(10);
+        if($posts->isNotEmpty() ){
+            $postsList = $posts;
+        }
+
+        $data = [
+            'postsList' => $postsList,
+        ];
+
+        return response()->json($data);
+    }
+
+    // ========レビュー一覧へ========
+    public function reviews(){
+        $reviewList = null;
+        $reviews = Review::paginate(10);
+        $ideaIds = $reviews->pluck('idea_id');
+        $ideas = Idea::whereIn('id', $ideaIds)->get();
     
-    public function destroy($id){
-        if(!ctype_digit($id)){
-            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        if($reviews->isNotEmpty()){
+            $reviewList = $reviews;
         }
-        // ユーザー情報を削除してリダイレクト
-        User::where('id', $id)->delete();
-        return redirect('/')->with('flash_message', '退会しました');
+    
+        $data = [
+            'reviewList' => $reviewList,
+            'theIdea'    => $ideas,
+        ];
+    
+        return response()->json($data);
     }
+    
+    // ========アイデア一覧========
+    public function ideas(){
+        $ideas = Idea::all();
+
+        $data = [
+            'ideas' => $ideas,
+        ];
+
+        return response()->json($data);
+    }
+
+
 
 }

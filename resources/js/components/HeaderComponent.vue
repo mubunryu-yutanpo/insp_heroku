@@ -16,19 +16,25 @@
           <router-link :to="{ path: '/' }" class="c-header__nav__link">HOME</router-link>
         </li>
         <li class="c-header__nav__item">
-          <router-link :to="{ name: 'ideas.index' }" class="c-header__nav__link">アイデア一覧</router-link>
+          <router-link :to="{ name: 'api.ideas' }" class="c-header__nav__link">アイデア一覧</router-link>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
-          <router-link :to="{ name: 'mypage' }" class="c-header__nav__link">マイページ</router-link>
+          <router-link :to="{ name: 'api.mypage' }" class="c-header__nav__link">マイページ</router-link>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
-          <router-link :to="{ name: 'ideas.new' }" class="c-header__nav__link">アイデアを投稿</router-link>
+          <router-link :to="{ name: 'idea.new' }" class="c-header__nav__link">アイデアを投稿</router-link>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
-          <router-link :to="{ name: 'checklist', params: { id: $store.getters.userId } }" class="c-header__nav__link">気になるリスト</router-link>
+          <router-link :to="{ name: 'api.checks', params: { id: $store.getters.userId } }" class="c-header__nav__link">気になるリスト</router-link>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
-          <router-link :to="{ name: 'ideas.bought', params: { id: $store.getters.userId } }" class="c-header__nav__link">購入したアイデア</router-link>
+          <router-link :to="{ name: 'api.boughts', params: { id: $store.getters.userId } }" class="c-header__nav__link">購入したアイデア</router-link>
+        </li>
+        <li class="c-header__nav__item" v-if="$store.getters.isLogin">
+          <router-link :to="{ name: 'api.myposts', params: { id: $store.getters.userId } }" class="c-header__nav__link">投稿したアイデア</router-link>
+        </li>
+        <li class="c-header__nav__item" v-if="$store.getters.isLogin">
+          <router-link :to="{ name: 'api.reviews' }" class="c-header__nav__link">レビュー一覧</router-link>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
           <a href="/logout" class="c-header__nav__link">ログアウト</a>
