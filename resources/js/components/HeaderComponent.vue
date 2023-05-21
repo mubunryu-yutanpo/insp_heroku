@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <nav class="c-header__nav">
+    <!-- <nav class="c-header__nav">
       <ul class="c-header__nav__list">
         <li class="c-header__nav__item">
           <router-link :to="{ path: '/' }" class="c-header__nav__link">HOME</router-link>
@@ -19,7 +19,7 @@
           <router-link :to="{ name: 'api.ideas' }" class="c-header__nav__link">アイデア一覧</router-link>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
-          <router-link :to="{ name: 'api.mypage' }" class="c-header__nav__link">マイページ</router-link>
+          <router-link to="/mypage" class="c-header__nav__link">マイページ</router-link>
         </li>
         <li class="c-header__nav__item" v-if="$store.getters.isLogin">
           <router-link :to="{ name: 'idea.new' }" class="c-header__nav__link">アイデアを投稿</router-link>
@@ -49,7 +49,7 @@
           <a href="/register" class="c-header__nav__link">登録</a>
         </li>
       </ul>
-    </nav>
+    </nav> -->
 
   </div>
 </template>

@@ -91,6 +91,7 @@ class ApiController extends Controller
         ];
 
         return response()->json($data);
+        //return view('mypage', $data);
     }
 
 
@@ -176,7 +177,7 @@ class ApiController extends Controller
     
         return response()->json($data);
     }
-    
+
     // ========アイデア一覧========
     public function ideas(){
         $ideas = Idea::all();

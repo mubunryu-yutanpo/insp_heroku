@@ -25,10 +25,13 @@ Route::get('/index', 'HomeController@index')->name('ideas.index');
 
 Route::group(['middleware' => 'auth'], function(){
 
-    Route::get('/mypage', function () {
-        return view('mypage');
-    })->where('any', '.*');
+    // Route::get('/mypage', function () {
+    //     return view('mypage');
+    // })->where('any', '.*');
 
+    Route::get('/mypage', 'HomeController@mypage')->name('mypage');
+
+    // // ======================ログアウト============================
     Route::get('/logout', 'HomeController@logout')->name('logout');
 
     
@@ -63,7 +66,6 @@ Route::group(['middleware' => 'auth'], function(){
     // // =================JSONデータ用=======================
     // Route::get('/ideas/json', 'IdeasController@json')->name('ideas.json');
 
-    // // ======================ログアウト============================
 
     });
 
