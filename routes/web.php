@@ -30,6 +30,9 @@ Route::group(['middleware' => 'auth'], function(){
     // })->where('any', '.*');
 
     Route::get('/mypage', 'HomeController@mypage')->name('mypage');
+    Route::get('/reviews', 'HomeController@reviews')->name('reviews');
+    Route::get('/{id}/checkList', 'HomeController@checks')->name('checks');
+    Route::get('/{id}/boughtList', 'HomeController@boughts')->name('boughts');
 
     // // ======================ログアウト============================
     Route::get('/logout', 'HomeController@logout')->name('logout');

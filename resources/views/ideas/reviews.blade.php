@@ -1,11 +1,12 @@
 @extends('layouts.parent')
 
-@section('title', 'bought')
+@section('title', 'review')
 
 @section('header')
 
 @section('main')
-  <h2>自分が購入したアイデア一覧ページ</h2>
+  <h2>レビュー一覧ページ</h2>
+  <reviews-component />
 @endsection
 
 @section('footer')

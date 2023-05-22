@@ -26,29 +26,29 @@
                   <a href="/" class="c-header__nav__link">HOME</a>
                 </li>
                 <li class="c-header__nav__item">
-                  <a href="/" class="c-header__nav__link">アイデア一覧</a>
+                  <a href="{{ route('ideas.index') }}" class="c-header__nav__link">アイデア一覧</a>
                 </li>
                 @auth
                   <li class="c-header__nav__item">
-                    <a href="/mypage" class="c-header__nav__link">マイページ</a>
+                    <a href="{{ route('mypage') }}" class="c-header__nav__link">マイページ</a>
                   </li>
                   <li class="c-header__nav__item">
                     <a href="/" class="c-header__nav__link">アイデア投稿</a>
                   </li>
                   <li class="c-header__nav__item">
-                    <a href="/" class="c-header__nav__link">気になるリスト</a>
+                    <a href="{{ route('checks', Auth::user()->id ) }}" class="c-header__nav__link">気になるリスト</a>
                   </li>
                   <li class="c-header__nav__item">
-                    <a href="/" class="c-header__nav__link">レビュー一覧</a>
+                    <a href="{{ route('reviews') }}" class="c-header__nav__link">レビュー一覧</a>
                   </li>
                   <li class="c-header__nav__item">
                     <a href="/" class="c-header__nav__link">投稿したアイデア一覧</a>
                   </li>
                   <li class="c-header__nav__item">
-                    <a href="/" class="c-header__nav__link">購入したアイデア一覧</a>
+                    <a href="{{ route('boughts', Auth::user()->id ) }}" class="c-header__nav__link">購入したアイデア一覧</a>
                   </li>
                   <li class="c-header__nav__item">
-                    <a href="/logout" class="c-header__nav__link">ログアウト</a>
+                    <a href="{{ route('logout') }}" class="c-header__nav__link">ログアウト</a>
                   </li>
                   <li class="c-header__nav__item">
                     <a href="/" class="c-header__nav__link">プロフィール変更</a>
@@ -56,11 +56,11 @@
                 @else
                   @if(Route::has('register'))
                     <li class="c-header__nav__item">
-                      <a href="/login" class="c-header__nav__link">ログイン</a>
+                      <a href="{{ route('login') }}" class="c-header__nav__link">ログイン</a>
                     </li>
                   @else
                     <li class="c-header__nav__item">
-                      <a href="/register" class="c-header__nav__link">登録</a>
+                      <a href="{{ route('register') }}" class="c-header__nav__link">登録</a>
                     </li>
                   @endif
                 @endauth

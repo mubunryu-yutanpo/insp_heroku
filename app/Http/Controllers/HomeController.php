@@ -37,6 +37,30 @@ class HomeController extends Controller
 
     // ========マイページへ========
     public function mypage(){
-        return view('mypage');
+        return view('mypage/mypage');
     }
+
+    // ========気になる一覧へ========
+    public function checks($id){
+        return view('mypage/checklist');
+    }
+
+    // ========アイデア一覧へ========
+    public function index(){
+        return view('ideas/index');
+    }
+
+    // ========レビュー一覧へ========
+    public function reviews(){
+        return view('ideas/review');
+    }
+
+    // ========購入したアイデア一覧へ========
+    public function boughts($id){
+        return view('ideas/boughts');
+    }
+
+
+
+
 }

@@ -5,7 +5,7 @@
 @section('header')
 
 @section('main')
-  <h2>気になるリスト</h2>
+  <checks-component />
 @endsection
 
 @section('footer')

@@ -23,6 +23,11 @@ window.Vue = require('vue');
 Vue.component('header-component', require('./components/HeaderComponent.vue').default);
 Vue.component('footer-component', require('./components/FooterComponent.vue').default);
 Vue.component('mypage-component', require('./components/MypageComponent.vue').default);
+Vue.component('ideas-component', require('./components/IdeasComponent.vue').default);
+Vue.component('reviews-component', require('./components/ReviewsComponent.vue').default);
+Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
+Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
