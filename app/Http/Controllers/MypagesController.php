@@ -18,19 +18,14 @@ use App\Review;
 class MypagesController extends Controller
 {
 
-    // ========プロフィール編集画面へ========
-
-    public function edit($id){
-        $user = Auth::user();
-        return view('mypage/prof', compact('user'));
-    }
 
     // ========プロフィール編集処理========
-
     public function update(ValidRequest $request, $id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
+
+        dd($id);
 
         // アバター画像のパス名を変数に
         if($request->avatar !== null){
@@ -54,15 +49,7 @@ class MypagesController extends Controller
    
     }
 
-    // ========退会ページへ========
-
-    public function withdrow($id){
-        $user = Auth::user();
-        return view('mypage/withdrow', compact('user'));
-    }
-
     // ========退会処理========
-    
     public function destroy($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));

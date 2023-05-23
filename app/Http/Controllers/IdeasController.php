@@ -18,31 +18,28 @@ class IdeasController extends Controller
 {
 
     // コントローラーのプロパティを定義
-    protected $user;
-    protected $user_id;
+    // protected $user;
+    // protected $user_id;
 
-    public function __construct(){
-        $this->middleware('auth')->except('index');
+    // public function __construct(){
+    //     $this->middleware('auth')->except('index');
 
-        $this->user = Auth::user();
-        $this->user_id = $this->user ? $this->user->id : null;
-    }
+    //     $this->user = Auth::user();
+    //     $this->user_id = $this->user ? $this->user->id : null;
+    // }
 
 
     // ========アイデア新規投稿処理========
-    public function ideaNew(ValidRequest $request)
+    public function ideaCreate(ValidRequest $request)
     {
+        $user_id = Auth::id();
         $idea = new Idea;
-        
-        // 既存のカテゴリーを取得または作成
-        // $category = Category::firstOrCreate(['name' => $request->category]);
-        // $category_id = $category->id;
-    
+            
         // DBに保存
         $idea->fill([
-            'user_id'     => $this->user_id,
-            'category_id' => $request->category_id,
-            'name'        => $request->name,
+            'user_id'     => $user_id,
+            'category_id' => $request->category,
+            'title'       => $request->title,
             'summary'     => $request->summary,
             'description' => $request->description,
             'price'       => $request->price,
@@ -87,11 +84,13 @@ class IdeasController extends Controller
             return redirect('/')->with('flash_message', '失敗しました');
         }
 
+        $user_id = Auth::id();
+
         // DB情報更新
         $idea->update([
-            'user_id'     => $this->user_id,
+            'user_id'     => $user_id,
             'category_id' => $request->category_id,
-            'name'        => $request->name,
+            'title'       => $request->title,
             'summary'     => $request->summary,
             'description' => $request->description,
             'price'       => $request->price,
@@ -107,6 +106,7 @@ class IdeasController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
+        $user_id = Auth::id();
         $idea = Idea::find($id);
         $owner_id = $idea->user_id;
 
@@ -116,7 +116,7 @@ class IdeasController extends Controller
         }
 
         // アイデアの所持者とアクセスしているユーザーが異なる場合
-        if ($owner_id !== $this->user_id) {
+        if ($owner_id !== $user_id) {
             return redirect('/')->with('flash_message', '失敗しました');
         }
 
@@ -130,8 +130,10 @@ class IdeasController extends Controller
     // ========アイデア詳細画面へ========
 
     public function ideaDetail($id){
+
+        $user_id = Auth::id();
         $canBuy = true;
-        $boughtIdea = Purchase::where('user_id', $this->user_id)->where('idea_id', $id)->first();
+        $boughtIdea = Purchase::where('user_id', $user_id)->where('idea_id', $id)->first();
         if($boughtIdea !== null){
             $canBuy = false;
         }
@@ -154,15 +156,16 @@ class IdeasController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
+        $user_id = Auth::id();
         // 既にチェックされているかを判別し登録or解除
-        $checked = Check::where('user_id', $this->user_id)->where('idea_id', $id)->first();
+        $checked = Check::where('user_id', $user_id)->where('idea_id', $id)->first();
 
         if($checked !== null){
             $checked->delete();
         }else{
             $check = new Check;
             $check->fill([
-                'user_id' => $this->user_id,
+                'user_id' => $user_id,
                 'idea_id' => $id,
             ])->save();
         }

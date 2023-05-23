@@ -4,6 +4,11 @@
       <ul>
         <li>Name: {{ user.name }}</li>
         <li>Email: {{ user.email }}</li>
+        <li>
+          <div class="">
+            <img :src="user.avatar" alt="" class="">
+          </div>
+        </li>
       </ul>
       <h2>Check List</h2>
       <ul>
@@ -46,20 +51,15 @@
       };
     },
     mounted() {
-        // const token = localStorage.getItem('api_token');
         axios.get('/api/mypage', {
-            // headers: {
-            // Authorization: `Bearer ${token}`
-            // }
         })
         .then(response => {
-            console.log('れすぽんすの' + response.data);
             this.user = response.data.user;
             this.checkList = response.data.checkList;
             this.postList = response.data.postList;
             this.boughtList = response.data.boughtList;
             this.reviewList = response.data.reviewList;
-            console.log('ぽっぷな' + this.user);
+            console.log('ぽっぷな' + this.user.avatar);
         })
         .catch(error => {
             console.log(error);

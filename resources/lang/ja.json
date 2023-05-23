@@ -1,5 +1,6 @@
 {
     "registered!" : "登録しました！",
     "updated!" : "情報を更新しました！",
-    "deleted!" : "削除しました"
+    "deleted!" : "削除しました",
+    "The price must be an integer." : "えへへ"
 }

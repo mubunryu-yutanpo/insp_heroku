@@ -40,6 +40,18 @@ class HomeController extends Controller
         return view('mypage/mypage');
     }
 
+    // ========プロフ編集画面へ========
+    public function profEdit($id){
+        $user = User::find($id);
+        return view('mypage/prof', compact('user'));
+    }
+
+    // ========退会ページへ========
+    public function withdrow($id){
+        $user = Auth::user();
+        return view('mypage/withdrow', compact('user'));
+    }
+
     // ========気になる一覧へ========
     public function checks($id){
         return view('mypage/checklist');
@@ -52,13 +64,26 @@ class HomeController extends Controller
 
     // ========レビュー一覧へ========
     public function reviews(){
-        return view('ideas/review');
+        return view('ideas/reviews');
     }
 
     // ========購入したアイデア一覧へ========
     public function boughts($id){
         return view('ideas/boughts');
     }
+
+    // ========自分が投稿したアイデア一覧へ========
+    public function myposts($id){
+        return view('ideas/myposts');
+    }
+
+    // ========アイデア作成画面へ========
+    public function new(){
+        $category = Category::all();
+
+        return view('ideas/new', compact('category'));
+    }
+
 
 
 

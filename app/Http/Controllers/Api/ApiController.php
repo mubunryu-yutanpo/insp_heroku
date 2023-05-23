@@ -17,8 +17,7 @@ use App\Review;
 
 class ApiController extends Controller
 {
-
-    // ========マイページへ========
+    // ========マイページ情報取得========
 
     public function mypage(){
         $user = Auth::user();
@@ -95,7 +94,7 @@ class ApiController extends Controller
     }
 
 
-    // ========気になるリストへ========
+    // ========気になるリスト取得========
     public function checks($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -118,7 +117,7 @@ class ApiController extends Controller
     }
 
 
-    // ========購入したアイデア取得処理========
+    // ========購入したアイデア取得========
     public function boughts($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -142,24 +141,31 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
-    // ========投稿したアイデア一覧へ========
-    public function myPosts($id){
-
+    // ========投稿したアイデア一取得========
+    public function myPosts($id)
+    {
         $postsList = null;
-
-        $posts = Idea::where('user_id', $id)->paginate(10);
-        if($posts->isNotEmpty() ){
+    
+        $posts = Idea::where('user_id', $id);
+    
+        if ($posts->count() >= 10) {
+            $posts = $posts->paginate(10);
+        } else {
+            $posts = $posts->get();
+        }
+    
+        if ($posts->isNotEmpty()) {
             $postsList = $posts;
         }
-
+    
         $data = [
             'postsList' => $postsList,
         ];
-
+    
         return response()->json($data);
     }
-
-    // ========レビュー一覧へ========
+    
+    // ========レビュー一覧取得========
     public function reviews(){
         $reviewList = null;
         $reviews = Review::paginate(10);
@@ -178,7 +184,7 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
-    // ========アイデア一覧========
+    // ========アイデア一覧取得========
     public function ideas(){
         $ideas = Idea::all();
 

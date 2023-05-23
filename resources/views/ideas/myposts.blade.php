@@ -5,7 +5,7 @@
 @section('header')
 
 @section('main')
-  <h2>自分の投稿一覧</h2>
+  <myposts-component :test="'{{ Auth::id() }}'"></myposts-component>
 @endsection
 
 @section('footer')

@@ -27,6 +27,7 @@ Vue.component('ideas-component', require('./components/IdeasComponent.vue').defa
 Vue.component('reviews-component', require('./components/ReviewsComponent.vue').default);
 Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
 Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
+Vue.component('myposts-component' , require('./components/MyPostsComponent.vue').default);
 
 
 /**
@@ -128,7 +129,7 @@ const store = new Vuex.Store({
         console.error('ログイン状態の取得に失敗しました', error);
         console.log('ログインしているかどうか:', state.isLogin);
       }
-    },
+    },      
   },
   getters: {
     isLogin: (state) => state.isLogin,
