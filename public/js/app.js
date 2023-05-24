@@ -1971,6 +1971,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user_id'],
   data: function data() {
     return {
       checkIdeas: []
@@ -1982,7 +1983,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fetchCheckIdeas: function fetchCheckIdeas() {
       var _this = this;
-      axios.get('/api/' + this.$route.params.id + '/checks').then(function (response) {
+      axios.get('/api/' + this.user_id + '/checks').then(function (response) {
         _this.checkIdeas = response.data.checkIdeas;
       })["catch"](function (error) {
         console.error(error);
@@ -36817,7 +36818,7 @@ var render = function () {
           _c("div", {}, [
             _c("strong", {}, [_vm._v(_vm._s(idea.title))]),
             _vm._v(" "),
-            _c("p", {}, [_vm._v(_vm._s(idea.description))]),
+            _c("p", {}, [_vm._v(_vm._s(idea.summary))]),
           ]),
         ])
       })

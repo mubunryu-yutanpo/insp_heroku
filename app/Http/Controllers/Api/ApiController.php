@@ -140,10 +140,15 @@ class ApiController extends Controller
 
         $checkIdeas = null;
         $checks = Check::where('user_id', $id)->get();
-
+        
         if ($checks->isNotEmpty()) {
             $idea_ids = $checks->pluck('idea_id')->toArray();
-            $ideas = Idea::whereIn('id', $ideaI_ids)->paginate(10);
+            // 気になるアイデアが10件以上の場合は1ページ10件まで表示
+            if($checks->count() >= 10){
+                $ideas = Idea::whereIn('id', $idea_ids)->paginate(10);
+            }else{
+                $ideas = Idea::whereIn('id', $idea_ids)->get();
+            }
             $checkIdeas = $ideas;
         }
 

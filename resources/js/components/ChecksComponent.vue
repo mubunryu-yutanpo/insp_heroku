@@ -5,7 +5,7 @@
         <li v-for="idea in checkIdeas" :key="idea.id">
           <div class="">
             <strong class="">{{ idea.title }}</strong>
-            <p class="">{{ idea.description }}</p>
+            <p class="">{{ idea.summary }}</p>
           </div>
         </li>
       </ul>
@@ -14,6 +14,7 @@
   
   <script>
   export default {
+    props: ['user_id'],
     data() {
       return {
         checkIdeas: [],
@@ -24,7 +25,7 @@
     },
     methods: {
       fetchCheckIdeas() {
-        axios.get('/api/' + this.$route.params.id + '/checks')
+        axios.get('/api/' + this.user_id + '/checks')
           .then(response => {
             this.checkIdeas = response.data.checkIdeas;
           })

@@ -5,7 +5,7 @@
 @section('header')
 
 @section('main')
-  <checks-component />
+  <checks-component :user_id="'{{ Auth::id() }}'"></checks-component>
 @endsection
 
 @section('footer')
