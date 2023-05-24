@@ -1,11 +1,11 @@
 @extends('layouts.parent')
 
-@section('title', 'myposted')
+@section('title', '投稿一覧')
 
 @section('header')
 
 @section('main')
-  <myposts-component :test="'{{ Auth::id() }}'"></myposts-component>
+  <myposts-component :user_id="'{{ Auth::id() }}'"></myposts-component>
 @endsection
 
 @section('footer')

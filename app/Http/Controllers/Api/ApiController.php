@@ -18,7 +18,6 @@ use App\Review;
 class ApiController extends Controller
 {
     // ========マイページ情報取得========
-
     public function mypage(){
         $user = Auth::user();
         $user_id = $user->id;
@@ -91,6 +90,45 @@ class ApiController extends Controller
 
         return response()->json($data);
         //return view('mypage', $data);
+    }
+    
+    
+    // ========アイデア詳細情報取得========
+    public function ideaDetail($id){
+        
+        $user_id = Auth::id();
+        $canBuy = true;
+        $isChecked = false;
+        $idea = Idea::find($id);
+
+        // 購入状態を取得
+        $boughtIdea = Purchase::where('user_id', $user_id)->where('idea_id', $id)->first();
+        // 自分のアイデアかの判定用
+        $myIdea = Idea::where('id', $id)->value('user_id');
+        
+        if($boughtIdea !== null || $myIdea === $user_id){
+            $canBuy = false;
+        }
+
+        // レビュー取得
+        $reviews = Review::where('idea_id', $id)->get();
+        // 平均点を算出
+        $averageScore = $reviews->avg('score');
+        // 気になるの状態を取得
+        $checkRecord = Check::where('user_id', $user_id)->where('idea_id', $id)->first();
+        if($checkRecord){
+            $isChecked = true;
+        }
+
+        $data = [
+            'idea'         => $idea,
+            'canBuy'       => $canBuy,
+            'reviews'      => $reviews,
+            'averageScore' => $averageScore,
+            'isChecked'    => $isChecked,
+        ];
+        
+        return response()->json($data);
     }
 
 
@@ -195,6 +233,46 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
+    // ========気になる登録・登録解除処理========
+    public function toggleCheck($id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        $user_id = Auth::id();
+        // 既にチェックされているかを判別し登録or解除
+        $checked = Check::where('user_id', $user_id)->where('idea_id', $id)->first();
+
+        if($checked !== null){
+            $checked->delete();
+        }else{
+            $check = new Check;
+            $check->fill([
+                'user_id' => $user_id,
+                'idea_id' => $id,
+            ])->save();
+        }
+    }
+
+    // ========アイデア購入処理========
+    public function buy($id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        //dd('こーにゅー');
+
+        $purchase = new Purchase;
+        $user_id = Auth::id();
+
+        $purchase->fill([
+            'user_id'  => $user_id,
+            'idea_id'  => $id,
+        ])->save();
+
+        return redirect()->back()->with('flash_message', '購入しました！');
+
+    }
 
 
 }

@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'], function(){
     // Route::get('/{id}/withdrow', 'HomeController@withdrow')->name('withdrow');
     // アイデア新規投稿へ
     Route::get('/new', 'HomeController@new')->name('new');
+    // アイデア詳細へ
+    Route::get('/{id}/idea', 'HomeController@show')->name('ideas.show');
 
   // =====================処理関連ルート===========================
     Route::post('/new', 'IdeasController@ideaCreate')->name('create');
@@ -63,8 +65,6 @@ Route::group(['middleware' => 'auth'], function(){
     // // アイデア新規投稿
     // Route::get('/new', 'IdeasController@new')->name('ideas.new');
     // Route::post('/new/create', 'IdeasController@create')->name('ideas.create');
-    // // アイデア詳細
-    // Route::get('/{id}/idea', 'IdeasController@show')->name('ideas.show');
     // // アイデア編集
     // Route::get('/{id}/ideaEdit', 'IdeasController@edit')->name('ideas.edit');
     // Route::post('/{id}/ideaEdit', 'IdeasController@update')->name('ideas.update');
@@ -86,6 +86,8 @@ Route::group(['middleware' => 'auth'], function(){
 
         // マイページ情報取得
         Route::get('/api/mypage', 'Api\ApiController@mypage');
+        // アイデア詳細情報取得
+        Route::get('/api/idea/{id}/detail', 'Api\ApiController@ideaDetail');
         // アイデア一覧情報取得
         Route::get('/api/ideas', 'Api\ApiController@ideas');
         // 投稿一覧取得
@@ -96,5 +98,9 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/api/{id}/boughts', 'Api\ApiController@boughts');
         // レビュー一覧取得
         Route::get('/api/reviews', 'Api\ApiController@reviews');
+        // 気になる切り替え
+        Route::post('/api/idea/{id}/toggleCheck', 'Api\ApiController@toggleCheck');
+        // アイデア購入
+        Route::get('api/idea/{id}/buy', 'Api\ApiController@buy');
     });
     

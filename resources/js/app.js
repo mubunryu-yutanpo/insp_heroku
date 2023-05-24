@@ -28,6 +28,7 @@ Vue.component('reviews-component', require('./components/ReviewsComponent.vue').
 Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
 Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
 Vue.component('myposts-component' , require('./components/MyPostsComponent.vue').default);
+Vue.component('detail-component' , require('./components/DetailComponent.vue').default);
 
 
 /**
@@ -52,6 +53,7 @@ import ReviewsComponent from './components/ReviewsComponent';
 import MyPostsComponent from './components/MyPostsComponent';
 import ChecksComponent from './components/ChecksComponent';
 import BoughtsComponent from './components/BoughtsComponent';
+
 
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';

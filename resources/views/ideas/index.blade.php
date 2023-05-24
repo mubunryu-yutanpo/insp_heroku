@@ -1,6 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'index')
+@section('title', 'アイデア一覧')
 
 @section('header')
 

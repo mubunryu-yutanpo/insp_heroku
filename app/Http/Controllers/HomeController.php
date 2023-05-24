@@ -84,6 +84,12 @@ class HomeController extends Controller
         return view('ideas/new', compact('category'));
     }
 
+    // ========アイデア詳細へ========
+    public function show($id){
+        $idea_id = $id;
+        return view('ideas/detail', compact('idea_id'));
+    }
+
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidRequest;
 use App\User;
@@ -24,8 +25,6 @@ class MypagesController extends Controller
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
-
-        dd($id);
 
         // アバター画像のパス名を変数に
         if($request->avatar !== null){

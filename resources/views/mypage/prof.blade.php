@@ -1,6 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'prof_edit')
+@section('title', 'プロフィール編集')
 
 @section('header')
 

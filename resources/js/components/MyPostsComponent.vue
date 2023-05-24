@@ -2,7 +2,7 @@
     <div>
       <h2>投稿したアイデア</h2>
       <ul>
-        <li v-for="post in postsList" :key="post.id">
+        <li v-for="post in postsList" :key="post.user_id">
           <div>
             <strong>{{ post.title }}</strong>
             <p>{{ post.description }}</p>
@@ -15,7 +15,7 @@
   
   <script>
   export default {
-    props: ['test'],
+    props: ['user_id'],
     data() {
       return {
         postsList: [],
@@ -23,12 +23,12 @@
     },
     mounted() {
       this.fetchPosts();
-      console.log('これとおってる？' + this.test);
+      console.log('これとおってる？' + this.user_id);
 
     },
     methods: {
       fetchPosts() {
-        axios.get('/api/' + this.test + '/myPosts')
+        axios.get('/api/' + this.user_id + '/myPosts')
           .then(response => {
             this.postsList = response.data.postsList;
           })

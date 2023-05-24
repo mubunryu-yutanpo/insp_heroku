@@ -125,52 +125,7 @@ class IdeasController extends Controller
         return redirect('/mypage')->with('flash_message', __('deleted!') );
     }
 
-    
-
-    // ========アイデア詳細画面へ========
-
-    public function ideaDetail($id){
-
-        $user_id = Auth::id();
-        $canBuy = true;
-        $boughtIdea = Purchase::where('user_id', $user_id)->where('idea_id', $id)->first();
-        if($boughtIdea !== null){
-            $canBuy = false;
-        }
-        $reviews = Review::where('idea_id', $id)->get();
-        // 平均点を算出
-        $averageScore = $reviews->avg('score');
-
-        $data = [
-            'canBuy'       => $canBuy,
-            'reviews'      => $reviews,
-            'averageScore' => $averageScore,
-        ];
         
-        return response()->json($data);
-    }
-
-    // ========気になる登録・登録解除処理========
-    public function toggleCheck($id){
-        if(!ctype_digit($id)){
-            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
-        }
-
-        $user_id = Auth::id();
-        // 既にチェックされているかを判別し登録or解除
-        $checked = Check::where('user_id', $user_id)->where('idea_id', $id)->first();
-
-        if($checked !== null){
-            $checked->delete();
-        }else{
-            $check = new Check;
-            $check->fill([
-                'user_id' => $user_id,
-                'idea_id' => $id,
-            ])->save();
-        }
-    }
-    
     // ========気になるリストへ========
     public function checkIdeas($id){
         if(!ctype_digit($id)){
