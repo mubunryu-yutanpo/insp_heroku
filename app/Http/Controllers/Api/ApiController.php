@@ -144,7 +144,7 @@ class ApiController extends Controller
         if ($checks->isNotEmpty()) {
             $idea_ids = $checks->pluck('idea_id')->toArray();
             // 気になるアイデアが10件以上の場合は1ページ10件まで表示
-            if($checks->count() >= 10){
+            if($checks->count() > 10){
                 $ideas = Idea::whereIn('id', $idea_ids)->paginate(10);
             }else{
                 $ideas = Idea::whereIn('id', $idea_ids)->get();
@@ -161,29 +161,34 @@ class ApiController extends Controller
 
 
     // ========購入したアイデア取得========
-    public function boughts($id){
-        if(!ctype_digit($id)){
+    public function boughts($id)
+    {
+        if (!ctype_digit($id)) {
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
-
+    
         $boughtList = null;
-        // 自分が購入したアイデアを1ページ10件表示するように取得
-        $boughts = $this->user
-                   ->purchase()
-                   ->with('idea')
-                   ->paginate(10);
-        
-        if($boughts->isNotEmpty()){
-            $boughtList = $boughts;
+        $user = User::find($id);
+    
+        if (!$user) {
+            return response()->json(['error' => 'ユーザーが見つかりません'], 404);
         }
-
+    
+        $boughts = $user->purchase()
+            ->with('idea')
+            ->get();
+    
+        if ($boughts->isNotEmpty()) {
+            $boughtList = $boughts->count() > 10 ? $boughts->paginate(10) : $boughts;
+        }
+    
         $data = [
             'boughtList' => $boughtList,
         ];
-
+    
         return response()->json($data);
     }
-
+    
     // ========投稿したアイデア一取得========
     public function myPosts($id)
     {

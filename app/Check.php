@@ -11,7 +11,7 @@ class Check extends Model
 
     //他のモデルとの関係
     public function user(){
-        return $this->belongTo('App\User');
+        return $this->belongsTo('App\User');
     }
     public function idea(){
         return $this->hasMany('App\Idea');

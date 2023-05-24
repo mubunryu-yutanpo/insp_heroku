@@ -5,7 +5,7 @@
 @section('header')
 
 @section('main')
-  <boughts-component />  
+  <boughts-component :user_id="'{{ Auth::id() }}'"></boughts-component>  
 @endsection
 
 @section('footer')

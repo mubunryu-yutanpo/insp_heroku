@@ -1924,6 +1924,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user_id'],
   data: function data() {
     return {
       boughtList: []
@@ -1935,7 +1936,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fetchBoughtIdeas: function fetchBoughtIdeas() {
       var _this = this;
-      axios.get('/api/' + this.$route.params.id + '/boughts').then(function (response) {
+      axios.get('/api/' + this.user_id + '/boughts').then(function (response) {
         _this.boughtList = response.data.boughtList;
       })["catch"](function (error) {
         console.error(error);

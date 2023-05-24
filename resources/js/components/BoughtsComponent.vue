@@ -14,6 +14,7 @@
   
   <script>
   export default {
+    props: ['user_id'],
     data() {
       return {
         boughtList: [],
@@ -24,7 +25,7 @@
     },
     methods: {
       fetchBoughtIdeas() {
-        axios.get('/api/' + this.$route.params.id + '/boughts')
+        axios.get('/api/' + this.user_id + '/boughts')
           .then(response => {
             this.boughtList = response.data.boughtList;
           })

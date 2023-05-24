@@ -11,7 +11,7 @@ class Idea extends Model
 
     //他のモデルとの関係
     public function check(){
-        return $this->belongsTo('App\Check');
+        return $this->hasMany('App\Check');
     }
     public function purchase(){
         return $this->hasMany('App\Purchase');
