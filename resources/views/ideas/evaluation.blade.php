@@ -11,14 +11,16 @@
     <p class="">{{ $idea->title }}</p>
   </div>  
   
-  <form method="post" action="" class="p-form">
+  <form method="post" action="{{ route('post.review', $idea->id) }}" class="p-form">
     @csrf
 
-      <evaluation-component></evaluation-component>
+        <evaluation-component></evaluation-component>
 
         <div class="c-form__input">
         <label for="comment" class="c-form__input__label">コメント:</label>
-        <input type="comment" name="comment" id="comment" class="c-form__input__field @error('comment') valid-error @enderror" autocomplete="comment" value="{{ old('comment') }}">
+        <textarea name="comment" id="comment" cols="30" rows="10" class="c-form__input__field @error('comment') valid-error @enderror">
+            {{ old('comment') }}
+        </textarea>
         @error('comment')
             <span class="c-form__error" role="alert">
             <strong>{{ $message }}</strong>
@@ -36,4 +38,4 @@
 @section('footer')
 
 
-<!-- レビュー投稿処理・ルートまだ -->
+<!-- scoreが入らない -->

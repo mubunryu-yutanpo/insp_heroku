@@ -216,12 +216,12 @@ class ApiController extends Controller
     // ========レビュー一覧取得========
     public function reviews(){
         $reviewList = null;
-        $reviews = Review::paginate(10);
+        $reviews = Review::all();
         $ideaIds = $reviews->pluck('idea_id');
         $ideas = Idea::whereIn('id', $ideaIds)->get();
     
         if($reviews->isNotEmpty()){
-            $reviewList = $reviews;
+            $reviewList = $reviews->count() > 10 ? $reviews->paginate(10) : $reviews;
         }
     
         $data = [

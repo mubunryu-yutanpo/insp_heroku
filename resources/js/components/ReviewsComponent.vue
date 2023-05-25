@@ -3,8 +3,8 @@
     <h1>レビュー一覧</h1>
     <ul>
       <li v-for="review in reviewList" :key="review.id">
-        <h2>{{ review.title }}</h2>
-        <p>{{ review.content }}</p>
+        <h2>{{ review.score }}</h2>
+        <p>{{ review.comment }}</p>
         <p>アイデア: {{ getIdeaTitle(review.idea_id) }}</p>
       </li>
     </ul>
@@ -44,3 +44,7 @@ export default {
   },
 };
 </script>
+
+
+
+<!-- データ取得はいけてるっぽいから、レビューのスコアを星のアイコンで値をリンクさせて表示する -->

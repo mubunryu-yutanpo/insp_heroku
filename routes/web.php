@@ -48,9 +48,14 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/{id}/review/create', 'HomeController@evaluation')->name('evaluation');
 
   // =====================処理関連ルート===========================
+    // アイデア投稿
     Route::post('/new', 'IdeasController@ideaCreate')->name('create');
+    // プロフ更新
     Route::post('/{id}/profEdit', 'MypagesController@update')->name('prof.update');
+    // 退会
     // Route::post('/{id}/withdrow', 'MypagesController@destroy')->name('destroy');
+    // レビュー投稿
+    Route::post('/{id}/review/create', 'IdeasController@postReview')->name('post.review');
 
 
   // ======================ログアウト============================

@@ -2122,16 +2122,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      selectedScore: 0
+      selectedScore: this.value
     };
   },
   methods: {
     selectScore: function selectScore(score) {
       this.selectedScore = score;
+      this.$emit('input', score);
     }
   }
 });
@@ -6505,7 +6508,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fa-star{\n  color: #e6e4e4;\n}\n.fa-star.active {\n  color: gold;\n}\n", ""]);
+exports.push([module.i, "\n.fa-star {\n  color: #e6e4e4;\n}\n.fa-star.active {\n  color: gold;\n}\n", ""]);
 
 // exports
 
@@ -37670,19 +37673,29 @@ var render = function () {
     _c(
       "div",
       { staticClass: "c-form__input__stars" },
-      _vm._l(5, function (star) {
-        return _c("i", {
-          key: star,
-          staticClass: "fa-solid fa-star",
-          class: { active: star <= _vm.selectedScore },
-          on: {
-            click: function ($event) {
-              _vm.selectScore(star)
+      [
+        _vm._l(5, function (star) {
+          return _c("i", {
+            key: star,
+            staticClass: "fa-solid fa-star",
+            class: { active: star <= _vm.selectedScore },
+            on: {
+              click: function ($event) {
+                _vm.selectScore(star)
+              },
             },
-          },
-        })
-      })
+          })
+        }),
+        _vm._v(" "),
+        _c("p", {}, [_vm._v("(" + _vm._s(_vm.selectedScore) + ")")]),
+      ],
+      2
     ),
+    _vm._v(" "),
+    _c("input", {
+      attrs: { type: "hidden", name: "score" },
+      domProps: { value: _vm.selectedScore },
+    }),
   ])
 }
 var staticRenderFns = []
@@ -37990,9 +38003,9 @@ var render = function () {
       "ul",
       _vm._l(_vm.reviewList, function (review) {
         return _c("li", { key: review.id }, [
-          _c("h2", [_vm._v(_vm._s(review.title))]),
+          _c("h2", [_vm._v(_vm._s(review.score))]),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(review.content))]),
+          _c("p", [_vm._v(_vm._s(review.comment))]),
           _vm._v(" "),
           _c("p", [
             _vm._v("アイデア: " + _vm._s(_vm.getIdeaTitle(review.idea_id))),
