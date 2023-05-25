@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/new', 'HomeController@new')->name('new');
     // アイデア詳細へ
     Route::get('/{id}/idea', 'HomeController@show')->name('ideas.show');
+    // レビュー投稿へ
+    Route::get('/{id}/review/create', 'HomeController@evaluation')->name('evaluation');
 
   // =====================処理関連ルート===========================
     Route::post('/new', 'IdeasController@ideaCreate')->name('create');

@@ -4,7 +4,7 @@
       <ul>
         <li v-for="bought in boughtList" :key="bought.id">
           <div>
-            <strong>{{ bought.idea.title }}</strong>
+            <a :href="'/' + bought.id + '/idea'" class="">{{ bought.idea.title }}</a>
             <p>{{ bought.idea.description }}</p>
           </div>
         </li>

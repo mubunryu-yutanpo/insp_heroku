@@ -33,6 +33,14 @@
                 <i class="fa-solid fa-check"></i>
             </span>
         </button>
+
+        <button class="" v-if="!canBuy" @click="doReview($id)">
+            <span class="">
+                レビューを付ける
+                <i class="fa-solid fa-check"></i>
+            </span>
+        </button>
+
       </div>
     </div>
   </template>
@@ -82,15 +90,11 @@
         });
        },
        buy() {
-        // axios.post('/api/idea/' + this.idea_id + '/buy')
-        // .then(response => {
-        //     console.log('購入完了！');
-        // })
-        // .catch(error => {
-        //     console.error(error);
-        // });
         window.location.href = '/api/idea/' + this.idea_id + '/buy';
        },
+       doReview(){
+        window.location.href = '/' + this.idea_id + '/review/create'; 
+       }
 
     },
   };

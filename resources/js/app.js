@@ -29,6 +29,7 @@ Vue.component('checks-component' , require('./components/ChecksComponent.vue').d
 Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
 Vue.component('myposts-component' , require('./components/MyPostsComponent.vue').default);
 Vue.component('detail-component' , require('./components/DetailComponent.vue').default);
+Vue.component('evaluation-component' , require('./components/EvaluationComponent.vue').default);
 
 
 /**

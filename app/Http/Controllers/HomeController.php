@@ -90,6 +90,12 @@ class HomeController extends Controller
         return view('ideas/detail', compact('idea_id'));
     }
 
+    // ========レビュー投稿へ========
+    public function evaluation($id){
+        $idea = Idea::find($id);
+        //dd($idea);
+        return view('ideas/evaluation', compact('idea'));
+    }
 
 
 

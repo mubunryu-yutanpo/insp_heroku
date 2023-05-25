@@ -4,7 +4,7 @@
       <ul>
         <li v-for="idea in checkIdeas" :key="idea.id">
           <div class="">
-            <strong class="">{{ idea.title }}</strong>
+            <a :href="'/' + idea.id + '/idea'" class="">{{ idea.title }}</a>
             <p class="">{{ idea.summary }}</p>
           </div>
         </li>
