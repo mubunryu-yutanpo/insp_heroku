@@ -2213,61 +2213,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'HeaderComponent',
   data: function data() {
     return {
       isOpen: false,
-      imageSrc: '/images/menubutton.png',
+      imageSrc: '/images/menu.png',
       //初期はメニューアイコンを出す
       closeImageSrc: '/images/close.png' // MENU閉じるボタンアイコン
     };
@@ -2286,7 +2238,7 @@ __webpack_require__.r(__webpack_exports__);
 
       // メニューボタンのアイコン画像パスを切り替え
       this.isOpen = !this.isOpen;
-      this.imageSrc = this.isOpen ? this.closeImageSrc : '/images/menubutton.png';
+      this.imageSrc = this.isOpen ? this.closeImageSrc : '/images/menu.png';
     }
   }
 });
@@ -2483,6 +2435,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
 //
 //
 //
@@ -37561,7 +37515,7 @@ var render = function () {
     _vm._v(" "),
     _c("p", [_vm._v("レビュー数: " + _vm._s(_vm.reviews.length))]),
     _vm._v(" "),
-    _c("p", [_vm._v("平均評価: " + _vm._s(_vm.averageScore))]),
+    _c("p", [_vm._v("平均評価: " + _vm._s(_vm.averageScore.toFixed(1)))]),
     _vm._v(" "),
     _c("p", [_vm._v("気になる〜: " + _vm._s(_vm.isChecked))]),
     _vm._v(" "),
@@ -37775,39 +37729,20 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "c-header__menu js-menu-button" }, [
-      _c(
-        "button",
-        {
-          staticClass: "c-header__menu__button",
-          on: { click: this.toggleNav },
-        },
-        [
-          _c("img", {
-            staticClass: "c-header__menu__button__image",
-            attrs: { src: _vm.imageSrc, alt: "" },
-          }),
-        ]
-      ),
-    ]),
+  return _c("div", { staticClass: "c-header__menu js-menu-button" }, [
+    _c(
+      "button",
+      { staticClass: "c-header__menu__button", on: { click: this.toggleNav } },
+      [
+        _c("img", {
+          staticClass: "c-header__menu__button__image",
+          attrs: { src: _vm.imageSrc, alt: "" },
+        }),
+      ]
+    ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-header-logo" }, [
-      _c("img", {
-        staticClass: "c-header-logo__image",
-        attrs: { src: "/images/logo.png", alt: "" },
-      }),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38003,7 +37938,17 @@ var render = function () {
       "ul",
       _vm._l(_vm.reviewList, function (review) {
         return _c("li", { key: review.id }, [
-          _c("h2", [_vm._v(_vm._s(review.score))]),
+          _c(
+            "div",
+            {},
+            _vm._l(5, function (n) {
+              return _c("i", {
+                key: n,
+                staticClass: "fa-solid fa-star",
+                class: { active: n <= review.score },
+              })
+            })
+          ),
           _vm._v(" "),
           _c("p", [_vm._v(_vm._s(review.comment))]),
           _vm._v(" "),

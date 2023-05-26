@@ -12,7 +12,7 @@
       </div>
       <p>値段： {{ idea.price }}</p>
       <p>レビュー数: {{ reviews.length }}</p>
-      <p>平均評価: {{ averageScore }}</p>
+      <p>平均評価: {{ averageScore.toFixed(1) }}</p>
       <p>気になる〜: {{ isChecked }}</p>
     
       <div class="">
