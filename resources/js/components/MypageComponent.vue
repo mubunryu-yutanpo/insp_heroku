@@ -1,5 +1,26 @@
 <template>
-    <div>
+    <div class="p-mypage">
+      
+      <div class="c-mypage__user">
+        <p class="c-mypage__user-name">{{ user.name }} さん</p>
+        <img :src="user.avatar" class="c-mypage__user-image">
+      </div>
+
+      <div class="c-mypage__contents">
+        <strong class="c-mypage__contents-title">自分のアイデア</strong>
+        <div class="c-mypage__contents__container">
+
+          <div class="c-mypage__contents__container-card" v-for="post in postList" :key="post.id">
+            <p class="c-mypage__contents__container-title">{{ post.title }}</p>
+            <!-- <img ::src="{{ post.sumbnail }}" alt="" class="c-mypage__contents__container-sumbnail"> -->
+            <p class="c-mypage__contents__container-summary">{{ post.summary }}</p>
+          </div>
+
+        </div>
+      </div>
+
+<!-- ↑ここまでやってる -->
+
       <h1>My Page</h1>
       <ul>
         <li>Name: {{ user.name }}</li>

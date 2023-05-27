@@ -2395,6 +2395,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -37843,7 +37864,46 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "p-mypage" }, [
+    _c("div", { staticClass: "c-mypage__user" }, [
+      _c("p", { staticClass: "c-mypage__user-name" }, [
+        _vm._v(_vm._s(_vm.user.name) + " さん"),
+      ]),
+      _vm._v(" "),
+      _c("img", {
+        staticClass: "c-mypage__user-image",
+        attrs: { src: _vm.user.avatar },
+      }),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "c-mypage__contents" }, [
+      _c("strong", { staticClass: "c-mypage__contents-title" }, [
+        _vm._v("自分のアイデア"),
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "c-mypage__contents__container" },
+        _vm._l(_vm.postList, function (post) {
+          return _c(
+            "div",
+            { key: post.id, staticClass: "c-mypage__contents__container-card" },
+            [
+              _c("p", { staticClass: "c-mypage__contents__container-title" }, [
+                _vm._v(_vm._s(post.title)),
+              ]),
+              _vm._v(" "),
+              _c(
+                "p",
+                { staticClass: "c-mypage__contents__container-summary" },
+                [_vm._v(_vm._s(post.summary))]
+              ),
+            ]
+          )
+        })
+      ),
+    ]),
+    _vm._v(" "),
     _c("h1", [_vm._v("My Page")]),
     _vm._v(" "),
     _c("ul", [
@@ -37864,7 +37924,7 @@ var render = function () {
       "ul",
       _vm._l(_vm.checkList, function (check) {
         return _c("li", { key: check.id }, [
-          _vm._v("\n      " + _vm._s(check.title) + "\n    "),
+          _vm._v("\n          " + _vm._s(check.title) + "\n        "),
         ])
       })
     ),
@@ -37875,7 +37935,7 @@ var render = function () {
       "ul",
       _vm._l(_vm.postList, function (post) {
         return _c("li", { key: post.id }, [
-          _vm._v("\n      " + _vm._s(post.title) + "\n    "),
+          _vm._v("\n          " + _vm._s(post.title) + "\n        "),
         ])
       })
     ),
@@ -37887,11 +37947,11 @@ var render = function () {
       _vm._l(_vm.boughtList, function (bought) {
         return _c("li", { key: bought.id }, [
           _vm._v(
-            "\n      " +
+            "\n          " +
               _vm._s(bought.idea.title) +
               " (" +
               _vm._s(bought.amount) +
-              " yen)\n    "
+              " yen)\n        "
           ),
         ])
       })
@@ -37903,7 +37963,7 @@ var render = function () {
       "ul",
       _vm._l(_vm.reviewList, function (review) {
         return _c("li", { key: review.id }, [
-          _vm._v("\n      " + _vm._s(review.content) + "\n    "),
+          _vm._v("\n          " + _vm._s(review.content) + "\n        "),
         ])
       })
     ),
