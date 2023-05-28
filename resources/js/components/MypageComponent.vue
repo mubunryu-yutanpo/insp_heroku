@@ -63,7 +63,9 @@
               <p class="c-mypage__card-user-name">{{ review.user.name }}</p>
               <img :src="review.user.avatar" class="c-mypage__card-user-avatar">
             </div>
-            <p class="c-mypage__card-score">{{ review.score }}</p>
+            <div class="c-mypage__card-score">
+              <i v-for="n in 5" :key="n" class="fa-solid fa-star" :class="{ 'active': n <= review.score }"></i>
+            </div>
             <!-- <img ::src="{{ review.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
             <p class="c-mypage__card-comment">{{ review.comment }}</p>
           </div>

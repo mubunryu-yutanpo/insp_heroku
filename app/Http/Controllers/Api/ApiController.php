@@ -271,16 +271,46 @@ class ApiController extends Controller
 
 
     // ========アイデア一覧取得========
-    public function ideas(){
-        $ideas = Idea::all();
-
+    public function ideas(Request $request)
+    {
+        $query = Idea::query();
+    
+        // カテゴリ絞り込み
+        if ($request->has('category')) {
+            $query->where('category', $request->category);
+        }
+    
+        // 価格絞り込み
+        if ($request->has('price')) {
+            $priceOrder = $request->input('price');
+    
+            if ($priceOrder === 'low') {
+                $query->orderBy('price', 'asc');
+            } elseif ($priceOrder === 'high') {
+                $query->orderBy('price', 'desc');
+            }
+        }
+    
+        // 投稿日絞り込み
+        if ($request->has('date')) {
+            $dateOrder = $request->input('date');
+    
+            if ($dateOrder === 'new') {
+                $query->orderBy('created_at', 'desc');
+            } elseif ($dateOrder === 'old') {
+                $query->orderBy('created_at', 'asc');
+            }
+        }
+    
+        $ideas = $query->get();
+    
         $data = [
             'ideas' => $ideas,
         ];
-
+    
         return response()->json($data);
     }
-
+    
     // ========気になる登録・登録解除処理========
     public function toggleCheck($id){
         if(!ctype_digit($id)){

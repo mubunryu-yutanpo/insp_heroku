@@ -59,7 +59,9 @@ class HomeController extends Controller
 
     // ========アイデア一覧へ========
     public function index(){
-        return view('ideas/index');
+        $category = Category::all();
+
+        return view('ideas/index', compact('category'));
     }
 
     // ========自分のアイデアに対するレビュー一覧へ========

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Idea extends Model
 {
     //カラムに挿入するものを指定
-    protected $fillable = ['user_id', 'category_id', 'title', 'summary', 'description', 'price'];
+    protected $fillable = ['user_id', 'category_id', 'title', 'sumbnail', 'summary', 'description', 'price'];
 
     //他のモデルとの関係
     public function check(){

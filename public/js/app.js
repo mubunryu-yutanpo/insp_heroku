@@ -2329,22 +2329,95 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['category'],
   data: function data() {
     return {
-      ideas: []
+      ideas: [],
+      selectCategory: '',
+      selectPrice: null,
+      selectDate: null
     };
   },
   mounted: function mounted() {
-    this.fetchIdeas();
+    this.getIdeas();
+  },
+  computed: {
+    filteredIdeas: function filteredIdeas() {
+      var _this = this;
+      var filteredIdeas = this.ideas;
+      if (this.selectCategory !== '') {
+        filteredIdeas = filteredIdeas.filter(function (idea) {
+          return idea.category_id === _this.selectCategory;
+        } // カテゴリーIDと選択の値が同じものだけ抽出
+        );
+      }
+
+      if (this.selectPrice !== null) {
+        var priceOrder = this.selectPrice;
+        filteredIdeas = filteredIdeas.slice().sort(function (a, b) {
+          if (priceOrder === 'low') {
+            return a.price - b.price; // 安い順に並び替え
+          } else if (priceOrder === 'high') {
+            return b.price - a.price; // 高い順に並び替え
+          }
+
+          return 0;
+        });
+      }
+      if (this.selectDate !== null) {
+        var dateOrder = this.selectDate;
+        filteredIdeas = filteredIdeas.slice().sort(function (a, b) {
+          if (dateOrder === 'new') {
+            return new Date(b.created_at) - new Date(a.created_at); // 新しい順に並び替え
+          } else if (dateOrder === 'old') {
+            return new Date(a.created_at) - new Date(b.created_at); // 古い順に並び替え
+          }
+
+          return 0;
+        });
+      }
+      return filteredIdeas;
+    }
   },
   methods: {
-    fetchIdeas: function fetchIdeas() {
-      var _this = this;
+    getIdeas: function getIdeas() {
+      var _this2 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/ideas').then(function (response) {
-        _this.ideas = response.data.ideas;
+        _this2.ideas = response.data.ideas;
       })["catch"](function (error) {
         console.error(error);
       });
@@ -2418,6 +2491,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
 //
 //
 //
@@ -37928,17 +38003,145 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._v("\n  アイデアのリスト\n  "),
-    _c(
-      "ul",
-      _vm._l(_vm.ideas, function (idea) {
-        return _c("li", { key: idea.id }, [
-          _c("a", { attrs: { href: _vm.getIdeaLink(idea.id) } }, [
-            _vm._v(_vm._s(idea.title)),
-          ]),
-        ])
-      })
-    ),
+    _c("div", [
+      _c("label", { attrs: { for: "category" } }, [_vm._v("カテゴリ:")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectCategory,
+              expression: "selectCategory",
+            },
+          ],
+          attrs: { id: "category" },
+          on: {
+            change: function ($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function (o) {
+                  return o.selected
+                })
+                .map(function (o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectCategory = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            },
+          },
+        },
+        [
+          _c("option", { attrs: { value: "" } }, [_vm._v("すべて")]),
+          _vm._v(" "),
+          _vm._l(_vm.category, function (cat) {
+            return _c("option", { key: cat.id, domProps: { value: cat.id } }, [
+              _vm._v(_vm._s(cat.name)),
+            ])
+          }),
+        ],
+        2
+      ),
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("label", { attrs: { for: "price" } }, [_vm._v("価格:")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectPrice,
+              expression: "selectPrice",
+            },
+          ],
+          attrs: { id: "price" },
+          on: {
+            change: function ($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function (o) {
+                  return o.selected
+                })
+                .map(function (o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectPrice = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            },
+          },
+        },
+        [
+          _c("option", { attrs: { value: "low" } }, [_vm._v("安い順")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "high" } }, [_vm._v("高い順")]),
+        ]
+      ),
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("label", { attrs: { for: "date" } }, [_vm._v("投稿日:")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.selectDate,
+              expression: "selectDate",
+            },
+          ],
+          attrs: { id: "date" },
+          on: {
+            change: function ($event) {
+              var $$selectedVal = Array.prototype.filter
+                .call($event.target.options, function (o) {
+                  return o.selected
+                })
+                .map(function (o) {
+                  var val = "_value" in o ? o._value : o.value
+                  return val
+                })
+              _vm.selectDate = $event.target.multiple
+                ? $$selectedVal
+                : $$selectedVal[0]
+            },
+          },
+        },
+        [
+          _c("option", { attrs: { value: "new" } }, [_vm._v("古い順")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "old" } }, [_vm._v("新しい順")]),
+        ]
+      ),
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _c("button", { on: { click: _vm.getIdeas } }, [_vm._v("絞り込む")]),
+    ]),
+    _vm._v(" "),
+    _c("div", [
+      _vm._v("\n    アイデアのリスト\n    "),
+      _c(
+        "ul",
+        _vm._l(_vm.filteredIdeas, function (idea) {
+          return _c("li", { key: idea.id }, [
+            _c("a", { attrs: { href: _vm.getIdeaLink(idea.id) } }, [
+              _vm._v(_vm._s(idea.title)),
+            ]),
+          ])
+        })
+      ),
+    ]),
   ])
 }
 var staticRenderFns = []
@@ -38173,9 +38376,17 @@ var render = function () {
                   }),
                 ]),
                 _vm._v(" "),
-                _c("p", { staticClass: "c-mypage__card-score" }, [
-                  _vm._v(_vm._s(review.score)),
-                ]),
+                _c(
+                  "div",
+                  { staticClass: "c-mypage__card-score" },
+                  _vm._l(5, function (n) {
+                    return _c("i", {
+                      key: n,
+                      staticClass: "fa-solid fa-star",
+                      class: { active: n <= review.score },
+                    })
+                  })
+                ),
                 _vm._v(" "),
                 _c("p", { staticClass: "c-mypage__card-comment" }, [
                   _vm._v(_vm._s(review.comment)),

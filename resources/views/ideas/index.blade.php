@@ -6,7 +6,7 @@
 
 @section('main')
   <h2>indexだよ</h2>
-  <ideas-component />
+  <ideas-component :category="{{ $category }}"></ideas-component>
 @endsection
 
 @section('footer')
