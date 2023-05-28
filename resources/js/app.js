@@ -25,6 +25,7 @@ Vue.component('footer-component', require('./components/FooterComponent.vue').de
 Vue.component('mypage-component', require('./components/MypageComponent.vue').default);
 Vue.component('ideas-component', require('./components/IdeasComponent.vue').default);
 Vue.component('reviews-component', require('./components/ReviewsComponent.vue').default);
+Vue.component('ideareviews-component', require('./components/IdeaReviewsComponent.vue').default);
 Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
 Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
 Vue.component('myposts-component' , require('./components/MyPostsComponent.vue').default);

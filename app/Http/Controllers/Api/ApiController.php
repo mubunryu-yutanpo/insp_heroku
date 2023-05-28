@@ -32,7 +32,8 @@ class ApiController extends Controller
                   ->get();
 
         if($checks->isNotEmpty()){
-            $checkList = $checks;
+            $idea_id = $checks->pluck('idea_id');
+            $checkList = Idea::whereIn('id', $idea_id)->get();
         }
 
         // -- 投稿したアイデア取得 --
@@ -67,31 +68,30 @@ class ApiController extends Controller
         $reviewList = null;
         // 投稿に対するレビューのデータを最新5件まで取得
         $reviews = $user->idea()
-                  ->with('review')
-                  ->has('review')
-                  ->get()
-                  ->flatMap(function ($idea) {
-                     return $idea->review;
-                    })
-                  ->sortByDesc('created_at')
-                  ->take(5);
-
-        if($reviews->isNotEmpty()){
-            $reviewList = $reviews;
-        }
-
-        $data = [
-            'user'       => $user,
-            'checkList'  => $checkList,
-            'postList'   => $postList,
-            'boughtList' => $boughtList,
-            'reviewList' => $reviewList,
-        ];
-
-        return response()->json($data);
-        //return view('mypage', $data);
-    }
+        ->with('review.user') // レビューに紐づくユーザー情報をロード
+        ->has('review')
+        ->get()
+        ->flatMap(function ($idea) {
+            return $idea->review;
+        })
+        ->sortByDesc('created_at')
+        ->take(5);
     
+    $reviewList = $reviews->map(function ($review) {
+        $review->user = $review->user->select('name', 'avatar')->first(); // ユーザー名とアバターを取得
+        return $review;
+    });
+    
+    $data = [
+        'user'       => $user,
+        'checkList'  => $checkList,
+        'postList'   => $postList,
+        'boughtList' => $boughtList,
+        'reviewList' => $reviewList,
+    ];
+    
+    return response()->json($data);
+    }        
     
     // ========アイデア詳細情報取得========
     public function ideaDetail($id){
@@ -192,6 +192,10 @@ class ApiController extends Controller
     // ========投稿したアイデア一取得========
     public function myPosts($id)
     {
+        if (!ctype_digit($id)) {
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
         $postsList = null;
     
         $posts = Idea::where('user_id', $id);
@@ -213,10 +217,43 @@ class ApiController extends Controller
         return response()->json($data);
     }
     
-    // ========レビュー一覧取得========
-    public function reviews(){
+    // ========自分のアイデアに対するレビュー一覧取得========
+    public function myReviews($id)
+    {
+        if (!ctype_digit($id)) {
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
         $reviewList = null;
-        $reviews = Review::all();
+        $reviews = Review::whereIn('idea_id', function ($query) use ($id) {
+            $query->select('id')
+                  ->from('ideas')
+                  ->where('user_id', $id);
+        })->get();
+    
+        $ideaIds = $reviews->pluck('idea_id');
+        $ideas = Idea::whereIn('id', $ideaIds)->get();
+
+        if ($reviews->isNotEmpty()) {
+            $reviewList = $reviews->count() > 10 ? $reviews->paginate(10) : $reviews;
+        }
+    
+        $data = [
+            'reviewList' => $reviewList,
+            'theIdea'    => $ideas,
+        ];
+    
+        return response()->json($data);
+    }
+
+    // ========指定のアイデアに対するレビュー一覧取得========
+    public function ideaReviews($id){
+        if (!ctype_digit($id)) {
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        $reviewList = null;
+        $reviews = Review::where('idea_id', $id)->get();
         $ideaIds = $reviews->pluck('idea_id');
         $ideas = Idea::whereIn('id', $ideaIds)->get();
     
@@ -231,6 +268,7 @@ class ApiController extends Controller
     
         return response()->json($data);
     }
+
 
     // ========アイデア一覧取得========
     public function ideas(){

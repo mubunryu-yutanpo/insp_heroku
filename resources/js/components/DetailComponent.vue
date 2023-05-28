@@ -11,7 +11,7 @@
         <p>{{ idea.description }}</p>
       </div>
       <p>値段： {{ idea.price }}</p>
-      <p>レビュー数: {{ reviews.length }}</p>
+      <a :href="'/idea/' + idea.id + '/reviews'">レビュー数: {{ reviews.length }}</a>
       <p>平均評価: {{ averageScore.toFixed(1) }}</p>
       <p>気になる〜: {{ isChecked }}</p>
     

@@ -62,10 +62,17 @@ class HomeController extends Controller
         return view('ideas/index');
     }
 
-    // ========レビュー一覧へ========
-    public function reviews(){
-        return view('ideas/reviews');
+    // ========自分のアイデアに対するレビュー一覧へ========
+    public function myReviews($id){
+        return view('ideas/myReviews');
     }
+
+    // ========指定のアイデアのレビュー一覧へ========
+    public function ideaReviews($id){
+        $idea_id = $id;
+        return view('ideas/ideaReviews', compact('idea_id'));
+    }
+
 
     // ========購入したアイデア一覧へ========
     public function boughts($id){

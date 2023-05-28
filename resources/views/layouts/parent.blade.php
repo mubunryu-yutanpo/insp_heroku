@@ -56,9 +56,6 @@
                   <a href="{{ route('checks', Auth::id() ) }}" class="c-header__nav__link">気になるリスト</a>
                 </li>
                 <li class="c-header__nav__item">
-                  <a href="{{ route('reviews') }}" class="c-header__nav__link">レビュー一覧</a>
-                </li>
-                <li class="c-header__nav__item">
                   <a href="{{ route('myposts', Auth::id() ) }}" class="c-header__nav__link">投稿したアイデア一覧</a>
                 </li>
                 <li class="c-header__nav__item">

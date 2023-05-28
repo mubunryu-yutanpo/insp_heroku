@@ -59,3 +59,7 @@ class MypagesController extends Controller
     }
 
 }
+
+
+
+// プロフィール編集のメソッドで画像が保存できない。

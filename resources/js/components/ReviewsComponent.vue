@@ -19,6 +19,7 @@
 import axios from 'axios';
 
 export default {
+  props: ['user_id'],
   data() {
     return {
       reviewList: [],
@@ -30,7 +31,7 @@ export default {
   },
   methods: {
     getReviews() {
-      axios.get('/api/reviews')
+      axios.get('/api/' + this.user_id + '/reviews')
         .then(response => {
           this.reviewList = response.data.reviewList;
           this.theIdea = response.data.theIdea;

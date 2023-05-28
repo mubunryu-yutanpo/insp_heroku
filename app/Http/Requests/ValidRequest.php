@@ -29,7 +29,7 @@ class ValidRequest extends FormRequest
             'email'        => 'sometimes|required|string|max:255',
             'password'     => 'sometimes|required|string|max:255|min:8',
             'introduction' => 'sometimes|nullable|string|max:255',
-            'avatar'       => 'sometimes|nullable|mimes:jpg,jpeg,png,gif|max:1024',
+            'avatar'       => 'sometimes|nullable|max:1024',
             'title'        => 'sometimes|required|string|max:255',
             'category'     => 'sometimes|required|',
             'summary'      => 'sometimes|required|string|max:255',

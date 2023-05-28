@@ -28,8 +28,10 @@ Route::group(['middleware' => 'auth'], function(){
   // ======================Viewを返すルート============================
     // マイページへ
     Route::get('/mypage', 'HomeController@mypage')->name('mypage');
-    // レビュー一覧へ
-    Route::get('/reviews', 'HomeController@reviews')->name('reviews');
+    // マイレビュー一覧へ
+    Route::get('/{id}/reviews', 'HomeController@myReviews')->name('reviews');
+    // アイデアレビュー一覧へ
+    Route::get('/idea/{id}/reviews', 'HomeController@ideaReviews')->name('idea.reviews');
     // 気になる一覧へ
     Route::get('/{id}/checkList', 'HomeController@checks')->name('checks');
     // 購入済み一覧へ
@@ -103,8 +105,10 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/api/{id}/checks', 'Api\ApiController@checks');
         // 購入したアイデア一覧取得
         Route::get('/api/{id}/boughts', 'Api\ApiController@boughts');
-        // レビュー一覧取得
-        Route::get('/api/reviews', 'Api\ApiController@reviews');
+        // マイレビュー一覧取得
+        Route::get('/api/{id}/reviews', 'Api\ApiController@myReviews');
+        // アイデアレビュー一覧取得
+        Route::get('/api/idea/{id}/reviews', 'Api\ApiController@ideaReviews');
         // 気になる切り替え
         Route::post('/api/idea/{id}/toggleCheck', 'Api\ApiController@toggleCheck');
         // アイデア購入

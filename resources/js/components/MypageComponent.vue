@@ -1,60 +1,82 @@
 <template>
     <div class="p-mypage">
       
-      <div class="c-mypage__user">
-        <p class="c-mypage__user-name">{{ user.name }} さん</p>
-        <img :src="user.avatar" class="c-mypage__user-image">
+      <div class="p-mypage__user">
+        <p class="p-mypage__user-name">{{ user.name }} さん</p>
+        <img :src="user.avatar" class="p-mypage__user-image">
       </div>
 
-      <div class="c-mypage__contents">
-        <strong class="c-mypage__contents-title">自分のアイデア</strong>
-        <div class="c-mypage__contents__container">
 
-          <div class="c-mypage__contents__container-card" v-for="post in postList" :key="post.id">
-            <p class="c-mypage__contents__container-title">{{ post.title }}</p>
-            <!-- <img ::src="{{ post.sumbnail }}" alt="" class="c-mypage__contents__container-sumbnail"> -->
-            <p class="c-mypage__contents__container-summary">{{ post.summary }}</p>
+      <section class="p-mypage__contents">
+        <strong class="p-mypage__contents-title">自分のアイデア</strong>
+        <div class="p-mypage__contents-container u-bg1">
+          
+          <div class="c-mypage__card" v-for="post in postList" :key="post.id">
+            <p class="c-mypage__card-title">{{ post.title }}</p>
+            <!-- <img ::src="{{ post.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
+            <p class="c-mypage__card-summary">{{ post.summary }}</p>
           </div>
+          <p class="p-mypage__contents-text" v-if="postList === null">投稿がまだありません。</p>
 
         </div>
+        <a :href="'/' + user.id + '/mypostList'" class="p-mypage__contents-link" v-if="postList !== null">全件表示</a>
+      </section>
+
+
+      <section class="p-mypage__contents">
+        <strong class="p-mypage__contents-title">気になるリスト</strong>
+        <div class="p-mypage__contents-container u-bg2">
+          
+          <div class="c-mypage__card" v-for="check in checkList" :key="check.id">
+            <p class="c-mypage__card-title">{{ check.title }}</p>
+            <!-- <img ::src="{{ check.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
+            <p class="c-mypage__card-summary">{{ check.summary }}</p>
+          </div>
+          <p class="p-mypage__contents-text" v-if="checkList === null">気になるアイデアがまだありません。</p>
+        </div>
+
+        <a :href="'/' + user.id + '/checkList'" class="p-mypage__contents-link" v-if="checkList !== null">全件表示</a>
+      </section>
+
+      <section class="p-mypage__contents">
+        <strong class="p-mypage__contents-title">購入したアイデア</strong>
+        <div class="p-mypage__contents-container u-bg1">
+          
+          <div class="c-mypage__card" v-for="bought in boughtList" :key="bought.id">
+            <p class="c-mypage__card-title">{{ bought.idea.title }}</p>
+            <!-- <img ::src="{{ bought.idea.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
+            <p class="c-mypage__card-summary">{{ bought.idea.summary }}</p>
+          </div>
+          <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
+
+        </div>
+        <a :href="'/' + user.id + '/boughtList'" class="p-mypage__contents-link" v-if="boughtList !== null">全件表示</a>
+      </section>
+
+
+      <section class="p-mypage__contents">
+        <strong class="p-mypage__contents-title">自分のアイデアへのレビュー</strong>
+        <div class="p-mypage__contents-container u-bg2">
+          
+          <div class="c-mypage__card" v-for="review in reviewList" :key="review.id">
+            <div class="c-mypage__card-user">
+              <p class="c-mypage__card-user-name">{{ review.user.name }}</p>
+              <img :src="review.user.avatar" class="c-mypage__card-user-avatar">
+            </div>
+            <p class="c-mypage__card-score">{{ review.score }}</p>
+            <!-- <img ::src="{{ review.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
+            <p class="c-mypage__card-comment">{{ review.comment }}</p>
+          </div>
+          <p class="p-mypage__contents-text" v-if="reviewList === null">レビューがまだありません。</p>
+
+        </div>
+        <a :href="'/' + user.id + '/reviews'" class="p-mypage__contents-link" v-if="reviewList !== null">全件表示</a>
+      </section>
+
+      <div class="c-button">
+        <a :href="'/' + user.id + '/profEdit'" class="c-button-link">プロフィール編集</a>
       </div>
 
-<!-- ↑ここまでやってる -->
-
-      <h1>My Page</h1>
-      <ul>
-        <li>Name: {{ user.name }}</li>
-        <li>Email: {{ user.email }}</li>
-        <li>
-          <div class="">
-            <img :src="user.avatar" alt="" class="">
-          </div>
-        </li>
-      </ul>
-      <h2>Check List</h2>
-      <ul>
-        <li v-for="check in checkList" :key="check.id">
-          {{ check.title }}
-        </li>
-      </ul>
-      <h2>Post List</h2>
-      <ul>
-        <li v-for="post in postList" :key="post.id">
-          {{ post.title }}
-        </li>
-      </ul>
-      <h2>Bought List</h2>
-      <ul>
-        <li v-for="bought in boughtList" :key="bought.id">
-          {{ bought.idea.title }} ({{ bought.amount }} yen)
-        </li>
-      </ul>
-      <h2>Review List</h2>
-      <ul>
-        <li v-for="review in reviewList" :key="review.id">
-          {{ review.content }}
-        </li>
-      </ul>
     </div>
   </template>
   
