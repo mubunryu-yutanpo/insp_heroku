@@ -4,6 +4,7 @@
       <p v-if="canBuy">このアイデアは購入可能です。</p>
       <p v-else>このアイデアは購入できません</p>
       <p>タイトル： {{ idea.title }}</p>
+      <img :src="idea.sumbnail" alt="" class="">
       <p>概要： {{ idea.summary }}</p>
       <div class="">
         <p class="">内容：</p>
@@ -12,7 +13,10 @@
       </div>
       <p>値段： {{ idea.price }}</p>
       <a :href="'/idea/' + idea.id + '/reviews'">レビュー数: {{ reviews.length }}</a>
-      <p>平均評価: {{ averageScore.toFixed(1) }}</p>
+      <p>平均評価: 
+        <span class="" v-if="averageScore !== null">{{ averageScore.toFixed(1) }}</span>
+        <span class="" v-if="averageScore === null">-</span>
+      </p>
       <p>気になる〜: {{ isChecked }}</p>
     
       <div class="">
@@ -27,20 +31,30 @@
           </span>
         </button>
         
-        <button class="" v-if="canBuy" @click="buy()">
-            <span class="">
-                購入する
-                <i class="fa-solid fa-check"></i>
-            </span>
-        </button>
-
-        <button class="" v-if="!canBuy" @click="doReview($id)">
+        <div class="" v-if="canBuy">
+          <button class="" @click="buy()">
+              <span class="">
+                  購入する
+                  <i class="fa-solid fa-check"></i>
+              </span>
+          </button>
+        </div>
+        
+        <div class="" v-else>
+          <button class="" @click="doReview($id)">
             <span class="">
                 レビューを付ける
                 <i class="fa-solid fa-check"></i>
             </span>
-        </button>
-
+          </button>
+          <button class="">
+            <span class="">
+                メッセージボードへ
+                <i class="fa-regular fa-messages"></i>
+            </span>
+          </button>
+        
+        </div>
       </div>
     </div>
   </template>
@@ -100,3 +114,5 @@
   };
   </script>
   
+
+  <!-- メッセージのやりとりをどういう方向（別ページでやるか、ここでやるか。とか）でどう実装するか -->

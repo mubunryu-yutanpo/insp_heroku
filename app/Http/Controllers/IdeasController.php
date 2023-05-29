@@ -34,12 +34,22 @@ class IdeasController extends Controller
     {
         $user_id = Auth::id();
         $idea = new Idea;
-            
+
+        // サムネ画像のパス名を変数に
+        if($request->sumbnail !== null){
+            $avatar = $request->file('sumbnail');
+            $filename = $avatar->getClientOriginalName();
+            $avatar->move(public_path('uploads'), $filename);
+        }else{
+            $filename = 'sumbnail-default.png';
+        }
+
         // DBに保存
         $idea->fill([
             'user_id'     => $user_id,
             'category_id' => $request->category,
             'title'       => $request->title,
+            'sumbnail'    => '/uploads/'.$filename,
             'summary'     => $request->summary,
             'description' => $request->description,
             'price'       => $request->price,
@@ -77,20 +87,29 @@ class IdeasController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
+        $user_id = Auth::id();
         $idea = Idea::find($id);
+
+        // サムネ画像のパス名を変数に
+        if($request->sumbnail !== null){
+            $avatar = $request->file('sumbnail');
+            $filename = $avatar->getClientOriginalName();
+            $avatar->move(public_path('uploads'), $filename);
+        }else{
+            $filename = 'sumbnail-default.png';
+        }
 
         // アイデアの所持者とアクセスしているユーザーが異なる場合、リダイレクトする
         if ($user_id !== Auth::user()->id) {
             return redirect('/')->with('flash_message', '失敗しました');
         }
 
-        $user_id = Auth::id();
-
         // DB情報更新
         $idea->update([
             'user_id'     => $user_id,
             'category_id' => $request->category_id,
             'title'       => $request->title,
+            'sumbnail'    => '/uploads/'.$filename,
             'summary'     => $request->summary,
             'description' => $request->description,
             'price'       => $request->price,

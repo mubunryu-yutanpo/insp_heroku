@@ -17,7 +17,11 @@ use App\Review;
 
 class ApiController extends Controller
 {
-    // ========マイページ情報取得========
+
+    /* ================================================================
+      マイページ情報取得
+    ================================================================*/
+    
     public function mypage(){
         $user = Auth::user();
         $user_id = $user->id;
@@ -76,12 +80,14 @@ class ApiController extends Controller
         })
         ->sortByDesc('created_at')
         ->take(5);
-    
-    $reviewList = $reviews->map(function ($review) {
-        $review->user = $review->user->select('name', 'avatar')->first(); // ユーザー名とアバターを取得
-        return $review;
-    });
-    
+
+        if ($reviews->isNotEmpty()) {
+            $reviewList = $reviews->map(function ($review) {
+                $review->user = $review->user->select('name', 'avatar')->first(); // ユーザー名とアバターを取得
+                return $review;
+            });        
+        }
+        
     $data = [
         'user'       => $user,
         'checkList'  => $checkList,
@@ -93,7 +99,11 @@ class ApiController extends Controller
     return response()->json($data);
     }        
     
-    // ========アイデア詳細情報取得========
+
+    /* ================================================================
+      アイデア詳細情報取得
+    ================================================================*/
+
     public function ideaDetail($id){
         
         $user_id = Auth::id();
@@ -132,7 +142,10 @@ class ApiController extends Controller
     }
 
 
-    // ========気になるリスト取得========
+    /* ================================================================
+      気になるリスト取得
+    ================================================================*/
+
     public function checks($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -160,7 +173,10 @@ class ApiController extends Controller
     }
 
 
-    // ========購入したアイデア取得========
+    /* ================================================================
+      購入したアイデア取得
+    ================================================================*/
+
     public function boughts($id)
     {
         if (!ctype_digit($id)) {
@@ -189,7 +205,11 @@ class ApiController extends Controller
         return response()->json($data);
     }
     
-    // ========投稿したアイデア一取得========
+
+    /* ================================================================
+      投稿したアイデア一覧取得
+    ================================================================*/
+
     public function myPosts($id)
     {
         if (!ctype_digit($id)) {
@@ -217,7 +237,11 @@ class ApiController extends Controller
         return response()->json($data);
     }
     
-    // ========自分のアイデアに対するレビュー一覧取得========
+
+    /* ================================================================
+      自分のアイデアに対するレビュー一覧取得
+    ================================================================*/
+
     public function myReviews($id)
     {
         if (!ctype_digit($id)) {
@@ -246,7 +270,11 @@ class ApiController extends Controller
         return response()->json($data);
     }
 
-    // ========指定のアイデアに対するレビュー一覧取得========
+
+    /* ================================================================
+      指定のアイデアに対するレビュー一覧取得
+    ================================================================*/
+
     public function ideaReviews($id){
         if (!ctype_digit($id)) {
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -270,7 +298,10 @@ class ApiController extends Controller
     }
 
 
-    // ========アイデア一覧取得========
+    /* ================================================================
+      アイデア一覧取得
+    ================================================================*/
+
     public function ideas(Request $request)
     {
         $query = Idea::query();
@@ -310,8 +341,12 @@ class ApiController extends Controller
     
         return response()->json($data);
     }
-    
-    // ========気になる登録・登録解除処理========
+
+
+    /* ================================================================
+      気になる登録・削除処理
+    ================================================================*/
+
     public function toggleCheck($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -332,13 +367,15 @@ class ApiController extends Controller
         }
     }
 
-    // ========アイデア購入処理========
+
+    /* ================================================================
+      アイデア購入処理
+    ================================================================*/
+
     public function buy($id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
-
-        //dd('こーにゅー');
 
         $purchase = new Purchase;
         $user_id = Auth::id();

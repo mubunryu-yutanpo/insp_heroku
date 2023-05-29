@@ -1,42 +1,55 @@
 <template>
-  <div>
-    <div>
-      <label for="category">カテゴリ:</label>
-      <select v-model="selectCategory" id="category">
-        <option value="">すべて</option>
-        <option v-for="cat in category" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
-      </select>    
+  <div class="l-main__container">
+    <div class="p-sort">
+
+      <div class="c-sort__contents">
+        <label for="category" class="c-sort__contents-label">カテゴリ:</label>
+        <select v-model="selectCategory" id="category" class="c-sort__contents-select">
+          <option value="" class="c-sort__contents-input">すべて</option>
+          <option v-for="cat in category" :key="cat.id" :value="cat.id" class="c-sort__contents-input">
+            {{ cat.name }}
+          </option>
+        </select>    
+      </div>
+
+      <div class="c-sort__contents">
+        <label for="price" class="c-sort__contents-label">価格:</label>
+        <select v-model="selectPrice" id="price" class="c-sort__contents-select">
+          <option value="low" class="c-sort__contents-input">安い順</option>
+          <option value="high" class="c-sort__contents-input">高い順</option>
+        </select>
+      </div>
+
+      <div class="c-sort__contents">
+        <label for="date" class="c-sort__contents-label">投稿日:</label>
+        <select v-model="selectDate" id="date" class="c-sort__contents-select">
+          <option value="new" class="c-sort__contents-input">古い順</option>
+          <option value="old" class="c-sort__contents-input">新しい順</option>
+        </select>
+      </div>
+
+      <div class="c-sort__contents">
+        <button @click="getIdeas" class="c-sort__button">絞り込む</button>
+      </div>
     </div>
 
-    <div>
-      <label for="price">価格:</label>
-      <select v-model="selectPrice" id="price">
-        <option value="low" class="">安い順</option>
-        <option value="high" class="">高い順</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="date">投稿日:</label>
-      <select v-model="selectDate" id="date">
-        <option value="new" class="">古い順</option>
-        <option value="old" class="">新しい順</option>
-      </select>
-
-    </div>
-
-    <div>
-      <button @click="getIdeas">絞り込む</button>
-    </div>
-
-    <div>
+    <section class="p-main">
       アイデアのリスト
-      <ul>
-        <li v-for="idea in filteredIdeas" :key="idea.id">
-          <a :href="getIdeaLink(idea.id)">{{ idea.title }}</a>
-        </li>
-      </ul>
-    </div>
+      <div class="c-idea__containar">
+        <div v-for="idea in filteredIdeas" :key="idea.id" class="c-idea__contents">
+          <div class="c-idea__contents-title">
+            <a :href="getIdeaLink(idea.id)" class="c-idea__contents-link">{{ idea.title }}</a>
+          </div>
+          <div class="c-idea__contens-sumbnail">
+            <img :src="idea.sumbnail" alt="" class="c-idea__contents-image">
+          </div>
+          <div class="c-idea__contents-summary">
+            <p class="c-idea__contents-text">{{ idea.summary }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 

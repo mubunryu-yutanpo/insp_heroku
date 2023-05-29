@@ -2053,6 +2053,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2318,6 +2332,19 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -37682,6 +37709,8 @@ var render = function () {
     _vm._v(" "),
     _c("p", [_vm._v("タイトル： " + _vm._s(_vm.idea.title))]),
     _vm._v(" "),
+    _c("img", { attrs: { src: _vm.idea.sumbnail, alt: "" } }),
+    _vm._v(" "),
     _c("p", [_vm._v("概要： " + _vm._s(_vm.idea.summary))]),
     _vm._v(" "),
     _c("div", {}, [
@@ -37698,7 +37727,14 @@ var render = function () {
       _vm._v("レビュー数: " + _vm._s(_vm.reviews.length)),
     ]),
     _vm._v(" "),
-    _c("p", [_vm._v("平均評価: " + _vm._s(_vm.averageScore.toFixed(1)))]),
+    _c("p", [
+      _vm._v("平均評価: \n    "),
+      _vm.averageScore !== null
+        ? _c("span", {}, [_vm._v(_vm._s(_vm.averageScore.toFixed(1)))])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.averageScore === null ? _c("span", {}, [_vm._v("-")]) : _vm._e(),
+    ]),
     _vm._v(" "),
     _c("p", [_vm._v("気になる〜: " + _vm._s(_vm.isChecked))]),
     _vm._v(" "),
@@ -37730,32 +37766,34 @@ var render = function () {
       ),
       _vm._v(" "),
       _vm.canBuy
-        ? _c(
-            "button",
-            {
-              on: {
-                click: function ($event) {
-                  _vm.buy()
+        ? _c("div", {}, [
+            _c(
+              "button",
+              {
+                on: {
+                  click: function ($event) {
+                    _vm.buy()
+                  },
                 },
               },
-            },
-            [_vm._m(0)]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.canBuy
-        ? _c(
-            "button",
-            {
-              on: {
-                click: function ($event) {
-                  _vm.doReview(_vm.$id)
+              [_vm._m(0)]
+            ),
+          ])
+        : _c("div", {}, [
+            _c(
+              "button",
+              {
+                on: {
+                  click: function ($event) {
+                    _vm.doReview(_vm.$id)
+                  },
                 },
               },
-            },
-            [_vm._m(1)]
-          )
-        : _vm._e(),
+              [_vm._m(1)]
+            ),
+            _vm._v(" "),
+            _vm._m(2),
+          ]),
     ]),
   ])
 }
@@ -37765,7 +37803,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", {}, [
-      _vm._v("\n            購入する\n            "),
+      _vm._v("\n              購入する\n              "),
       _c("i", { staticClass: "fa-solid fa-check" }),
     ])
   },
@@ -37776,6 +37814,17 @@ var staticRenderFns = [
     return _c("span", {}, [
       _vm._v("\n            レビューを付ける\n            "),
       _c("i", { staticClass: "fa-solid fa-check" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", {}, [
+      _c("span", {}, [
+        _vm._v("\n            メッセージボードへ\n            "),
+        _c("i", { staticClass: "fa-regular fa-messages" }),
+      ]),
     ])
   },
 ]
@@ -38002,141 +38051,221 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", [
-      _c("label", { attrs: { for: "category" } }, [_vm._v("カテゴリ:")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selectCategory,
-              expression: "selectCategory",
-            },
-          ],
-          attrs: { id: "category" },
-          on: {
-            change: function ($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function (o) {
-                  return o.selected
-                })
-                .map(function (o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.selectCategory = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
-            },
-          },
-        },
-        [
-          _c("option", { attrs: { value: "" } }, [_vm._v("すべて")]),
-          _vm._v(" "),
-          _vm._l(_vm.category, function (cat) {
-            return _c("option", { key: cat.id, domProps: { value: cat.id } }, [
-              _vm._v(_vm._s(cat.name)),
-            ])
-          }),
-        ],
-        2
-      ),
-    ]),
-    _vm._v(" "),
-    _c("div", [
-      _c("label", { attrs: { for: "price" } }, [_vm._v("価格:")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selectPrice,
-              expression: "selectPrice",
-            },
-          ],
-          attrs: { id: "price" },
-          on: {
-            change: function ($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function (o) {
-                  return o.selected
-                })
-                .map(function (o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.selectPrice = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
+  return _c("div", { staticClass: "l-main__container" }, [
+    _c("div", { staticClass: "p-sort" }, [
+      _c("div", { staticClass: "c-sort__contents" }, [
+        _c(
+          "label",
+          { staticClass: "c-sort__contents-label", attrs: { for: "category" } },
+          [_vm._v("カテゴリ:")]
+        ),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectCategory,
+                expression: "selectCategory",
+              },
+            ],
+            staticClass: "c-sort__contents-select",
+            attrs: { id: "category" },
+            on: {
+              change: function ($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function (o) {
+                    return o.selected
+                  })
+                  .map(function (o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.selectCategory = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
             },
           },
-        },
-        [
-          _c("option", { attrs: { value: "low" } }, [_vm._v("安い順")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "high" } }, [_vm._v("高い順")]),
-        ]
-      ),
-    ]),
-    _vm._v(" "),
-    _c("div", [
-      _c("label", { attrs: { for: "date" } }, [_vm._v("投稿日:")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.selectDate,
-              expression: "selectDate",
-            },
+          [
+            _c(
+              "option",
+              { staticClass: "c-sort__contents-input", attrs: { value: "" } },
+              [_vm._v("すべて")]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.category, function (cat) {
+              return _c(
+                "option",
+                {
+                  key: cat.id,
+                  staticClass: "c-sort__contents-input",
+                  domProps: { value: cat.id },
+                },
+                [_vm._v("\n          " + _vm._s(cat.name) + "\n        ")]
+              )
+            }),
           ],
-          attrs: { id: "date" },
-          on: {
-            change: function ($event) {
-              var $$selectedVal = Array.prototype.filter
-                .call($event.target.options, function (o) {
-                  return o.selected
-                })
-                .map(function (o) {
-                  var val = "_value" in o ? o._value : o.value
-                  return val
-                })
-              _vm.selectDate = $event.target.multiple
-                ? $$selectedVal
-                : $$selectedVal[0]
+          2
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-sort__contents" }, [
+        _c(
+          "label",
+          { staticClass: "c-sort__contents-label", attrs: { for: "price" } },
+          [_vm._v("価格:")]
+        ),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectPrice,
+                expression: "selectPrice",
+              },
+            ],
+            staticClass: "c-sort__contents-select",
+            attrs: { id: "price" },
+            on: {
+              change: function ($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function (o) {
+                    return o.selected
+                  })
+                  .map(function (o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.selectPrice = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
             },
           },
-        },
-        [
-          _c("option", { attrs: { value: "new" } }, [_vm._v("古い順")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "old" } }, [_vm._v("新しい順")]),
-        ]
-      ),
+          [
+            _c(
+              "option",
+              {
+                staticClass: "c-sort__contents-input",
+                attrs: { value: "low" },
+              },
+              [_vm._v("安い順")]
+            ),
+            _vm._v(" "),
+            _c(
+              "option",
+              {
+                staticClass: "c-sort__contents-input",
+                attrs: { value: "high" },
+              },
+              [_vm._v("高い順")]
+            ),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-sort__contents" }, [
+        _c(
+          "label",
+          { staticClass: "c-sort__contents-label", attrs: { for: "date" } },
+          [_vm._v("投稿日:")]
+        ),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.selectDate,
+                expression: "selectDate",
+              },
+            ],
+            staticClass: "c-sort__contents-select",
+            attrs: { id: "date" },
+            on: {
+              change: function ($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function (o) {
+                    return o.selected
+                  })
+                  .map(function (o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.selectDate = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+            },
+          },
+          [
+            _c(
+              "option",
+              {
+                staticClass: "c-sort__contents-input",
+                attrs: { value: "new" },
+              },
+              [_vm._v("古い順")]
+            ),
+            _vm._v(" "),
+            _c(
+              "option",
+              {
+                staticClass: "c-sort__contents-input",
+                attrs: { value: "old" },
+              },
+              [_vm._v("新しい順")]
+            ),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-sort__contents" }, [
+        _c(
+          "button",
+          { staticClass: "c-sort__button", on: { click: _vm.getIdeas } },
+          [_vm._v("絞り込む")]
+        ),
+      ]),
     ]),
     _vm._v(" "),
-    _c("div", [
-      _c("button", { on: { click: _vm.getIdeas } }, [_vm._v("絞り込む")]),
-    ]),
-    _vm._v(" "),
-    _c("div", [
+    _c("section", { staticClass: "p-main" }, [
       _vm._v("\n    アイデアのリスト\n    "),
       _c(
-        "ul",
+        "div",
+        { staticClass: "c-idea__containar" },
         _vm._l(_vm.filteredIdeas, function (idea) {
-          return _c("li", { key: idea.id }, [
-            _c("a", { attrs: { href: _vm.getIdeaLink(idea.id) } }, [
-              _vm._v(_vm._s(idea.title)),
+          return _c("div", { key: idea.id, staticClass: "c-idea__contents" }, [
+            _c("div", { staticClass: "c-idea__contents-title" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "c-idea__contents-link",
+                  attrs: { href: _vm.getIdeaLink(idea.id) },
+                },
+                [_vm._v(_vm._s(idea.title))]
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-idea__contens-sumbnail" }, [
+              _c("img", {
+                staticClass: "c-idea__contents-image",
+                attrs: { src: idea.sumbnail, alt: "" },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-idea__contents-summary" }, [
+              _c("p", { staticClass: "c-idea__contents-text" }, [
+                _vm._v(_vm._s(idea.summary)),
+              ]),
             ]),
           ])
         })

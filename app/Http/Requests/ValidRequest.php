@@ -38,6 +38,7 @@ class ValidRequest extends FormRequest
             'price'        => 'sometimes|required|integer|min:0|max:999999999|regex:/^[0-9]+$/',
             'comment'      => 'sometimes|nullable|string|max:255',
             'score'        => 'sometimes|nullable|integer|min:0|max:5',
+            'content'      => 'sometimes|required|string|max:500',
         ];
     }
 
