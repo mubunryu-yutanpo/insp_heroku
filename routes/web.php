@@ -48,6 +48,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/{id}/idea', 'HomeController@show')->name('ideas.show');
     // レビュー投稿へ
     Route::get('/{id}/review/create', 'HomeController@evaluation')->name('evaluation');
+    // チャットルームへ
+    Route::get('/chat/{idea_id}/{sell_user}/{user_id}', 'HomeController@chat')->name('chat');
 
   // =====================処理関連ルート===========================
     // アイデア投稿
@@ -113,5 +115,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::post('/api/idea/{id}/toggleCheck', 'Api\ApiController@toggleCheck');
         // アイデア購入
         Route::get('api/idea/{id}/buy', 'Api\ApiController@buy');
+        // メッセージ取得
+        Route::get('api/message/{idea_id}/{sell_user}/{user_id]', 'Api\ApiController@message');
     });
     

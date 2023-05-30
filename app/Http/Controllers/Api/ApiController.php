@@ -13,6 +13,8 @@ use App\Check;
 use App\Idea;
 use App\Purchase;
 use App\Review;
+use App\Chat;
+use App\Message;
 
 
 class ApiController extends Controller
@@ -21,7 +23,7 @@ class ApiController extends Controller
     /* ================================================================
       マイページ情報取得
     ================================================================*/
-    
+
     public function mypage(){
         $user = Auth::user();
         $user_id = $user->id;
@@ -110,6 +112,7 @@ class ApiController extends Controller
         $canBuy = true;
         $isChecked = false;
         $idea = Idea::find($id);
+        $sell_user = $idea->user_id;
 
         // 購入状態を取得
         $boughtIdea = Purchase::where('user_id', $user_id)->where('idea_id', $id)->first();
@@ -136,6 +139,8 @@ class ApiController extends Controller
             'reviews'      => $reviews,
             'averageScore' => $averageScore,
             'isChecked'    => $isChecked,
+            'user_id'      => $user_id,
+            'sell_user'    => $sell_user,
         ];
         
         return response()->json($data);
@@ -379,10 +384,19 @@ class ApiController extends Controller
 
         $purchase = new Purchase;
         $user_id = Auth::id();
+        $sell_user = Idea::where('id', $id)->value('user_id');
 
         $purchase->fill([
             'user_id'  => $user_id,
             'idea_id'  => $id,
+        ])->save();
+
+        // チャットのデータを作成
+        $chat = new Chat;
+        $chat->fill([
+            'buyer_id'  => $user_id,
+            'seller_id' => $sell_user,
+            'idea_id'   => $id,
         ])->save();
 
         return redirect()->back()->with('flash_message', '購入しました！');
@@ -390,4 +404,40 @@ class ApiController extends Controller
     }
 
 
+    /* ================================================================
+      メッセージ・チャット情報取得
+    ================================================================*/
+
+    public function message($idea_id, $sell_user, $user_id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        $seller_id = Idea::where('id', $idea_id)->value('user_id');
+        $bayer_id = Purchase::where('idea_id', $idea_id)->where('user_id', $user_id)->value('user_id');
+
+        // アイデアの販売者・購入者のIDとパラメーターが違う場合にはリダイレクト
+        if($sell_user !== $seller_id || $user_id !== $bayer_id){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        // チャットデータを検索・取得
+        $chat = Chat::where('idea_id', $idea_id)
+                      ->where('seller_id', $sell_user)
+                      ->where('buyer_id', $user_id)
+                      ->first();
+
+        if (!$chat) {
+        return redirect('/')->with('flash_message', __('チャットが見つかりません'));
+    }
+        // メッセージ情報を取得
+        $message = Message::where('chat_id', $caht->id)->get();
+
+        $data = [
+            'message' => $message,
+        ];
+
+        return response()->json($data);
+
+    }
 }

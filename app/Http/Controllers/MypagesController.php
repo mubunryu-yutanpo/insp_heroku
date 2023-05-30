@@ -14,6 +14,8 @@ use App\Check;
 use App\Idea;
 use App\Purchase;
 use App\Review;
+use App\Chat;
+use App\Message;
 
 
 class MypagesController extends Controller
@@ -58,8 +60,26 @@ class MypagesController extends Controller
         return redirect('/')->with('flash_message', '退会しました');
     }
 
+
+    /* ================================================================
+      メッセージ保存
+    ================================================================*/
+
+    public function saveMessage(ValidRequest $request, $user_id, $chat_id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        $message = new Message;
+
+        $message->fill([
+            'user_id' => $user_id,
+            'chat_id' => $chat_id,
+            'content' => $request->content,
+        ])->save();
+
+        return redirect()->back();
+    }
 }
 
 
-
-// プロフィール編集のメソッドで画像が保存できない。

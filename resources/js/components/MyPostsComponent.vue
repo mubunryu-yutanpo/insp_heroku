@@ -2,7 +2,7 @@
     <div>
       <h2>投稿したアイデア</h2>
       <ul>
-        <li v-for="post in postsList" :key="post.user_id">
+        <li v-for="post in postsList" :key="post.id">
           <div>
             <strong>{{ post.title }}</strong>
             <p>{{ post.description }}</p>

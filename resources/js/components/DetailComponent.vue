@@ -47,14 +47,12 @@
                 <i class="fa-solid fa-check"></i>
             </span>
           </button>
-          <button class="">
-            <span class="">
-                メッセージボードへ
-                <i class="fa-regular fa-messages"></i>
-            </span>
-          </button>
-        
+          <a :href="'/chat/' + idea_id + '/' + sell_user + '/' + user_id" class="">
+              メッセージボードへ
+              <i class="fa-regular fa-messages"></i>
+          </a>
         </div>
+
       </div>
     </div>
   </template>
@@ -71,6 +69,8 @@
         reviews: [],
         averageScore: 0,
         isChecked: false,
+        user_id: null,
+        sell_user: null,
       };
     },
     mounted() {
@@ -86,6 +86,8 @@
             this.reviews = response.data.reviews;
             this.averageScore = response.data.averageScore;
             this.isChecked = response.data.isChecked;
+            this.user_id = response.data.user_id;
+            this.sell_user = response.data.sell_user;
           })
           .catch((error) => {
             console.error(error);

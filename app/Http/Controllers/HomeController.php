@@ -107,6 +107,12 @@ class HomeController extends Controller
     }
 
 
+    /* ================================================================
+      チャットへ
+    ================================================================*/
 
+    public function chat($idea_id, $sell_user, $user_id){
+        return view('mypage/chat');
+    }
 
 }
