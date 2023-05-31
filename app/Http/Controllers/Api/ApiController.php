@@ -401,6 +401,8 @@ class ApiController extends Controller
 
         return redirect()->back()->with('flash_message', '購入しました！');
 
+        // 購入者・販売者にメール送る処理まだ。
+
     }
 
 
@@ -409,15 +411,22 @@ class ApiController extends Controller
     ================================================================*/
 
     public function message($idea_id, $sell_user, $user_id){
-        if(!ctype_digit($id)){
+        if(!ctype_digit($idea_id) || !ctype_digit($sell_user) || !ctype_digit($user_id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
+        // 販売者のID取得
         $seller_id = Idea::where('id', $idea_id)->value('user_id');
-        $bayer_id = Purchase::where('idea_id', $idea_id)->where('user_id', $user_id)->value('user_id');
+
+        // 購入者のID取得
+        $purchase = Purchase::where('idea_id', $idea_id)
+        ->where('user_id', $user_id)
+        ->first();
+        $buyer_id = $purchase ? $purchase->user_id : null;
+
 
         // アイデアの販売者・購入者のIDとパラメーターが違う場合にはリダイレクト
-        if($sell_user !== $seller_id || $user_id !== $bayer_id){
+        if($sell_user !== strval($seller_id) || $user_id !== strval($buyer_id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
@@ -427,17 +436,43 @@ class ApiController extends Controller
                       ->where('buyer_id', $user_id)
                       ->first();
 
+
         if (!$chat) {
         return redirect('/')->with('flash_message', __('チャットが見つかりません'));
-    }
-        // メッセージ情報を取得
-        $message = Message::where('chat_id', $caht->id)->get();
+        }
+
+        // メッセージ情報を取得        
+        $messages = Message::where('chat_id', $chat->id)->get();
+
+        // 送信者ごとにソート
+        $buyerMessages = $messages->where('user_id', $buyer_id)->sortBy('timestamp')->values();
+        $sellerMessages = $messages->where('user_id', $seller_id)->sortBy('timestamp')->values();
 
         $data = [
-            'message' => $message,
+            'buyerMessages' => $buyerMessages,
+            'sellerMessages' => $sellerMessages,
+            'chat_id' => $chat->id,
         ];
 
         return response()->json($data);
-
     }
+
+
+    /* ================================================================
+      メッセージ追加
+    ================================================================*/
+
+    public function addMessage(ValidRequest $request, $chat_id, $user_id){
+        $msg = new Message;
+
+        $msg->fill([
+            'user_id' => $user_id,
+            'chat_id' => $chat_id,
+            'content' => $request->content,
+        ])->save();
+
+        return redirect()->back()->with('flash_message', 'メッセージを送信しました!');
+    }
+
+
 }

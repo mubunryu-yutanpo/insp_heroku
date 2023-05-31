@@ -1974,40 +1974,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['chat_id', 'sell_user', 'user_id'],
   data: function data() {
     return {
-      loading: true,
       buyerMessages: [],
-      sellerMessages: []
+      sellerMessages: [],
+      newMessage: ''
     };
   },
   mounted: function mounted() {
-    this.fetchMessages();
+    this.getMessages();
   },
   methods: {
-    fetchMessages: function fetchMessages() {
+    getMessages: function getMessages() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/message/{{ $idea_id }}/{{ $sell_user }}/{{ $user_id }}').then(function (response) {
-        _this.loading = false;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/message/' + this.chat_id + '/' + this.sell_user + '/' + this.user_id).then(function (response) {
         _this.sortMessages(response.data.messages);
+        console.log(response.data.messages);
       })["catch"](function (error) {
         console.error(error);
       });
     },
     sortMessages: function sortMessages(messages) {
-      this.buyerMessages = messages.filter(function (message) {
+      var _this2 = this;
+      var buyerMessages = messages.filter(function (message) {
         return message.sender === 'buyer';
       }).sort(function (a, b) {
         return new Date(a.timestamp) - new Date(b.timestamp);
       });
-      this.sellerMessages = messages.filter(function (message) {
+      var sellerMessages = messages.filter(function (message) {
         return message.sender === 'seller';
       }).sort(function (a, b) {
         return new Date(a.timestamp) - new Date(b.timestamp);
       });
+      this.buyerMessages.splice(0, this.buyerMessages.length);
+      this.sellerMessages.splice(0, this.sellerMessages.length);
+      buyerMessages.forEach(function (message) {
+        _this2.buyerMessages.push(message);
+      });
+      sellerMessages.forEach(function (message) {
+        _this2.sellerMessages.push(message);
+      });
+      console.log(this.buyerMessages);
+      console.log(this.sellerMessages);
+    },
+    sendMessage: function sendMessage() {
+      var _this3 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/message/' + this.chat_id + '/' + this.user_id, {
+        content: this.newMessage
+      }).then(function (response) {
+        // メッセージの送信後にメッセージを再取得する
+        _this3.getMessages();
+        _this3.newMessage = ''; // 送信後、入力欄をクリアする
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    }
+  },
+  computed: {
+    hasMessages: function hasMessages() {
+      return this.buyerMessages.length > 0 || this.sellerMessages.length > 0;
     }
   }
 });
@@ -37729,9 +37765,8 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.loading
-      ? _c("div", [_vm._v("Loading...")])
-      : _c(
+    _vm.hasMessages
+      ? _c(
           "div",
           [
             _vm._l(_vm.buyerMessages, function (message) {
@@ -37751,7 +37786,44 @@ var render = function () {
             }),
           ],
           2
-        ),
+        )
+      : _c("div", [_c("p", [_vm._v("メッセージはまだありません")])]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function ($event) {
+            $event.preventDefault()
+            return _vm.sendMessage($event)
+          },
+        },
+      },
+      [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.newMessage,
+              expression: "newMessage",
+            },
+          ],
+          attrs: { type: "text" },
+          domProps: { value: _vm.newMessage },
+          on: {
+            input: function ($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.newMessage = $event.target.value
+            },
+          },
+        }),
+        _vm._v(" "),
+        _c("button", { attrs: { type: "submit" } }, [_vm._v("送信する")]),
+      ]
+    ),
   ])
 }
 var staticRenderFns = []

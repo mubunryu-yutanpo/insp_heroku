@@ -12,6 +12,8 @@ use App\Check;
 use App\Idea;
 use App\Purchase;
 use App\Review;
+use App\Chat;
+use App\Message;
 
 
 
@@ -112,7 +114,13 @@ class HomeController extends Controller
     ================================================================*/
 
     public function chat($idea_id, $sell_user, $user_id){
-        return view('mypage/chat');
+
+        $chat_id = Chat::where('seller_id', $sell_user)
+                         ->where('buyer_id', $user_id)
+                         ->where('idea_id', $idea_id)
+                         ->value('id');
+        
+        return view('mypage/chat', compact('idea_id', 'sell_user', 'user_id','chat_id'));
     }
 
 }

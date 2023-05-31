@@ -61,25 +61,6 @@ class MypagesController extends Controller
     }
 
 
-    /* ================================================================
-      メッセージ保存
-    ================================================================*/
-
-    public function saveMessage(ValidRequest $request, $user_id, $chat_id){
-        if(!ctype_digit($id)){
-            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
-        }
-
-        $message = new Message;
-
-        $message->fill([
-            'user_id' => $user_id,
-            'chat_id' => $chat_id,
-            'content' => $request->content,
-        ])->save();
-
-        return redirect()->back();
-    }
 }
 
 
