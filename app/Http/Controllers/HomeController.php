@@ -113,14 +113,14 @@ class HomeController extends Controller
       チャットへ
     ================================================================*/
 
-    public function chat($idea_id, $sell_user, $user_id){
+    public function chat($idea_id, $seller_id, $user_id){
 
-        $chat_id = Chat::where('seller_id', $sell_user)
+        $chat_id = Chat::where('seller_id', $seller_id)
                          ->where('buyer_id', $user_id)
                          ->where('idea_id', $idea_id)
                          ->value('id');
         
-        return view('mypage/chat', compact('idea_id', 'sell_user', 'user_id','chat_id'));
+        return view('mypage/chat', compact('idea_id', 'seller_id', 'user_id','chat_id'));
     }
 
 }

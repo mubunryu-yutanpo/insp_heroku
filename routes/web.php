@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth'], function(){
     // レビュー投稿へ
     Route::get('/{id}/review/create', 'HomeController@evaluation')->name('evaluation');
     // チャットルームへ
-    Route::get('/chat/{idea_id}/{sell_user}/{user_id}', 'HomeController@chat')->name('chat');
+    Route::get('/chat/{idea_id}/{seller_id}/{user_id}', 'HomeController@chat')->name('chat');
 
   // =====================処理関連ルート===========================
     // アイデア投稿
@@ -116,7 +116,7 @@ Route::group(['middleware' => 'auth'], function(){
         // アイデア購入
         Route::get('api/idea/{id}/buy', 'Api\ApiController@buy');
         // メッセージ取得
-        Route::get('api/message/{chat_id}/{sell_user}/{user_id}', 'Api\ApiController@message');
+        Route::get('api/message/{chat_id}/{seller_id}/{user_id}', 'Api\ApiController@message');
         // メッセージ追加
         Route::post('api/message/{chat_id}/{user_id}', 'Api\ApiController@addMessage');
     });

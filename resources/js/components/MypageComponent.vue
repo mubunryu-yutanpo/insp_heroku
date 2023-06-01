@@ -13,7 +13,7 @@
           
           <div class="c-mypage__card" v-for="post in postList" :key="post.id">
             <p class="c-mypage__card-title">{{ post.title }}</p>
-            <!-- <img ::src="{{ post.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
+            <img ::src="post.sumbnail" alt="" class="c-mypage__card-sumbnail">
             <p class="c-mypage__card-summary">{{ post.summary }}</p>
           </div>
           <p class="p-mypage__contents-text" v-if="postList === null">投稿がまだありません。</p>
@@ -29,7 +29,7 @@
           
           <div class="c-mypage__card" v-for="check in checkList" :key="check.id">
             <p class="c-mypage__card-title">{{ check.title }}</p>
-            <!-- <img ::src="{{ check.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
+            <img ::src="check.sumbnail" alt="" class="c-mypage__card-sumbnail">
             <p class="c-mypage__card-summary">{{ check.summary }}</p>
           </div>
           <p class="p-mypage__contents-text" v-if="checkList === null">気になるアイデアがまだありません。</p>
@@ -44,7 +44,7 @@
           
           <div class="c-mypage__card" v-for="bought in boughtList" :key="bought.id">
             <p class="c-mypage__card-title">{{ bought.idea.title }}</p>
-            <!-- <img ::src="{{ bought.idea.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
+            <img ::src="bought.idea.sumbnail" alt="" class="c-mypage__card-sumbnail">
             <p class="c-mypage__card-summary">{{ bought.idea.summary }}</p>
           </div>
           <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
@@ -66,7 +66,7 @@
             <div class="c-mypage__card-score">
               <i v-for="n in 5" :key="n" class="fa-solid fa-star" :class="{ 'active': n <= review.score }"></i>
             </div>
-            <!-- <img ::src="{{ review.sumbnail }}" alt="" class="c-mypage__card-sumbnail"> -->
+            <img ::src="review.idea.sumbnail" alt="" class="c-mypage__card-sumbnail">
             <p class="c-mypage__card-comment">{{ review.comment }}</p>
           </div>
           <p class="p-mypage__contents-text" v-if="reviewList === null">レビューがまだありません。</p>

@@ -112,14 +112,16 @@ class ApiController extends Controller
         $canBuy = true;
         $isChecked = false;
         $idea = Idea::find($id);
-        $sell_user = $idea->user_id;
+        $seller_id = $idea->user_id;
+        $seller = User::find($seller_id);
 
         // 購入状態を取得
         $boughtIdea = Purchase::where('user_id', $user_id)->where('idea_id', $id)->first();
         // 自分のアイデアかの判定用
-        $myIdea = Idea::where('id', $id)->value('user_id');
-        
-        if($boughtIdea !== null || $myIdea === $user_id){
+        $myIdea = Idea::where('id', $id)->value('user_id');        
+
+        // 購入可能かのフラグ
+        if($boughtIdea !== null || $myIdea === $user_id || $seller === null){
             $canBuy = false;
         }
 
@@ -140,7 +142,7 @@ class ApiController extends Controller
             'averageScore' => $averageScore,
             'isChecked'    => $isChecked,
             'user_id'      => $user_id,
-            'sell_user'    => $sell_user,
+            'seller_id'    => $seller_id,
         ];
         
         return response()->json($data);
@@ -382,8 +384,14 @@ class ApiController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
-        $purchase = new Purchase;
         $user_id = Auth::id();
+        $bought = Purchase::where('user_id', $user_id)->where('idea_id', $id)->first();
+        // 同じユーザーが同じアイデアを購入できないように
+        if(!empty($bought)){
+            return redirect('/')->with('flash_message', 'エラーが発生しました');
+        }
+
+        $purchase = new Purchase;
         $sell_user = Idea::where('id', $id)->value('user_id');
 
         $purchase->fill([
@@ -430,6 +438,10 @@ class ApiController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
+        // ユーザー情報の取得
+        $seller = User::find($seller_id);
+        $buyer =  User::find($buyer_id);
+
         // チャットデータを検索・取得
         $chat = Chat::where('idea_id', $idea_id)
                       ->where('seller_id', $sell_user)
@@ -442,16 +454,17 @@ class ApiController extends Controller
         }
 
         // メッセージ情報を取得        
-        $messages = Message::where('chat_id', $chat->id)->get();
-
+        $messages = Message::where('chat_id', $chat->id)->orderBy('created_at')->get();
+        
         // 送信者ごとにソート
-        $buyerMessages = $messages->where('user_id', $buyer_id)->sortBy('timestamp')->values();
-        $sellerMessages = $messages->where('user_id', $seller_id)->sortBy('timestamp')->values();
+        // $buyerMessages = $messages->where('user_id', $buyer_id)->sortBy('timestamp')->values();
+        // $sellerMessages = $messages->where('user_id', $seller_id)->sortBy('timestamp')->values();
 
         $data = [
-            'buyerMessages' => $buyerMessages,
-            'sellerMessages' => $sellerMessages,
-            'chat_id' => $chat->id,
+            'seller'   => $seller,
+            'buyer'    => $buyer,
+            'messages' => $messages,
+            'chat_id'  => $chat->id,
         ];
 
         return response()->json($data);

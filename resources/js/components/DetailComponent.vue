@@ -47,7 +47,7 @@
                 <i class="fa-solid fa-check"></i>
             </span>
           </button>
-          <a :href="'/chat/' + idea_id + '/' + sell_user + '/' + user_id" class="">
+          <a :href="'/chat/' + idea_id + '/' + seller_id + '/' + user_id" class="">
               メッセージボードへ
               <i class="fa-regular fa-messages"></i>
           </a>
@@ -70,7 +70,7 @@
         averageScore: 0,
         isChecked: false,
         user_id: null,
-        sell_user: null,
+        seller_id: null,
       };
     },
     mounted() {
@@ -87,7 +87,7 @@
             this.averageScore = response.data.averageScore;
             this.isChecked = response.data.isChecked;
             this.user_id = response.data.user_id;
-            this.sell_user = response.data.sell_user;
+            this.seller_id = response.data.seller_id;
           })
           .catch((error) => {
             console.error(error);
