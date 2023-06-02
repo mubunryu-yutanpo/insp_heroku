@@ -2333,7 +2333,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'HeaderComponent',
   data: function data() {
     return {
       isOpen: false,
@@ -2344,15 +2343,13 @@ __webpack_require__.r(__webpack_exports__);
   },
 
   methods: {
-    hasRoute: function hasRoute(routeName) {
-      return this.$router.resolve({
-        name: routeName
-      }).resolved.matched.length > 0;
-    },
     toggleNav: function toggleNav() {
       // ナビメニューのセレクターを取得しクラス名をつけ外し
-      var nav = document.querySelector('.c-header__nav');
+      var nav = document.querySelector('.c-nav');
       nav.classList.toggle('is-open');
+
+      // クローズボタンのDOM取得
+      document.querySelector('.c-menu__image').classList.toggle('close');
 
       // メニューボタンのアイコン画像パスを切り替え
       this.isOpen = !this.isOpen;
@@ -38237,13 +38234,13 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "c-header__menu js-menu-button" }, [
+  return _c("div", { staticClass: "c-menu js-menu-button" }, [
     _c(
       "button",
-      { staticClass: "c-header__menu__button", on: { click: this.toggleNav } },
+      { staticClass: "c-menu__button", on: { click: this.toggleNav } },
       [
         _c("img", {
-          staticClass: "c-header__menu__button__image",
+          staticClass: "c-menu__image",
           attrs: { src: _vm.imageSrc, alt: "" },
         }),
       ]
@@ -38636,17 +38633,17 @@ var render = function () {
         { staticClass: "p-mypage__contents-container u-bg1" },
         [
           _vm._l(_vm.postList, function (post) {
-            return _c("div", { key: post.id, staticClass: "c-mypage__card" }, [
-              _c("p", { staticClass: "c-mypage__card-title" }, [
+            return _c("div", { key: post.id, staticClass: "c-card" }, [
+              _c("p", { staticClass: "c-card-title" }, [
                 _vm._v(_vm._s(post.title)),
               ]),
               _vm._v(" "),
               _c("img", {
-                staticClass: "c-mypage__card-sumbnail",
+                staticClass: "c-card-sumbnail",
                 attrs: { ":src": post.sumbnail, alt: "" },
               }),
               _vm._v(" "),
-              _c("p", { staticClass: "c-mypage__card-summary" }, [
+              _c("p", { staticClass: "c-card-summary" }, [
                 _vm._v(_vm._s(post.summary)),
               ]),
             ])
@@ -38683,17 +38680,17 @@ var render = function () {
         { staticClass: "p-mypage__contents-container u-bg2" },
         [
           _vm._l(_vm.checkList, function (check) {
-            return _c("div", { key: check.id, staticClass: "c-mypage__card" }, [
-              _c("p", { staticClass: "c-mypage__card-title" }, [
+            return _c("div", { key: check.id, staticClass: "c-card" }, [
+              _c("p", { staticClass: "c-card-title" }, [
                 _vm._v(_vm._s(check.title)),
               ]),
               _vm._v(" "),
               _c("img", {
-                staticClass: "c-mypage__card-sumbnail",
+                staticClass: "c-card-sumbnail",
                 attrs: { ":src": check.sumbnail, alt: "" },
               }),
               _vm._v(" "),
-              _c("p", { staticClass: "c-mypage__card-summary" }, [
+              _c("p", { staticClass: "c-card-summary" }, [
                 _vm._v(_vm._s(check.summary)),
               ]),
             ])
@@ -38730,24 +38727,20 @@ var render = function () {
         { staticClass: "p-mypage__contents-container u-bg1" },
         [
           _vm._l(_vm.boughtList, function (bought) {
-            return _c(
-              "div",
-              { key: bought.id, staticClass: "c-mypage__card" },
-              [
-                _c("p", { staticClass: "c-mypage__card-title" }, [
-                  _vm._v(_vm._s(bought.idea.title)),
-                ]),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "c-mypage__card-sumbnail",
-                  attrs: { ":src": bought.idea.sumbnail, alt: "" },
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "c-mypage__card-summary" }, [
-                  _vm._v(_vm._s(bought.idea.summary)),
-                ]),
-              ]
-            )
+            return _c("div", { key: bought.id, staticClass: "c-card" }, [
+              _c("p", { staticClass: "c-card-title" }, [
+                _vm._v(_vm._s(bought.idea.title)),
+              ]),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "c-card-sumbnail",
+                attrs: { ":src": bought.idea.sumbnail, alt: "" },
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card-summary" }, [
+                _vm._v(_vm._s(bought.idea.summary)),
+              ]),
+            ])
           }),
           _vm._v(" "),
           _vm.boughtList === null
@@ -38781,43 +38774,39 @@ var render = function () {
         { staticClass: "p-mypage__contents-container u-bg2" },
         [
           _vm._l(_vm.reviewList, function (review) {
-            return _c(
-              "div",
-              { key: review.id, staticClass: "c-mypage__card" },
-              [
-                _c("div", { staticClass: "c-mypage__card-user" }, [
-                  _c("p", { staticClass: "c-mypage__card-user-name" }, [
-                    _vm._v(_vm._s(review.user.name)),
-                  ]),
-                  _vm._v(" "),
-                  _c("img", {
-                    staticClass: "c-mypage__card-user-avatar",
-                    attrs: { src: review.user.avatar },
-                  }),
+            return _c("div", { key: review.id, staticClass: "c-card" }, [
+              _c("div", { staticClass: "c-card-user" }, [
+                _c("p", { staticClass: "c-card-user-name" }, [
+                  _vm._v(_vm._s(review.user.name)),
                 ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "c-mypage__card-score" },
-                  _vm._l(5, function (n) {
-                    return _c("i", {
-                      key: n,
-                      staticClass: "fa-solid fa-star",
-                      class: { active: n <= review.score },
-                    })
-                  })
-                ),
                 _vm._v(" "),
                 _c("img", {
-                  staticClass: "c-mypage__card-sumbnail",
-                  attrs: { ":src": review.idea.sumbnail, alt: "" },
+                  staticClass: "c-card-user-avatar",
+                  attrs: { src: review.user.avatar },
                 }),
-                _vm._v(" "),
-                _c("p", { staticClass: "c-mypage__card-comment" }, [
-                  _vm._v(_vm._s(review.comment)),
-                ]),
-              ]
-            )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-card-score" },
+                _vm._l(5, function (n) {
+                  return _c("i", {
+                    key: n,
+                    staticClass: "fa-solid fa-star",
+                    class: { active: n <= review.score },
+                  })
+                })
+              ),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "c-card-sumbnail",
+                attrs: { ":src": review.idea.sumbnail, alt: "" },
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card-comment" }, [
+                _vm._v(_vm._s(review.comment)),
+              ]),
+            ])
           }),
           _vm._v(" "),
           _vm.reviewList === null

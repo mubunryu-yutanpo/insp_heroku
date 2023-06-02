@@ -3,6 +3,7 @@
 
 // Fandation
 @import 'Fandation/variables.scss';
+@import 'Fandation/reset.scss';
 
 // Layouts
 @import 'Layouts/header.scss';
@@ -10,7 +11,14 @@
 @import 'Layouts/footer.scss';
 
 // Object
+@import 'Object/project/header.scss';
+@import 'Object/project/mypage.scss';
 
+@import 'Object/component/menu.scss';
+@import 'Object/component/nav.scss';
+@import 'Object/component/card.scss';
+
+@import 'Object/utility/background.scss';
 
 
 // Bootstrap

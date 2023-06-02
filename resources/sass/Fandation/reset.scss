@@ -1,0 +1,25 @@
+body,a,button,li,ul,p{
+    border: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+body{
+    box-sizing: border-box;
+    color: $black;
+    position: relative;
+}
+a,button{
+    cursor: pointer;
+}
+a:focus{
+    outline: none;
+}
+button:focus{
+    outline: none;
+}
+img{
+    vertical-align: bottom;
+    width: 100%;
+}

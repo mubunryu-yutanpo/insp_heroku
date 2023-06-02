@@ -1,0 +1,18 @@
+.c-menu{
+    background: none;
+    height: 45px;
+    width: 45px;
+    z-index: 1;
+
+    &__button{
+        background: none;
+    }
+
+    &__image{
+        background: $white;
+
+        &.close{
+            background: $blue;
+        }
+    }
+}

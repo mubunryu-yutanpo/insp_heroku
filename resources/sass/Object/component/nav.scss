@@ -1,0 +1,37 @@
+.c-nav{
+    @include mq(){
+        background: $blue;
+        font-size: $font-size_l;
+        opacity: 0;
+        padding: 75px 0 $space_40;
+        position: absolute;
+        text-align: center;
+        transition: all .7s;
+        width: 100%;
+
+        &.is-open{
+            display: block;
+            opacity: 1;
+            overflow-y: auto;
+            top: 0;
+            transition: all .7s;
+        }
+
+        &__item{
+            margin-bottom: $space_20;
+        }
+    
+        &__link{
+            color: $white;
+            padding: $space-10 $space_default;
+
+            &:hover{
+                color: $brown;
+                font-weight: bold;
+                text-decoration-style: dashed;
+                text-decoration-color: $white;
+            }
+        }
+    
+    }
+}
