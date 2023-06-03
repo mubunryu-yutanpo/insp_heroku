@@ -38,6 +38,10 @@
               @endif
             @endif
 
+            @if(Route::currentRouteName() == 'mypage')
+              <a href="{{ route('prof.edit', Auth::id() ) }}" class="p-header__contents-profile">プロフィール編集</a>
+            @endif
+
             <header-component></header-component>
 
           </div>

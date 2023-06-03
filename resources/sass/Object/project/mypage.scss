@@ -6,6 +6,7 @@
     &__user{
         align-items: center;
         display: flex;
+        justify-content: flex-end;
         margin-right: $space_default ;
         text-align: right;
         
@@ -19,21 +20,48 @@
     }
 
     &__contents{
-        padding: $space_default;
 
         &-title{
-            margin: $space_default 0;
+            background-color: $blue;
+            color: $white;
+            display: block;
+            font-size: $font-size_xl;
+            font-weight: bold;
+            margin: $space_30 0 $space_default;
+            padding: $space_default $space-10;
+
+            @include mq(){
+                font-size: $font-size_l;
+                margin: $space_default 0;
+            }
         }
 
         &-container{
+            box-shadow: 0 0 3px 0 $black;
             display: flex;
             margin-bottom: $space_default;
-            padding: $space-10 $space-5;
+            overflow-x: auto;
+            padding: $space-10 $space_default;
+            @include mq(){
+                align-items: center;
+                flex-direction: column;
+            }
         }
 
         &-link{
             display: block;
+            font-size: $font-size_default;
             text-align: right;
+            padding-right: $space-5;
+
+            &:hover{
+                color: $brown;
+                font-weight: bold;
+            }
+        }
+
+        &-text{
+            margin: $space_default 0;
         }
     }
 }

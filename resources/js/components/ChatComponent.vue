@@ -9,7 +9,7 @@
                 <div class="c-chat__user">
                     <img :src="seller.avatar" class="c-chat__user-avatar">
                 </div>
-                <div class="c-chat__messages">
+                <div class="c-chat__messages seller-messages">
                     <p  style="margin:0;">{{ message.content }}</p>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <div class="c-chat__user">
                     <img :src="buyer.avatar" class="c-chat__user-avatar">
                 </div>
-                <div class="c-chat__messages">
+                <div class="c-chat__messages buyer-messages">
                     <p style="margin:0;">{{ message.content }}</p>
                 </div>
             </div>
@@ -91,67 +91,5 @@
   };
   </script>
   
-<style>
-  .p-chat{
-    background-color: #ebe7e0; padding: 40px 0 0 0;
-  }
-  .p-chat__container{
-    width: 100%; max-width:980px; padding:40px 15px; background-color: #fff; margin: 0 auto;
-  }
-  .c-chat__wrap{
-    margin: 25px 0;
-  }
-  .c-chat__content{
-    display: flex; flex-direction: column; 
-  }
-  .c-chat__content.seller{
-    align-items: flex-start;
-  }
-  .c-chat__content.buyer{
-    align-items: flex-end;
-  }
-  .c-chat__user{
-    width:30px; height: 30px; border-radius: 100%; border: 1px solid #ebe7e0; padding: 2px; margin-bottom: 5px;
-  }
-  .c-chat__user-avatar{
-    width: 100%; vertical-align: bottom;
-  }
-  .c-chat__messages{
-    padding: 15px 10px; border-radius: 5px;
-  }
-  .c-chat__content.seller > .c-chat__messages{
-    background:  #ebe7e0;
-  }
-  .c-chat__content.buyer > .c-chat__messages{
-    background:  #c6d4e1;
-  }
-
-
-  .p-message{
-    width:100%; max-width: 980px; background:#ebe7e0; margin:0 auto; padding: 40px 0; text-align: center; 
-  }
-  .p-message__wrap{
-    background: #fff; border-radius: 10px; box-shadow: 0 0 8px 1px #bdb8ad; display: flex; align-items: center;
-  }
-  .p-message__input{
-    border: none; border-radius: 10px; padding: 10px 0 10px 15px; width:100%; height: 50px; font-size: 18px; resize:none; vertical-align: middle; overflow-y: hidden;
-  }
-  .p-message__input:focus{
-    outline: none;
-  }
-  .p-message__input::placeholder{
-    color: #dad8d8; padding-top: 3px;
-  }
-  .p-message__send{
-    background:none; border:none; margin-right: 5px; padding: 10px; padding-right: 15px; cursor: pointer;
-  }
-  .p-message__send:focus{
-    outline: none;
-  }
-  .p-message__send-icon{
-    color:#44749d; font-size:20px;
-  }
-</style>
-
 
 <!-- ここはとりあえずスタイルOK。他のコンポーネントも -->

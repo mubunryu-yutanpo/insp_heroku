@@ -1,20 +1,22 @@
 .c-nav{
     @include mq(){
         background: $blue;
+        display: none;
         font-size: $font-size_l;
-        opacity: 0;
         padding: 75px 0 $space_40;
         position: absolute;
+        // right: -100%;
         text-align: center;
-        transition: all .7s;
+        // transition: all;
         width: 100%;
 
         &.is-open{
             display: block;
-            opacity: 1;
             overflow-y: auto;
+            // right: 0;
             top: 0;
-            transition: all .7s;
+            transition: all .8s;
+            z-index: 0;
         }
 
         &__item{

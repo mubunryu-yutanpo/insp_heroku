@@ -1,0 +1,16 @@
+.p-chat{
+    background-color: #ebe7e0;
+    padding: $space_40 0 0 0;
+
+    &__container{
+        background-color: #fff;
+        margin: 0 auto;
+        max-width:980px;
+        padding: $space_40 $space_default;
+        width: 100%;
+
+        @include mq(){
+            padding: $space_20 $space_default;
+        }
+    }
+  }

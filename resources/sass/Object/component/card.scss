@@ -1,0 +1,45 @@
+.c-card{
+    background-color: $white;
+    border-radius: 5px;
+    box-shadow: 0 0 3px 0 $black;
+    margin-right: $space_default;
+    min-width: calc(100% / 2 - 30px);
+
+    &.card-mypage{
+        min-width: 30%;
+    }
+
+    &:last-child{
+        margin-right: 0;
+    }
+
+    @include mq(){
+        margin: $space_default auto;
+        width: 100%;
+    }
+
+        &__sumbnail{
+            border-radius: 5px 5px 0 0;
+            max-height: 250px;
+
+            @include mq(){
+                max-height: 400px;
+                width: 100%;    
+            }
+        }
+
+        &__link{
+            color: $black;
+
+            &-text{
+                font-size: 17px;
+                margin: $space_20 $space-10;
+
+                &:hover{
+                    color: $blue;
+                    text-decoration: underline;
+                }
+    
+            }
+        }
+}
