@@ -1,16 +1,22 @@
 <template>
-    <div>
-      <h2>気になるリスト</h2>
-      <ul>
-        <li v-for="idea in checkIdeas" :key="idea.id">
-          <div class="">
-            <a :href="'/' + idea.id + '/idea'" class="">{{ idea.title }}</a>
-            <p class="">{{ idea.summary }}</p>
-          </div>
-        </li>
-      </ul>
+  <div class="p-list">
+    
+    <strong class="p-list__title">気になるアイデア一覧</strong>
+    <div class="p-list__container">
+      <div class="c-card" v-for="idea in checkIdeas" :key="idea.id">
+        <a :href="'/' + idea.id + '/idea'" class="c-card__link">
+          <img :src="idea.sumbnail" alt="" class="c-card__link-sumbnail">
+          <p class="c-card__link-text">{{ idea.title }}</p>
+        </a>
+      </div>
     </div>
-  </template>
+
+    <div v-if="checkIdeas === null" class="p-list__none">
+      <strong>購入したアイデアがありません。</strong>
+    </div>
+  </div>
+
+</template>
   
   <script>
   export default {

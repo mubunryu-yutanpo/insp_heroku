@@ -1,16 +1,21 @@
 <template>
-    <div>
-      <h2>購入したアイデア</h2>
-      <ul>
-        <li v-for="bought in boughtList" :key="bought.id">
-          <div>
-            <a :href="'/' + bought.idea.id + '/idea'" class="">{{ bought.idea.title }}</a>
-            <p>{{ bought.idea.description }}</p>
-          </div>
-        </li>
-      </ul>
+  <div class="p-list">
+    
+    <strong class="p-list__title">購入したアイデア一覧</strong>
+    <div class="p-list__container">
+      <div class="c-card" v-for="bought in boughtList" :key="bought.id">
+        <a :href="'/' + bought.idea.id + '/idea'" class="c-card__link">
+          <img :src="bought.idea.sumbnail" alt="" class="c-card__link-sumbnail">
+          <p class="c-card__link-text">{{ bought.idea.title }}</p>
+        </a>
+      </div>
     </div>
-  </template>
+
+    <div v-if="boughtList === null" class="p-list__none">
+      <strong>購入したアイデアがありません。</strong>
+    </div>
+  </div>
+</template>
   
   <script>
   export default {

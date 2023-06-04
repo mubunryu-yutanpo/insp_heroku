@@ -1,16 +1,21 @@
 <template>
-    <div>
-      <h2>投稿したアイデア</h2>
-      <ul>
-        <li v-for="post in postsList" :key="post.id">
-          <div>
-            <strong>{{ post.title }}</strong>
-            <p>{{ post.description }}</p>
-          </div>
-        </li>
-      </ul>
-      <div v-if="postsList === null">投稿したアイデアがありません。</div>
-    </div>
+    <div class="p-list">
+      
+      <strong class="p-list__title">投稿したアイデア一覧</strong>
+      <div class="p-list__container">
+        <div class="c-card" v-for="post in postsList" :key="post.id">
+          <a :href="'/' + post.id + '/idea'" class="c-card__link">
+            <img :src="post.sumbnail" alt="" class="c-card__link-sumbnail">
+            <p class="c-card__link-text">{{ post.title }}</p>
+          </a>
+        </div>
+      </div>
+
+      <div v-if="postsList === null" class="p-list__none">
+        <strong>投稿したアイデアがありません。</strong>
+      </div>
+  </div>
+
   </template>
   
   <script>
@@ -22,12 +27,12 @@
       };
     },
     mounted() {
-      this.fetchPosts();
+      this.getPosts();
       console.log('これとおってる？' + this.user_id);
 
     },
     methods: {
-      fetchPosts() {
+      getPosts() {
         axios.get('/api/' + this.user_id + '/myPosts')
           .then(response => {
             this.postsList = response.data.postsList;

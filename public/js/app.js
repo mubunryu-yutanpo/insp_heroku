@@ -1922,6 +1922,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user_id'],
@@ -2058,6 +2063,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2488,6 +2499,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2582,6 +2610,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user_id'],
@@ -2591,11 +2624,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.fetchPosts();
+    this.getPosts();
     console.log('これとおってる？' + this.user_id);
   },
   methods: {
-    fetchPosts: function fetchPosts() {
+    getPosts: function getPosts() {
       var _this = this;
       axios.get('/api/' + this.user_id + '/myPosts').then(function (response) {
         _this.postsList = response.data.postsList;
@@ -37718,23 +37751,42 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", [_vm._v("購入したアイデア")]),
+  return _c("div", { staticClass: "p-list" }, [
+    _c("strong", { staticClass: "p-list__title" }, [
+      _vm._v("購入したアイデア一覧"),
+    ]),
     _vm._v(" "),
     _c(
-      "ul",
+      "div",
+      { staticClass: "p-list__container" },
       _vm._l(_vm.boughtList, function (bought) {
-        return _c("li", { key: bought.id }, [
-          _c("div", [
-            _c("a", { attrs: { href: "/" + bought.idea.id + "/idea" } }, [
-              _vm._v(_vm._s(bought.idea.title)),
-            ]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(bought.idea.description))]),
-          ]),
+        return _c("div", { key: bought.id, staticClass: "c-card" }, [
+          _c(
+            "a",
+            {
+              staticClass: "c-card__link",
+              attrs: { href: "/" + bought.idea.id + "/idea" },
+            },
+            [
+              _c("img", {
+                staticClass: "c-card__link-sumbnail",
+                attrs: { src: bought.idea.sumbnail, alt: "" },
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__link-text" }, [
+                _vm._v(_vm._s(bought.idea.title)),
+              ]),
+            ]
+          ),
         ])
       })
     ),
+    _vm._v(" "),
+    _vm.boughtList === null
+      ? _c("div", { staticClass: "p-list__none" }, [
+          _c("strong", [_vm._v("購入したアイデアがありません。")]),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
@@ -37884,23 +37936,42 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", [_vm._v("気になるリスト")]),
+  return _c("div", { staticClass: "p-list" }, [
+    _c("strong", { staticClass: "p-list__title" }, [
+      _vm._v("気になるアイデア一覧"),
+    ]),
     _vm._v(" "),
     _c(
-      "ul",
+      "div",
+      { staticClass: "p-list__container" },
       _vm._l(_vm.checkIdeas, function (idea) {
-        return _c("li", { key: idea.id }, [
-          _c("div", {}, [
-            _c("a", { attrs: { href: "/" + idea.id + "/idea" } }, [
-              _vm._v(_vm._s(idea.title)),
-            ]),
-            _vm._v(" "),
-            _c("p", {}, [_vm._v(_vm._s(idea.summary))]),
-          ]),
+        return _c("div", { key: idea.id, staticClass: "c-card" }, [
+          _c(
+            "a",
+            {
+              staticClass: "c-card__link",
+              attrs: { href: "/" + idea.id + "/idea" },
+            },
+            [
+              _c("img", {
+                staticClass: "c-card__link-sumbnail",
+                attrs: { src: idea.sumbnail, alt: "" },
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__link-text" }, [
+                _vm._v(_vm._s(idea.title)),
+              ]),
+            ]
+          ),
         ])
       })
     ),
+    _vm._v(" "),
+    _vm.checkIdeas === null
+      ? _c("div", { staticClass: "p-list__none" }, [
+          _c("strong", [_vm._v("購入したアイデアがありません。")]),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []
@@ -38228,7 +38299,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", [_vm._v("レビュー一覧")]),
+    _c("h1", [_vm._v("アイデアのレビュー一覧")]),
     _vm._v(" "),
     _c(
       "ul",
@@ -38501,6 +38572,46 @@ var render = function () {
           ])
         })
       ),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-list" }, [
+        _c("strong", { staticClass: "p-list__title" }, [
+          _vm._v("アイデア一覧"),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "p-list__container" },
+          _vm._l(_vm.ideas, function (idea) {
+            return _c(
+              "div",
+              { key: idea.id, staticClass: "c-card card-ideas" },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "c-card__link",
+                    attrs: { href: "/" + idea.id + "/idea" },
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "c-card__link-sumbnail",
+                      attrs: { src: idea.sumbnail, alt: "" },
+                    }),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "c-card__link-text" }, [
+                      _vm._v(_vm._s(idea.title)),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "c-card__link-text" }, [
+                      _vm._v(_vm._s(idea.summary)),
+                    ]),
+                  ]
+                ),
+              ]
+            )
+          })
+        ),
+      ]),
     ]),
   ])
 }
@@ -38526,24 +38637,41 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h2", [_vm._v("投稿したアイデア")]),
+  return _c("div", { staticClass: "p-list" }, [
+    _c("strong", { staticClass: "p-list__title" }, [
+      _vm._v("投稿したアイデア一覧"),
+    ]),
     _vm._v(" "),
     _c(
-      "ul",
+      "div",
+      { staticClass: "p-list__container" },
       _vm._l(_vm.postsList, function (post) {
-        return _c("li", { key: post.id }, [
-          _c("div", [
-            _c("strong", [_vm._v(_vm._s(post.title))]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(post.description))]),
-          ]),
+        return _c("div", { key: post.id, staticClass: "c-card" }, [
+          _c(
+            "a",
+            {
+              staticClass: "c-card__link",
+              attrs: { href: "/" + post.id + "/idea" },
+            },
+            [
+              _c("img", {
+                staticClass: "c-card__link-sumbnail",
+                attrs: { src: post.sumbnail, alt: "" },
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__link-text" }, [
+                _vm._v(_vm._s(post.title)),
+              ]),
+            ]
+          ),
         ])
       })
     ),
     _vm._v(" "),
     _vm.postsList === null
-      ? _c("div", [_vm._v("投稿したアイデアがありません。")])
+      ? _c("div", { staticClass: "p-list__none" }, [
+          _c("strong", [_vm._v("投稿したアイデアがありません。")]),
+        ])
       : _vm._e(),
   ])
 }
@@ -38588,18 +38716,13 @@ var render = function () {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "p-mypage__contents-container u-bg1" },
+        { staticClass: "p-mypage__contents-container" },
         [
           _vm._l(_vm.postList, function (post) {
             return _c(
               "div",
               { key: post.id, staticClass: "c-card card-mypage" },
               [
-                _c("img", {
-                  staticClass: "c-card__sumbnail",
-                  attrs: { src: post.sumbnail, alt: "" },
-                }),
-                _vm._v(" "),
                 _c(
                   "a",
                   {
@@ -38607,6 +38730,11 @@ var render = function () {
                     attrs: { href: "/" + post.id + "/idea" },
                   },
                   [
+                    _c("img", {
+                      staticClass: "c-card__link-sumbnail",
+                      attrs: { src: post.sumbnail, alt: "" },
+                    }),
+                    _vm._v(" "),
                     _c("p", { staticClass: "c-card__link-text" }, [
                       _vm._v(_vm._s(post.title)),
                     ]),
@@ -38644,18 +38772,13 @@ var render = function () {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "p-mypage__contents-container u-bg2" },
+        { staticClass: "p-mypage__contents-container" },
         [
           _vm._l(_vm.checkList, function (check) {
             return _c(
               "div",
               { key: check.id, staticClass: "c-card card-mypage" },
               [
-                _c("img", {
-                  staticClass: "c-card__sumbnail",
-                  attrs: { src: check.sumbnail, alt: "" },
-                }),
-                _vm._v(" "),
                 _c(
                   "a",
                   {
@@ -38663,6 +38786,11 @@ var render = function () {
                     attrs: { href: "/" + check.id + "/idea" },
                   },
                   [
+                    _c("img", {
+                      staticClass: "c-card__link-sumbnail",
+                      attrs: { src: check.sumbnail, alt: "" },
+                    }),
+                    _vm._v(" "),
                     _c("p", { staticClass: "c-card__link-text" }, [
                       _vm._v(_vm._s(check.title)),
                     ]),
@@ -38700,18 +38828,13 @@ var render = function () {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "p-mypage__contents-container u-bg1" },
+        { staticClass: "p-mypage__contents-container" },
         [
           _vm._l(_vm.boughtList, function (bought) {
             return _c(
               "div",
               { key: bought.id, staticClass: "c-card card-mypage" },
               [
-                _c("img", {
-                  staticClass: "c-card__sumbnail",
-                  attrs: { src: bought.idea.sumbnail, alt: "" },
-                }),
-                _vm._v(" "),
                 _c(
                   "a",
                   {
@@ -38719,6 +38842,11 @@ var render = function () {
                     attrs: { href: "/" + bought.idea.id + "/idea" },
                   },
                   [
+                    _c("img", {
+                      staticClass: "c-card__link-sumbnail",
+                      attrs: { src: bought.idea.sumbnail, alt: "" },
+                    }),
+                    _vm._v(" "),
                     _c("p", { staticClass: "c-card__link-text" }, [
                       _vm._v(_vm._s(bought.idea.title)),
                     ]),
@@ -38756,7 +38884,7 @@ var render = function () {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "p-mypage__contents-container u-bg2" },
+        { staticClass: "p-mypage__contents-container" },
         [
           _vm._l(_vm.reviewList, function (review) {
             return _c(
@@ -38787,7 +38915,7 @@ var render = function () {
                 ),
                 _vm._v(" "),
                 _c("img", {
-                  staticClass: "c-card__sumbnail",
+                  staticClass: "c-card__link-sumbnail",
                   attrs: { src: review.idea.sumbnail, alt: "" },
                 }),
                 _vm._v(" "),

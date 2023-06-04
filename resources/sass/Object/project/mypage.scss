@@ -37,11 +37,10 @@
         }
 
         &-container{
-            box-shadow: 0 0 3px 0 $black;
             display: flex;
+            flex-wrap: wrap;
             margin-bottom: $space_default;
-            overflow-x: auto;
-            padding: $space-10 $space_default;
+            padding: $space-10 0 0 $space_default;
             @include mq(){
                 align-items: center;
                 flex-direction: column;

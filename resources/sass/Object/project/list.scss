@@ -1,0 +1,38 @@
+.p-list{
+    margin: 0 auto;
+    max-width: 980px;
+    width: 100%;
+
+
+    &__title{
+        background-color: $blue;
+        color: $white;
+        display: block;
+        font-size: $font-size_xl;
+        font-weight: bold;
+        margin: $space_30 0 $space_default;
+        padding: $space_default $space-10;
+
+        @include mq(){
+            font-size: $font-size_l;
+            margin: $space_default 0;
+        }
+    }
+
+    &__container{
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: $space_default;
+        padding: $space-10 0 0 $space_default;
+        @include mq(){
+            align-items: center;
+            flex-direction: column;
+        }
+    }
+
+    &__none{
+        min-height: 500px;
+        padding: $space_40 0;
+        text-align: center;
+    }
+}

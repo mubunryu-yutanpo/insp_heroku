@@ -1,16 +1,23 @@
 .c-card{
     background-color: $white;
     border-radius: 5px;
-    box-shadow: 0 0 3px 0 $black;
-    margin-right: $space_default;
-    min-width: calc(100% / 2 - 30px);
+    box-shadow: 0 0 3px 0 $blue;
+    margin: 0 $space_default $space_default 0;
+    width: calc(33.3% - #{$space_default});
+    transform: translateY(3px);
+    transition: all .5s;
 
-    &.card-mypage{
-        min-width: 30%;
+
+    &:hover{
+        box-shadow: 0 3px 8px $blue;
+        transform: scale(1.05);
+        transform: translateY(-3px);
+        transition: all .5s;
     }
 
-    &:last-child{
-        margin-right: 0;
+  
+    &.card-mypage{
+        width: calc(33.3% - #{$space_default});
     }
 
     @include mq(){
@@ -18,18 +25,19 @@
         width: 100%;
     }
 
-        &__sumbnail{
-            border-radius: 5px 5px 0 0;
-            max-height: 250px;
-
-            @include mq(){
-                max-height: 400px;
-                width: 100%;    
-            }
-        }
-
         &__link{
             color: $black;
+
+            &__sumbnail{
+                border-radius: 5px 5px 0 0;
+                // max-height: 250px;
+                max-width: 100%;
+    
+                @include mq(){
+                    max-height: 400px;
+                    width: 100%;    
+                }
+            }    
 
             &-text{
                 font-size: 17px;
@@ -39,7 +47,6 @@
                     color: $blue;
                     text-decoration: underline;
                 }
-    
             }
         }
 }

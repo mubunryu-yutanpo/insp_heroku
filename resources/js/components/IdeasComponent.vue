@@ -48,6 +48,23 @@
           </div>
         </div>
       </div>
+
+
+      <div class="p-list">
+    
+        <strong class="p-list__title">アイデア一覧</strong>
+        <div class="p-list__container">
+          <div class="c-card card-ideas" v-for="idea in ideas" :key="idea.id">
+            <a :href="'/' + idea.id + '/idea'" class="c-card__link">
+              <img :src="idea.sumbnail" alt="" class="c-card__link-sumbnail">
+              <p class="c-card__link-text">{{ idea.title }}</p>
+              <p class="c-card__link-text">{{ idea.summary }}</p>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
     </section>
 
   </div>
@@ -124,5 +141,7 @@ export default {
 };
 </script>
 
+
+<!-- アイデア一覧は、「タイトル・概要」パターンなら概要の色変える。「タイトル・ユーザー」パターンは？ -->
 
 

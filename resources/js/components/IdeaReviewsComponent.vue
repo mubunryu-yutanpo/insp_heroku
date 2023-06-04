@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1>レビュー一覧</h1>
+      <h1>アイデアのレビュー一覧</h1>
       <ul>
         <li v-for="review in reviewList" :key="review.id">
           <div class="">

@@ -9,11 +9,11 @@
 
       <section class="p-mypage__contents">
         <strong class="p-mypage__contents-title">自分のアイデア</strong>
-        <div class="p-mypage__contents-container u-bg1">
+        <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="post in postList" :key="post.id">
-            <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
             <a :href="'/' + post.id + '/idea'" class="c-card__link">
+              <img :src="post.sumbnail" alt="" class="c-card__link-sumbnail">
               <p class="c-card__link-text">{{ post.title }}</p>
             </a>
           </div>
@@ -26,11 +26,11 @@
 
       <section class="p-mypage__contents">
         <strong class="p-mypage__contents-title">気になるリスト</strong>
-        <div class="p-mypage__contents-container u-bg2">
+        <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="check in checkList" :key="check.id">
-            <img :src="check.sumbnail" alt="" class="c-card__sumbnail">
             <a :href="'/' + check.id + '/idea'" class="c-card__link">
+              <img :src="check.sumbnail" alt="" class="c-card__link-sumbnail">
               <p class="c-card__link-text">{{ check.title }}</p>
             </a>
           </div>
@@ -42,11 +42,11 @@
 
       <section class="p-mypage__contents">
         <strong class="p-mypage__contents-title">購入したアイデア</strong>
-        <div class="p-mypage__contents-container u-bg1">
+        <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="bought in boughtList" :key="bought.id">
-            <img :src="bought.idea.sumbnail" alt="" class="c-card__sumbnail">
             <a :href="'/' + bought.idea.id + '/idea'" class="c-card__link">
+              <img :src="bought.idea.sumbnail" alt="" class="c-card__link-sumbnail">
               <p class="c-card__link-text">{{ bought.idea.title }}</p>
             </a>
           </div>
@@ -59,7 +59,7 @@
 
       <section class="p-mypage__contents">
         <strong class="p-mypage__contents-title">自分のアイデアへのレビュー</strong>
-        <div class="p-mypage__contents-container u-bg2">
+        <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="review in reviewList" :key="review.id">
             <div class="c-card__user">
@@ -69,7 +69,7 @@
             <div class="c-card__score">
               <i v-for="n in 5" :key="n" class="fa-solid fa-star" :class="{ 'active': n <= review.score }"></i>
             </div>
-            <img :src="review.idea.sumbnail" alt="" class="c-card__sumbnail">
+            <img :src="review.idea.sumbnail" alt="" class="c-card__link-sumbnail">
             <p class="c-card__comment">{{ review.comment }}</p>
           </div>
           <p class="p-mypage__contents-text" v-if="reviewList === null">レビューがまだありません。</p>
@@ -109,8 +109,9 @@
             console.log(error);
         });
     },
+    
   };
   </script>
   
 
-  <!-- 一覧表示のデザイン問題どうするか。 -->
+  <!-- レビューのあたりは要修正かな。 -->
