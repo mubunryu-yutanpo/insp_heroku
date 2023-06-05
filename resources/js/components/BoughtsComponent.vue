@@ -5,8 +5,8 @@
     <div class="p-list__container">
       <div class="c-card" v-for="bought in boughtList" :key="bought.id">
         <a :href="'/' + bought.idea.id + '/idea'" class="c-card__link">
-          <img :src="bought.idea.sumbnail" alt="" class="c-card__link-sumbnail">
-          <p class="c-card__link-text">{{ bought.idea.title }}</p>
+          <img :src="bought.idea.sumbnail" alt="" class="c-card__sumbnail">
+          <p class="c-card__title">{{ bought.idea.title }}</p>
         </a>
       </div>
     </div>

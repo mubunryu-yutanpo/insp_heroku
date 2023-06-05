@@ -322,6 +322,48 @@ img {
   transition: all 0.5s;
 }
 
+.c-card__category {
+  background-color: #bdb8ad;
+  border-radius: 5px 0 5px 0;
+  color: white;
+  padding: 5px 10px;
+  position: absolute;
+  top: 0;
+}
+
+.c-card__sumbnail {
+  border-radius: 5px 5px 0 0;
+  max-width: 100%;
+}
+
+@media screen and (max-width:767px) {
+  .c-card__sumbnail {
+    max-height: 400px;
+    width: 100%;
+  }
+}
+
+.c-card__container {
+  margin: 15px 10px;
+}
+
+.c-card__title {
+  font-size: 17px;
+  margin: 15px 0 20px;
+  text-decoration: underline;
+}
+
+.c-card__title:hover {
+  color: #44749d;
+}
+
+.c-card__price {
+  color: #FA7070;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
 .c-card.card-mypage {
   width: calc(33.3% - 15px);
 }
@@ -335,28 +377,33 @@ img {
 
 .c-card__link {
   color: #101010;
+  display: block;
 }
 
-.c-card__link__sumbnail {
-  border-radius: 5px 5px 0 0;
-  max-width: 100%;
+.c-card__link.idea-link {
+  position: relative;
 }
 
-@media screen and (max-width:767px) {
-  .c-card__link__sumbnail {
-    max-height: 400px;
-    width: 100%;
-  }
+.c-card__link.idea-link:hover {
+  color: #101010;
+  text-decoration: none;
 }
 
-.c-card__link-text {
-  font-size: 17px;
-  margin: 20px 10px;
+.c-card__link-user {
+  display: flex;
+  padding: 15px 10px;
 }
 
-.c-card__link-text:hover {
-  color: #44749d;
-  text-decoration: underline;
+.c-card__link-user-image {
+  border: 1px solid #ebe7e0;
+  border-radius: 100%;
+  height: 30px;
+  padding: 1px;
+  width: 30px;
+}
+
+.c-card__link-user-name {
+  margin-left: 5px;
 }
 
 .c-chat__wrap {

@@ -341,9 +341,42 @@ class ApiController extends Controller
         }
     
         $ideas = $query->get();
+
+        // User 情報の取得
+        $userIds = $ideas->pluck('user_id')->unique();
+        $users = User::whereIn('id', $userIds)->get();
+    
+        // カテゴリ情報の取得
+        $categoryIds = $ideas->pluck('category_id')->unique();
+        $categories = Category::whereIn('id', $categoryIds)->get();
+    
+        // レビュー情報の取得
+        $ideaIds = $ideas->pluck('id')->unique();
+        $reviews = Review::whereIn('idea_id', $ideaIds)->get();
+    
+        // User 情報をアイデアに結合
+        $ideasWithUser = $ideas->map(function ($idea) use ($users) {
+            $user = $users->firstWhere('id', $idea->user_id);
+            $idea->user = $user;
+            return $idea;
+        });
+    
+        // カテゴリ情報をアイデアに結合
+        $ideasWithCategory = $ideasWithUser->map(function ($idea) use ($categories) {
+            $category = $categories->firstWhere('id', $idea->category_id);
+            $idea->category = $category;
+            return $idea;
+        });
+    
+        // レビュー情報をアイデアに結合
+        $ideasWithReview = $ideasWithCategory->map(function ($idea) use ($reviews) {
+            $review = $reviews->where('idea_id', $idea->id);
+            $idea->review = $review;
+            return $idea;
+        });
     
         $data = [
-            'ideas' => $ideas,
+            'ideas' => $ideasWithReview,
         ];
     
         return response()->json($data);

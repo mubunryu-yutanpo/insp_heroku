@@ -1,72 +1,65 @@
 <template>
   <div class="l-main__container">
+
     <div class="p-sort">
 
-      <div class="c-sort__contents">
-        <label for="category" class="c-sort__contents-label">カテゴリ:</label>
-        <select v-model="selectCategory" id="category" class="c-sort__contents-select">
-          <option value="" class="c-sort__contents-input">すべて</option>
-          <option v-for="cat in category" :key="cat.id" :value="cat.id" class="c-sort__contents-input">
+      <div class="c-sort">
+        <label for="category" class="c-sort-label">カテゴリ:</label>
+        <select v-model="selectCategory" id="category" class="c-sort-select">
+          <option value="" class="c-sort-input">すべて</option>
+          <option v-for="cat in category" :key="cat.id" :value="cat.id" class="c-sort-input">
             {{ cat.name }}
           </option>
         </select>    
       </div>
 
-      <div class="c-sort__contents">
-        <label for="price" class="c-sort__contents-label">価格:</label>
-        <select v-model="selectPrice" id="price" class="c-sort__contents-select">
-          <option value="low" class="c-sort__contents-input">安い順</option>
-          <option value="high" class="c-sort__contents-input">高い順</option>
+      <div class="c-sort">
+        <label for="price" class="c-sort-label">価格:</label>
+        <select v-model="selectPrice" id="price" class="c-sort-select">
+          <option value="low" class="c-sort-input">安い順</option>
+          <option value="high" class="c-sort-input">高い順</option>
         </select>
       </div>
 
-      <div class="c-sort__contents">
-        <label for="date" class="c-sort__contents-label">投稿日:</label>
-        <select v-model="selectDate" id="date" class="c-sort__contents-select">
-          <option value="new" class="c-sort__contents-input">古い順</option>
-          <option value="old" class="c-sort__contents-input">新しい順</option>
+      <div class="c-sort">
+        <label for="date" class="c-sort-label">投稿日:</label>
+        <select v-model="selectDate" id="date" class="c-sort-select">
+          <option value="new" class="c-sort-input">古い順</option>
+          <option value="old" class="c-sort-input">新しい順</option>
         </select>
       </div>
 
-      <div class="c-sort__contents">
+      <div class="c-sort">
         <button @click="getIdeas" class="c-sort__button">絞り込む</button>
       </div>
     </div>
 
-    <section class="p-main">
-      アイデアのリスト
-      <div class="c-idea__containar">
-        <div v-for="idea in filteredIdeas" :key="idea.id" class="c-idea__contents">
-          <div class="c-idea__contents-title">
-            <a :href="getIdeaLink(idea.id)" class="c-idea__contents-link">{{ idea.title }}</a>
-          </div>
-          <div class="c-idea__contens-sumbnail">
-            <img :src="idea.sumbnail" alt="" class="c-idea__contents-image">
-          </div>
-          <div class="c-idea__contents-summary">
-            <p class="c-idea__contents-text">{{ idea.summary }}</p>
-          </div>
-        </div>
-      </div>
+    <section class="p-list">
 
-
-      <div class="p-list">
-    
         <strong class="p-list__title">アイデア一覧</strong>
         <div class="p-list__container">
-          <div class="c-card card-ideas" v-for="idea in ideas" :key="idea.id">
-            <a :href="'/' + idea.id + '/idea'" class="c-card__link">
-              <img :src="idea.sumbnail" alt="" class="c-card__link-sumbnail">
-              <p class="c-card__link-text">{{ idea.title }}</p>
-              <p class="c-card__link-text">{{ idea.summary }}</p>
+
+          <div class="c-card card-ideas" v-for="idea in filteredIdeas" :key="idea.id">
+            <a :href="'/' + idea.id + '/idea'" class="c-card__link idea-link">
+              <img :src="idea.sumbnail" alt="" class="c-card__sumbnail">
+              <p class="c-card__category">{{ idea.category.name }}</p>
+
+              <div class="c-card__container">
+                <p class="c-card__title">{{ idea.title }}</p>
+
+                <div class="c-card__review">
+                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.review.score }"></i>
+                  <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.review.length }})</a>
+                </div>
+
+                <p class="c-card__price"><span class="">¥</span> {{ idea.price | numberWithCommas }}</p>
+                <p class="c-card__summary">{{ idea.summary }}</p>
+              </div>
             </a>
           </div>
         </div>
 
-      </div>
-
     </section>
-
   </div>
 </template>
 
@@ -138,10 +131,20 @@ export default {
       return `/${ideaId}/idea`; // ルートパラメータを含んだリンク先を生成
     },
   },
+  filters: {
+    numberWithCommas(value) {
+      if (value === 0) {
+        return '0';
+      }
+      if (!value) {
+        return '';
+      }
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    },
+  },
 };
 </script>
 
-
-<!-- アイデア一覧は、「タイトル・概要」パターンなら概要の色変える。「タイトル・ユーザー」パターンは？ -->
+<!-- SP用のスタイル入れて、他のコンポーネントも -->
 
 

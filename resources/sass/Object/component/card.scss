@@ -15,7 +15,47 @@
         transition: all .5s;
     }
 
-  
+    &__category{
+        background-color: $brown;
+        border-radius: 5px 0 5px 0;
+        color: $white;
+        padding: $space-5 $space-10;
+        position: absolute;
+        top: 0;
+    }
+
+    &__sumbnail{
+        border-radius: 5px 5px 0 0;
+        // max-height: 250px;
+        max-width: 100%;
+
+        @include mq(){
+            max-height: 400px;
+            width: 100%;    
+        }
+    }
+
+    &__container{
+        margin: $space_default $space-10;
+    }
+
+    &__title{
+        font-size: 17px;
+        margin: $space_default 0 $space_20;
+        text-decoration: underline;
+
+        &:hover{
+            color: $blue;
+        }
+    }
+
+    &__price{
+        color: $red;
+        font-size: $font-size_l;
+        font-weight: bold;
+        margin: $space_default 0;
+    }
+
     &.card-mypage{
         width: calc(33.3% - #{$space_default});
     }
@@ -25,28 +65,34 @@
         width: 100%;
     }
 
-        &__link{
-            color: $black;
+    &__link{
+        color: $black;
+        display: block;
 
-            &__sumbnail{
-                border-radius: 5px 5px 0 0;
-                // max-height: 250px;
-                max-width: 100%;
-    
-                @include mq(){
-                    max-height: 400px;
-                    width: 100%;    
-                }
-            }    
+        &.idea-link{
+            position: relative;
 
-            &-text{
-                font-size: 17px;
-                margin: $space_20 $space-10;
-
-                &:hover{
-                    color: $blue;
-                    text-decoration: underline;
-                }
+            &:hover{
+                color: $black;
+                text-decoration: none;
             }
         }
+
+        &-user{
+            display: flex;
+            padding: $space_default $space-10;
+
+            &-image{
+                border: 1px solid $gray;
+                border-radius: 100%;
+                height: 30px;
+                padding: 1px;
+                width: 30px;
+            }
+
+            &-name{
+                margin-left: $space-5;
+            }
+        }
+    }
 }

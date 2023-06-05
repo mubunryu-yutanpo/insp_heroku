@@ -5,8 +5,8 @@
     <div class="p-list__container">
       <div class="c-card" v-for="idea in checkIdeas" :key="idea.id">
         <a :href="'/' + idea.id + '/idea'" class="c-card__link">
-          <img :src="idea.sumbnail" alt="" class="c-card__link-sumbnail">
-          <p class="c-card__link-text">{{ idea.title }}</p>
+          <img :src="idea.sumbnail" alt="" class="c-card__sumbnail">
+          <p class="c-card__title">{{ idea.title }}</p>
         </a>
       </div>
     </div>

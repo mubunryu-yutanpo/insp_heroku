@@ -5,8 +5,8 @@
       <div class="p-list__container">
         <div class="c-card" v-for="post in postsList" :key="post.id">
           <a :href="'/' + post.id + '/idea'" class="c-card__link">
-            <img :src="post.sumbnail" alt="" class="c-card__link-sumbnail">
-            <p class="c-card__link-text">{{ post.title }}</p>
+            <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
+            <p class="c-card__title">{{ post.title }}</p>
           </a>
         </div>
       </div>

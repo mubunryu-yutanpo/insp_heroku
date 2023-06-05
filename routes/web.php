@@ -19,8 +19,11 @@ Route::get('/', function () {
 Auth::routes();
 // Authの認証
 Route::get('/api/checkLogin', 'HomeController@checkAuth');
+
 //全ユーザーのアイデア一覧画面
 Route::get('/index', 'HomeController@index')->name('ideas.index');
+// アイデアレビュー一覧へ
+Route::get('/idea/{id}/reviews', 'HomeController@ideaReviews')->name('idea.reviews');
 
 
 Route::group(['middleware' => 'auth'], function(){
@@ -30,8 +33,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/mypage', 'HomeController@mypage')->name('mypage');
     // マイレビュー一覧へ
     Route::get('/{id}/reviews', 'HomeController@myReviews')->name('reviews');
-    // アイデアレビュー一覧へ
-    Route::get('/idea/{id}/reviews', 'HomeController@ideaReviews')->name('idea.reviews');
     // 気になる一覧へ
     Route::get('/{id}/checkList', 'HomeController@checks')->name('checks');
     // 購入済み一覧へ
@@ -65,59 +66,34 @@ Route::group(['middleware' => 'auth'], function(){
   // ======================ログアウト============================
     Route::get('/logout', 'HomeController@logout')->name('logout');
 
-    
+});
 
-    // =================マイページ関連=====================
-    // Route::get('/mypage', 'HomeController@mypage')->name('mypage');
-    // // 気になるリスト一覧(気になるボタン押下時のルートに関して)
-    // Route::get('/{id}/checklist', 'HomeController@checklist')->name('checklist');
+// =================API関連=====================
+Route::middleware('api')->group(function() {
 
-    // // =================アイデア関連=======================
-    // // アイデア新規投稿
-    // Route::get('/new', 'IdeasController@new')->name('ideas.new');
-    // Route::post('/new/create', 'IdeasController@create')->name('ideas.create');
-    // // アイデア編集
-    // Route::get('/{id}/ideaEdit', 'IdeasController@edit')->name('ideas.edit');
-    // Route::post('/{id}/ideaEdit', 'IdeasController@update')->name('ideas.update');
-    // // 自分が投稿したアイデア一覧
-    // Route::get('/{id}/posted', 'IdeasController@posted')->name('ideas.mypost');
-    // // 購入したアイデア一覧
-    // Route::get('/{id}/bought', 'IdeasController@bought')->name('ideas.bought');
-    // // レビュー一覧
-    // Route::get('/{id}/review', 'IdeasController@review')->name('ideas.review');
-
-    // // =================JSONデータ用=======================
-    // Route::get('/ideas/json', 'IdeasController@json')->name('ideas.json');
-
-
-    });
-
-    // =================API関連=====================
-    Route::middleware('api')->group(function() {
-
-        // マイページ情報取得
-        Route::get('/api/mypage', 'Api\ApiController@mypage');
-        // アイデア詳細情報取得
-        Route::get('/api/idea/{id}/detail', 'Api\ApiController@ideaDetail');
-        // アイデア一覧情報取得
-        Route::get('/api/ideas', 'Api\ApiController@ideas');
-        // 投稿一覧取得
-        Route::get('/api/{id}/myPosts', 'Api\ApiController@myPosts');
-        // 気になる一覧取得
-        Route::get('/api/{id}/checks', 'Api\ApiController@checks');
-        // 購入したアイデア一覧取得
-        Route::get('/api/{id}/boughts', 'Api\ApiController@boughts');
-        // マイレビュー一覧取得
-        Route::get('/api/{id}/reviews', 'Api\ApiController@myReviews');
-        // アイデアレビュー一覧取得
-        Route::get('/api/idea/{id}/reviews', 'Api\ApiController@ideaReviews');
-        // 気になる切り替え
-        Route::post('/api/idea/{id}/toggleCheck', 'Api\ApiController@toggleCheck');
-        // アイデア購入
-        Route::get('api/idea/{id}/buy', 'Api\ApiController@buy');
-        // メッセージ取得
-        Route::get('api/message/{chat_id}/{seller_id}/{user_id}', 'Api\ApiController@message');
-        // メッセージ追加
-        Route::post('api/message/{chat_id}/{user_id}', 'Api\ApiController@addMessage');
-    });
+    // マイページ情報取得
+    Route::get('/api/mypage', 'Api\ApiController@mypage');
+    // アイデア詳細情報取得
+    Route::get('/api/idea/{id}/detail', 'Api\ApiController@ideaDetail');
+    // アイデア一覧情報取得
+    Route::get('/api/ideas', 'Api\ApiController@ideas');
+    // 投稿一覧取得
+    Route::get('/api/{id}/myPosts', 'Api\ApiController@myPosts');
+    // 気になる一覧取得
+    Route::get('/api/{id}/checks', 'Api\ApiController@checks');
+    // 購入したアイデア一覧取得
+    Route::get('/api/{id}/boughts', 'Api\ApiController@boughts');
+    // マイレビュー一覧取得
+    Route::get('/api/{id}/reviews', 'Api\ApiController@myReviews');
+    // アイデアレビュー一覧取得
+    Route::get('/api/idea/{id}/reviews', 'Api\ApiController@ideaReviews');
+    // 気になる切り替え
+    Route::post('/api/idea/{id}/toggleCheck', 'Api\ApiController@toggleCheck');
+    // アイデア購入
+    Route::get('api/idea/{id}/buy', 'Api\ApiController@buy');
+    // メッセージ取得
+    Route::get('api/message/{chat_id}/{seller_id}/{user_id}', 'Api\ApiController@message');
+    // メッセージ追加
+    Route::post('api/message/{chat_id}/{user_id}', 'Api\ApiController@addMessage');
+});
     
