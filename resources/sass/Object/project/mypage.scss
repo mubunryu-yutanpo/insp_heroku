@@ -41,10 +41,6 @@
             flex-wrap: wrap;
             margin-bottom: $space_default;
             padding: $space-10 0 0 $space_default;
-            @include mq(){
-                align-items: center;
-                flex-direction: column;
-            }
         }
 
         &-link{

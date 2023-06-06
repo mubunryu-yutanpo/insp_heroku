@@ -1927,6 +1927,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user_id'],
@@ -2740,6 +2746,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2760,7 +2769,6 @@ __webpack_require__.r(__webpack_exports__);
       _this.postList = response.data.postList;
       _this.boughtList = response.data.boughtList;
       _this.reviewList = response.data.reviewList;
-      console.log('ぽっぷな' + _this.user.avatar);
     })["catch"](function (error) {
       console.log(error);
     });
@@ -37766,23 +37774,36 @@ var render = function () {
       { staticClass: "p-list__container" },
       _vm._l(_vm.boughtList, function (bought) {
         return _c("div", { key: bought.id, staticClass: "c-card" }, [
-          _c(
-            "a",
-            {
-              staticClass: "c-card__link",
-              attrs: { href: "/" + bought.idea.id + "/idea" },
-            },
-            [
-              _c("img", {
-                staticClass: "c-card__sumbnail",
-                attrs: { src: bought.idea.sumbnail, alt: "" },
-              }),
+          _c("img", {
+            staticClass: "c-card__sumbnail",
+            attrs: { src: bought.idea.sumbnail, alt: "" },
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-card__about" }, [
+            _c("p", { staticClass: "c-card__title" }, [
+              _vm._v(_vm._s(bought.idea.title)),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-card__wrap" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "c-card__wrap-link",
+                  attrs: { href: "/" + bought.idea.id + "/idea" },
+                },
+                [_vm._v("詳細を見る")]
+              ),
               _vm._v(" "),
-              _c("p", { staticClass: "c-card__title" }, [
-                _vm._v(_vm._s(bought.idea.title)),
-              ]),
-            ]
-          ),
+              _c(
+                "a",
+                {
+                  staticClass: "c-card__wrap-link",
+                  attrs: { href: "/" + bought.idea.id + "/review/create" },
+                },
+                [_vm._v("レビューする")]
+              ),
+            ]),
+          ]),
         ])
       })
     ),
@@ -38529,7 +38550,7 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "p-list" }, [
-      _c("strong", { staticClass: "p-list__title" }, [_vm._v("アイデア一覧")]),
+      _c("h2", { staticClass: "p-list__title" }, [_vm._v("アイデア一覧")]),
       _vm._v(" "),
       _c(
         "div",
@@ -38553,7 +38574,7 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "c-card__container" }, [
-                  _c("p", { staticClass: "c-card__title" }, [
+                  _c("h3", { staticClass: "c-card__title card-ideas-title" }, [
                     _vm._v(_vm._s(idea.title)),
                   ]),
                   _vm._v(" "),
@@ -38582,7 +38603,9 @@ var render = function () {
                   ),
                   _vm._v(" "),
                   _c("p", { staticClass: "c-card__price" }, [
-                    _c("span", {}, [_vm._v("¥")]),
+                    _c("span", { staticClass: "u-font__size-m" }, [
+                      _vm._v("¥"),
+                    ]),
                     _vm._v(
                       " " + _vm._s(_vm._f("numberWithCommas")(idea.price))
                     ),
@@ -38720,6 +38743,10 @@ var render = function () {
                       attrs: { src: post.sumbnail, alt: "" },
                     }),
                     _vm._v(" "),
+                    _c("p", { staticClass: "c-card__category" }, [
+                      _vm._v(_vm._s(post.category.name)),
+                    ]),
+                    _vm._v(" "),
                     _c("p", { staticClass: "c-card__title" }, [
                       _vm._v(_vm._s(post.title)),
                     ]),
@@ -38776,6 +38803,10 @@ var render = function () {
                       attrs: { src: check.sumbnail, alt: "" },
                     }),
                     _vm._v(" "),
+                    _c("p", { staticClass: "c-card__category" }, [
+                      _vm._v(_vm._s(check.category.name)),
+                    ]),
+                    _vm._v(" "),
                     _c("p", { staticClass: "c-card__title" }, [
                       _vm._v(_vm._s(check.title)),
                     ]),
@@ -38824,16 +38855,20 @@ var render = function () {
                   "a",
                   {
                     staticClass: "c-card__link",
-                    attrs: { href: "/" + bought.idea.id + "/idea" },
+                    attrs: { href: "/" + bought.id + "/idea" },
                   },
                   [
                     _c("img", {
                       staticClass: "c-card__sumbnail",
-                      attrs: { src: bought.idea.sumbnail, alt: "" },
+                      attrs: { src: bought.sumbnail, alt: "" },
                     }),
                     _vm._v(" "),
+                    _c("p", { staticClass: "c-card__category" }, [
+                      _vm._v(_vm._s(bought.category.name)),
+                    ]),
+                    _vm._v(" "),
                     _c("p", { staticClass: "c-card__title" }, [
-                      _vm._v(_vm._s(bought.idea.title)),
+                      _vm._v(_vm._s(bought.title)),
                     ]),
                   ]
                 ),

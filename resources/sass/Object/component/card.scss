@@ -3,10 +3,21 @@
     border-radius: 5px;
     box-shadow: 0 0 3px 0 $blue;
     margin: 0 $space_default $space_default 0;
-    width: calc(33.3% - #{$space_default});
+    position: relative;
     transform: translateY(3px);
     transition: all .5s;
+    width: calc(33.3% - #{$space_default});
 
+
+    @include mq(){
+        width: calc(50% - #{$space_default});
+    }
+
+    @include mq(sm){
+        display: flex;
+        height: 150px;    //
+        width: 100%;
+    }
 
     &:hover{
         box-shadow: 0 3px 8px $blue;
@@ -33,19 +44,50 @@
             max-height: 400px;
             width: 100%;    
         }
+
+        @include mq(sm){     //
+            border-radius: 5px 0 0 5px;
+            height: 150px;
+            max-width: 40%;
+        }
     }
 
     &__container{
         margin: $space_default $space-10;
     }
 
+    &__about{
+
+        @include mq(sm){     //
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-evenly;
+            padding: $space-10 $space-10 0;
+        }
+    }
+    
+
     &__title{
+        color: $black;
         font-size: 17px;
-        margin: $space_default 0 $space_20;
+        margin: $space_20 $space_10;
         text-decoration: underline;
+
+        @include mq(sm){
+            font-size: $font-size_default;
+            margin: 0;
+            max-height: 150px;
+        }
 
         &:hover{
             color: $blue;
+        }
+
+        &.card-ideas-title{
+            font-weight: bold;
+            margin: $space-10 0;
         }
     }
 
@@ -53,16 +95,52 @@
         color: $red;
         font-size: $font-size_l;
         font-weight: bold;
-        margin: $space_default 0;
+        margin: $space_10 0;
     }
 
-    &.card-mypage{
-        width: calc(33.3% - #{$space_default});
-    }
+    &__wrap{   //
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        margin: $space_default;
 
-    @include mq(){
-        margin: $space_default auto;
-        width: 100%;
+        @include mq(){    //
+            flex-direction: column;
+            margin: $space_default;
+        }
+
+        @include mq(sm){    //
+            display: block;
+            margin: $space-5 0 0;
+        }
+
+        &-link{    //
+            background-color: $blue;
+            border-radius: 5px;
+            color: $white;
+            display: block;
+            font-size: $font-size_default;
+            font-weight: bold;
+            margin: $space-10 auto;
+            padding: $space_default $space-10;
+            text-align: center;
+            width: 100%;
+
+            &:hover{
+                background-color: $lightblue;
+            }
+
+            @include mq(){   //
+                margin: $space-10 auto;
+                padding: $space-10 $space-5;
+            }
+
+            @include mq(sm){    //
+                font-size: $font-size_m;
+                margin: 5px auto;
+                padding: 5px;
+            }
+        }
     }
 
     &__link{
@@ -70,7 +148,6 @@
         display: block;
 
         &.idea-link{
-            position: relative;
 
             &:hover{
                 color: $black;

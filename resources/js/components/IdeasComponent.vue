@@ -36,7 +36,7 @@
 
     <section class="p-list">
 
-        <strong class="p-list__title">アイデア一覧</strong>
+        <h2 class="p-list__title">アイデア一覧</h2>
         <div class="p-list__container">
 
           <div class="c-card card-ideas" v-for="idea in filteredIdeas" :key="idea.id">
@@ -45,14 +45,14 @@
               <p class="c-card__category">{{ idea.category.name }}</p>
 
               <div class="c-card__container">
-                <p class="c-card__title">{{ idea.title }}</p>
+                <h3 class="c-card__title card-ideas-title">{{ idea.title }}</h3>
 
                 <div class="c-card__review">
                   <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.review.score }"></i>
                   <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.review.length }})</a>
                 </div>
 
-                <p class="c-card__price"><span class="">¥</span> {{ idea.price | numberWithCommas }}</p>
+                <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
                 <p class="c-card__summary">{{ idea.summary }}</p>
               </div>
             </a>
@@ -145,6 +145,6 @@ export default {
 };
 </script>
 
-<!-- SP用のスタイル入れて、他のコンポーネントも -->
+<!-- LISTたち、マイページとアイデア一覧はいいとして、他のリストにタイトルだけってのはどうかなと。 -->
 
 

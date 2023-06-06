@@ -14,6 +14,7 @@
           <div class="c-card card-mypage" v-for="post in postList" :key="post.id">
             <a :href="'/' + post.id + '/idea'" class="c-card__link">
               <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
+              <p class="c-card__category">{{ post.category.name }}</p>
               <p class="c-card__title">{{ post.title }}</p>
             </a>
           </div>
@@ -31,6 +32,7 @@
           <div class="c-card card-mypage" v-for="check in checkList" :key="check.id">
             <a :href="'/' + check.id + '/idea'" class="c-card__link">
               <img :src="check.sumbnail" alt="" class="c-card__sumbnail">
+              <p class="c-card__category">{{ check.category.name }}</p>
               <p class="c-card__title">{{ check.title }}</p>
             </a>
           </div>
@@ -45,9 +47,10 @@
         <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="bought in boughtList" :key="bought.id">
-            <a :href="'/' + bought.idea.id + '/idea'" class="c-card__link">
-              <img :src="bought.idea.sumbnail" alt="" class="c-card__sumbnail">
-              <p class="c-card__title">{{ bought.idea.title }}</p>
+            <a :href="'/' + bought.id + '/idea'" class="c-card__link">
+              <img :src="bought.sumbnail" alt="" class="c-card__sumbnail">
+              <p class="c-card__category">{{ bought.category.name }}</p>
+              <p class="c-card__title">{{ bought.title }}</p>
             </a>
           </div>
           <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
@@ -103,7 +106,6 @@
             this.postList = response.data.postList;
             this.boughtList = response.data.boughtList;
             this.reviewList = response.data.reviewList;
-            console.log('ぽっぷな' + this.user.avatar);
         })
         .catch(error => {
             console.log(error);

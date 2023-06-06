@@ -19,4 +19,7 @@ class Idea extends Model
     public function review(){
         return $this->hasMany('App\Review');
     }
+    public function category(){
+        return $this->belongsTo('App\Category');
+    }
 }

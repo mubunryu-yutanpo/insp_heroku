@@ -38,8 +38,8 @@ class ApiController extends Controller
                   ->get();
 
         if($checks->isNotEmpty()){
-            $idea_id = $checks->pluck('idea_id');
-            $checkList = Idea::whereIn('id', $idea_id)->get();
+            $idea_id = $checks->pluck('idea_id')->toArray();
+            $checkList = Idea::whereIn('id', $idea_id)->with('category')->get();
         }
 
         // -- 投稿したアイデア取得 --
@@ -52,23 +52,23 @@ class ApiController extends Controller
                  ->get();
 
         if($posts->isNotEmpty()){
-            $postList = $posts;
+            $postList = $posts->load('category');
         }
         
         // -- 購入したアイデア取得 --
         
         $boughtList = null;
-        // 購入したアイデア最新5件表示
-        $boughts = $user->purchase()
-                   ->with('idea')
-                   ->get()
-                   ->sortByDesc('created_at')
-                   ->take(5);
+        $purchases = Purchase::where('user_id', $user_id)
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get();
         
-        if($boughts->isNotEmpty()){
-        $boughtList = $boughts;
-        }
-        
+        if ($purchases->isNotEmpty()) {
+            $ideaIds = $purchases->pluck('idea_id')->toArray();
+            $boughtList = Idea::whereIn('id', $ideaIds)
+                ->with('category')
+                ->get();
+        }        
         // -- レビュー取得 --
         
         $reviewList = null;
@@ -101,6 +101,84 @@ class ApiController extends Controller
     return response()->json($data);
     }        
     
+    
+    /* ================================================================
+      アイデア一覧取得
+    ================================================================*/
+
+    public function ideas(Request $request)
+    {
+        $query = Idea::query();
+    
+        // カテゴリ絞り込み
+        if ($request->has('category')) {
+            $query->where('category', $request->category);
+        }
+    
+        // 価格絞り込み
+        if ($request->has('price')) {
+            $priceOrder = $request->input('price');
+    
+            if ($priceOrder === 'low') {
+                $query->orderBy('price', 'asc');
+            } elseif ($priceOrder === 'high') {
+                $query->orderBy('price', 'desc');
+            }
+        }
+    
+        // 投稿日絞り込み
+        if ($request->has('date')) {
+            $dateOrder = $request->input('date');
+    
+            if ($dateOrder === 'new') {
+                $query->orderBy('created_at', 'desc');
+            } elseif ($dateOrder === 'old') {
+                $query->orderBy('created_at', 'asc');
+            }
+        }
+    
+        $ideas = $query->get();
+
+        // User 情報の取得
+        $userIds = $ideas->pluck('user_id')->unique();
+        $users = User::whereIn('id', $userIds)->get();
+    
+        // カテゴリ情報の取得
+        $categoryIds = $ideas->pluck('category_id')->unique();
+        $categories = Category::whereIn('id', $categoryIds)->get();
+    
+        // レビュー情報の取得
+        $ideaIds = $ideas->pluck('id')->unique();
+        $reviews = Review::whereIn('idea_id', $ideaIds)->get();
+    
+        // User 情報をアイデアに結合
+        $ideasWithUser = $ideas->map(function ($idea) use ($users) {
+            $user = $users->firstWhere('id', $idea->user_id);
+            $idea->user = $user;
+            return $idea;
+        });
+    
+        // カテゴリ情報をアイデアに結合
+        $ideasWithCategory = $ideasWithUser->map(function ($idea) use ($categories) {
+            $category = $categories->firstWhere('id', $idea->category_id);
+            $idea->category = $category;
+            return $idea;
+        });
+    
+        // レビュー情報をアイデアに結合
+        $ideasWithReview = $ideasWithCategory->map(function ($idea) use ($reviews) {
+            $review = $reviews->where('idea_id', $idea->id);
+            $idea->review = $review;
+            return $idea;
+        });
+    
+        $data = [
+            'ideas' => $ideasWithReview,
+        ];
+    
+        return response()->json($data);
+    }
+
 
     /* ================================================================
       アイデア詳細情報取得
@@ -299,84 +377,6 @@ class ApiController extends Controller
         $data = [
             'reviewList' => $reviewList,
             'theIdea'    => $ideas,
-        ];
-    
-        return response()->json($data);
-    }
-
-
-    /* ================================================================
-      アイデア一覧取得
-    ================================================================*/
-
-    public function ideas(Request $request)
-    {
-        $query = Idea::query();
-    
-        // カテゴリ絞り込み
-        if ($request->has('category')) {
-            $query->where('category', $request->category);
-        }
-    
-        // 価格絞り込み
-        if ($request->has('price')) {
-            $priceOrder = $request->input('price');
-    
-            if ($priceOrder === 'low') {
-                $query->orderBy('price', 'asc');
-            } elseif ($priceOrder === 'high') {
-                $query->orderBy('price', 'desc');
-            }
-        }
-    
-        // 投稿日絞り込み
-        if ($request->has('date')) {
-            $dateOrder = $request->input('date');
-    
-            if ($dateOrder === 'new') {
-                $query->orderBy('created_at', 'desc');
-            } elseif ($dateOrder === 'old') {
-                $query->orderBy('created_at', 'asc');
-            }
-        }
-    
-        $ideas = $query->get();
-
-        // User 情報の取得
-        $userIds = $ideas->pluck('user_id')->unique();
-        $users = User::whereIn('id', $userIds)->get();
-    
-        // カテゴリ情報の取得
-        $categoryIds = $ideas->pluck('category_id')->unique();
-        $categories = Category::whereIn('id', $categoryIds)->get();
-    
-        // レビュー情報の取得
-        $ideaIds = $ideas->pluck('id')->unique();
-        $reviews = Review::whereIn('idea_id', $ideaIds)->get();
-    
-        // User 情報をアイデアに結合
-        $ideasWithUser = $ideas->map(function ($idea) use ($users) {
-            $user = $users->firstWhere('id', $idea->user_id);
-            $idea->user = $user;
-            return $idea;
-        });
-    
-        // カテゴリ情報をアイデアに結合
-        $ideasWithCategory = $ideasWithUser->map(function ($idea) use ($categories) {
-            $category = $categories->firstWhere('id', $idea->category_id);
-            $idea->category = $category;
-            return $idea;
-        });
-    
-        // レビュー情報をアイデアに結合
-        $ideasWithReview = $ideasWithCategory->map(function ($idea) use ($reviews) {
-            $review = $reviews->where('idea_id', $idea->id);
-            $idea->review = $review;
-            return $idea;
-        });
-    
-        $data = [
-            'ideas' => $ideasWithReview,
         ];
     
         return response()->json($data);
