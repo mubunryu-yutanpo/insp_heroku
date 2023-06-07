@@ -96,12 +96,10 @@
       toggleCheck() {
         axios.post('/api/idea/' + this.idea_id + '/toggleCheck')
         .then(response => {
-            // チェックのトグル処理が成功した場合の処理を記述
             console.log('チェックのトグル処理が成功しました');
             this.isChecked = !this.isChecked; // チェックボックスの状態を反転させる
         })
         .catch(error => {
-            // エラーハンドリング
             console.error(error);
         });
        },

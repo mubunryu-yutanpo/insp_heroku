@@ -4,13 +4,16 @@
 
     &__container{
         background-color: #fff;
+        border-radius: 5px;
         margin: 0 auto;
         max-width:980px;
         padding: $space_40 $space_default;
         width: 100%;
 
         @include mq(){
+            margin: 0 auto;
             padding: $space_20 $space_default;
+            width: 95%;
         }
     }
   }

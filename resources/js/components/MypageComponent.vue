@@ -12,11 +12,17 @@
         <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="post in postList" :key="post.id">
-            <a :href="'/' + post.id + '/idea'" class="c-card__link">
-              <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
+            <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
+
+            <div class="c-card__about">
               <p class="c-card__category">{{ post.category.name }}</p>
               <p class="c-card__title">{{ post.title }}</p>
-            </a>
+
+              <div class="c-card__wrap">
+                <a :href="'/' + post.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
+                <a :href="'/' + post.id + '/idea/edit'" class="c-card__wrap-link">編集する</a>
+              </div>
+            </div>
           </div>
           <p class="p-mypage__contents-text" v-if="postList === null">投稿がまだありません。</p>
 
@@ -30,11 +36,20 @@
         <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="check in checkList" :key="check.id">
-            <a :href="'/' + check.id + '/idea'" class="c-card__link">
-              <img :src="check.sumbnail" alt="" class="c-card__sumbnail">
+            <img :src="check.sumbnail" alt="" class="c-card__sumbnail">
+
+            <div class="c-card__about">
               <p class="c-card__category">{{ check.category.name }}</p>
               <p class="c-card__title">{{ check.title }}</p>
-            </a>
+
+              <div class="c-card__wrap">
+                <a :href="'/' + check.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
+                <button class="c-card__wrap-link" @click="toggleCheck(check.id)">
+                  <i class="fa-solid fa-heart fa-fw"></i>気になるを解除
+                </button>
+              </div>
+            </div>
+
           </div>
           <p class="p-mypage__contents-text" v-if="checkList === null">気になるアイデアがまだありません。</p>
         </div>
@@ -46,15 +61,22 @@
         <strong class="p-mypage__contents-title">購入したアイデア</strong>
         <div class="p-mypage__contents-container">
           
-          <div class="c-card card-mypage" v-for="bought in boughtList" :key="bought.id">
-            <a :href="'/' + bought.id + '/idea'" class="c-card__link">
+          <div class="c-card" v-for="bought in boughtList" :key="bought.id">
               <img :src="bought.sumbnail" alt="" class="c-card__sumbnail">
-              <p class="c-card__category">{{ bought.category.name }}</p>
-              <p class="c-card__title">{{ bought.title }}</p>
-            </a>
-          </div>
-          <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
 
+              <div class="c-card__about">
+                <p class="c-card__category">{{ bought.category.name }}</p>
+                <p class="c-card__title">{{ bought.title }}</p>
+
+                <div class="c-card__wrap">
+                  <a :href="'/' + bought.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
+                  <a :href=" '/' + bought.id + '/review/create'" class="c-card__wrap-link">
+                    <i class="fa-solid fa-check fa-fw"></i>レビューする
+                  </a>
+                </div>
+              </div>
+              <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
+          </div>
         </div>
         <a :href="'/' + user.id + '/boughtList'" class="p-mypage__contents-link" v-if="boughtList !== null">全件表示</a>
       </section>
@@ -97,19 +119,36 @@
         reviewList: [],
       };
     },
-    mounted() {
-        axios.get('/api/mypage', {
-        })
-        .then(response => {
+    methods: {
+      toggleCheck(id) {
+        axios.post('/api/idea/' + id + '/toggleCheck')
+          .then(response => {
+            console.log('チェックのトグル処理が成功しました');
+            this.isChecked = !this.isChecked; // チェックボックスの状態を反転させる
+            
+            // ページの状態を更新するためにデータを再取得
+            this.getData();
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+      getData() {
+        axios.get('/api/mypage')
+          .then(response => {
             this.user = response.data.user;
             this.checkList = response.data.checkList;
             this.postList = response.data.postList;
             this.boughtList = response.data.boughtList;
             this.reviewList = response.data.reviewList;
-        })
-        .catch(error => {
+          })
+          .catch(error => {
             console.log(error);
-        });
+          });
+      }
+    },
+    mounted() {
+      this.getData();
     },
     
   };

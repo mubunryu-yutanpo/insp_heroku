@@ -47,6 +47,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/new', 'HomeController@new')->name('new');
     // アイデア詳細へ
     Route::get('/{id}/idea', 'HomeController@show')->name('ideas.show');
+    // アイデア編集へ
+    Route::get('/{id}/idea/edit', 'HomeController@edit')->name('idea.edit');
     // レビュー投稿へ
     Route::get('/{id}/review/create', 'HomeController@evaluation')->name('evaluation');
     // チャットルームへ
@@ -55,6 +57,9 @@ Route::group(['middleware' => 'auth'], function(){
   // =====================処理関連ルート===========================
     // アイデア投稿
     Route::post('/new', 'IdeasController@ideaCreate')->name('create');
+    // アイデア編集
+    Route::post('/{id}/idea/edit', 'IdeasController@ideaUpdate')->name('idea.update');
+    // アイデア削除
     // プロフ更新
     Route::post('/{id}/profEdit', 'MypagesController@update')->name('prof.update');
     // 退会
@@ -91,9 +96,9 @@ Route::middleware('api')->group(function() {
     Route::post('/api/idea/{id}/toggleCheck', 'Api\ApiController@toggleCheck');
     // アイデア購入
     Route::get('api/idea/{id}/buy', 'Api\ApiController@buy');
-    // メッセージ取得
+    // チャットメッセージ取得
     Route::get('api/message/{chat_id}/{seller_id}/{user_id}', 'Api\ApiController@message');
-    // メッセージ追加
+    // チャットメッセージ追加
     Route::post('api/message/{chat_id}/{user_id}', 'Api\ApiController@addMessage');
 });
     

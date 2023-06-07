@@ -2220,11 +2220,9 @@ __webpack_require__.r(__webpack_exports__);
     toggleCheck: function toggleCheck() {
       var _this2 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/idea/' + this.idea_id + '/toggleCheck').then(function (response) {
-        // チェックのトグル処理が成功した場合の処理を記述
         console.log('チェックのトグル処理が成功しました');
         _this2.isChecked = !_this2.isChecked; // チェックボックスの状態を反転させる
       })["catch"](function (error) {
-        // エラーハンドリング
         console.error(error);
       });
     },
@@ -2749,6 +2747,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2761,17 +2781,34 @@ __webpack_require__.r(__webpack_exports__);
       reviewList: []
     };
   },
+  methods: {
+    toggleCheck: function toggleCheck(id) {
+      var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/idea/' + id + '/toggleCheck').then(function (response) {
+        console.log('チェックのトグル処理が成功しました');
+        _this.isChecked = !_this.isChecked; // チェックボックスの状態を反転させる
+
+        // ページの状態を更新するためにデータを再取得
+        _this.getData();
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    getData: function getData() {
+      var _this2 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/mypage').then(function (response) {
+        _this2.user = response.data.user;
+        _this2.checkList = response.data.checkList;
+        _this2.postList = response.data.postList;
+        _this2.boughtList = response.data.boughtList;
+        _this2.reviewList = response.data.reviewList;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
   mounted: function mounted() {
-    var _this = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/mypage', {}).then(function (response) {
-      _this.user = response.data.user;
-      _this.checkList = response.data.checkList;
-      _this.postList = response.data.postList;
-      _this.boughtList = response.data.boughtList;
-      _this.reviewList = response.data.reviewList;
-    })["catch"](function (error) {
-      console.log(error);
-    });
+    this.getData();
   }
 });
 
@@ -38731,27 +38768,40 @@ var render = function () {
               "div",
               { key: post.id, staticClass: "c-card card-mypage" },
               [
-                _c(
-                  "a",
-                  {
-                    staticClass: "c-card__link",
-                    attrs: { href: "/" + post.id + "/idea" },
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "c-card__sumbnail",
-                      attrs: { src: post.sumbnail, alt: "" },
-                    }),
+                _c("img", {
+                  staticClass: "c-card__sumbnail",
+                  attrs: { src: post.sumbnail, alt: "" },
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-card__about" }, [
+                  _c("p", { staticClass: "c-card__category" }, [
+                    _vm._v(_vm._s(post.category.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__title" }, [
+                    _vm._v(_vm._s(post.title)),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-card__wrap" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "c-card__wrap-link",
+                        attrs: { href: "/" + post.id + "/idea" },
+                      },
+                      [_vm._v("詳細を見る")]
+                    ),
                     _vm._v(" "),
-                    _c("p", { staticClass: "c-card__category" }, [
-                      _vm._v(_vm._s(post.category.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "c-card__title" }, [
-                      _vm._v(_vm._s(post.title)),
-                    ]),
-                  ]
-                ),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "c-card__wrap-link",
+                        attrs: { href: "/" + post.id + "/idea/edit" },
+                      },
+                      [_vm._v("編集する")]
+                    ),
+                  ]),
+                ]),
               ]
             )
           }),
@@ -38791,27 +38841,47 @@ var render = function () {
               "div",
               { key: check.id, staticClass: "c-card card-mypage" },
               [
-                _c(
-                  "a",
-                  {
-                    staticClass: "c-card__link",
-                    attrs: { href: "/" + check.id + "/idea" },
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "c-card__sumbnail",
-                      attrs: { src: check.sumbnail, alt: "" },
-                    }),
+                _c("img", {
+                  staticClass: "c-card__sumbnail",
+                  attrs: { src: check.sumbnail, alt: "" },
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-card__about" }, [
+                  _c("p", { staticClass: "c-card__category" }, [
+                    _vm._v(_vm._s(check.category.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__title" }, [
+                    _vm._v(_vm._s(check.title)),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-card__wrap" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "c-card__wrap-link",
+                        attrs: { href: "/" + check.id + "/idea" },
+                      },
+                      [_vm._v("詳細を見る")]
+                    ),
                     _vm._v(" "),
-                    _c("p", { staticClass: "c-card__category" }, [
-                      _vm._v(_vm._s(check.category.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "c-card__title" }, [
-                      _vm._v(_vm._s(check.title)),
-                    ]),
-                  ]
-                ),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "c-card__wrap-link",
+                        on: {
+                          click: function ($event) {
+                            _vm.toggleCheck(check.id)
+                          },
+                        },
+                      },
+                      [
+                        _c("i", { staticClass: "fa-solid fa-heart fa-fw" }),
+                        _vm._v("気になるを解除\n            "),
+                      ]
+                    ),
+                  ]),
+                ]),
               ]
             )
           }),
@@ -38845,44 +38915,53 @@ var render = function () {
       _c(
         "div",
         { staticClass: "p-mypage__contents-container" },
-        [
-          _vm._l(_vm.boughtList, function (bought) {
-            return _c(
-              "div",
-              { key: bought.id, staticClass: "c-card card-mypage" },
-              [
+        _vm._l(_vm.boughtList, function (bought) {
+          return _c("div", { key: bought.id, staticClass: "c-card" }, [
+            _c("img", {
+              staticClass: "c-card__sumbnail",
+              attrs: { src: bought.sumbnail, alt: "" },
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-card__about" }, [
+              _c("p", { staticClass: "c-card__category" }, [
+                _vm._v(_vm._s(bought.category.name)),
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__title" }, [
+                _vm._v(_vm._s(bought.title)),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "c-card__wrap" }, [
                 _c(
                   "a",
                   {
-                    staticClass: "c-card__link",
+                    staticClass: "c-card__wrap-link",
                     attrs: { href: "/" + bought.id + "/idea" },
                   },
+                  [_vm._v("詳細を見る")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "c-card__wrap-link",
+                    attrs: { href: "/" + bought.id + "/review/create" },
+                  },
                   [
-                    _c("img", {
-                      staticClass: "c-card__sumbnail",
-                      attrs: { src: bought.sumbnail, alt: "" },
-                    }),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "c-card__category" }, [
-                      _vm._v(_vm._s(bought.category.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "c-card__title" }, [
-                      _vm._v(_vm._s(bought.title)),
-                    ]),
+                    _c("i", { staticClass: "fa-solid fa-check fa-fw" }),
+                    _vm._v("レビューする\n              "),
                   ]
                 ),
-              ]
-            )
-          }),
-          _vm._v(" "),
-          _vm.boughtList === null
-            ? _c("p", { staticClass: "p-mypage__contents-text" }, [
-                _vm._v("購入したアイデアはありません。"),
-              ])
-            : _vm._e(),
-        ],
-        2
+              ]),
+            ]),
+            _vm._v(" "),
+            _vm.boughtList === null
+              ? _c("p", { staticClass: "p-mypage__contents-text" }, [
+                  _vm._v("購入したアイデアはありません。"),
+                ])
+              : _vm._e(),
+          ])
+        })
       ),
       _vm._v(" "),
       _vm.boughtList !== null

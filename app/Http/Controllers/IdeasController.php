@@ -58,28 +58,6 @@ class IdeasController extends Controller
         return redirect('mypage')->with('flash_message', __('registered!'));
     }
 
-    // ========アイデア編集画面へ========
-    public function ideaEdit($id){
-        if(!ctype_digit($id)){
-            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
-        }
-
-        // 誰かに購入されている場合は編集・削除できなくなる
-        $canEdit = true;
-        $purchased = Purchase::where('idea_id', $id)->first();
-        if($purchased !== null){
-            $canEdit = false;
-        }
-        $idea = Idea::find($id);
-
-        $data = [
-            'idea'    => $idea,
-            'canEdit' => $canEdit,
-        ];
-
-        return response()->json($data);
-    }
-
 
     // ========アイデア編集（更新）処理========
     public function ideaUpdate(ValidRequest $request, $id){
