@@ -165,8 +165,9 @@ class HomeController extends Controller
             $can_edit = false;
         }
         $idea = Idea::find($id);
+        $category = Category::all();
 
-        return view('ideas/edit', compact('idea', 'can_edit'));
+        return view('ideas/edit', compact('idea', 'can_edit', 'category'));
     }
 
 

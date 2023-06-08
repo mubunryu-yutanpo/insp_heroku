@@ -20,7 +20,9 @@
 
               <div class="c-card__wrap">
                 <a :href="'/' + post.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-                <a :href="'/' + post.id + '/idea/edit'" class="c-card__wrap-link">編集する</a>
+                <a :href="'/' + post.id + '/idea/edit'" class="c-card__wrap-link">
+                  <i class="fa-solid fa-pencil fa-fw"></i>編集する
+                </a>
               </div>
             </div>
           </div>

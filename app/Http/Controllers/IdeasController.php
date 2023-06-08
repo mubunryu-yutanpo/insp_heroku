@@ -68,6 +68,7 @@ class IdeasController extends Controller
         $user_id = Auth::id();
         $idea = Idea::find($id);
 
+
         // サムネ画像のパス名を変数に
         if($request->sumbnail !== null){
             $avatar = $request->file('sumbnail');
@@ -85,7 +86,7 @@ class IdeasController extends Controller
         // DB情報更新
         $idea->update([
             'user_id'     => $user_id,
-            'category_id' => $request->category_id,
+            'category_id' => $request->category,
             'title'       => $request->title,
             'sumbnail'    => '/uploads/'.$filename,
             'summary'     => $request->summary,

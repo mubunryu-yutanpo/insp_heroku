@@ -32,6 +32,7 @@ Vue.component('myposts-component' , require('./components/MyPostsComponent.vue')
 Vue.component('detail-component' , require('./components/DetailComponent.vue').default);
 Vue.component('evaluation-component' , require('./components/EvaluationComponent.vue').default);
 Vue.component('chat-component' , require('./components/ChatComponent.vue').default);
+Vue.component('preview-component' , require('./components/PreviewComponent.vue').default);
 
 
 
