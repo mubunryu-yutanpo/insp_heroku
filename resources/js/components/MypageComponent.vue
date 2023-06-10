@@ -12,19 +12,25 @@
         <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="post in postList" :key="post.id">
-            <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
-
-            <div class="c-card__about">
-              <p class="c-card__category">{{ post.category.name }}</p>
-              <p class="c-card__title">{{ post.title }}</p>
-
-              <div class="c-card__wrap">
-                <a :href="'/' + post.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-                <a :href="'/' + post.id + '/idea/edit'" class="c-card__wrap-link">
-                  <i class="fa-solid fa-pencil fa-fw"></i>編集する
-                </a>
+            <div class="c-card__main">
+              <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
+              <div class="c-card__about">
+                <p class="c-card__category">{{ post.category.name }}</p>
+                <p class="c-card__title">{{ post.title }}</p>
+                <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ post.price | numberWithCommas }}</p>
+                <div class="c-card__review">
+                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= post.averageScore }"></i>
+                  <a :href=" '/idea/' + post.id + '/reviews' " class="c-card__review-link">({{ post.review.length }})</a>
+                </div>
               </div>
             </div>
+            <div class="c-card__wrap">
+              <a :href="'/' + post.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
+              <a :href="'/' + post.id + '/idea/edit'" class="c-card__wrap-link">
+                <i class="fa-solid fa-pencil fa-fw"></i>編集する
+              </a>
+            </div>
+
           </div>
           <p class="p-mypage__contents-text" v-if="postList === null">投稿がまだありません。</p>
 
@@ -38,20 +44,25 @@
         <div class="p-mypage__contents-container">
           
           <div class="c-card card-mypage" v-for="check in checkList" :key="check.id">
-            <img :src="check.sumbnail" alt="" class="c-card__sumbnail">
+            <div class="c-card__main">
+              <img :src="check.sumbnail" alt="" class="c-card__sumbnail">
+              <div class="c-card__about">
+                <p class="c-card__category">{{ check.category.name }}</p>
+                <p class="c-card__title">{{ check.title }}</p>
+                <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ check.price | numberWithCommas }}</p>
+                <div class="c-card__review">
+                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= check.averageScore }"></i>
+                  <a :href=" '/idea/' + check.id + '/reviews' " class="c-card__review-link">({{ check.review.length }})</a>
+                </div>
 
-            <div class="c-card__about">
-              <p class="c-card__category">{{ check.category.name }}</p>
-              <p class="c-card__title">{{ check.title }}</p>
-
-              <div class="c-card__wrap">
+              </div>
+            </div>
+            <div class="c-card__wrap">
                 <a :href="'/' + check.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
                 <button class="c-card__wrap-link" @click="toggleCheck(check.id)">
                   <i class="fa-solid fa-heart fa-fw"></i>気になるを解除
                 </button>
-              </div>
             </div>
-
           </div>
           <p class="p-mypage__contents-text" v-if="checkList === null">気になるアイデアがまだありません。</p>
         </div>
@@ -64,20 +75,27 @@
         <div class="p-mypage__contents-container">
           
           <div class="c-card" v-for="bought in boughtList" :key="bought.id">
+            <div class="c-card__main">
               <img :src="bought.sumbnail" alt="" class="c-card__sumbnail">
-
               <div class="c-card__about">
                 <p class="c-card__category">{{ bought.category.name }}</p>
                 <p class="c-card__title">{{ bought.title }}</p>
-
-                <div class="c-card__wrap">
-                  <a :href="'/' + bought.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-                  <a :href=" '/' + bought.id + '/review/create'" class="c-card__wrap-link">
-                    <i class="fa-solid fa-check fa-fw"></i>レビューする
-                  </a>
+                <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ bought.price | numberWithCommas }}</p>
+                <div class="c-card__review">
+                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= bought.averageScore }"></i>
+                  <a :href=" '/idea/' + bought.id + '/reviews' " class="c-card__review-link">({{ bought.review.length }})</a>
                 </div>
+
               </div>
-              <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
+            </div>
+            <div class="c-card__wrap">
+              <a :href="'/' + bought.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
+              <a :href=" '/' + bought.id + '/review/create'" class="c-card__wrap-link">
+                <i class="fa-solid fa-check fa-fw"></i>レビューする
+              </a>
+            </div>
+
+            <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
           </div>
         </div>
         <a :href="'/' + user.id + '/boughtList'" class="p-mypage__contents-link" v-if="boughtList !== null">全件表示</a>
@@ -143,11 +161,35 @@
             this.postList = response.data.postList;
             this.boughtList = response.data.boughtList;
             this.reviewList = response.data.reviewList;
+            this.getAverageScore([...this.boughtList, ...this.checkList, ...this.postList]);
           })
           .catch(error => {
             console.log(error);
           });
-      }
+      },
+      getAverageScore(ideas) {
+        ideas.forEach(idea => {
+          axios.get('/api/idea/' + idea.id + '/average')
+            .then(response => {
+              idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
+            })
+            .catch(error => {
+              console.error(error);
+            });
+        });
+      },
+    },
+    filters: {
+      // 値段の単位をカンマ区切りにする
+      numberWithCommas(value) {
+        if (value === 0) {
+          return '0';
+        }
+        if (!value) {
+          return '';
+        }
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
     },
     mounted() {
       this.getData();

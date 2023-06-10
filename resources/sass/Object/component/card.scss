@@ -15,7 +15,7 @@
 
     @include mq(sm){
         display: flex;
-        height: 150px;    //
+        flex-direction: column;
         margin-right: 0;
         width: 100%;
     }
@@ -25,6 +25,15 @@
         transform: scale(1.05);
         transform: translateY(-3px);
         transition: all .5s;
+    }
+
+    &__main{
+        @include mq(sm){
+            box-shadow: 0 0 5px 0 #ebe7e0;
+            display: flex;
+            flex-direction: row;
+            height: 150px;
+        }
     }
 
     &__category{
@@ -46,8 +55,42 @@
         }
     }
 
+    &__title{
+        color: $black;
+        font-size: 17px;
+        margin-bottom: $space_default;
+        text-decoration: underline;
+
+
+        @include mq(sm){
+            font-size: $font-size_default;
+            margin: 0;
+        }
+
+        &:hover{
+            color: $blue;
+        }
+
+        &.card-ideas-title{
+            font-weight: bold;
+            margin: $space-10 0;
+        }
+    }
+
+    &__price{
+        color: $red;
+        font-size: $font-size_l;
+        font-weight: bold;
+        margin: $space_10 0 0;
+    }
+
+    &__text{
+        margin-bottom: 0;
+    }
+
+
     &__sumbnail{
-        border-radius: 5px 5px 0 0;
+        border-radius: 5px 0 0 0;
         max-width: 100%;
         height: 220px;
 
@@ -71,52 +114,22 @@
     }
 
     &__about{
+        height: 180px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: $space_20 $space_default 0;
 
         @include mq(sm){     //
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            justify-content: space-evenly;
-            margin: 0 auto;
-            padding: $space-10 $space-10 0;
-            width: calc(100% - 150px);
+            height: 150px;
+            margin: 0 $space-5;
+            padding: $space-10 0;
+            width: 100%;
         }
     }
     
-
-    &__title{
-        color: $black;
-        font-size: 17px;
-        height: 50px;
-        margin: $space_20 $space_10;
-        overflow-x: hidden;
-        overflow-y: auto;
-        text-decoration: underline;
-
-
-        @include mq(sm){
-            font-size: $font-size_default;
-            margin: 0;
-        }
-
-        &:hover{
-            color: $blue;
-        }
-
-        &.card-ideas-title{
-            font-weight: bold;
-            margin: $space-10 0;
-        }
-    }
-
-    &__price{
-        color: $red;
-        font-size: $font-size_l;
-        font-weight: bold;
-        margin: $space_10 0;
-    }
-
     &__wrap{   //
         display: flex;
         flex-direction: column;
@@ -129,8 +142,8 @@
         }
 
         @include mq(sm){    //
-            display: block;
-            margin: $space-5 0 0;
+            flex-direction: row;
+            margin: $space-5;
         }
 
         &-link{    //
@@ -156,8 +169,12 @@
 
             @include mq(sm){    //
                 font-size: $font-size_m;
-                margin: $space-5 auto;
-                padding: $space-5;
+                margin: $space-5;
+                padding: $space-10 $space-5;
+
+                &:first-child{
+                    margin-right: $space-5;
+                }
             }
         }
     }
@@ -192,3 +209,4 @@
         }
     }
 }
+

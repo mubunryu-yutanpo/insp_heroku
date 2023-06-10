@@ -1933,6 +1933,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user_id'],
@@ -1942,16 +1951,37 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.fetchBoughtIdeas();
+    this.getBoughtIdeas();
   },
   methods: {
-    fetchBoughtIdeas: function fetchBoughtIdeas() {
+    getBoughtIdeas: function getBoughtIdeas() {
       var _this = this;
       axios.get('/api/' + this.user_id + '/boughts').then(function (response) {
         _this.boughtList = response.data.boughtList;
       })["catch"](function (error) {
         console.error(error);
       });
+    },
+    getAverageScore: function getAverageScore() {
+      this.boughtList.forEach(function (idea) {
+        axios.get('/api/idea/' + idea.id + '/average').then(function (response) {
+          idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      });
+    }
+  },
+  filters: {
+    // 値段の単位をカンマ区切りにする
+    numberWithCommas: function numberWithCommas(value) {
+      if (value === 0) {
+        return '0';
+      }
+      if (!value) {
+        return '';
+      }
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
   }
 });
@@ -2089,6 +2119,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user_id'],
@@ -2098,16 +2143,50 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.fetchCheckIdeas();
+    this.getCheckIdeas();
   },
   methods: {
-    fetchCheckIdeas: function fetchCheckIdeas() {
+    getCheckIdeas: function getCheckIdeas() {
       var _this = this;
       axios.get('/api/' + this.user_id + '/checks').then(function (response) {
         _this.checkIdeas = response.data.checkIdeas;
+        _this.getAverageScore();
       })["catch"](function (error) {
         console.error(error);
       });
+    },
+    toggleCheck: function toggleCheck(id) {
+      var _this2 = this;
+      axios.post('/api/idea/' + id + '/toggleCheck').then(function (response) {
+        console.log('チェックのトグル処理が成功しました');
+        _this2.isChecked = !_this2.isChecked; // チェックボックスの状態を反転させる
+
+        // ページの状態を更新するためにデータを再取得
+        _this2.getData();
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    getAverageScore: function getAverageScore() {
+      this.checkIdeas.forEach(function (idea) {
+        axios.get('/api/idea/' + idea.id + '/average').then(function (response) {
+          idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      });
+    }
+  },
+  filters: {
+    // 値段の単位をカンマ区切りにする
+    numberWithCommas: function numberWithCommas(value) {
+      if (value === 0) {
+        return '0';
+      }
+      if (!value) {
+        return '';
+      }
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
   }
 });
@@ -2448,6 +2527,13 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 //
 //
 //
@@ -2513,6 +2599,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2528,7 +2621,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getIdeas();
   },
-  computed: {
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['isLogin'])), {}, {
     filteredIdeas: function filteredIdeas() {
       var _this = this;
       var filteredIdeas = this.ideas;
@@ -2565,7 +2658,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       return filteredIdeas;
     }
-  },
+  }),
   methods: {
     getIdeas: function getIdeas() {
       var _this2 = this;
@@ -2575,11 +2668,26 @@ __webpack_require__.r(__webpack_exports__);
         console.error(error);
       });
     },
-    getIdeaLink: function getIdeaLink(ideaId) {
-      return "/".concat(ideaId, "/idea"); // ルートパラメータを含んだリンク先を生成
+    getAverageScore: function getAverageScore() {
+      this.filteredIdeas.forEach(function (idea) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/idea/' + idea.id + '/average').then(function (response) {
+          idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      });
+    },
+    toggleCheck: function toggleCheck(id) {
+      var _this3 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/idea/' + id + '/toggleCheck').then(function (response) {
+        console.log('チェックのトグル処理が成功しました');
+        _this3.isChecked = !_this3.isChecked; // チェックボックスの状態を反転させる
+        _this3.getIdeas();
+      })["catch"](function (error) {
+        console.error(error);
+      });
     }
   },
-
   filters: {
     numberWithCommas: function numberWithCommas(value) {
       if (value === 0) {
@@ -2624,6 +2732,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user_id'],
@@ -2641,9 +2765,31 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       axios.get('/api/' + this.user_id + '/myPosts').then(function (response) {
         _this.postsList = response.data.postsList;
+        _this.getAverageScore();
       })["catch"](function (error) {
         console.error(error);
       });
+    },
+    getAverageScore: function getAverageScore() {
+      this.postsList.forEach(function (idea) {
+        axios.get('/api/idea/' + idea.id + '/average').then(function (response) {
+          idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      });
+    }
+  },
+  filters: {
+    // 値段の単位をカンマ区切りにする
+    numberWithCommas: function numberWithCommas(value) {
+      if (value === 0) {
+        return '0';
+      }
+      if (!value) {
+        return '';
+      }
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
   }
 });
@@ -2661,6 +2807,30 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2804,9 +2974,31 @@ __webpack_require__.r(__webpack_exports__);
         _this2.postList = response.data.postList;
         _this2.boughtList = response.data.boughtList;
         _this2.reviewList = response.data.reviewList;
+        _this2.getAverageScore([].concat(_toConsumableArray(_this2.boughtList), _toConsumableArray(_this2.checkList), _toConsumableArray(_this2.postList)));
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    getAverageScore: function getAverageScore(ideas) {
+      ideas.forEach(function (idea) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/idea/' + idea.id + '/average').then(function (response) {
+          idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
+        })["catch"](function (error) {
+          console.error(error);
+        });
+      });
+    }
+  },
+  filters: {
+    // 値段の単位をカンマ区切りにする
+    numberWithCommas: function numberWithCommas(value) {
+      if (value === 0) {
+        return '0';
+      }
+      if (!value) {
+        return '';
+      }
+      return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
   },
   mounted: function mounted() {
@@ -37868,35 +38060,79 @@ var render = function () {
       { staticClass: "p-list__container" },
       _vm._l(_vm.boughtList, function (bought) {
         return _c("div", { key: bought.id, staticClass: "c-card" }, [
-          _c("img", {
-            staticClass: "c-card__sumbnail",
-            attrs: { src: bought.idea.sumbnail, alt: "" },
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-card__about" }, [
-            _c("p", { staticClass: "c-card__title" }, [
-              _vm._v(_vm._s(bought.idea.title)),
-            ]),
+          _c("div", { staticClass: "c-card__main" }, [
+            _c("img", {
+              staticClass: "c-card__sumbnail",
+              attrs: { src: bought.idea.sumbnail, alt: "" },
+            }),
             _vm._v(" "),
-            _c("div", { staticClass: "c-card__wrap" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "c-card__wrap-link",
-                  attrs: { href: "/" + bought.idea.id + "/idea" },
-                },
-                [_vm._v("詳細を見る")]
-              ),
+            _c("div", { staticClass: "c-card__about" }, [
+              _c("p", { staticClass: "c-card__category" }, [
+                _vm._v(_vm._s(bought.idea.category.name)),
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__title" }, [
+                _vm._v(_vm._s(bought.idea.title)),
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__price" }, [
+                _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
+                _vm._v(
+                  " " + _vm._s(_vm._f("numberWithCommas")(bought.idea.price))
+                ),
+              ]),
               _vm._v(" "),
               _c(
-                "a",
-                {
-                  staticClass: "c-card__wrap-link",
-                  attrs: { href: "/" + bought.idea.id + "/review/create" },
-                },
-                [_vm._v("レビューする")]
+                "div",
+                { staticClass: "c-card__review" },
+                [
+                  _vm._l(5, function (n) {
+                    return _c("i", {
+                      key: n,
+                      staticClass: "c-card__review-icon fa-solid fa-star",
+                      class: { active: n <= bought.averageScore },
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "c-card__review-link",
+                      attrs: { href: "/idea/" + bought.id + "/reviews" },
+                    },
+                    [_vm._v("(" + _vm._s(bought.idea.review.length) + ")")]
+                  ),
+                ],
+                2
               ),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__text" }, [
+                _vm._v(_vm._s(bought.idea.description)),
+              ]),
             ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-card__wrap" }, [
+            _c(
+              "a",
+              {
+                staticClass: "c-card__wrap-link",
+                attrs: { href: "/" + bought.idea.id + "/idea" },
+              },
+              [_vm._v("詳細を見る")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "c-card__wrap-link",
+                attrs: { href: "/" + bought.idea.id + "/review/create" },
+              },
+              [
+                _c("i", { staticClass: "fa-solid fa-check fa-fw" }),
+                _vm._v("レビューする\n        "),
+              ]
+            ),
           ]),
         ])
       })
@@ -38066,23 +38302,82 @@ var render = function () {
       { staticClass: "p-list__container" },
       _vm._l(_vm.checkIdeas, function (idea) {
         return _c("div", { key: idea.id, staticClass: "c-card" }, [
-          _c(
-            "a",
-            {
-              staticClass: "c-card__link",
-              attrs: { href: "/" + idea.id + "/idea" },
-            },
-            [
-              _c("img", {
-                staticClass: "c-card__sumbnail",
-                attrs: { src: idea.sumbnail, alt: "" },
-              }),
+          _c("div", { staticClass: "c-card__main" }, [
+            _c("img", {
+              staticClass: "c-card__sumbnail",
+              attrs: { src: idea.sumbnail, alt: "" },
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-card__about" }, [
+              _c("p", { staticClass: "c-card__category" }, [
+                _vm._v(_vm._s(idea.category.name)),
+              ]),
               _vm._v(" "),
               _c("p", { staticClass: "c-card__title" }, [
                 _vm._v(_vm._s(idea.title)),
               ]),
-            ]
-          ),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__price" }, [
+                _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
+                _vm._v(" " + _vm._s(_vm._f("numberWithCommas")(idea.price))),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-card__review" },
+                [
+                  _vm._l(5, function (n) {
+                    return _c("i", {
+                      key: n,
+                      staticClass: "c-card__review-icon fa-solid fa-star",
+                      class: { active: n <= idea.averageScore },
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "c-card__review-link",
+                      attrs: { href: "/idea/" + idea.id + "/reviews" },
+                    },
+                    [_vm._v("(" + _vm._s(idea.review.length) + ")")]
+                  ),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__text" }, [
+                _vm._v(_vm._s(idea.description)),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-card__wrap" }, [
+            _c(
+              "a",
+              {
+                staticClass: "c-card__wrap-link",
+                attrs: { href: "/" + idea.id + "/idea" },
+              },
+              [_vm._v("詳細を見る")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "c-card__wrap-link",
+                on: {
+                  click: function ($event) {
+                    _vm.toggleCheck(_vm.check.id)
+                  },
+                },
+              },
+              [
+                _c("i", { staticClass: "fa-solid fa-heart fa-fw" }),
+                _vm._v("気になるを解除\n        "),
+              ]
+            ),
+          ]),
         ])
       })
     ),
@@ -38475,6 +38770,8 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "l-main__container" }, [
     _c("div", { staticClass: "p-sort" }, [
+      _c("button", {}, [_vm._v("並び替え")]),
+      _vm._v(" "),
       _c("div", { staticClass: "c-sort" }, [
         _c(
           "label",
@@ -38651,66 +38948,97 @@ var render = function () {
         { staticClass: "p-list__container" },
         _vm._l(_vm.filteredIdeas, function (idea) {
           return _c("div", { key: idea.id, staticClass: "c-card card-ideas" }, [
-            _c(
-              "a",
-              {
-                staticClass: "c-card__link idea-link",
-                attrs: { href: "/" + idea.id + "/idea" },
-              },
-              [
-                _c("img", {
-                  staticClass: "c-card__sumbnail",
-                  attrs: { src: idea.sumbnail, alt: "" },
-                }),
-                _vm._v(" "),
+            _c("div", { staticClass: "c-card__main" }, [
+              _c("img", {
+                staticClass: "c-card__sumbnail",
+                attrs: { src: idea.sumbnail, alt: "" },
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "c-card__about" }, [
                 _c("p", { staticClass: "c-card__category" }, [
                   _vm._v(_vm._s(idea.category.name)),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "c-card__container" }, [
-                  _c("h3", { staticClass: "c-card__title card-ideas-title" }, [
-                    _vm._v(_vm._s(idea.title)),
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "c-card__review" },
-                    [
-                      _vm._l(5, function (n) {
-                        return _c("i", {
-                          key: n,
-                          staticClass: "c-card__review-icon fa-solid fa-star",
-                          class: { active: n <= idea.review.score },
-                        })
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "c-card__review-link",
-                          attrs: { href: "/idea/" + idea.id + "/reviews" },
-                        },
-                        [_vm._v("(" + _vm._s(idea.review.length) + ")")]
-                      ),
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "c-card__price" }, [
-                    _c("span", { staticClass: "u-font__size-m" }, [
-                      _vm._v("¥"),
-                    ]),
-                    _vm._v(
-                      " " + _vm._s(_vm._f("numberWithCommas")(idea.price))
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "c-card__summary" }, [
-                    _vm._v(_vm._s(idea.summary)),
-                  ]),
+                _c("h3", { staticClass: "c-card__title" }, [
+                  _vm._v(_vm._s(idea.title)),
                 ]),
-              ]
-            ),
+                _vm._v(" "),
+                _c("p", { staticClass: "c-card__price" }, [
+                  _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
+                  _vm._v(" " + _vm._s(_vm._f("numberWithCommas")(idea.price))),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "c-card__review" },
+                  [
+                    _vm._l(5, function (n) {
+                      return _c("i", {
+                        key: n,
+                        staticClass: "c-card__review-icon fa-solid fa-star",
+                        class: { active: n <= idea.averageScore },
+                      })
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "c-card__review-link",
+                        attrs: { href: "/idea/" + idea.id + "/reviews" },
+                      },
+                      [_vm._v("(" + _vm._s(idea.review.length) + ")")]
+                    ),
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "c-card__text" }, [
+                  _vm._v(_vm._s(idea.summary)),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-card__wrap" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "c-card__wrap-link",
+                  attrs: { href: "/" + idea.id + "/idea" },
+                },
+                [_vm._v("詳細を見る")]
+              ),
+              _vm._v(" "),
+              _vm.isLogin
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "c-card__wrap-link",
+                      on: {
+                        click: function ($event) {
+                          _vm.toggleCheck(idea.id)
+                        },
+                      },
+                    },
+                    [
+                      idea.isChecked
+                        ? _c("span", [
+                            _c("i", { staticClass: "fa-solid fa-heart fa-fw" }),
+                            _vm._v("気になるを解除"),
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !idea.isChecked
+                        ? _c("span", [
+                            _c("i", {
+                              staticClass: "fa-regular fa-heart fa-fw",
+                            }),
+                            _vm._v("気になるに追加"),
+                          ])
+                        : _vm._e(),
+                    ]
+                  )
+                : _vm._e(),
+            ]),
           ])
         })
       ),
@@ -38749,23 +39077,78 @@ var render = function () {
       { staticClass: "p-list__container" },
       _vm._l(_vm.postsList, function (post) {
         return _c("div", { key: post.id, staticClass: "c-card" }, [
-          _c(
-            "a",
-            {
-              staticClass: "c-card__link",
-              attrs: { href: "/" + post.id + "/idea" },
-            },
-            [
-              _c("img", {
-                staticClass: "c-card__sumbnail",
-                attrs: { src: post.sumbnail, alt: "" },
-              }),
+          _c("div", { staticClass: "c-card__main" }, [
+            _c("img", {
+              staticClass: "c-card__sumbnail",
+              attrs: { src: post.sumbnail, alt: "" },
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-card__about" }, [
+              _c("p", { staticClass: "c-card__category" }, [
+                _vm._v(_vm._s(post.category.name)),
+              ]),
               _vm._v(" "),
               _c("p", { staticClass: "c-card__title" }, [
                 _vm._v(_vm._s(post.title)),
               ]),
-            ]
-          ),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__price" }, [
+                _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
+                _vm._v(" " + _vm._s(_vm._f("numberWithCommas")(post.price))),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-card__review" },
+                [
+                  _vm._l(5, function (n) {
+                    return _c("i", {
+                      key: n,
+                      staticClass: "c-card__review-icon fa-solid fa-star",
+                      class: { active: n <= post.averageScore },
+                    })
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "c-card__review-link",
+                      attrs: { href: "/idea/" + post.id + "/reviews" },
+                    },
+                    [_vm._v("(" + _vm._s(post.review.length) + ")")]
+                  ),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-card__text" }, [
+                _vm._v(_vm._s(post.description)),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-card__wrap" }, [
+            _c(
+              "a",
+              {
+                staticClass: "c-card__wrap-link",
+                attrs: { href: "/" + post.id + "/idea" },
+              },
+              [_vm._v("詳細を見る")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "c-card__wrap-link",
+                attrs: { href: "/" + post.id + "/idea/edit" },
+              },
+              [
+                _c("i", { staticClass: "fa-solid fa-pencil fa-fw" }),
+                _vm._v("編集する\n          "),
+              ]
+            ),
+          ]),
         ])
       })
     ),
@@ -38825,42 +39208,77 @@ var render = function () {
               "div",
               { key: post.id, staticClass: "c-card card-mypage" },
               [
-                _c("img", {
-                  staticClass: "c-card__sumbnail",
-                  attrs: { src: post.sumbnail, alt: "" },
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-card__about" }, [
-                  _c("p", { staticClass: "c-card__category" }, [
-                    _vm._v(_vm._s(post.category.name)),
-                  ]),
+                _c("div", { staticClass: "c-card__main" }, [
+                  _c("img", {
+                    staticClass: "c-card__sumbnail",
+                    attrs: { src: post.sumbnail, alt: "" },
+                  }),
                   _vm._v(" "),
-                  _c("p", { staticClass: "c-card__title" }, [
-                    _vm._v(_vm._s(post.title)),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-card__wrap" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "c-card__wrap-link",
-                        attrs: { href: "/" + post.id + "/idea" },
-                      },
-                      [_vm._v("詳細を見る")]
-                    ),
+                  _c("div", { staticClass: "c-card__about" }, [
+                    _c("p", { staticClass: "c-card__category" }, [
+                      _vm._v(_vm._s(post.category.name)),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "c-card__title" }, [
+                      _vm._v(_vm._s(post.title)),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "c-card__price" }, [
+                      _c("span", { staticClass: "u-font__size-m" }, [
+                        _vm._v("¥"),
+                      ]),
+                      _vm._v(
+                        " " + _vm._s(_vm._f("numberWithCommas")(post.price))
+                      ),
+                    ]),
                     _vm._v(" "),
                     _c(
-                      "a",
-                      {
-                        staticClass: "c-card__wrap-link",
-                        attrs: { href: "/" + post.id + "/idea/edit" },
-                      },
+                      "div",
+                      { staticClass: "c-card__review" },
                       [
-                        _c("i", { staticClass: "fa-solid fa-pencil fa-fw" }),
-                        _vm._v("編集する\n            "),
-                      ]
+                        _vm._l(5, function (n) {
+                          return _c("i", {
+                            key: n,
+                            staticClass: "c-card__review-icon fa-solid fa-star",
+                            class: { active: n <= post.averageScore },
+                          })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "c-card__review-link",
+                            attrs: { href: "/idea/" + post.id + "/reviews" },
+                          },
+                          [_vm._v("(" + _vm._s(post.review.length) + ")")]
+                        ),
+                      ],
+                      2
                     ),
                   ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-card__wrap" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "c-card__wrap-link",
+                      attrs: { href: "/" + post.id + "/idea" },
+                    },
+                    [_vm._v("詳細を見る")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "c-card__wrap-link",
+                      attrs: { href: "/" + post.id + "/idea/edit" },
+                    },
+                    [
+                      _c("i", { staticClass: "fa-solid fa-pencil fa-fw" }),
+                      _vm._v("編集する\n          "),
+                    ]
+                  ),
                 ]),
               ]
             )
@@ -38901,46 +39319,81 @@ var render = function () {
               "div",
               { key: check.id, staticClass: "c-card card-mypage" },
               [
-                _c("img", {
-                  staticClass: "c-card__sumbnail",
-                  attrs: { src: check.sumbnail, alt: "" },
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-card__about" }, [
-                  _c("p", { staticClass: "c-card__category" }, [
-                    _vm._v(_vm._s(check.category.name)),
-                  ]),
+                _c("div", { staticClass: "c-card__main" }, [
+                  _c("img", {
+                    staticClass: "c-card__sumbnail",
+                    attrs: { src: check.sumbnail, alt: "" },
+                  }),
                   _vm._v(" "),
-                  _c("p", { staticClass: "c-card__title" }, [
-                    _vm._v(_vm._s(check.title)),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-card__wrap" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "c-card__wrap-link",
-                        attrs: { href: "/" + check.id + "/idea" },
-                      },
-                      [_vm._v("詳細を見る")]
-                    ),
+                  _c("div", { staticClass: "c-card__about" }, [
+                    _c("p", { staticClass: "c-card__category" }, [
+                      _vm._v(_vm._s(check.category.name)),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "c-card__title" }, [
+                      _vm._v(_vm._s(check.title)),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "c-card__price" }, [
+                      _c("span", { staticClass: "u-font__size-m" }, [
+                        _vm._v("¥"),
+                      ]),
+                      _vm._v(
+                        " " + _vm._s(_vm._f("numberWithCommas")(check.price))
+                      ),
+                    ]),
                     _vm._v(" "),
                     _c(
-                      "button",
-                      {
-                        staticClass: "c-card__wrap-link",
-                        on: {
-                          click: function ($event) {
-                            _vm.toggleCheck(check.id)
-                          },
-                        },
-                      },
+                      "div",
+                      { staticClass: "c-card__review" },
                       [
-                        _c("i", { staticClass: "fa-solid fa-heart fa-fw" }),
-                        _vm._v("気になるを解除\n            "),
-                      ]
+                        _vm._l(5, function (n) {
+                          return _c("i", {
+                            key: n,
+                            staticClass: "c-card__review-icon fa-solid fa-star",
+                            class: { active: n <= check.averageScore },
+                          })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "c-card__review-link",
+                            attrs: { href: "/idea/" + check.id + "/reviews" },
+                          },
+                          [_vm._v("(" + _vm._s(check.review.length) + ")")]
+                        ),
+                      ],
+                      2
                     ),
                   ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-card__wrap" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "c-card__wrap-link",
+                      attrs: { href: "/" + check.id + "/idea" },
+                    },
+                    [_vm._v("詳細を見る")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "c-card__wrap-link",
+                      on: {
+                        click: function ($event) {
+                          _vm.toggleCheck(check.id)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fa-solid fa-heart fa-fw" }),
+                      _vm._v("気になるを解除\n            "),
+                    ]
+                  ),
                 ]),
               ]
             )
@@ -38977,42 +39430,75 @@ var render = function () {
         { staticClass: "p-mypage__contents-container" },
         _vm._l(_vm.boughtList, function (bought) {
           return _c("div", { key: bought.id, staticClass: "c-card" }, [
-            _c("img", {
-              staticClass: "c-card__sumbnail",
-              attrs: { src: bought.sumbnail, alt: "" },
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "c-card__about" }, [
-              _c("p", { staticClass: "c-card__category" }, [
-                _vm._v(_vm._s(bought.category.name)),
-              ]),
+            _c("div", { staticClass: "c-card__main" }, [
+              _c("img", {
+                staticClass: "c-card__sumbnail",
+                attrs: { src: bought.sumbnail, alt: "" },
+              }),
               _vm._v(" "),
-              _c("p", { staticClass: "c-card__title" }, [
-                _vm._v(_vm._s(bought.title)),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "c-card__wrap" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "c-card__wrap-link",
-                    attrs: { href: "/" + bought.id + "/idea" },
-                  },
-                  [_vm._v("詳細を見る")]
-                ),
+              _c("div", { staticClass: "c-card__about" }, [
+                _c("p", { staticClass: "c-card__category" }, [
+                  _vm._v(_vm._s(bought.category.name)),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "c-card__title" }, [
+                  _vm._v(_vm._s(bought.title)),
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "c-card__price" }, [
+                  _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
+                  _vm._v(
+                    " " + _vm._s(_vm._f("numberWithCommas")(bought.price))
+                  ),
+                ]),
                 _vm._v(" "),
                 _c(
-                  "a",
-                  {
-                    staticClass: "c-card__wrap-link",
-                    attrs: { href: "/" + bought.id + "/review/create" },
-                  },
+                  "div",
+                  { staticClass: "c-card__review" },
                   [
-                    _c("i", { staticClass: "fa-solid fa-check fa-fw" }),
-                    _vm._v("レビューする\n              "),
-                  ]
+                    _vm._l(5, function (n) {
+                      return _c("i", {
+                        key: n,
+                        staticClass: "c-card__review-icon fa-solid fa-star",
+                        class: { active: n <= bought.averageScore },
+                      })
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "c-card__review-link",
+                        attrs: { href: "/idea/" + bought.id + "/reviews" },
+                      },
+                      [_vm._v("(" + _vm._s(bought.review.length) + ")")]
+                    ),
+                  ],
+                  2
                 ),
               ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-card__wrap" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "c-card__wrap-link",
+                  attrs: { href: "/" + bought.id + "/idea" },
+                },
+                [_vm._v("詳細を見る")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "c-card__wrap-link",
+                  attrs: { href: "/" + bought.id + "/review/create" },
+                },
+                [
+                  _c("i", { staticClass: "fa-solid fa-check fa-fw" }),
+                  _vm._v("レビューする\n          "),
+                ]
+              ),
             ]),
             _vm._v(" "),
             _vm.boughtList === null
@@ -54644,7 +55130,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_13__["default"].Store({
               commit = _ref.commit;
               _context.prev = 1;
               _context.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/checkLogin');
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/checkAuth');
             case 4:
               response = _context.sent;
               if (response.data.authenticated) {

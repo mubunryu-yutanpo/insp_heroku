@@ -2,6 +2,7 @@
   <div class="l-main__container">
 
     <div class="p-sort">
+      <button class="">並び替え</button>
 
       <div class="c-sort">
         <label for="category" class="c-sort-label">カテゴリ:</label>
@@ -40,22 +41,27 @@
         <div class="p-list__container">
 
           <div class="c-card card-ideas" v-for="idea in filteredIdeas" :key="idea.id">
-            <a :href="'/' + idea.id + '/idea'" class="c-card__link idea-link">
+            <div class="c-card__main">
               <img :src="idea.sumbnail" alt="" class="c-card__sumbnail">
-              <p class="c-card__category">{{ idea.category.name }}</p>
-
-              <div class="c-card__container">
-                <h3 class="c-card__title card-ideas-title">{{ idea.title }}</h3>
-
+              <div class="c-card__about">
+                <p class="c-card__category">{{ idea.category.name }}</p>
+                <h3 class="c-card__title">{{ idea.title }}</h3>
+                <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
                 <div class="c-card__review">
-                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.review.score }"></i>
+                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.averageScore }"></i>
                   <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.review.length }})</a>
                 </div>
+                <p class="c-card__text">{{ idea.summary }}</p>
 
-                <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
-                <p class="c-card__summary">{{ idea.summary }}</p>
               </div>
-            </a>
+            </div>
+            <div class="c-card__wrap">
+              <a :href="'/' + idea.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
+              <button class="c-card__wrap-link" @click="toggleCheck(idea.id)" v-if="isLogin">
+                <span v-if="idea.isChecked"><i class="fa-solid fa-heart fa-fw"></i>気になるを解除</span>
+                <span v-if="!idea.isChecked"><i class="fa-regular fa-heart fa-fw"></i>気になるに追加</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -65,6 +71,7 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
   props: ['category'],
@@ -80,6 +87,8 @@ export default {
     this.getIdeas();
   },
   computed: {
+    ...mapState(['isLogin']),
+
     filteredIdeas() {
       let filteredIdeas = this.ideas;
 
@@ -115,6 +124,7 @@ export default {
 
       return filteredIdeas;
     },
+    
   },
   methods: {
     getIdeas() {
@@ -127,10 +137,31 @@ export default {
           console.error(error);
         });
     },
-    getIdeaLink(ideaId) {
-      return `/${ideaId}/idea`; // ルートパラメータを含んだリンク先を生成
+    getAverageScore() {
+      this.filteredIdeas.forEach(idea => {
+        axios.get('/api/idea/' + idea.id + '/average')
+          .then(response => {
+            idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      });
+    },
+
+    toggleCheck(id) {
+      axios.post('/api/idea/' + id + '/toggleCheck')
+        .then(response => {
+          console.log('チェックのトグル処理が成功しました');
+          this.isChecked = !this.isChecked; // チェックボックスの状態を反転させる
+          this.getIdeas();
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
   },
+
   filters: {
     numberWithCommas(value) {
       if (value === 0) {
@@ -145,6 +176,6 @@ export default {
 };
 </script>
 
-<!-- このページの一覧だけスタイル変えるか他の一覧と合わせるか。 -->
+<!-- ソートのスタイルとフォームたちのスタイルまだ。 -->
 
 

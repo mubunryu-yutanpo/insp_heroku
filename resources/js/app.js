@@ -123,7 +123,7 @@ const store = new Vuex.Store({
   actions: {
     async checkLoginStatus({ commit }) {
       try {
-        const response = await axios.get('/api/checkLogin');
+        const response = await axios.get('/api/checkAuth');
 
         if (response.data.authenticated) {
           console.log('ログインしてるらしい');

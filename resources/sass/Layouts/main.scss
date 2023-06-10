@@ -1,4 +1,10 @@
 .l-main{
     background-color: $lightbrown;
     padding: $space_40 0;
+
+    &__container{
+        margin: 0 auto;
+        max-width: 980px;
+        width: 100%;
+    }
 }

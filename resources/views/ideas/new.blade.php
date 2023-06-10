@@ -8,7 +8,7 @@
   <h2>アイデア新規投稿ページ</h2>
   <form method="post" action="{{ route('create') }}" class="p-form" enctype="multipart/form-data">
 
-    @include('form')
+    @include('layouts.form')
 
     <div class="p-submit">
       <button type="submit" class="p-submit__button">登録する</button>

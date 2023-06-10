@@ -17,8 +17,6 @@ Route::get('/', function () {
 
 
 Auth::routes();
-// Authの認証
-Route::get('/api/checkLogin', 'HomeController@checkAuth');
 
 //全ユーザーのアイデア一覧画面
 Route::get('/index', 'HomeController@index')->name('ideas.index');
@@ -76,6 +74,8 @@ Route::group(['middleware' => 'auth'], function(){
 // =================API関連=====================
 Route::middleware('api')->group(function() {
 
+    // Authの認証
+    Route::get('/api/checkAuth', 'HomeController@checkAuth');
     // マイページ情報取得
     Route::get('/api/mypage', 'Api\ApiController@mypage');
     // アイデア詳細情報取得
@@ -96,6 +96,8 @@ Route::middleware('api')->group(function() {
     Route::post('/api/idea/{id}/toggleCheck', 'Api\ApiController@toggleCheck');
     // アイデア購入
     Route::get('api/idea/{id}/buy', 'Api\ApiController@buy');
+    // 平均点の取得
+    Route::get('api/idea/{id}/average', 'Api\ApiController@getAverage');
     // チャットメッセージ取得
     Route::get('api/message/{chat_id}/{seller_id}/{user_id}', 'Api\ApiController@message');
     // チャットメッセージ追加

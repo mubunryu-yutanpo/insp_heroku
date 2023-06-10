@@ -39,7 +39,7 @@ class ApiController extends Controller
 
         if($checks->isNotEmpty()){
             $idea_id = $checks->pluck('idea_id')->toArray();
-            $checkList = Idea::whereIn('id', $idea_id)->with('category')->get();
+            $checkList = Idea::whereIn('id', $idea_id)->with('category','review')->get();
         }
 
         // -- 投稿したアイデア取得 --
@@ -52,7 +52,7 @@ class ApiController extends Controller
                  ->get();
 
         if($posts->isNotEmpty()){
-            $postList = $posts->load('category');
+            $postList = $posts->load('category','review');
         }
         
         // -- 購入したアイデア取得 --
@@ -66,7 +66,7 @@ class ApiController extends Controller
         if ($purchases->isNotEmpty()) {
             $ideaIds = $purchases->pluck('idea_id')->toArray();
             $boughtList = Idea::whereIn('id', $ideaIds)
-                ->with('category')
+                ->with('category','review')
                 ->get();
         }        
         // -- レビュー取得 --
@@ -157,6 +157,19 @@ class ApiController extends Controller
             $idea->user = $user;
             return $idea;
         });
+
+        if(Auth::check()){
+            $checkRecords = Check::where('user_id', auth()->id())
+            ->whereIn('idea_id', $ideaIds)
+            ->get();
+
+            $ideasWithCheck = $ideasWithUser->map(function ($idea) use ($checkRecords) {
+                $check = $checkRecords->where('idea_id', $idea->id)->first();
+                $idea->isChecked = $check ? true : false;
+                return $idea;
+            });
+        }
+
     
         // カテゴリ情報をアイデアに結合
         $ideasWithCategory = $ideasWithUser->map(function ($idea) use ($categories) {
@@ -243,9 +256,9 @@ class ApiController extends Controller
             $idea_ids = $checks->pluck('idea_id')->toArray();
             // 気になるアイデアが10件以上の場合は1ページ10件まで表示
             if($checks->count() > 10){
-                $ideas = Idea::whereIn('id', $idea_ids)->paginate(10);
+                $ideas = Idea::whereIn('id', $idea_ids)->with('category', 'review')->paginate(10);
             }else{
-                $ideas = Idea::whereIn('id', $idea_ids)->get();
+                $ideas = Idea::whereIn('id', $idea_ids)->with('category', 'review')->get();
             }
             $checkIdeas = $ideas;
         }
@@ -276,7 +289,7 @@ class ApiController extends Controller
         }
     
         $boughts = $user->purchase()
-            ->with('idea')
+            ->with('idea.category', 'idea.review')
             ->get();
     
         if ($boughts->isNotEmpty()) {
@@ -303,7 +316,7 @@ class ApiController extends Controller
 
         $postsList = null;
     
-        $posts = Idea::where('user_id', $id);
+        $posts = Idea::with('category','review')->where('user_id', $id);
     
         if ($posts->count() >= 10) {
             $posts = $posts->paginate(10);
@@ -444,6 +457,18 @@ class ApiController extends Controller
 
         // 購入者・販売者にメール送る処理まだ。
 
+    }
+
+
+    /* ================================================================
+      平均点取得処理
+    ================================================================*/
+
+    public function getAverage($id){
+        $reviews = Review::where('idea_id', $id)->get();
+        $averageScore = $reviews->count() === 0 ? 0 : $reviews->avg('score');
+
+        return response()->json(['averageScore' => $averageScore]);
     }
 
 
