@@ -1,3 +1,36 @@
 .p-sort{
+    box-sizing: border-box;
+    margin-left: auto;
+    text-align: right;
+    width: 40%;
     
+    @include mq(){
+        padding-right: $space-10;
+        width: 80%;
+    }
+
+    &__menu{
+        background: $white;
+        box-shadow: 0 0 5px 1px $brown;
+        border-radius: 5px;
+        padding: 5px 10px;
+
+        &.active{
+            background-color: $brown;
+        }
+    }
+
+    &__wrap{
+        display: none;
+
+        &.open{
+            border: 1px solid #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 8px 0 #bdb8ad;
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: column;
+            margin: 15px auto;
+        }
+    }
 }

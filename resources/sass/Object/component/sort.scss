@@ -1,6 +1,30 @@
 .c-sort{
-    display: flex;
-    flex-wrap: wrap;
+
+    &__title{
+        background: $brown;
+        border-bottom: 1px solid $white;
+        color: $white;
+        display: block;
+        font-weight: bold;
+        padding: $space-5 0 $space-5 $space_20;
+        text-align: left;
+        width: 100%;
+
+        &:last-child{
+            border-bottom: none;
+        }
+    }
+
+    &__list{
+        display: none;
+
+        &.open{
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: $space_default $space-10;
+        }
+    }
 
     &__item{
         margin-right: $space-5;
@@ -19,7 +43,7 @@
             cursor: pointer;
             padding: $space-5 $space-10;
 
-            &.default{
+            &.active{
                 background-color: $lightblue;
             }
 

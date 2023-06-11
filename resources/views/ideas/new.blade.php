@@ -19,3 +19,6 @@
 @endsection
 
 @section('footer')
+
+
+<!-- アイデアの投稿・編集、プロフ・退会などのフォーム達はformだけLaravelにして中身はVueでつくった方が良さげ。 -->

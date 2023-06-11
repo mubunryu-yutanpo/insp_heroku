@@ -2623,6 +2623,23 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2633,7 +2650,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       ideas: [],
       selectCategory: '',
       selectPrice: null,
-      selectDate: null
+      selectDate: null,
+      isOpenSortMenu: false,
+      // 並び替えメニュー表示切り替え用
+      isOpenSortSubmenu: '' // 並び替えメニュー選択用
     };
   },
   mounted: function mounted() {
@@ -2678,6 +2698,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }
   }),
   methods: {
+    // アイデア情報取得
     getIdeas: function getIdeas() {
       var _this2 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/ideas').then(function (response) {
@@ -2686,6 +2707,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         console.error(error);
       });
     },
+    // 平均点を取得
     getAverageScore: function getAverageScore() {
       this.filteredIdeas.forEach(function (idea) {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/idea/' + idea.id + '/average').then(function (response) {
@@ -2695,18 +2717,40 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         });
       });
     },
+    // 「気になる」の状態をトグル
     toggleCheck: function toggleCheck(id) {
       var _this3 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/idea/' + id + '/toggleCheck').then(function (response) {
-        console.log('チェックのトグル処理が成功しました');
+        console.log('気になるのトグル処理成功');
         _this3.isChecked = !_this3.isChecked; // チェックボックスの状態を反転させる
         _this3.getIdeas();
       })["catch"](function (error) {
         console.error(error);
       });
+    },
+    // 並び替えメニューOPEN / CLOSE
+    sortMenuToggle: function sortMenuToggle() {
+      this.isOpenSortMenu = !this.isOpenSortMenu;
+    },
+    // ソートの状態の取得・切り替え
+    sortSubmenuToggle: function sortSubmenuToggle(submenu) {
+      this.isOpenSortSubmenu = this.isOpenSortSubmenu === submenu ? '' : submenu;
+    },
+    // 何を基準にソートするか
+    isSortSubmenuopen: function isSortSubmenuopen(submenu) {
+      return this.isOpenSortSubmenu === submenu;
+    },
+    // 日付の表示を変更
+    formatDate: function formatDate(value) {
+      var date = new Date(value);
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      return "".concat(year, ".").concat(month, ".").concat(day);
     }
   },
   filters: {
+    // 値段の表記。コンマ区切りにする。
     numberWithCommas: function numberWithCommas(value) {
       if (value === 0) {
         return '0';
@@ -3049,6 +3093,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3058,7 +3105,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       ideaData: [],
-      previewImage: null
+      previewImage: null,
+      fileValidationError: null
     };
   },
   mounted: function mounted() {
@@ -3074,7 +3122,32 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     handleFileChange: function handleFileChange() {
       var file = this.$refs.fileInput.files[0];
+
+      // ファイル形式のバリデーション
+      var allowedFormats = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!allowedFormats.includes(file.type)) {
+        this.fileValidationError = '画像の形式が無効です。JPEG、PNG、GIF形式の画像を選択してください。';
+        return;
+      }
+
+      // ファイルサイズのバリデーション
+      var maxSizeInBytes = 3145728; // 3MB
+      if (file.size > maxSizeInBytes) {
+        this.fileValidationError = '画像のファイルサイズが大きすぎます。3MB以下の画像を選択してください。';
+        return;
+      }
+      this.fileValidationError = null;
       this.previewImage = URL.createObjectURL(file);
+      if (file) {
+        // ファイルが選択された場合の処理
+        this.previewImage = URL.createObjectURL(file);
+      } else if (this.ideaData && this.ideaData.idea && this.ideaData.idea.sumbnail) {
+        // ファイルが選択されなかった場合で、DBに保存されているsumbnailが存在する場合の処理
+        this.previewImage = this.ideaData.idea.sumbnail;
+      } else {
+        // ファイルが選択されなかった場合で、DBに保存されているsumbnailも存在しない場合の処理
+        this.previewImage = null;
+      }
     }
   }
 });
@@ -38788,57 +38861,64 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "l-main__container" }, [
     _c("div", { staticClass: "p-sort" }, [
-      _c("button", { staticClass: "p-sort__menu js-sort-menu" }, [
-        _vm._v("並び替え"),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-sort__wrap" }, [
-        _c("div", { staticClass: "p-sort__contents js-sort-submenu" }, [
-          _c("button", { staticClass: "p-sort__contents-title" }, [
-            _vm._v("カテゴリー"),
-          ]),
+      _c(
+        "button",
+        {
+          staticClass: "p-sort__menu",
+          class: { active: _vm.isOpenSortMenu },
+          on: {
+            click: function ($event) {
+              _vm.sortMenuToggle()
+            },
+          },
+        },
+        [
+          _vm._v("\n      並び替え \n      "),
+          !_vm.isOpenSortMenu
+            ? _c("i", { staticClass: "fa-solid fa-chevron-down fa-fw" })
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "c-sort" },
-            [
-              _c("li", { staticClass: "c-sort__item" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.selectCategory,
-                      expression: "selectCategory",
-                    },
-                  ],
-                  staticClass: "c-sort__item-input",
-                  attrs: {
-                    type: "radio",
-                    value: "",
-                    name: "category",
-                    id: "category-0",
+          _vm.isOpenSortMenu
+            ? _c("i", { staticClass: "fa-solid fa-chevron-up fa-fw" })
+            : _vm._e(),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "p-sort__wrap", class: { open: _vm.isOpenSortMenu } },
+        [
+          _c("div", { staticClass: "c-sort" }, [
+            _c(
+              "button",
+              {
+                staticClass: "c-sort__title",
+                on: {
+                  click: function ($event) {
+                    _vm.sortSubmenuToggle("category")
                   },
-                  domProps: { checked: _vm._q(_vm.selectCategory, "") },
-                  on: {
-                    change: function ($event) {
-                      _vm.selectCategory = ""
-                    },
-                  },
-                }),
+                },
+              },
+              [
+                _vm._v("\n          カテゴリー \n          "),
+                !_vm.isSortSubmenuopen("category")
+                  ? _c("i", { staticClass: "fa-solid fa-chevron-down fa-fw" })
+                  : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "c-sort__item-label default",
-                    attrs: { for: "category-0" },
-                  },
-                  [_vm._v("すべて")]
-                ),
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.category, function (cat) {
-                return _c("li", { key: cat.id, staticClass: "c-sort__item" }, [
+                _vm.isSortSubmenuopen("category")
+                  ? _c("i", { staticClass: "fa-solid fa-chevron-up fa-fw" })
+                  : _vm._e(),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "ul",
+              {
+                staticClass: "c-sort__list",
+                class: { open: _vm.isSortSubmenuopen("category") },
+              },
+              [
+                _c("li", { staticClass: "c-sort__item" }, [
                   _c("input", {
                     directives: [
                       {
@@ -38851,16 +38931,128 @@ var render = function () {
                     staticClass: "c-sort__item-input",
                     attrs: {
                       type: "radio",
+                      value: "",
                       name: "category",
-                      id: "category-" + cat.id,
+                      id: "category-0",
                     },
-                    domProps: {
-                      value: cat.id,
-                      checked: _vm._q(_vm.selectCategory, cat.id),
-                    },
+                    domProps: { checked: _vm._q(_vm.selectCategory, "") },
                     on: {
                       change: function ($event) {
-                        _vm.selectCategory = cat.id
+                        _vm.selectCategory = ""
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-sort__item-label default",
+                      class: { active: _vm.selectCategory === "" },
+                      attrs: { for: "category-0" },
+                    },
+                    [_vm._v("すべて")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.category, function (cat) {
+                  return _c(
+                    "li",
+                    { key: cat.id, staticClass: "c-sort__item" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectCategory,
+                            expression: "selectCategory",
+                          },
+                        ],
+                        staticClass: "c-sort__item-input",
+                        attrs: {
+                          type: "radio",
+                          name: "category",
+                          id: "category-" + cat.id,
+                        },
+                        domProps: {
+                          value: cat.id,
+                          checked: _vm._q(_vm.selectCategory, cat.id),
+                        },
+                        on: {
+                          change: function ($event) {
+                            _vm.selectCategory = cat.id
+                          },
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "c-sort__item-label",
+                          class: { active: _vm.selectCategory === cat.id },
+                          attrs: { for: "category-" + cat.id },
+                        },
+                        [_vm._v(_vm._s(cat.name))]
+                      ),
+                    ]
+                  )
+                }),
+              ],
+              2
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-sort" }, [
+            _c(
+              "button",
+              {
+                staticClass: "c-sort__title",
+                on: {
+                  click: function ($event) {
+                    _vm.sortSubmenuToggle("date")
+                  },
+                },
+              },
+              [
+                _vm._v("\n          投稿日 \n          "),
+                !_vm.isSortSubmenuopen("date")
+                  ? _c("i", { staticClass: "fa-solid fa-chevron-down fa-fw" })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isSortSubmenuopen("date")
+                  ? _c("i", { staticClass: "fa-solid fa-chevron-up fa-fw" })
+                  : _vm._e(),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "ul",
+              {
+                staticClass: "c-sort__list",
+                class: { open: _vm.isSortSubmenuopen("date") },
+              },
+              [
+                _c("li", { staticClass: "c-sort__item" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectDate,
+                        expression: "selectDate",
+                      },
+                    ],
+                    staticClass: "c-sort__item-input",
+                    attrs: {
+                      type: "radio",
+                      value: "new",
+                      name: "date",
+                      id: "date_new",
+                    },
+                    domProps: { checked: _vm._q(_vm.selectDate, "new") },
+                    on: {
+                      change: function ($event) {
+                        _vm.selectDate = "new"
                       },
                     },
                   }),
@@ -38869,17 +39061,158 @@ var render = function () {
                     "label",
                     {
                       staticClass: "c-sort__item-label",
-                      attrs: { for: "category-" + cat.id },
+                      class: { active: _vm.selectDate === "new" },
+                      attrs: { for: "date_new" },
                     },
-                    [_vm._v(_vm._s(cat.name))]
+                    [_vm._v("新しい順")]
                   ),
-                ])
-              }),
-            ],
-            2
-          ),
-        ]),
-      ]),
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "c-sort__item" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectDate,
+                        expression: "selectDate",
+                      },
+                    ],
+                    staticClass: "c-sort__item-input",
+                    attrs: {
+                      type: "radio",
+                      value: "old",
+                      name: "date",
+                      id: "date_old",
+                    },
+                    domProps: { checked: _vm._q(_vm.selectDate, "old") },
+                    on: {
+                      change: function ($event) {
+                        _vm.selectDate = "old"
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-sort__item-label",
+                      class: { active: _vm.selectDate === "old" },
+                      attrs: { for: "date_old" },
+                    },
+                    [_vm._v("古い順")]
+                  ),
+                ]),
+              ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-sort" }, [
+            _c(
+              "button",
+              {
+                staticClass: "c-sort__title",
+                on: {
+                  click: function ($event) {
+                    _vm.sortSubmenuToggle("price")
+                  },
+                },
+              },
+              [
+                _vm._v("\n          値段 \n          "),
+                !_vm.isSortSubmenuopen("price")
+                  ? _c("i", { staticClass: "fa-solid fa-chevron-down fa-fw" })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isSortSubmenuopen("price")
+                  ? _c("i", { staticClass: "fa-solid fa-chevron-up fa-fw" })
+                  : _vm._e(),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "ul",
+              {
+                staticClass: "c-sort__list",
+                class: { open: _vm.isSortSubmenuopen("price") },
+              },
+              [
+                _c("li", { staticClass: "c-sort__item" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectPrice,
+                        expression: "selectPrice",
+                      },
+                    ],
+                    staticClass: "c-sort__item-input",
+                    attrs: {
+                      type: "radio",
+                      value: "high",
+                      name: "price",
+                      id: "price_high",
+                    },
+                    domProps: { checked: _vm._q(_vm.selectPrice, "high") },
+                    on: {
+                      change: function ($event) {
+                        _vm.selectPrice = "high"
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-sort__item-label",
+                      class: { active: _vm.selectPrice === "high" },
+                      attrs: { for: "price_high" },
+                    },
+                    [_vm._v("高い順")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "c-sort__item" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectPrice,
+                        expression: "selectPrice",
+                      },
+                    ],
+                    staticClass: "c-sort__item-input",
+                    attrs: {
+                      type: "radio",
+                      value: "low",
+                      name: "price",
+                      id: "price_low",
+                    },
+                    domProps: { checked: _vm._q(_vm.selectPrice, "low") },
+                    on: {
+                      change: function ($event) {
+                        _vm.selectPrice = "low"
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-sort__item-label",
+                      class: { active: _vm.selectPrice === "low" },
+                      attrs: { for: "price_low" },
+                    },
+                    [_vm._v("安い順")]
+                  ),
+                ]),
+              ]
+            ),
+          ]),
+        ]
+      ),
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "p-list" }, [
@@ -38905,6 +39238,10 @@ var render = function () {
                   _vm._v(_vm._s(idea.title)),
                 ]),
                 _vm._v(" "),
+                _c("p", { staticClass: "c-card__date" }, [
+                  _vm._v(_vm._s(_vm.formatDate(idea.created_at))),
+                ]),
+                _vm._v(" "),
                 _c("p", { staticClass: "c-card__price" }, [
                   _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
                   _vm._v(" " + _vm._s(_vm._f("numberWithCommas")(idea.price))),
@@ -38918,7 +39255,7 @@ var render = function () {
                       return _c("i", {
                         key: n,
                         staticClass: "c-card__review-icon fa-solid fa-star",
-                        class: { active: n <= idea.averageScore },
+                        class: { open: n <= idea.averageScore },
                       })
                     }),
                     _vm._v(" "),
@@ -39557,12 +39894,10 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "c-form__input-preview" }, [
-    _c(
-      "label",
-      { staticClass: "c-form__input-label", attrs: { for: "sumbnail" } },
-      [_vm._v("サムネイル画像:")]
-    ),
+  return _c("div", { staticClass: "c-form__wrap u-align__stretch" }, [
+    _c("label", { staticClass: "c-form__label", attrs: { for: "sumbnail" } }, [
+      _vm._v("画像:"),
+    ]),
     _vm._v(" "),
     _c("label", { staticClass: "c_form__file-label" }, [
       _c("input", {
@@ -39582,6 +39917,12 @@ var render = function () {
       }),
       _vm._v("\n    ドラッグ＆ドロップ\n  "),
     ]),
+    _vm._v(" "),
+    _vm.fileValidationError
+      ? _c("span", { staticClass: "c-form__error", attrs: { role: "alert" } }, [
+          _c("strong", [_vm._v(_vm._s(_vm.fileValidationError))]),
+        ])
+      : _vm._e(),
   ])
 }
 var staticRenderFns = []

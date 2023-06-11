@@ -17,18 +17,6 @@ use App\Review;
 class IdeasController extends Controller
 {
 
-    // コントローラーのプロパティを定義
-    // protected $user;
-    // protected $user_id;
-
-    // public function __construct(){
-    //     $this->middleware('auth')->except('index');
-
-    //     $this->user = Auth::user();
-    //     $this->user_id = $this->user ? $this->user->id : null;
-    // }
-
-
     // ========アイデア新規投稿処理========
     public function ideaCreate(ValidRequest $request)
     {
@@ -68,12 +56,15 @@ class IdeasController extends Controller
         $user_id = Auth::id();
         $idea = Idea::find($id);
 
-
         // サムネ画像のパス名を変数に
         if($request->sumbnail !== null){
-            $avatar = $request->file('sumbnail');
-            $filename = $avatar->getClientOriginalName();
-            $avatar->move(public_path('uploads'), $filename);
+            $sumbnail = $request->file('sumbnail');
+            $filename = $sumbnail->getClientOriginalName();
+            $sumbnail->move(public_path('uploads'), $filename);
+       
+        }elseif($idea->sumbnail !== null){
+            $filename = basename($idea->sumbnail);
+       
         }else{
             $filename = 'sumbnail-default.png';
         }

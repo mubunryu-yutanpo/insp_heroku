@@ -1,0 +1,18 @@
+.c-form{
+
+    &__wrap{
+        align-items: center;
+        border-bottom: 1px solid $gray;
+        box-sizing: border-box;
+        display: flex;    
+    }    
+
+    &__label{
+        background: $lightblue;
+        font-size: $font-size_default;
+        min-width: 200px;
+        margin: 0 $space_default 0 0;
+        padding: $space_default $space_20;
+        text-align: center;
+    }
+}

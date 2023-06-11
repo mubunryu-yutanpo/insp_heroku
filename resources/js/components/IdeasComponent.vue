@@ -2,55 +2,71 @@
   <div class="l-main__container">
 
     <div class="p-sort">
-      <button class="p-sort__menu js-sort-menu">並び替え</button>
-      <div class="p-sort__wrap">
+      <button class="p-sort__menu" :class="{active : isOpenSortMenu}" @click="sortMenuToggle()">
+        並び替え 
+        <i class="fa-solid fa-chevron-down fa-fw" v-if="!isOpenSortMenu"></i>
+        <i class="fa-solid fa-chevron-up fa-fw" v-if="isOpenSortMenu"></i>
+      </button>
+      <div class="p-sort__wrap" :class="{open : isOpenSortMenu}">
         
-        <div class="p-sort__contents js-sort-submenu">
-          <button class="p-sort__contents-title">カテゴリー</button>
+        <div class="c-sort">
+          <button class="c-sort__title" @click="sortSubmenuToggle('category')">
+            カテゴリー 
+            <i class="fa-solid fa-chevron-down fa-fw" v-if="!isSortSubmenuopen('category')"></i>
+            <i class="fa-solid fa-chevron-up fa-fw" v-if="isSortSubmenuopen('category')"></i>
+          </button>
 
-          <ul class="c-sort">
+          <ul class="c-sort__list" :class="{ open: isSortSubmenuopen('category') }">
             <li class="c-sort__item">
               <input type="radio" value="" class="c-sort__item-input" name="category" id="category-0" v-model="selectCategory">
-              <label for="category-0" class="c-sort__item-label default">すべて</label>
+              <label for="category-0" class="c-sort__item-label default" :class="{active : selectCategory === ''}">すべて</label>
             </li>
             <li class="c-sort__item" v-for="cat in category" :key="cat.id">
               <input type="radio" :value="cat.id" class="c-sort__item-input" name="category" :id="'category-' + cat.id" v-model="selectCategory">
-              <label :for="'category-' + cat.id" class="c-sort__item-label" >{{ cat.name }}</label>
+              <label :for="'category-' + cat.id" class="c-sort__item-label" :class="{active : selectCategory === cat.id}">{{ cat.name }}</label>
             </li>
           </ul>
         </div>
 
+        <div class="c-sort">
+          <button class="c-sort__title" @click="sortSubmenuToggle('date')">
+            投稿日 
+            <i class="fa-solid fa-chevron-down fa-fw" v-if="!isSortSubmenuopen('date')"></i>
+            <i class="fa-solid fa-chevron-up fa-fw" v-if="isSortSubmenuopen('date')"></i>
+          </button>
+
+          <ul class="c-sort__list" :class="{open : isSortSubmenuopen('date')}">
+            <li class="c-sort__item">
+              <input type="radio" value="new" class="c-sort__item-input" name="date" id="date_new" v-model="selectDate">
+              <label for="date_new" class="c-sort__item-label" :class="{active : selectDate === 'new'}">新しい順</label>
+            </li>
+            <li class="c-sort__item">
+              <input type="radio" value="old" class="c-sort__item-input" name="date" id="date_old" v-model="selectDate">
+              <label for="date_old" class="c-sort__item-label" :class="{active : selectDate === 'old'}">古い順</label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="c-sort">
+          <button class="c-sort__title" @click="sortSubmenuToggle('price')">
+            値段 
+            <i class="fa-solid fa-chevron-down fa-fw" v-if="!isSortSubmenuopen('price')"></i>
+            <i class="fa-solid fa-chevron-up fa-fw" v-if="isSortSubmenuopen('price')"></i>
+          </button>
+
+          <ul class="c-sort__list" :class="{open : isSortSubmenuopen('price')}">
+            <li class="c-sort__item">
+              <input type="radio" value="high" class="c-sort__item-input" name="price" id="price_high" v-model="selectPrice">
+              <label for="price_high" class="c-sort__item-label" :class="{active : selectPrice === 'high'}">高い順</label>
+            </li>
+            <li class="c-sort__item">
+              <input type="radio" value="low" class="c-sort__item-input" name="price" id="price_low" v-model="selectPrice">
+              <label for="price_low" class="c-sort__item-label" :class="{active : selectPrice === 'low'}">安い順</label>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <!-- <div class="c-sort">
-        <label for="category" class="c-sort-label">カテゴリ:</label>
-        <select v-model="selectCategory" id="category" class="c-sort-select">
-          <option value="" class="c-sort-input">すべて</option>
-          <option v-for="cat in category" :key="cat.id" :value="cat.id" class="c-sort-input">
-            {{ cat.name }}
-          </option>
-        </select>    
-      </div>
-
-      <div class="c-sort">
-        <label for="price" class="c-sort-label">価格:</label>
-        <select v-model="selectPrice" id="price" class="c-sort-select">
-          <option value="low" class="c-sort-input">安い順</option>
-          <option value="high" class="c-sort-input">高い順</option>
-        </select>
-      </div>
-
-      <div class="c-sort">
-        <label for="date" class="c-sort-label">投稿日:</label>
-        <select v-model="selectDate" id="date" class="c-sort-select">
-          <option value="new" class="c-sort-input">古い順</option>
-          <option value="old" class="c-sort-input">新しい順</option>
-        </select>
-      </div> -->
-
-      <!-- <div class="c-sort">
-        <button @click="getIdeas" class="c-sort__button">絞り込む</button>
-      </div> -->
     </div>
 
     <section class="p-list">
@@ -64,9 +80,10 @@
               <div class="c-card__about">
                 <p class="c-card__category">{{ idea.category.name }}</p>
                 <h3 class="c-card__title">{{ idea.title }}</h3>
+                <p class="c-card__date">{{ formatDate(idea.created_at) }}</p>
                 <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
                 <div class="c-card__review">
-                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.averageScore }"></i>
+                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'open': n <= idea.averageScore }"></i>
                   <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.review.length }})</a>
                 </div>
                 <p class="c-card__text">{{ idea.summary }}</p>
@@ -99,6 +116,8 @@ export default {
       selectCategory: '',
       selectPrice: null,
       selectDate: null,
+      isOpenSortMenu: false,  // 並び替えメニュー表示切り替え用
+      isOpenSortSubmenu: '',  // 並び替えメニュー選択用
     };
   },
   mounted() {
@@ -145,6 +164,7 @@ export default {
     
   },
   methods: {
+    // アイデア情報取得
     getIdeas() {
       axios
         .get('/api/ideas')
@@ -155,6 +175,8 @@ export default {
           console.error(error);
         });
     },
+
+    // 平均点を取得
     getAverageScore() {
       this.filteredIdeas.forEach(idea => {
         axios.get('/api/idea/' + idea.id + '/average')
@@ -167,10 +189,11 @@ export default {
       });
     },
 
+    // 「気になる」の状態をトグル
     toggleCheck(id) {
       axios.post('/api/idea/' + id + '/toggleCheck')
         .then(response => {
-          console.log('チェックのトグル処理が成功しました');
+          console.log('気になるのトグル処理成功');
           this.isChecked = !this.isChecked; // チェックボックスの状態を反転させる
           this.getIdeas();
         })
@@ -178,9 +201,35 @@ export default {
           console.error(error);
         });
     },
+
+    // 並び替えメニューOPEN / CLOSE
+    sortMenuToggle(){
+      this.isOpenSortMenu = !this.isOpenSortMenu;
+    },
+
+    // ソートの状態の取得・切り替え
+    sortSubmenuToggle(submenu) {
+      this.isOpenSortSubmenu = this.isOpenSortSubmenu === submenu ? '' : submenu;
+    },
+
+    // 何を基準にソートするか
+    isSortSubmenuopen(submenu) {
+      return this.isOpenSortSubmenu === submenu;
+    },
+
+    // 日付の表示を変更
+    formatDate(value) {
+      const date = new Date(value);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      return `${year}.${month}.${day}`;
+    },
   },
 
   filters: {
+
+    // 値段の表記。コンマ区切りにする。
     numberWithCommas(value) {
       if (value === 0) {
         return '0';

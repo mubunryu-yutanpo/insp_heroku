@@ -1,4 +1,5 @@
 .c-nav{
+
     @include mq(){
         background: $blue;
         display: none;
@@ -19,18 +20,30 @@
         &__item{
             margin-bottom: $space_20;
         }
-    
-        &__link{
-            color: $white;
-            padding: $space-10 $space_default;
+    }
 
-            &:hover{
-                color: $brown;
-                font-weight: bold;
-                text-decoration-style: dashed;
-                text-decoration-color: $white;
-            }
+    &__list{
+        background: #44749d;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-around;
+        margin: 0;
+        padding: 10px 0;
+
+        @include mq(){
+            flex-direction: column;
         }
-    
+    }
+
+    &__link{
+        color: $white;
+        padding: $space-10 $space_default;
+
+        &:hover{
+            color: $brown;
+            font-weight: bold;
+            text-decoration-style: dashed;
+            text-decoration-color: $white;
+        }
     }
 }
