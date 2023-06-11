@@ -2,9 +2,27 @@
   <div class="l-main__container">
 
     <div class="p-sort">
-      <button class="">並び替え</button>
+      <button class="p-sort__menu js-sort-menu">並び替え</button>
+      <div class="p-sort__wrap">
+        
+        <div class="p-sort__contents js-sort-submenu">
+          <button class="p-sort__contents-title">カテゴリー</button>
 
-      <div class="c-sort">
+          <ul class="c-sort">
+            <li class="c-sort__item">
+              <input type="radio" value="" class="c-sort__item-input" name="category" id="category-0" v-model="selectCategory">
+              <label for="category-0" class="c-sort__item-label default">すべて</label>
+            </li>
+            <li class="c-sort__item" v-for="cat in category" :key="cat.id">
+              <input type="radio" :value="cat.id" class="c-sort__item-input" name="category" :id="'category-' + cat.id" v-model="selectCategory">
+              <label :for="'category-' + cat.id" class="c-sort__item-label" >{{ cat.name }}</label>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- <div class="c-sort">
         <label for="category" class="c-sort-label">カテゴリ:</label>
         <select v-model="selectCategory" id="category" class="c-sort-select">
           <option value="" class="c-sort-input">すべて</option>
@@ -28,11 +46,11 @@
           <option value="new" class="c-sort-input">古い順</option>
           <option value="old" class="c-sort-input">新しい順</option>
         </select>
-      </div>
+      </div> -->
 
-      <div class="c-sort">
+      <!-- <div class="c-sort">
         <button @click="getIdeas" class="c-sort__button">絞り込む</button>
-      </div>
+      </div> -->
     </div>
 
     <section class="p-list">
@@ -176,6 +194,4 @@ export default {
 };
 </script>
 
-<!-- ソートのスタイルとフォームたちのスタイルまだ。 -->
-
-
+<!-- ソートのスタイルとHTML書き。フォームも終わらせな。退会処理とメール送信機能もまだ...。 -->

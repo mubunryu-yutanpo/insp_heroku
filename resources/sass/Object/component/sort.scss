@@ -1,0 +1,32 @@
+.c-sort{
+    display: flex;
+    flex-wrap: wrap;
+
+    &__item{
+        margin-right: $space-5;
+
+        &:last-child{
+            margin-right: 0;
+        }
+
+        &-input{
+            display: none;
+        }
+
+        &-label{
+            background-color: $white;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: $space-5 $space-10;
+
+            &.default{
+                background-color: $lightblue;
+            }
+
+            &:hover{
+                background-color: $brown;
+            }
+    
+        }
+    }
+}

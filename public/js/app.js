@@ -2605,6 +2605,24 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -38770,173 +38788,97 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "l-main__container" }, [
     _c("div", { staticClass: "p-sort" }, [
-      _c("button", {}, [_vm._v("並び替え")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-sort" }, [
-        _c(
-          "label",
-          { staticClass: "c-sort-label", attrs: { for: "category" } },
-          [_vm._v("カテゴリ:")]
-        ),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.selectCategory,
-                expression: "selectCategory",
-              },
-            ],
-            staticClass: "c-sort-select",
-            attrs: { id: "category" },
-            on: {
-              change: function ($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function (o) {
-                    return o.selected
-                  })
-                  .map(function (o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.selectCategory = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              },
-            },
-          },
-          [
-            _c(
-              "option",
-              { staticClass: "c-sort-input", attrs: { value: "" } },
-              [_vm._v("すべて")]
-            ),
-            _vm._v(" "),
-            _vm._l(_vm.category, function (cat) {
-              return _c(
-                "option",
-                {
-                  key: cat.id,
-                  staticClass: "c-sort-input",
-                  domProps: { value: cat.id },
-                },
-                [_vm._v("\n          " + _vm._s(cat.name) + "\n        ")]
-              )
-            }),
-          ],
-          2
-        ),
+      _c("button", { staticClass: "p-sort__menu js-sort-menu" }, [
+        _vm._v("並び替え"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "c-sort" }, [
-        _c("label", { staticClass: "c-sort-label", attrs: { for: "price" } }, [
-          _vm._v("価格:"),
+      _c("div", { staticClass: "p-sort__wrap" }, [
+        _c("div", { staticClass: "p-sort__contents js-sort-submenu" }, [
+          _c("button", { staticClass: "p-sort__contents-title" }, [
+            _vm._v("カテゴリー"),
+          ]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "c-sort" },
+            [
+              _c("li", { staticClass: "c-sort__item" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectCategory,
+                      expression: "selectCategory",
+                    },
+                  ],
+                  staticClass: "c-sort__item-input",
+                  attrs: {
+                    type: "radio",
+                    value: "",
+                    name: "category",
+                    id: "category-0",
+                  },
+                  domProps: { checked: _vm._q(_vm.selectCategory, "") },
+                  on: {
+                    change: function ($event) {
+                      _vm.selectCategory = ""
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "c-sort__item-label default",
+                    attrs: { for: "category-0" },
+                  },
+                  [_vm._v("すべて")]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.category, function (cat) {
+                return _c("li", { key: cat.id, staticClass: "c-sort__item" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selectCategory,
+                        expression: "selectCategory",
+                      },
+                    ],
+                    staticClass: "c-sort__item-input",
+                    attrs: {
+                      type: "radio",
+                      name: "category",
+                      id: "category-" + cat.id,
+                    },
+                    domProps: {
+                      value: cat.id,
+                      checked: _vm._q(_vm.selectCategory, cat.id),
+                    },
+                    on: {
+                      change: function ($event) {
+                        _vm.selectCategory = cat.id
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-sort__item-label",
+                      attrs: { for: "category-" + cat.id },
+                    },
+                    [_vm._v(_vm._s(cat.name))]
+                  ),
+                ])
+              }),
+            ],
+            2
+          ),
         ]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.selectPrice,
-                expression: "selectPrice",
-              },
-            ],
-            staticClass: "c-sort-select",
-            attrs: { id: "price" },
-            on: {
-              change: function ($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function (o) {
-                    return o.selected
-                  })
-                  .map(function (o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.selectPrice = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              },
-            },
-          },
-          [
-            _c(
-              "option",
-              { staticClass: "c-sort-input", attrs: { value: "low" } },
-              [_vm._v("安い順")]
-            ),
-            _vm._v(" "),
-            _c(
-              "option",
-              { staticClass: "c-sort-input", attrs: { value: "high" } },
-              [_vm._v("高い順")]
-            ),
-          ]
-        ),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-sort" }, [
-        _c("label", { staticClass: "c-sort-label", attrs: { for: "date" } }, [
-          _vm._v("投稿日:"),
-        ]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.selectDate,
-                expression: "selectDate",
-              },
-            ],
-            staticClass: "c-sort-select",
-            attrs: { id: "date" },
-            on: {
-              change: function ($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function (o) {
-                    return o.selected
-                  })
-                  .map(function (o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.selectDate = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              },
-            },
-          },
-          [
-            _c(
-              "option",
-              { staticClass: "c-sort-input", attrs: { value: "new" } },
-              [_vm._v("古い順")]
-            ),
-            _vm._v(" "),
-            _c(
-              "option",
-              { staticClass: "c-sort-input", attrs: { value: "old" } },
-              [_vm._v("新しい順")]
-            ),
-          ]
-        ),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-sort" }, [
-        _c(
-          "button",
-          { staticClass: "c-sort__button", on: { click: _vm.getIdeas } },
-          [_vm._v("絞り込む")]
-        ),
       ]),
     ]),
     _vm._v(" "),

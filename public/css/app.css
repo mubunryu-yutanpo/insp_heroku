@@ -683,6 +683,38 @@ img {
   }
 }
 
+.c-sort {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c-sort__item {
+  margin-right: 5px;
+}
+
+.c-sort__item:last-child {
+  margin-right: 0;
+}
+
+.c-sort__item-input {
+  display: none;
+}
+
+.c-sort__item-label {
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.c-sort__item-label.default {
+  background-color: #c6d4e1;
+}
+
+.c-sort__item-label:hover {
+  background-color: #bdb8ad;
+}
+
 .u-bg1 {
   background-color: #c6d4e1;
 }
