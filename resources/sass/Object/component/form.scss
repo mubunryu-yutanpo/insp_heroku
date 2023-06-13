@@ -1,18 +1,39 @@
 .c-form{
 
+    padding: 20px 5%;
+
     &__wrap{
-        align-items: center;
-        border-bottom: 1px solid $gray;
-        box-sizing: border-box;
-        display: flex;    
+        margin: 0 auto;
+        width: 100%;
+
+        &.wrap-category{
+            margin: 0 auto 0 0;
+            width: 50%;
+        }
+
+        &.wrap-price{
+            margin: 0 auto 0 0;
+            width: 30%;
+        }
     }    
 
     &__label{
-        background: $lightblue;
-        font-size: $font-size_default;
-        min-width: 200px;
-        margin: 0 $space_default 0 0;
-        padding: $space_default $space_20;
-        text-align: center;
+        border-bottom: 1px solid $brown;
+        display: block;
+        margin: 0;
+        width: 100%;
+    }
+
+    &__input{
+        background-color: $gray;
+        border: none;
+        box-shadow: 0 0 3px 0 $brown;
+        cursor: pointer;
+        padding: $space_10 $space_default;
+        width: 100%;
+
+        &.input-description{
+            resize: none;
+        }
     }
 }

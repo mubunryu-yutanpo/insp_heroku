@@ -1,0 +1,21 @@
+.p-submit{
+    margin: $space_20 0;
+    text-align: right;
+
+    &__button{
+        background-color: $blue;
+        border-radius: 5px;
+        box-shadow: 0 5px 0 2px $lightbrown;
+        color: $white;
+        padding: $space-10 $space_default;
+        transition: all .5s;
+        transform: translateY(-3px);
+
+        &:hover{
+            background-color: $brown;
+            box-shadow: 0 0 5px 1px $lightbrown;
+            transition: all .5s;
+            transform: translateY(3px);
+        }
+    }
+}
