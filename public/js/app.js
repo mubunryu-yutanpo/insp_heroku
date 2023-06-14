@@ -3096,6 +3096,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3106,7 +3113,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       ideaData: [],
       previewImage: null,
-      fileValidationError: null
+      validError: null,
+      isDragover: false
     };
   },
   mounted: function mounted() {
@@ -3126,28 +3134,39 @@ __webpack_require__.r(__webpack_exports__);
       // ファイル形式のバリデーション
       var allowedFormats = ['image/jpeg', 'image/png', 'image/gif'];
       if (!allowedFormats.includes(file.type)) {
-        this.fileValidationError = '画像の形式が無効です。JPEG、PNG、GIF形式の画像を選択してください。';
+        this.validError = '画像の形式が無効です。JPEG、PNG、GIF形式の画像を選択してください。';
         return;
       }
 
       // ファイルサイズのバリデーション
       var maxSizeInBytes = 3145728; // 3MB
       if (file.size > maxSizeInBytes) {
-        this.fileValidationError = '画像のファイルサイズが大きすぎます。3MB以下の画像を選択してください。';
+        this.validError = '画像のファイルサイズが大きすぎます。3MB以下の画像を選択してください。';
         return;
       }
-      this.fileValidationError = null;
+      this.validError = null;
       this.previewImage = URL.createObjectURL(file);
-      if (file) {
-        // ファイルが選択された場合の処理
-        this.previewImage = URL.createObjectURL(file);
-      } else if (this.ideaData && this.ideaData.idea && this.ideaData.idea.sumbnail) {
-        // ファイルが選択されなかった場合で、DBに保存されているsumbnailが存在する場合の処理
-        this.previewImage = this.ideaData.idea.sumbnail;
-      } else {
-        // ファイルが選択されなかった場合で、DBに保存されているsumbnailも存在しない場合の処理
-        this.previewImage = null;
-      }
+    },
+    // ドラッグ時
+    handleDragover: function handleDragover(event) {
+      event.preventDefault();
+      this.isDragover = true;
+    },
+    // ドロップ時
+    handleDragleave: function handleDragleave() {
+      this.isDragover = false;
+    },
+    // ドラッグ＆ドロップをした後のイベント
+    handleDrop: function handleDrop(event) {
+      event.preventDefault();
+      this.isDragover = false;
+      // ドロップされたファイルをinput要素に
+      this.$refs.fileInput.files = event.dataTransfer.files;
+      this.handleFileChange();
+    },
+    // クリック時にもイベントが起こるように
+    handleFileClick: function handleFileClick() {
+      this.$refs.fileInput.click();
     }
   }
 });
@@ -39899,28 +39918,47 @@ var render = function () {
       _vm._v("画像:"),
     ]),
     _vm._v(" "),
-    _c("label", { staticClass: "c_form__file-label" }, [
-      _c("input", {
-        attrs: { type: "hidden", name: "MAX_FILE_SIZE", value: "3145728" },
-      }),
-      _vm._v(" "),
-      _c("input", {
-        ref: "fileInput",
-        staticClass: "c_form__file-input js-file-input",
-        attrs: { type: "file", name: "sumbnail" },
-        on: { change: _vm.handleFileChange },
-      }),
-      _vm._v(" "),
-      _c("img", {
-        staticClass: "c_form__file-image js-file-img",
-        attrs: { src: _vm.previewImage, alt: "" },
-      }),
-      _vm._v("\n    ドラッグ＆ドロップ\n  "),
-    ]),
+    _c(
+      "div",
+      {
+        staticClass: "c-form__file-label",
+        class: { preview: _vm.previewImage, dragover: _vm.isDragover },
+        on: {
+          dragover: function ($event) {
+            $event.preventDefault()
+            return _vm.handleDragover($event)
+          },
+          dragleave: _vm.handleDragleave,
+          drop: function ($event) {
+            $event.preventDefault()
+            return _vm.handleDrop($event)
+          },
+          click: _vm.handleFileClick,
+        },
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "MAX_FILE_SIZE", value: "3145728" },
+        }),
+        _vm._v(" "),
+        _c("input", {
+          ref: "fileInput",
+          staticClass: "c-form__file-input",
+          attrs: { type: "file", name: "sumbnail" },
+          on: { change: _vm.handleFileChange },
+        }),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "c-form__file-image",
+          attrs: { src: _vm.previewImage, alt: "" },
+        }),
+        _vm._v("\n    ドラッグ＆ドロップ\n  "),
+      ]
+    ),
     _vm._v(" "),
-    _vm.fileValidationError
+    _vm.validError
       ? _c("span", { staticClass: "c-form__error", attrs: { role: "alert" } }, [
-          _c("strong", [_vm._v(_vm._s(_vm.fileValidationError))]),
+          _c("strong", [_vm._v(_vm._s(_vm.validError))]),
         ])
       : _vm._e(),
   ])

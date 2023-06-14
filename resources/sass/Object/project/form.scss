@@ -6,4 +6,9 @@
     max-width: 980px;
     padding: $space_20 $space_default;
     width: 60%;
+
+    @include mq(){
+        padding: $space-10 $space-5;
+        width: 95%;
+    }
 }

@@ -94,6 +94,13 @@ img {
   width: 60%;
 }
 
+@media screen and (max-width:767px) {
+  .p-form {
+    padding: 10px 5px;
+    width: 95%;
+  }
+}
+
 .p-header {
   display: flex;
   justify-content: space-between;
@@ -364,14 +371,14 @@ img {
 }
 
 .p-submit {
-  margin: 20px 0;
+  margin: 20px 3% 0 0;
   text-align: right;
 }
 
 .p-submit__button {
   background-color: #44749d;
   border-radius: 5px;
-  box-shadow: 0 5px 0 2px #ebe7e1;
+  box-shadow: 0 3px 0 3px #c6d4e1;
   color: white;
   padding: 10px 15px;
   transition: all 0.5s;
@@ -702,6 +709,12 @@ img {
   padding: 20px 5%;
 }
 
+@media screen and (max-width:767px) {
+  .c-form {
+    padding: 20px 3%;
+  }
+}
+
 .c-form__wrap {
   margin: 0 auto;
   width: 100%;
@@ -712,16 +725,33 @@ img {
   width: 50%;
 }
 
+@media screen and (max-width:479px) {
+  .c-form__wrap.wrap-category {
+    width: 80%;
+  }
+}
+
 .c-form__wrap.wrap-price {
   margin: 0 auto 0 0;
   width: 30%;
 }
 
+@media screen and (max-width:479px) {
+  .c-form__wrap.wrap-price {
+    width: 50%;
+  }
+}
+
 .c-form__label {
-  border-bottom: 1px solid #bdb8ad;
   display: block;
   margin: 0;
   width: 100%;
+}
+
+@media screen and (max-width:767px) {
+  .c-form__label {
+    margin-bottom: 5px;
+  }
 }
 
 .c-form__input {
@@ -735,6 +765,75 @@ img {
 
 .c-form__input.input-description {
   resize: none;
+  vertical-align: bottom;
+}
+
+.c-form__input.valid-error {
+  border: 1px solid #FA7070;
+}
+
+.c-form__file-label {
+  background: white;
+  border: 1px dashed #ededec;
+  border-radius: 5px;
+  color: #bdb8ad;
+  display: block;
+  height: 300px;
+  line-height: 300px;
+  width: 400px;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+}
+
+@media screen and (max-width:479px) {
+  .c-form__file-label {
+    height: 230px;
+    line-height: 230px;
+    width: 100%;
+  }
+}
+
+.c-form__file-label.preview {
+  border: none;
+  box-shadow: 0 0 5px 3px #bdb8ad;
+}
+
+@media screen and (max-width:767px) {
+  .c-form__file-label.preview {
+    box-shadow: 0 0 5px 0 #bdb8ad;
+  }
+}
+
+.c-form__file-label.dragover {
+  border-color: #000;
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+.c-form__file-input {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.c-form__file-image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.c-form__error {
+  color: #FA7070;
+  display: block;
+  margin: 5px 0;
 }
 
 .c-menu {
@@ -880,6 +979,14 @@ img {
 
 .u-font__size-m {
   font-size: 14px;
+}
+
+.u_text-center {
+  text-align: center;
+}
+
+.u_text-right {
+  text-align: right;
 }
 
 /*!

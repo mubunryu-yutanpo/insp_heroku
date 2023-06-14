@@ -1,14 +1,21 @@
 <template>
     <div class="c-form__wrap u-align__stretch">
       <label for="sumbnail" class="c-form__label">画像:</label>
-      <label class="c_form__file-label">
+      <div
+        class="c-form__file-label"
+        :class="{ 'preview': previewImage, 'dragover': isDragover }"
+        @dragover.prevent="handleDragover"
+        @dragleave="handleDragleave"
+        @drop.prevent="handleDrop"
+        @click="handleFileClick"
+      >
         <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
-        <input type="file" class="c_form__file-input js-file-input" name="sumbnail" ref="fileInput" @change="handleFileChange">
-        <img :src="previewImage" alt="" class="c_form__file-image js-file-img">
+        <input type="file" class="c-form__file-input" name="sumbnail" ref="fileInput" @change="handleFileChange">
+        <img :src="previewImage" alt="" class="c-form__file-image">
         ドラッグ＆ドロップ
-      </label>
-      <span v-if="fileValidationError" class="c-form__error" role="alert">
-        <strong>{{ fileValidationError }}</strong>
+      </div>
+      <span v-if="validError" class="c-form__error" role="alert">
+        <strong>{{ validError }}</strong>
       </span>
     </div>
   </template>
@@ -24,7 +31,8 @@
       return {
         ideaData: [],
         previewImage: null,
-        fileValidationError: null
+        validError: null,
+        isDragover: false
       };
     },
     mounted() {
@@ -45,31 +53,42 @@
         // ファイル形式のバリデーション
         const allowedFormats = ['image/jpeg', 'image/png', 'image/gif'];
         if (!allowedFormats.includes(file.type)) {
-          this.fileValidationError = '画像の形式が無効です。JPEG、PNG、GIF形式の画像を選択してください。';
+          this.validError = '画像の形式が無効です。JPEG、PNG、GIF形式の画像を選択してください。';
           return;
         }
   
         // ファイルサイズのバリデーション
         const maxSizeInBytes = 3145728; // 3MB
         if (file.size > maxSizeInBytes) {
-          this.fileValidationError = '画像のファイルサイズが大きすぎます。3MB以下の画像を選択してください。';
+          this.validError = '画像のファイルサイズが大きすぎます。3MB以下の画像を選択してください。';
           return;
         }
   
-        this.fileValidationError = null;
+        this.validError = null;
         this.previewImage = URL.createObjectURL(file);
+      },
+      // ドラッグ時
+      handleDragover(event) {
+        event.preventDefault();
+        this.isDragover = true;
+      },
+      // ドロップ時
+      handleDragleave() {
+        this.isDragover = false;
+      },
 
-        if (file) {
-            // ファイルが選択された場合の処理
-            this.previewImage = URL.createObjectURL(file);
-        } else if (this.ideaData && this.ideaData.idea && this.ideaData.idea.sumbnail) {
-            // ファイルが選択されなかった場合で、DBに保存されているsumbnailが存在する場合の処理
-            this.previewImage = this.ideaData.idea.sumbnail;
-        } else {
-            // ファイルが選択されなかった場合で、DBに保存されているsumbnailも存在しない場合の処理
-            this.previewImage = null;
-        }
-        
+      // ドラッグ＆ドロップをした後のイベント
+      handleDrop(event) {
+        event.preventDefault();
+        this.isDragover = false;
+        // ドロップされたファイルをinput要素に
+        this.$refs.fileInput.files = event.dataTransfer.files; 
+        this.handleFileChange();
+      },
+
+      // クリック時にもイベントが起こるように
+      handleFileClick() {
+        this.$refs.fileInput.click();
       }
     },
   };

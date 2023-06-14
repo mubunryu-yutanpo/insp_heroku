@@ -4,7 +4,7 @@
     <div class="c-form__wrap wrap-category">
         <label for="category" class="c-form__label">カテゴリー:</label>
         <select name="category" id="category" class="c-form__input @error('category') valid-error @enderror">
-        <option hidden>選択してください</option>
+        <option value="" hidden>選択してください</option>
         @foreach ($category as $cat)
             <option value="{{ $cat['id'] }}" {{ old('category', $idea->category_id ?? '') == $cat['id'] ? 'selected' : '' }}>{{ $cat['name'] }}</option>
         @endforeach
@@ -46,9 +46,7 @@
   <div class="c-form">
     <div class="c-form__wrap">
       <label for="description" class="c-form__label">内容:</label>
-      <textarea name="description" id="description" cols="30" rows="10" class="c-form__input input-description @error('description') valid-error @enderror" autocomplete="description" maxlength="2000" placeholder="アイデアについて2,000文字以内で入力してください">
-        {{ old('description', $idea->description ?? '') }}
-    </textarea>
+      <textarea name="description" id="description" cols="30" rows="10" class="c-form__input input-description @error('description') valid-error @enderror" autocomplete="description" maxlength="2000" placeholder="アイデアについて2,000文字以内で入力してください">{{ old('description', $idea->description ?? '') }}</textarea>
     </div>
     @error('description')
       <span class="c-form__error" role="alert">
@@ -72,13 +70,12 @@
     <div class="c-form__wrap wrap-price">
       <label for="price" class="c-form__label">値段:</label>
       <input type="text" name="price" id="price" class="c-form__input @error('price') valid-error @enderror" autocomplete="price" value="{{ old('price', $idea->price ?? '') }}" placeholder="半角数字のみ">
-    </div>
-    @error('price')
+      @error('price')
       <span class="c-form__error" role="alert">
         <strong>{{ $message }}</strong>
       </span>
-    @enderror
+      @enderror
+    </div>
   </div>
 
 
-<!-- formのスタイルつづきはよ。 -->

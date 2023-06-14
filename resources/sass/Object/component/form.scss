@@ -1,6 +1,10 @@
 .c-form{
 
-    padding: 20px 5%;
+    padding: $space_20 5%;
+
+    @include mq(){
+        padding: $space_20 3%;
+    }
 
     &__wrap{
         margin: 0 auto;
@@ -9,19 +13,31 @@
         &.wrap-category{
             margin: 0 auto 0 0;
             width: 50%;
+
+            @include mq(sm){
+                width: 80%;
+            }
         }
 
         &.wrap-price{
             margin: 0 auto 0 0;
             width: 30%;
+
+            @include mq(sm){
+                width: 50%;
+            }
         }
     }    
 
     &__label{
-        border-bottom: 1px solid $brown;
+        //border-bottom: 1px solid $brown;
         display: block;
         margin: 0;
         width: 100%;
+
+        @include mq(){
+            margin-bottom: $space-5;
+        }
     }
 
     &__input{
@@ -34,6 +50,74 @@
 
         &.input-description{
             resize: none;
+            vertical-align: bottom;
+        }
+
+        &.valid-error{
+            border: 1px solid $red;
         }
     }
-}
+
+    &__file {
+        &-label {
+          background: $white;
+          border: 1px dashed $gray;
+          border-radius: $space-5;
+          color: $brown;
+          display: block;
+          height: 300px;
+          line-height: 300px;
+          width: 400px;
+          margin: 0 auto;
+          position: relative;
+          text-align: center;
+
+          @include mq(sm){
+            height: 230px;
+            line-height: 230px;
+            width: 100%;
+          }
+    
+          &.preview {
+            border: none;
+            box-shadow: 0 0 5px 3px $brown;
+
+            @include mq(){
+                box-shadow: 0 0 5px 0 $brown;
+            }
+          }
+    
+          &.dragover {
+            border-color: #000;
+            background-color: #f0f0f0;
+            color: #000;
+          }
+        }
+    
+        &-input {
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+    
+        &-image {
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
+    }
+
+    &__error{
+        color: $red;
+        display: block;
+        margin: $space-5 0;
+    }
+
+  }

@@ -1,11 +1,11 @@
 .p-submit{
-    margin: $space_20 0;
+    margin: $space_20 3% 0 0;
     text-align: right;
 
     &__button{
         background-color: $blue;
         border-radius: 5px;
-        box-shadow: 0 5px 0 2px $lightbrown;
+        box-shadow: 0 3px 0 3px $lightblue;
         color: $white;
         padding: $space-10 $space_default;
         transition: all .5s;

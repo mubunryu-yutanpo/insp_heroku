@@ -19,7 +19,7 @@ class IdeasController extends Controller
 
     // ========アイデア新規投稿処理========
     public function ideaCreate(ValidRequest $request)
-    {
+    {        
         $user_id = Auth::id();
         $idea = new Idea;
 
