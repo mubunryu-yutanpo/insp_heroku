@@ -217,7 +217,13 @@ class ApiController extends Controller
         }
 
         // レビュー取得
-        $reviews = Review::where('idea_id', $id)->get();
+        $reviews = Review::with('user')->where('idea_id', $id)->get();
+        if($reviews->isNotEmpty()){
+            $reviewData = $reviews;
+        }else{
+            $reviewData = null;
+        }
+
         // 平均点を算出
         $averageScore = $reviews->avg('score');
         // 気になるの状態を取得
@@ -229,7 +235,7 @@ class ApiController extends Controller
         $data = [
             'idea'         => $idea,
             'canBuy'       => $canBuy,
-            'reviews'      => $reviews,
+            'reviews'      => $reviewData,
             'averageScore' => $averageScore,
             'isChecked'    => $isChecked,
             'user_id'      => $user_id,

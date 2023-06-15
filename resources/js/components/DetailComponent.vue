@@ -1,57 +1,69 @@
 <template>
-    <div>
-      <h2>アイデア詳細</h2>
-      <p v-if="canBuy">このアイデアは購入可能です。</p>
-      <p v-else>このアイデアは購入できません</p>
-      <p>タイトル： {{ idea.title }}</p>
-      <img :src="idea.sumbnail" alt="" class="">
-      <p>概要： {{ idea.summary }}</p>
-      <div class="">
-        <p class="">内容：</p>
-        <p class="" v-if="canBuy">購入後に表示されます</p>
-        <p>{{ idea.description }}</p>
-      </div>
-      <p>値段： {{ idea.price }}</p>
-      <a :href="'/idea/' + idea.id + '/reviews'">レビュー数: {{ reviews.length }}</a>
-      <p>平均評価: 
-        <span class="" v-if="averageScore !== null">{{ averageScore.toFixed(1) }}</span>
-        <span class="" v-if="averageScore === null">-</span>
-      </p>
-      <p>気になる〜: {{ isChecked }}</p>
-    
-      <div class="">
-        <button class="" @click="toggleCheck()">
-          <span class="" v-if="!isChecked">
+    <div class="p-detail">
+
+      <div class="p-detail__title">
+        <h3 class="p-detail__title-text">{{ idea.title }}</h3>
+        <button class="p-detail__check" @click="toggleCheck()">
+          <span class="p-detail__check-text" v-if="!isChecked">
+            <i class="fa-regular fa-heart fa-fw p-detail__check-icon add"></i>
             気になる！に追加
-            <i class="fa-regular fa-heart"></i>
           </span>
-          <span class="" v-if="isChecked">
+          <span class="p-detail__check-text" v-if="isChecked">
+            <i class="fa-solid fa-heart fa-fw p-detail__check-icon remove"></i>
             気になる！から削除
-            <i class="fa-solid fa-heart" ></i>
           </span>
         </button>
-        
-        <div class="" v-if="canBuy">
-          <button class="" @click="buy()">
-              <span class="">
+      </div>
+
+      <div class="p-detail__container">
+        <!-- アイデアの中身 -->
+        <section class="p-detail__container-main">
+          <div class="p-detail__sumbnail">
+            <img :src="idea.sumbnail" alt="" class="p-detail__sumbnail-image">
+          </div>
+          <p class="p-detail__summary">{{ idea.summary }}</p>
+          <p class="p-detail__discription" v-if="canBuy">購入後に表示されます</p>
+          <p class="p-detail__discription" v-if="!canBuy">{{ idea.description }}</p>
+          <p class="p-detail__price">値段： {{ idea.price }}</p>
+          <a :href="'/idea/' + idea.id + '/reviews'" v-if="reviews !== null" class="p-detail__link">
+            レビュー数: {{ reviews.length }}
+          </a>
+          <span v-if="reviews === null" class="p-detail__link">レビュー数: 0</span>
+          
+          <div class="p-detail__wrap">
+            <div class="p-submit" v-if="canBuy">
+              <button class="p-submit-button" @click="buy()">
+                <span class="p-submit-button-text">
                   購入する
                   <i class="fa-solid fa-check"></i>
-              </span>
-          </button>
-        </div>
-        
-        <div class="" v-else>
-          <button class="" @click="doReview($id)">
-            <span class="">
+                </span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- レビュー達 -->
+        <section class="p-detail__container-sub">
+          <p class="p-detail__score">平均評価: 
+            <span class="p-detail__score-icon" v-if="averageScore !== null">{{ averageScore.toFixed(1) }}</span>
+            <span class="p-detail__score-icon" v-if="averageScore === null">-</span>
+          </p>
+          <div class="p-detail__comment" v-if="reviews !== null">
+            <p class="p-detail__comment-text">{{ reviews.comment}}</p>
+          </div>
+          <div class="p-submit" v-else>
+            <button class="p-submit-button" @click="doReview($id)">
+              <span class="p-submit-button-text">
                 レビューを付ける
                 <i class="fa-solid fa-check"></i>
-            </span>
-          </button>
-          <a :href="'/chat/' + idea_id + '/' + seller_id + '/' + user_id" class="">
+              </span>
+            </button>
+            <a :href="'/chat/' + idea_id + '/' + seller_id + '/' + user_id" class="p-submit-link">
               メッセージボードへ
               <i class="fa-regular fa-messages"></i>
-          </a>
-        </div>
+            </a>
+          </div>
+        </section>
 
       </div>
     </div>
@@ -97,7 +109,7 @@
         axios.post('/api/idea/' + this.idea_id + '/toggleCheck')
         .then(response => {
             console.log('チェックのトグル処理が成功しました');
-            this.isChecked = !this.isChecked; // チェックボックスの状態を反転させる
+            this.isChecked = !this.isChecked; 
         })
         .catch(error => {
             console.error(error);
@@ -113,6 +125,3 @@
     },
   };
   </script>
-  
-
-  <!-- メッセージのやりとりをどういう方向（別ページでやるか、ここでやるか。とか）でどう実装するか -->
