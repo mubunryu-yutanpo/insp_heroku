@@ -95,8 +95,8 @@
               </a>
             </div>
 
-            <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
           </div>
+          <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
         </div>
         <a :href="'/' + user.id + '/boughtList'" class="p-mypage__contents-link" v-if="boughtList !== null">全件表示</a>
       </section>

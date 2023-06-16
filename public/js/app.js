@@ -2275,6 +2275,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -38538,107 +38570,120 @@ var render = function () {
       _c("h3", { staticClass: "p-detail__title-text" }, [
         _vm._v(_vm._s(_vm.idea.title)),
       ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "p-detail__check",
-          on: {
-            click: function ($event) {
-              _vm.toggleCheck()
-            },
-          },
-        },
-        [
-          !_vm.isChecked
-            ? _c("span", { staticClass: "p-detail__check-text" }, [
-                _c("i", {
-                  staticClass:
-                    "fa-regular fa-heart fa-fw p-detail__check-icon add",
-                }),
-                _vm._v("\n        気になる！に追加\n      "),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.isChecked
-            ? _c("span", { staticClass: "p-detail__check-text" }, [
-                _c("i", {
-                  staticClass:
-                    "fa-solid fa-heart fa-fw p-detail__check-icon remove",
-                }),
-                _vm._v("\n        気になる！から削除\n      "),
-              ])
-            : _vm._e(),
-        ]
-      ),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-detail__container" }, [
       _c("section", { staticClass: "p-detail__container-main" }, [
-        _c("div", { staticClass: "p-detail__sumbnail" }, [
+        _c("div", { staticClass: "c-detail" }, [
           _c("img", {
-            staticClass: "p-detail__sumbnail-image",
+            staticClass: "c-detail__sumbnail",
             attrs: { src: _vm.idea.sumbnail, alt: "" },
           }),
         ]),
         _vm._v(" "),
-        _c("p", { staticClass: "p-detail__summary" }, [
-          _vm._v(_vm._s(_vm.idea.summary)),
+        _c("div", { staticClass: "c-detail" }, [
+          _c("p", { staticClass: "c-detail__summary" }, [
+            _vm._v(_vm._s(_vm.idea.summary)),
+          ]),
         ]),
         _vm._v(" "),
-        _vm.canBuy
-          ? _c("p", { staticClass: "p-detail__discription" }, [
-              _vm._v("購入後に表示されます"),
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        !_vm.canBuy
-          ? _c("p", { staticClass: "p-detail__discription" }, [
-              _vm._v(_vm._s(_vm.idea.description)),
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("p", { staticClass: "p-detail__price" }, [
-          _vm._v("値段： " + _vm._s(_vm.idea.price)),
+        _c("div", { staticClass: "c-detail" }, [
+          _vm.canBuy
+            ? _c("p", { staticClass: "c-detail__discription" }, [
+                _vm._v("※購入後に表示されます"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.canBuy
+            ? _c("p", { staticClass: "c-detail__discription" }, [
+                _vm._v(_vm._s(_vm.idea.description)),
+              ])
+            : _vm._e(),
         ]),
         _vm._v(" "),
-        _vm.reviews !== null
-          ? _c(
-              "a",
-              {
-                staticClass: "p-detail__link",
-                attrs: { href: "/idea/" + _vm.idea.id + "/reviews" },
-              },
-              [
-                _vm._v(
-                  "\n        レビュー数: " +
-                    _vm._s(_vm.reviews.length) +
-                    "\n      "
-                ),
-              ]
-            )
-          : _vm._e(),
+        _c("div", { staticClass: "c-detail" }, [
+          _vm.reviews !== null
+            ? _c(
+                "a",
+                {
+                  staticClass: "c-detail__reviews-link",
+                  attrs: { href: "/idea/" + _vm.idea.id + "/reviews" },
+                },
+                [
+                  _vm._v(
+                    "\n          レビュー数: (" +
+                      _vm._s(_vm.reviews.length) +
+                      ")\n        "
+                  ),
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.reviews === null
+            ? _c("span", { staticClass: "p-detail__reviews-text" }, [
+                _vm._v("レビュー数: (0)"),
+              ])
+            : _vm._e(),
+        ]),
         _vm._v(" "),
-        _vm.reviews === null
-          ? _c("span", { staticClass: "p-detail__link" }, [
-              _vm._v("レビュー数: 0"),
-            ])
-          : _vm._e(),
+        _c("div", { staticClass: "c-detail" }, [
+          _c("p", { staticClass: "c-detail__price" }, [
+            _vm._v("値段： " + _vm._s(_vm.idea.price)),
+          ]),
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "p-detail__wrap" }, [
-          _vm.canBuy
+          _vm._v('\n        v-if="user_id !== seller_id && !canBuy"\n        '),
+          _c("div", { staticClass: "p-submit" }, [
+            _vm.selle_id !== _vm.user_id && !_vm.canBuy
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "p-submit__link",
+                    attrs: {
+                      href:
+                        "/chat/" +
+                        _vm.idea_id +
+                        "/" +
+                        _vm.seller_id +
+                        "/" +
+                        _vm.user_id,
+                    },
+                  },
+                  [
+                    _vm._v("\n            メッセージボードへ\n            "),
+                    _c("i", { staticClass: "fa-regular fa-messages" }),
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "p-submit__button",
+                on: {
+                  click: function ($event) {
+                    _vm.doReview(_vm.$id)
+                  },
+                },
+              },
+              [_vm._m(0)]
+            ),
+          ]),
+          _vm._v(" "),
+          _vm.user_id !== _vm.seller_id && _vm.canBuy
             ? _c("div", { staticClass: "p-submit" }, [
                 _c(
                   "button",
                   {
-                    staticClass: "p-submit-button",
+                    staticClass: "p-submit__button",
                     on: {
                       click: function ($event) {
                         _vm.buy()
                       },
                     },
                   },
-                  [_vm._m(0)]
+                  [_vm._m(1)]
                 ),
               ])
             : _vm._e(),
@@ -38646,6 +38691,39 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("section", { staticClass: "p-detail__container-sub" }, [
+        _c(
+          "button",
+          {
+            staticClass: "p-detail__check",
+            on: {
+              click: function ($event) {
+                _vm.toggleCheck()
+              },
+            },
+          },
+          [
+            !_vm.isChecked
+              ? _c("span", { staticClass: "p-detail__check-text" }, [
+                  _c("i", {
+                    staticClass:
+                      "fa-regular fa-heart fa-fw p-detail__check-icon add",
+                  }),
+                  _vm._v("\n          気になる！に追加\n        "),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.isChecked
+              ? _c("span", { staticClass: "p-detail__check-text" }, [
+                  _c("i", {
+                    staticClass:
+                      "fa-solid fa-heart fa-fw p-detail__check-icon remove",
+                  }),
+                  _vm._v("\n          気になる！から削除\n        "),
+                ])
+              : _vm._e(),
+          ]
+        ),
+        _vm._v(" "),
         _c("p", { staticClass: "p-detail__score" }, [
           _vm._v("平均評価: \n        "),
           _vm.averageScore !== null
@@ -38660,45 +38738,51 @@ var render = function () {
         ]),
         _vm._v(" "),
         _vm.reviews !== null
-          ? _c("div", { staticClass: "p-detail__comment" }, [
-              _c("p", { staticClass: "p-detail__comment-text" }, [
-                _vm._v(_vm._s(_vm.reviews.comment)),
-              ]),
-            ])
-          : _c("div", { staticClass: "p-submit" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "p-submit-button",
-                  on: {
-                    click: function ($event) {
-                      _vm.doReview(_vm.$id)
-                    },
-                  },
-                },
-                [_vm._m(1)]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "p-submit-link",
-                  attrs: {
-                    href:
-                      "/chat/" +
-                      _vm.idea_id +
-                      "/" +
-                      _vm.seller_id +
-                      "/" +
-                      _vm.user_id,
-                  },
-                },
-                [
-                  _vm._v("\n          メッセージボードへ\n          "),
-                  _c("i", { staticClass: "fa-regular fa-messages" }),
-                ]
-              ),
-            ]),
+          ? _c(
+              "div",
+              { staticClass: "p-detail__reviews" },
+              _vm._l(_vm.reviews, function (review) {
+                return _c(
+                  "div",
+                  { key: review.id, staticClass: "c-detail__reviews" },
+                  [
+                    _c("div", { staticClass: "c-detail__reviews-image" }, [
+                      _c("img", {
+                        staticClass: "c-detail__reviews-image-item",
+                        attrs: { src: review.user.avatar, alt: "" },
+                      }),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "c-detail__reviews-score" },
+                      [
+                        _vm._l(5, function (n) {
+                          return _c("i", {
+                            key: n,
+                            staticClass:
+                              "c-detail__reviews-score-icon fa-solid fa-star",
+                            class: { active: n <= review.score },
+                          })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          { staticClass: "c-detail__reviews-score-text" },
+                          [_vm._v(_vm._s(review.score))]
+                        ),
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "p-detail__reivews-comment" }, [
+                      _vm._v(_vm._s(review.comment)),
+                    ]),
+                  ]
+                )
+              })
+            )
+          : _vm._e(),
       ]),
     ]),
   ])
@@ -38708,8 +38792,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "p-submit-button-text" }, [
-      _vm._v("\n              購入する\n              "),
+    return _c("span", { staticClass: "p-submit__button-text" }, [
+      _vm._v("\n              レビューを付ける\n              "),
       _c("i", { staticClass: "fa-solid fa-check" }),
     ])
   },
@@ -38717,8 +38801,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "p-submit-button-text" }, [
-      _vm._v("\n            レビューを付ける\n            "),
+    return _c("span", { staticClass: "p-submit__button-text" }, [
+      _vm._v("\n              購入する\n              "),
       _c("i", { staticClass: "fa-solid fa-check" }),
     ])
   },
@@ -39342,7 +39426,7 @@ var render = function () {
                       return _c("i", {
                         key: n,
                         staticClass: "c-card__review-icon fa-solid fa-star",
-                        class: { open: n <= idea.averageScore },
+                        class: { active: n <= idea.averageScore },
                       })
                     }),
                     _vm._v(" "),
@@ -39794,86 +39878,91 @@ var render = function () {
       _c(
         "div",
         { staticClass: "p-mypage__contents-container" },
-        _vm._l(_vm.boughtList, function (bought) {
-          return _c("div", { key: bought.id, staticClass: "c-card" }, [
-            _c("div", { staticClass: "c-card__main" }, [
-              _c("img", {
-                staticClass: "c-card__sumbnail",
-                attrs: { src: bought.sumbnail, alt: "" },
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "c-card__about" }, [
-                _c("p", { staticClass: "c-card__category" }, [
-                  _vm._v(_vm._s(bought.category.name)),
-                ]),
+        [
+          _vm._l(_vm.boughtList, function (bought) {
+            return _c("div", { key: bought.id, staticClass: "c-card" }, [
+              _c("div", { staticClass: "c-card__main" }, [
+                _c("img", {
+                  staticClass: "c-card__sumbnail",
+                  attrs: { src: bought.sumbnail, alt: "" },
+                }),
                 _vm._v(" "),
-                _c("p", { staticClass: "c-card__title" }, [
-                  _vm._v(_vm._s(bought.title)),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "c-card__price" }, [
-                  _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
-                  _vm._v(
-                    " " + _vm._s(_vm._f("numberWithCommas")(bought.price))
+                _c("div", { staticClass: "c-card__about" }, [
+                  _c("p", { staticClass: "c-card__category" }, [
+                    _vm._v(_vm._s(bought.category.name)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__title" }, [
+                    _vm._v(_vm._s(bought.title)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__price" }, [
+                    _c("span", { staticClass: "u-font__size-m" }, [
+                      _vm._v("¥"),
+                    ]),
+                    _vm._v(
+                      " " + _vm._s(_vm._f("numberWithCommas")(bought.price))
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "c-card__review" },
+                    [
+                      _vm._l(5, function (n) {
+                        return _c("i", {
+                          key: n,
+                          staticClass: "c-card__review-icon fa-solid fa-star",
+                          class: { active: n <= bought.averageScore },
+                        })
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "c-card__review-link",
+                          attrs: { href: "/idea/" + bought.id + "/reviews" },
+                        },
+                        [_vm._v("(" + _vm._s(bought.review.length) + ")")]
+                      ),
+                    ],
+                    2
                   ),
                 ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "c-card__wrap" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "c-card__wrap-link",
+                    attrs: { href: "/" + bought.id + "/idea" },
+                  },
+                  [_vm._v("詳細を見る")]
+                ),
                 _vm._v(" "),
                 _c(
-                  "div",
-                  { staticClass: "c-card__review" },
+                  "a",
+                  {
+                    staticClass: "c-card__wrap-link",
+                    attrs: { href: "/" + bought.id + "/review/create" },
+                  },
                   [
-                    _vm._l(5, function (n) {
-                      return _c("i", {
-                        key: n,
-                        staticClass: "c-card__review-icon fa-solid fa-star",
-                        class: { active: n <= bought.averageScore },
-                      })
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "c-card__review-link",
-                        attrs: { href: "/idea/" + bought.id + "/reviews" },
-                      },
-                      [_vm._v("(" + _vm._s(bought.review.length) + ")")]
-                    ),
-                  ],
-                  2
+                    _c("i", { staticClass: "fa-solid fa-check fa-fw" }),
+                    _vm._v("レビューする\n          "),
+                  ]
                 ),
               ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "c-card__wrap" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "c-card__wrap-link",
-                  attrs: { href: "/" + bought.id + "/idea" },
-                },
-                [_vm._v("詳細を見る")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "c-card__wrap-link",
-                  attrs: { href: "/" + bought.id + "/review/create" },
-                },
-                [
-                  _c("i", { staticClass: "fa-solid fa-check fa-fw" }),
-                  _vm._v("レビューする\n          "),
-                ]
-              ),
-            ]),
-            _vm._v(" "),
-            _vm.boughtList === null
-              ? _c("p", { staticClass: "p-mypage__contents-text" }, [
-                  _vm._v("購入したアイデアはありません。"),
-                ])
-              : _vm._e(),
-          ])
-        })
+            ])
+          }),
+          _vm._v(" "),
+          _vm.boughtList === null
+            ? _c("p", { staticClass: "p-mypage__contents-text" }, [
+                _vm._v("購入したアイデアはありません。"),
+              ])
+            : _vm._e(),
+        ],
+        2
       ),
       _vm._v(" "),
       _vm.boughtList !== null

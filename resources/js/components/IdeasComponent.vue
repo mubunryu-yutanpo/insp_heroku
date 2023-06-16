@@ -83,7 +83,7 @@
                 <p class="c-card__date">{{ formatDate(idea.created_at) }}</p>
                 <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
                 <div class="c-card__review">
-                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'open': n <= idea.averageScore }"></i>
+                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.averageScore }"></i>
                   <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.review.length }})</a>
                 </div>
                 <p class="c-card__text">{{ idea.summary }}</p>
