@@ -5,7 +5,8 @@
     box-shadow: 0 0 5px 0 #bdb8ad;
     margin: 0 auto;
     max-width: 980px;
-    padding: $space_20 $space_default;
+    padding: $space_40 $space_default $space_20;
+    position: relative;
     width: 100%;
 
     &__container{
@@ -17,8 +18,12 @@
         }
     
         &-sub{
-            width: 25%;
+            border: 1px solid $gray;
+            box-sizing: border-box;
+            height: 100%;
+            padding: $space-20 $space-10;
             margin: 0 1%;
+            width: 25%;
         }
     }
 
@@ -33,24 +38,28 @@
         }
     }
 
-    &__sumbnail{
-        text-align: center;
-
-        &-image{
-            height: auto;
-            max-width: 500px;
-            width: 100%;
-        }
-    }
-
     &__check{
         background: $lightbrown;
         border: 1px solid $gray;
         border-radius: 20px;
         padding: $space-10 $space_default;
+        position: absolute;
+        right: $space_default;
+        top: $space_20;
 
         &-icon{
             color: $red;
+        }
+    }
+
+    &__score{
+        margin-bottom: $space_20;
+        text-align: center;
+
+        &-text{
+            font-size: $font-size_l;
+            font-weight: bold;
+            margin-left: $space-5;
         }
     }
 

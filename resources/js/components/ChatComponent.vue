@@ -1,7 +1,7 @@
 <template>
     <section class="p-chat">
       
-      <div v-if="hasMessages" class="p-chat__container c-chat">
+      <div v-if="messages !== null" class="p-chat__container c-chat">
 
         <div v-for="message in messages" :key="message.id" class="c-chat__wrap">
             
@@ -44,7 +44,7 @@
   import axios from 'axios';
   
   export default {
-    props: ['chat_id', 'seller_id', 'user_id'],
+    props: ['chat_id', 'idea_id', 'seller_id', 'user_id'],
     data() {
       return {
         seller: [],
@@ -59,7 +59,7 @@
     methods: {
       getMessages() {
         axios
-          .get('/api/message/' + this.chat_id + '/' + this.seller_id + '/' + this.user_id)
+          .get('/api/message/' + this.idea_id + '/' + this.seller_id + '/' + this.user_id)
           .then((response) => {
             this.seller = response.data.seller;
             this.buyer = response.data.buyer;
@@ -82,12 +82,12 @@
           });
       },
     },
-    computed: {
-      hasMessages() {
-        // まだメッセージがない場合の処理
-        return this.messages.length > 0;
-      },
-    },
+    // computed: {
+    //   hasMessages() {
+    //     // まだメッセージがない場合の処理
+    //     return this.messages.length > 0;
+    //   },
+    // },
   };
   </script>
   

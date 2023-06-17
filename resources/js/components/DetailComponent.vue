@@ -5,10 +5,22 @@
         <h3 class="p-detail__title-text">{{ idea.title }}</h3>
       </div>
 
+      <button class="p-detail__check" @click="toggleCheck()">
+        <span class="p-detail__check-text" v-if="!isChecked">
+          <i class="fa-regular fa-heart fa-fw p-detail__check-icon add"></i>
+          気になる！に追加
+        </span>
+        <span class="p-detail__check-text" v-if="isChecked">
+          <i class="fa-solid fa-heart fa-fw p-detail__check-icon remove"></i>
+          気になる！から削除
+        </span>
+      </button>
+
+
       <div class="p-detail__container">
         <!-- アイデアの中身 -->
         <section class="p-detail__container-main">
-          <div class="c-detail">
+          <div class="c-detail u-text-center">
             <img :src="idea.sumbnail" alt="" class="c-detail__sumbnail">
           </div>
 
@@ -16,9 +28,8 @@
             <p class="c-detail__summary">{{ idea.summary }}</p>
           </div>
 
-          <div class="c-detail">
-            <p class="c-detail__discription" v-if="canBuy">※購入後に表示されます</p>
-            <p class="c-detail__discription" v-if="!canBuy">{{ idea.description }}</p>
+          <div class="c-detail u-margin-none">
+            <p class="c-detail__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
           </div>
 
           <div class="c-detail">
@@ -29,54 +40,42 @@
           </div>
 
           <div class="c-detail">
-            <p class="c-detail__price">値段： {{ idea.price }}</p>
+            <p class="c-detail__discription" v-if="canBuy && !bought">※購入後に表示されます</p>
+            <p class="c-detail__discription" v-else>{{ idea.description }}</p>
           </div>
-
           
           <div class="p-detail__wrap">
-            v-if="user_id !== seller_id && !canBuy"
             <div class="p-submit" >
 
-              <a :href="'/chat/' + idea_id + '/' + seller_id + '/' + user_id" class="p-submit__link" v-if="selle_id !== user_id && !canBuy">
+              <a :href="'/chat/' + idea_id + '/' + seller_id + '/' + user_id" class="p-submit__link" v-if="seller_id !== user_id && !canBuy">
                 メッセージボードへ
                 <i class="fa-regular fa-messages"></i>
               </a>
 
-              <button class="p-submit__button" @click="doReview($id)">
+              <button class="p-submit__button" @click="doReview($id)" v-if="user_id !== seller_id && !canBuy && bought">
                 <span class="p-submit__button-text">
                   レビューを付ける
                   <i class="fa-solid fa-check"></i>
                 </span>
               </button>
-            </div>
 
-            <div class="p-submit" v-if="user_id !== seller_id && canBuy">
-              <button class="p-submit__button" @click="buy()" >
+              <button class="p-submit__button" @click="buy()" v-if="user_id !== seller_id && !bought && canBuy">
                 <span class="p-submit__button-text">
                   購入する
                   <i class="fa-solid fa-check"></i>
                 </span>
               </button>
-            </div>
+
+            </div>              
           </div>
         </section>
 
         <!-- レビュー達 -->
         <section class="p-detail__container-sub">
-          <button class="p-detail__check" @click="toggleCheck()">
-            <span class="p-detail__check-text" v-if="!isChecked">
-              <i class="fa-regular fa-heart fa-fw p-detail__check-icon add"></i>
-              気になる！に追加
-            </span>
-            <span class="p-detail__check-text" v-if="isChecked">
-              <i class="fa-solid fa-heart fa-fw p-detail__check-icon remove"></i>
-              気になる！から削除
-            </span>
-          </button>
 
           <p class="p-detail__score">平均評価: 
-            <span class="p-detail__score-icon" v-if="averageScore !== null">{{ averageScore.toFixed(1) }}</span>
-            <span class="p-detail__score-icon" v-if="averageScore === null">-</span>
+            <span class="p-detail__score-text" v-if="averageScore !== null">{{ averageScore.toFixed(1) }} / 5</span>
+            <span class="p-detail__score-text" v-if="averageScore === null">-</span>
           </p>
 
           <div class="p-detail__reviews" v-if="reviews !== null">
@@ -90,9 +89,9 @@
               <div class="c-detail__reviews-score">
                 <i v-for="n in 5" :key="n" class="c-detail__reviews-score-icon fa-solid fa-star" :class="{ 'active': n <= review.score }"></i>
                 <span class="c-detail__reviews-score-text">{{ review.score }}</span>
+                <p class="p-detail__reivews-comment">{{ review.comment}}</p>
               </div>
 
-              <p class="p-detail__reivews-comment">{{ review.comment}}</p>
             </div>
           </div>
         </section>
@@ -115,6 +114,7 @@
         isChecked: false,
         user_id: null,
         seller_id: null,
+        bought: false,
       };
     },
     mounted() {
@@ -132,6 +132,9 @@
             this.isChecked = response.data.isChecked;
             this.user_id = response.data.user_id;
             this.seller_id = response.data.seller_id;
+            this.bought = response.data.bought;
+            console.log(this.idea_id, this.seller_id, this.user_id);
+
           })
           .catch((error) => {
             console.error(error);
@@ -155,5 +158,19 @@
        }
 
     },
+
+    filters: {
+      // 値段の単位をカンマ区切りにする
+      numberWithCommas(value) {
+        if (value === 0) {
+          return '0';
+        }
+        if (!value) {
+          return '';
+        }
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      },
+    },
+
   };
   </script>

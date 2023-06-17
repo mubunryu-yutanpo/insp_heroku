@@ -217,7 +217,7 @@ class ApiController extends Controller
         }
 
         // レビュー取得
-        $reviews = Review::with('user')->where('idea_id', $id)->get();
+        $reviews = Review::with('user')->where('idea_id', $id)->get()->sortByDesc('created_at')->take(5);
         if($reviews->isNotEmpty()){
             $reviewData = $reviews;
         }else{
@@ -240,6 +240,7 @@ class ApiController extends Controller
             'isChecked'    => $isChecked,
             'user_id'      => $user_id,
             'seller_id'    => $seller_id,
+            'bought'       => $boughtIdea,
         ];
         
         return response()->json($data);
@@ -496,7 +497,6 @@ class ApiController extends Controller
         ->first();
         $buyer_id = $purchase ? $purchase->user_id : null;
 
-
         // アイデアの販売者・購入者のIDとパラメーターが違う場合にはリダイレクト
         if($sell_user !== strval($seller_id) || $user_id !== strval($buyer_id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -517,7 +517,7 @@ class ApiController extends Controller
         return redirect('/')->with('flash_message', __('チャットが見つかりません'));
         }
 
-        // メッセージ情報を取得        
+        // メッセージ情報を取得
         $messages = Message::where('chat_id', $chat->id)->orderBy('created_at')->get();
         
         // 送信者ごとにソート

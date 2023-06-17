@@ -99,7 +99,7 @@ Route::middleware('api')->group(function() {
     // 平均点の取得
     Route::get('api/idea/{id}/average', 'Api\ApiController@getAverage');
     // チャットメッセージ取得
-    Route::get('api/message/{chat_id}/{seller_id}/{user_id}', 'Api\ApiController@message');
+    Route::get('api/message/{idea_id}/{seller_id}/{user_id}', 'Api\ApiController@message');
     // チャットメッセージ追加
     Route::post('api/message/{chat_id}/{user_id}', 'Api\ApiController@addMessage');
 });
