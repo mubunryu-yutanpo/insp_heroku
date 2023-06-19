@@ -25,6 +25,7 @@ Vue.component('footer-component', require('./components/FooterComponent.vue').de
 Vue.component('mypage-component', require('./components/MypageComponent.vue').default);
 Vue.component('ideas-component', require('./components/IdeasComponent.vue').default);
 Vue.component('reviews-component', require('./components/ReviewsComponent.vue').default);
+Vue.component('myreviews-component', require('./components/MyReviewsComponent.vue').default);
 Vue.component('ideareviews-component', require('./components/IdeaReviewsComponent.vue').default);
 Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
 Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
@@ -47,14 +48,16 @@ import axios from 'axios';
 
 
 import Vue from 'vue';
-import ExampleComponent from './components/ExampleComponent.vue';
-import TestComponent from './components/TestComponent.vue';
+// import ExampleComponent from './components/ExampleComponent.vue';
+// import TestComponent from './components/TestComponent.vue';
 
 import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import MypageComponent from './components/MypageComponent.vue';
 import IdeasComponent from './components/IdeasComponent.vue';
 import ReviewsComponent from './components/ReviewsComponent';
+import MyReviewsComponent from './components/MyReviewsComponent';
+import IdeaReviewsComponent from './components/IdeaReviewsComponent';
 import MyPostsComponent from './components/MyPostsComponent';
 import ChecksComponent from './components/ChecksComponent';
 import BoughtsComponent from './components/BoughtsComponent';
@@ -149,7 +152,6 @@ const mypage = new Vue({
   store,
   components: {
     MypageComponent,
-    TestComponent,
   },
 });
 

@@ -20,6 +20,10 @@ Auth::routes();
 
 //全ユーザーのアイデア一覧画面
 Route::get('/index', 'HomeController@index')->name('ideas.index');
+// アイデア詳細へ
+Route::get('/{id}/idea', 'HomeController@show')->name('ideas.show');
+// 全レビュー表示ページへ
+Route::get('/reviews', 'HomeController@reviews')->name('reviews');
 // アイデアレビュー一覧へ
 Route::get('/idea/{id}/reviews', 'HomeController@ideaReviews')->name('idea.reviews');
 
@@ -30,7 +34,7 @@ Route::group(['middleware' => 'auth'], function(){
     // マイページへ
     Route::get('/mypage', 'HomeController@mypage')->name('mypage');
     // マイレビュー一覧へ
-    Route::get('/{id}/reviews', 'HomeController@myReviews')->name('reviews');
+    Route::get('/{id}/reviews', 'HomeController@myReviews')->name('user.reviews');
     // 気になる一覧へ
     Route::get('/{id}/checkList', 'HomeController@checks')->name('checks');
     // 購入済み一覧へ
@@ -43,8 +47,8 @@ Route::group(['middleware' => 'auth'], function(){
     // Route::get('/{id}/withdrow', 'HomeController@withdrow')->name('withdrow');
     // アイデア新規投稿へ
     Route::get('/new', 'HomeController@new')->name('new');
-    // アイデア詳細へ
-    Route::get('/{id}/idea', 'HomeController@show')->name('ideas.show');
+    // // アイデア詳細へ
+    // Route::get('/{id}/idea', 'HomeController@show')->name('ideas.show');
     // アイデア編集へ
     Route::get('/{id}/idea/edit', 'HomeController@edit')->name('idea.edit');
     // レビュー投稿へ
@@ -88,9 +92,11 @@ Route::middleware('api')->group(function() {
     Route::get('/api/{id}/checks', 'Api\ApiController@checks');
     // 購入したアイデア一覧取得
     Route::get('/api/{id}/boughts', 'Api\ApiController@boughts');
-    // マイレビュー一覧取得
+    // 全てのレビュー取得
+    Route::get('api/idea/reviews', 'Api\ApiController@reviews');
+    // 自分のアイデアへのレビュー一覧取得
     Route::get('/api/{id}/reviews', 'Api\ApiController@myReviews');
-    // アイデアレビュー一覧取得
+    // 指定アイデアのレビュー一覧取得
     Route::get('/api/idea/{id}/reviews', 'Api\ApiController@ideaReviews');
     // 気になる切り替え
     Route::post('/api/idea/{id}/toggleCheck', 'Api\ApiController@toggleCheck');

@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('api')->group(function () {
-    Route::get('/test', 'Api\MypagesController@test');
-});
+// Route::middleware('api')->group(function () {
+//     Route::get('/test', 'Api\MypagesController@test');
+// });
 
 Route::get('/user',function (Request $request) {
 	

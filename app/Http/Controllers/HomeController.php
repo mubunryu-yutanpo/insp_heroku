@@ -92,11 +92,27 @@ class HomeController extends Controller
 
 
     /* ================================================================
+      全レビュー一覧ページへ
+    ================================================================*/
+
+    public function reviews(){
+        return view('ideas/reviews');
+    }
+
+
+    /* ================================================================
       自分のアイデアに対するレビュー一覧へ
     ================================================================*/
 
     public function myReviews($id){
-        return view('ideas/myReviews');
+        $auth_user = Auth::id();
+        $user_id = null;
+
+        if($auth_user === intval($id) ){
+            $user_id = $id;
+        }
+
+        return view('ideas/myReviews', compact('user_id'));
     }
 
 

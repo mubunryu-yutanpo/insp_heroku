@@ -5,16 +5,32 @@
     box-shadow: 0 0 5px 0 #bdb8ad;
     margin: 0 auto;
     max-width: 980px;
-    padding: $space_40 $space_default $space_20;
+    padding: 80px $space_default $space_20;
     position: relative;
     width: 100%;
+
+    @include mq(){
+        padding: $space_40 $space_default 100px;
+    }
+
+    @include mq(sm){
+        padding-bottom: 120px;
+    }
 
     &__container{
         display: flex;
         justify-content: center;
 
+        @include mq(){
+            flex-direction: column;
+        }
+
         &-main{
             width: 70%;
+
+            @include mq(){
+                width: 100%;
+            }
         }
     
         &-sub{
@@ -22,8 +38,12 @@
             box-sizing: border-box;
             height: 100%;
             padding: $space-20 $space-10;
-            margin: 0 1%;
+            margin-left: 1%;
             width: 25%;
+
+            @include mq(){
+                width: 100%;
+            }
         }
     }
 
@@ -33,8 +53,20 @@
         justify-content: center;
         margin-bottom: $space_40;
 
+        @include mq(){
+            margin-bottom: 80px;
+        }
+
+        @include mq(sm){
+            margin-bottom: $space-20;
+        }
+
         &-text{
             margin: 0 $space_30 0 0;
+
+            @include mq(){
+                margin: 0;
+            }
         }
     }
 
@@ -44,8 +76,24 @@
         border-radius: 20px;
         padding: $space-10 $space_default;
         position: absolute;
-        right: $space_default;
+        right: $space-20;
         top: $space_20;
+
+        @include mq(){
+            right: $space-20;
+            top: 85px;
+        }
+
+        @include mq(sm){
+            display: block;
+            margin-bottom: $space-20;
+            margin-left: auto;
+            max-width: 200px;
+            position: static;
+            right: 0;
+            top: 0;
+            width: 70%;
+        }
 
         &-icon{
             color: $red;

@@ -14,6 +14,6 @@ class Review extends Model
         return $this->belongsTo('App\User');
     }
     public function idea(){
-        return $this->hasMany('App\Idea');
+        return $this->belongsTo('App\Idea');
     }
 }

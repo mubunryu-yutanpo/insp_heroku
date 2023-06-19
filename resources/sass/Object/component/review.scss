@@ -1,0 +1,56 @@
+.c-review{
+    background-color: $white;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 $white;
+    margin: $space_default auto;
+    padding: $space-20 $space_default;
+
+    @include mq(){
+        width: 90%;
+    }
+
+    &__user{
+        align-items: center;
+        display: flex;
+        margin-bottom: $space-10;
+
+        &-avatar{
+            border: 1px solid $gray;
+            border-radius: 100%;
+            height: 30px;
+            margin-right: $space-10;
+            padding: 2px;
+            width: 30px;
+        }
+
+        &-name{
+            margin: 0;
+        }
+    }
+
+    &__about{
+        margin-bottom: $space_25;
+
+        &-score{
+            margin-bottom: $space-10;
+        }
+
+        &-comment{
+            max-height: 150px;
+            overflow-y: auto;
+
+            &-text{
+                line-height: 150%;
+                margin: 0;
+            }
+        }
+    }
+
+    &__idea{
+        text-align: right;
+
+        @include mq(sm){
+            text-align: left;
+        }
+    }
+}

@@ -344,6 +344,27 @@ class ApiController extends Controller
     
 
     /* ================================================================
+      レビュー一覧取得
+    ================================================================*/
+
+    public function reviews(){
+        $reviewList = null;
+
+        $reviews = Review::with('idea', 'user')->paginate(20);
+
+        if($reviews->isNotEmpty()){
+            $reviewList = $reviews;
+        }
+
+        $data = [
+            'reviewList' => $reviewList
+        ];
+
+        return response()->json($data);
+    }
+
+
+    /* ================================================================
       自分のアイデアに対するレビュー一覧取得
     ================================================================*/
 

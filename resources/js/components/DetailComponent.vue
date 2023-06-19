@@ -24,7 +24,7 @@
             <img :src="idea.sumbnail" alt="" class="c-detail__sumbnail">
           </div>
 
-          <div class="c-detail">
+          <div class="c-detail">概要： 
             <p class="c-detail__summary">{{ idea.summary }}</p>
           </div>
 
@@ -39,18 +39,23 @@
             <span v-if="reviews === null" class="p-detail__reviews-text">レビュー数: (0)</span>
           </div>
 
-          <div class="c-detail">
+          <div class="c-detail">内容： 
             <p class="c-detail__discription" v-if="canBuy && !bought">※購入後に表示されます</p>
             <p class="c-detail__discription" v-else>{{ idea.description }}</p>
           </div>
           
           <div class="p-detail__wrap">
-            <div class="p-submit" >
+            <div class="p-submit detail">
 
               <a :href="'/chat/' + idea_id + '/' + seller_id + '/' + user_id" class="p-submit__link" v-if="seller_id !== user_id && !canBuy">
                 メッセージボードへ
                 <i class="fa-regular fa-messages"></i>
               </a>
+
+              <a href="/login" class="p-submit__button" v-if="user_id === null">
+                ログインして購入する
+              </a>
+
 
               <button class="p-submit__button" @click="doReview($id)" v-if="user_id !== seller_id && !canBuy && bought">
                 <span class="p-submit__button-text">
@@ -59,7 +64,7 @@
                 </span>
               </button>
 
-              <button class="p-submit__button" @click="buy()" v-if="user_id !== seller_id && !bought && canBuy">
+              <button class="p-submit__button" @click="buy()" v-if="user_id !== null && user_id !== seller_id && !bought && canBuy">
                 <span class="p-submit__button-text">
                   購入する
                   <i class="fa-solid fa-check"></i>

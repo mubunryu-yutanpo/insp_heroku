@@ -1,6 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'mypage')
+@section('title', 'マイページ')
 
 @section('header')
 
