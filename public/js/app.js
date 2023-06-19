@@ -2529,14 +2529,82 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['idea_id'],
   data: function data() {
     return {
-      reviewList: [],
-      theIdea: []
+      reviewList: []
     };
   },
   mounted: function mounted() {
@@ -2547,16 +2615,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/idea/' + this.idea_id + '/reviews').then(function (response) {
         _this.reviewList = response.data.reviewList;
-        _this.theIdea = response.data.theIdea;
       })["catch"](function (error) {
-        console.error(error);
+        console.log(error);
       });
-    },
-    getIdeaTitle: function getIdeaTitle(ideaId) {
-      var idea = this.theIdea.find(function (idea) {
-        return idea.id === ideaId;
-      });
-      return idea ? idea.title : '不明なアイデア';
     }
   }
 });
@@ -2933,14 +2994,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user_id'],
   data: function data() {
     return {
-      reviewList: [],
-      theIdea: []
+      reviewList: []
     };
   },
   mounted: function mounted() {
@@ -2951,16 +3028,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/' + this.user_id + '/reviews').then(function (response) {
         _this.reviewList = response.data.reviewList;
-        _this.theIdea = response.data.theIdea;
+        console.log(_this.reviewList, response.data.reviewList.data);
       })["catch"](function (error) {
-        console.error(error);
+        console.log(error);
       });
-    },
-    getIdeaTitle: function getIdeaTitle(ideaId) {
-      var idea = this.theIdea.find(function (idea) {
-        return idea.id === ideaId;
-      });
-      return idea ? idea.title : '不明なアイデア';
     }
   }
 });
@@ -2984,6 +3055,23 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39008,38 +39096,58 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("アイデアのレビュー一覧")]),
-    _vm._v(" "),
-    _c(
-      "ul",
-      _vm._l(_vm.reviewList, function (review) {
-        return _c("li", { key: review.id }, [
+  return _c(
+    "div",
+    { staticClass: "p-list" },
+    _vm._l(_vm.reviewList, function (review) {
+      return _c("article", { key: review.id, staticClass: "c-review" }, [
+        _c("div", { staticClass: "c-review__user" }, [
+          _c("div", { staticClass: "c-review__user-avatar" }, [
+            _c("img", {
+              staticClass: "c-review__user-avatar-image",
+              attrs: { src: review.user.avatar },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "c-review__user-name" }, [
+            _vm._v(_vm._s(review.user.name)),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-review__about" }, [
           _c(
             "div",
-            {},
+            { staticClass: "c-review__about-score" },
             _vm._l(5, function (n) {
               return _c("i", {
                 key: n,
-                staticClass: "fa-solid fa-star",
+                staticClass: "c-review__about-score-icon fa-solid fa-star",
                 class: { active: n <= review.score },
               })
             })
           ),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(review.comment))]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v("アイデア: " + _vm._s(_vm.getIdeaTitle(review.idea_id))),
+          _c("div", { staticClass: "c-review__about-comment" }, [
+            _c("p", { staticClass: "c-review__about-comment-text" }, [
+              _vm._v(_vm._s(review.comment)),
+            ]),
           ]),
-        ])
-      })
-    ),
-    _vm._v(" "),
-    _vm.reviewList === null
-      ? _c("div", [_vm._v("レビューがありません。")])
-      : _vm._e(),
-  ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-review__idea" }, [
+          _vm._v("\n      アイデア名： \n      "),
+          _c(
+            "a",
+            {
+              staticClass: "c-review__idea-link",
+              attrs: { href: "/" + review.idea.id + "/idea" },
+            },
+            [_vm._v(_vm._s(review.idea.title))]
+          ),
+        ]),
+      ])
+    })
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39665,38 +39773,58 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("レビュー一覧")]),
-    _vm._v(" "),
-    _c(
-      "ul",
-      _vm._l(_vm.reviewList, function (review) {
-        return _c("li", { key: review.id }, [
+  return _c(
+    "div",
+    { staticClass: "p-list" },
+    _vm._l(_vm.reviewList.data, function (review) {
+      return _c("article", { key: review.id, staticClass: "c-review" }, [
+        _c("div", { staticClass: "c-review__user" }, [
+          _c("div", { staticClass: "c-review__user-avatar" }, [
+            _c("img", {
+              staticClass: "c-review__user-avatar-image",
+              attrs: { src: review.user.avatar },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "c-review__user-name" }, [
+            _vm._v(_vm._s(review.user.name)),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-review__about" }, [
           _c(
             "div",
-            {},
+            { staticClass: "c-review__about-score" },
             _vm._l(5, function (n) {
               return _c("i", {
                 key: n,
-                staticClass: "fa-solid fa-star",
+                staticClass: "c-review__about-score-icon fa-solid fa-star",
                 class: { active: n <= review.score },
               })
             })
           ),
           _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(review.comment))]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v("アイデア: " + _vm._s(_vm.getIdeaTitle(review.idea_id))),
+          _c("div", { staticClass: "c-review__about-comment" }, [
+            _c("p", { staticClass: "c-review__about-comment-text" }, [
+              _vm._v(_vm._s(review.comment)),
+            ]),
           ]),
-        ])
-      })
-    ),
-    _vm._v(" "),
-    _vm.reviewList === null
-      ? _c("div", [_vm._v("レビューがありません。")])
-      : _vm._e(),
-  ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-review__idea" }, [
+          _vm._v("\n      アイデア名： \n      "),
+          _c(
+            "a",
+            {
+              staticClass: "c-review__idea-link",
+              attrs: { href: "/" + review.idea.id + "/idea" },
+            },
+            [_vm._v(_vm._s(review.idea.title))]
+          ),
+        ]),
+      ])
+    })
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39733,7 +39861,7 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "p-mypage__contents" }, [
-      _c("strong", { staticClass: "p-mypage__contents-title" }, [
+      _c("h2", { staticClass: "p-mypage__contents-title" }, [
         _vm._v("自分のアイデア"),
       ]),
       _vm._v(" "),
@@ -39743,7 +39871,7 @@ var render = function () {
         [
           _vm._l(_vm.postList, function (post) {
             return _c(
-              "div",
+              "article",
               { key: post.id, staticClass: "c-card card-mypage" },
               [
                 _c("div", { staticClass: "c-card__main" }, [
@@ -39844,7 +39972,7 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "p-mypage__contents" }, [
-      _c("strong", { staticClass: "p-mypage__contents-title" }, [
+      _c("h2", { staticClass: "p-mypage__contents-title" }, [
         _vm._v("気になるリスト"),
       ]),
       _vm._v(" "),
@@ -39854,7 +39982,7 @@ var render = function () {
         [
           _vm._l(_vm.checkList, function (check) {
             return _c(
-              "div",
+              "article",
               { key: check.id, staticClass: "c-card card-mypage" },
               [
                 _c("div", { staticClass: "c-card__main" }, [
@@ -39959,7 +40087,7 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "p-mypage__contents" }, [
-      _c("strong", { staticClass: "p-mypage__contents-title" }, [
+      _c("h2", { staticClass: "p-mypage__contents-title" }, [
         _vm._v("購入したアイデア"),
       ]),
       _vm._v(" "),
@@ -39968,7 +40096,7 @@ var render = function () {
         { staticClass: "p-mypage__contents-container" },
         [
           _vm._l(_vm.boughtList, function (bought) {
-            return _c("div", { key: bought.id, staticClass: "c-card" }, [
+            return _c("article", { key: bought.id, staticClass: "c-card" }, [
               _c("div", { staticClass: "c-card__main" }, [
                 _c("img", {
                   staticClass: "c-card__sumbnail",
@@ -40066,7 +40194,7 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "p-mypage__contents" }, [
-      _c("strong", { staticClass: "p-mypage__contents-title" }, [
+      _c("h2", { staticClass: "p-mypage__contents-title" }, [
         _vm._v("自分のアイデアへのレビュー"),
       ]),
       _vm._v(" "),
@@ -40076,39 +40204,53 @@ var render = function () {
         [
           _vm._l(_vm.reviewList, function (review) {
             return _c(
-              "div",
-              { key: review.id, staticClass: "c-card card-mypage" },
+              "article",
+              { key: review.id, staticClass: "c-review mypage" },
               [
-                _c("div", { staticClass: "c-card__user" }, [
-                  _c("p", { staticClass: "c-card__user-name" }, [
-                    _vm._v(_vm._s(review.user.name)),
+                _c("div", { staticClass: "c-review__user" }, [
+                  _c("div", { staticClass: "c-review__user-avatar" }, [
+                    _c("img", {
+                      staticClass: "c-review__user-avatar-image",
+                      attrs: { src: review.user.avatar },
+                    }),
                   ]),
                   _vm._v(" "),
-                  _c("img", {
-                    staticClass: "c-card__user-avatar",
-                    attrs: { src: review.user.avatar },
-                  }),
+                  _c("p", { staticClass: "c-review__user-name" }, [
+                    _vm._v(_vm._s(review.user.name)),
+                  ]),
                 ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "c-card__score" },
-                  _vm._l(5, function (n) {
-                    return _c("i", {
-                      key: n,
-                      staticClass: "fa-solid fa-star",
-                      class: { active: n <= review.score },
+                _c("div", { staticClass: "c-review__about" }, [
+                  _c(
+                    "div",
+                    { staticClass: "c-review__about-score" },
+                    _vm._l(5, function (n) {
+                      return _c("i", {
+                        key: n,
+                        staticClass:
+                          "c-review__about-score-icon fa-solid fa-star",
+                        class: { active: n <= review.score },
+                      })
                     })
-                  })
-                ),
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-review__about-comment" }, [
+                    _c("p", { staticClass: "c-review__about-comment-text" }, [
+                      _vm._v(_vm._s(review.comment)),
+                    ]),
+                  ]),
+                ]),
                 _vm._v(" "),
-                _c("img", {
-                  staticClass: "c-card__sumbnail",
-                  attrs: { src: review.idea.sumbnail, alt: "" },
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "c-card__comment" }, [
-                  _vm._v(_vm._s(review.comment)),
+                _c("div", { staticClass: "c-review__idea" }, [
+                  _vm._v("\n          アイデア名： \n          "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "c-review__idea-link",
+                      attrs: { href: "/" + review.idea.id + "/idea" },
+                    },
+                    [_vm._v(_vm._s(review.idea.title))]
+                  ),
                 ]),
               ]
             )

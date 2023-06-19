@@ -159,45 +159,4 @@ class IdeasController extends Controller
 
     }
 
-    // // ========購入したアイデア取得処理========
-    // public function boughtIdeas($id){
-    //     if(!ctype_digit($id)){
-    //         return redirect('/')->with('flash_message', __('不正な操作が行われました'));
-    //     }
-
-    //     $boughtList = null;
-    //     // 自分が購入したアイデアを1ページ10件表示するように取得
-    //     $boughts = $this->user
-    //                ->purchase()
-    //                ->with('idea')
-    //                ->paginate(10);
-        
-    //     if($boughts->isNotEmpty()){
-    //         $boughtList = $boughts;
-    //     }
-
-    //     $data = [
-    //         'boughtList' => $boughtList,
-    //     ];
-
-    //     return response()->json($data);
-    // }
-
-    // // ========投稿したアイデア一覧へ========
-    // public function indexPosts($id){
-
-    //     $postsList = null;
-
-    //     $posts = Idea::where('user_id', $id)->paginate(10);
-    //     if($posts->isNotEmpty() ){
-    //         $postsList = $posts;
-    //     }
-
-    //     $data = [
-    //         'postsList' => $postsList,
-    //     ];
-
-    //     return response()->json($data);
-    // }
-
 }

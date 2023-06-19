@@ -8,10 +8,10 @@
 
 
       <section class="p-mypage__contents">
-        <strong class="p-mypage__contents-title">自分のアイデア</strong>
+        <h2 class="p-mypage__contents-title">自分のアイデア</h2>
         <div class="p-mypage__contents-container">
           
-          <div class="c-card card-mypage" v-for="post in postList" :key="post.id">
+          <article class="c-card card-mypage" v-for="post in postList" :key="post.id">
             <div class="c-card__main">
               <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
               <div class="c-card__about">
@@ -31,7 +31,7 @@
               </a>
             </div>
 
-          </div>
+          </article>
           <p class="p-mypage__contents-text" v-if="postList === null">投稿がまだありません。</p>
 
         </div>
@@ -40,10 +40,10 @@
 
 
       <section class="p-mypage__contents">
-        <strong class="p-mypage__contents-title">気になるリスト</strong>
+        <h2 class="p-mypage__contents-title">気になるリスト</h2>
         <div class="p-mypage__contents-container">
           
-          <div class="c-card card-mypage" v-for="check in checkList" :key="check.id">
+          <article class="c-card card-mypage" v-for="check in checkList" :key="check.id">
             <div class="c-card__main">
               <img :src="check.sumbnail" alt="" class="c-card__sumbnail">
               <div class="c-card__about">
@@ -63,7 +63,7 @@
                   <i class="fa-solid fa-heart fa-fw"></i>気になるを解除
                 </button>
             </div>
-          </div>
+          </article>
           <p class="p-mypage__contents-text" v-if="checkList === null">気になるアイデアがまだありません。</p>
         </div>
 
@@ -71,10 +71,10 @@
       </section>
 
       <section class="p-mypage__contents">
-        <strong class="p-mypage__contents-title">購入したアイデア</strong>
+        <h2 class="p-mypage__contents-title">購入したアイデア</h2>
         <div class="p-mypage__contents-container">
           
-          <div class="c-card" v-for="bought in boughtList" :key="bought.id">
+          <article class="c-card" v-for="bought in boughtList" :key="bought.id">
             <div class="c-card__main">
               <img :src="bought.sumbnail" alt="" class="c-card__sumbnail">
               <div class="c-card__about">
@@ -95,7 +95,7 @@
               </a>
             </div>
 
-          </div>
+          </article>
           <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
         </div>
         <a :href="'/' + user.id + '/boughtList'" class="p-mypage__contents-link" v-if="boughtList !== null">全件表示</a>
@@ -103,20 +103,37 @@
 
 
       <section class="p-mypage__contents">
-        <strong class="p-mypage__contents-title">自分のアイデアへのレビュー</strong>
+        <h2 class="p-mypage__contents-title">自分のアイデアへのレビュー</h2>
         <div class="p-mypage__contents-container">
           
-          <div class="c-card card-mypage" v-for="review in reviewList" :key="review.id">
-            <div class="c-card__user">
-              <p class="c-card__user-name">{{ review.user.name }}</p>
-              <img :src="review.user.avatar" class="c-card__user-avatar">
+          <article class="c-review mypage" v-for="review in reviewList" :key="review.id">
+            <!-- user -->
+            <div class="c-review__user">
+              <div class="c-review__user-avatar">
+                <img :src="review.user.avatar" class="c-review__user-avatar-image">
+              </div>
+              <p class="c-review__user-name">{{ review.user.name }}</p>
             </div>
-            <div class="c-card__score">
-              <i v-for="n in 5" :key="n" class="fa-solid fa-star" :class="{ 'active': n <= review.score }"></i>
+            <!-- review -->
+            <div class="c-review__about">
+              <!-- score -->
+              <div class="c-review__about-score">
+                <i v-for="n in 5" :key="n" class="c-review__about-score-icon fa-solid fa-star" :class="{ 'active': n <= review.score }"></i>
+              </div>
+              <!-- comment -->
+              <div class="c-review__about-comment">
+                <p class="c-review__about-comment-text">{{ review.comment }}</p>
+              </div>
+
             </div>
-            <img :src="review.idea.sumbnail" alt="" class="c-card__sumbnail">
-            <p class="c-card__comment">{{ review.comment }}</p>
-          </div>
+            <!-- idea -->
+            <div class="c-review__idea">
+              アイデア名： 
+              <a :href="'/' + review.idea.id + '/idea'" class="c-review__idea-link">{{ review.idea.title }}</a>
+            </div>
+          </article>
+
+
           <p class="p-mypage__contents-text" v-if="reviewList === null">レビューがまだありません。</p>
 
         </div>

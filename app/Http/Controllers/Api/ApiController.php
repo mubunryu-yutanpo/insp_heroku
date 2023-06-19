@@ -72,23 +72,19 @@ class ApiController extends Controller
         // -- レビュー取得 --
         
         $reviewList = null;
-        // 投稿に対するレビューのデータを最新5件まで取得
-        $reviews = $user->idea()
-        ->with('review.user') // レビューに紐づくユーザー情報をロード
-        ->has('review')
-        ->get()
-        ->flatMap(function ($idea) {
-            return $idea->review;
-        })
-        ->sortByDesc('created_at')
-        ->take(5);
+
+        $reviews = Review::whereHas('idea', function ($query) use ($user) {
+                $query->where('user_id', $user->id); // ユーザーが所有するアイデアに関連するレビューを取得
+            })
+            ->with(['idea', 'user'])
+            ->orderByDesc('created_at')
+            ->take(5)
+            ->get();
 
         if ($reviews->isNotEmpty()) {
-            $reviewList = $reviews->map(function ($review) {
-                $review->user = $review->user->select('name', 'avatar')->first(); // ユーザー名とアバターを取得
-                return $review;
-            });        
+            $reviewList = $reviews;
         }
+
         
     $data = [
         'user'       => $user,
@@ -374,25 +370,44 @@ class ApiController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
-        $reviewList = null;
-        $reviews = Review::whereIn('idea_id', function ($query) use ($id) {
-            $query->select('id')
-                  ->from('ideas')
-                  ->where('user_id', $id);
-        })->get();
+        // $reviewList = null;
+        // $reviews = Review::whereIn('idea_id', function ($query) use ($id) {
+        //     $query->select('id')
+        //           ->from('ideas')
+        //           ->where('user_id', $id);
+        // })->get();
     
-        $ideaIds = $reviews->pluck('idea_id');
-        $ideas = Idea::whereIn('id', $ideaIds)->get();
+        // $ideaIds = $reviews->pluck('idea_id');
+        // $ideas = Idea::whereIn('id', $ideaIds)->get();
 
-        if ($reviews->isNotEmpty()) {
-            $reviewList = $reviews->count() > 10 ? $reviews->paginate(10) : $reviews;
+        // if ($reviews->isNotEmpty()) {
+        //     $reviewList = $reviews->count() > 10 ? $reviews->paginate(10) : $reviews;
+        // }
+    
+        // $data = [
+        //     'reviewList' => $reviewList,
+        //     'theIdea'    => $ideas,
+        // ];
+    
+        // return response()->json($data);
+
+
+        $reviewList = null;
+
+        $reviews = Review::whereHas('idea', function ($query) use ($id) {
+                $query->where('user_id', $id);
+            })
+            ->with('idea','user')
+            ->paginate(20);
+
+        if($reviews->isNotEmpty()){
+            $reviewList = $reviews;
         }
-    
+
         $data = [
-            'reviewList' => $reviewList,
-            'theIdea'    => $ideas,
+            'reviewList' => $reviewList
         ];
-    
+
         return response()->json($data);
     }
 
@@ -406,20 +421,33 @@ class ApiController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
+        // $reviewList = null;
+        // $reviews = Review::where('idea_id', $id)->get();
+        // $ideaIds = $reviews->pluck('idea_id');
+        // $ideas = Idea::whereIn('id', $ideaIds)->get();
+    
+        // if($reviews->isNotEmpty()){
+        //     $reviewList = $reviews->count() > 10 ? $reviews->paginate(10) : $reviews;
+        // }
+    
+        // $data = [
+        //     'reviewList' => $reviewList,
+        //     'theIdea'    => $ideas,
+        // ];
+    
+        // return response()->json($data);
+
         $reviewList = null;
-        $reviews = Review::where('idea_id', $id)->get();
-        $ideaIds = $reviews->pluck('idea_id');
-        $ideas = Idea::whereIn('id', $ideaIds)->get();
-    
-        if($reviews->isNotEmpty()){
-            $reviewList = $reviews->count() > 10 ? $reviews->paginate(10) : $reviews;
-        }
-    
+        $reviews = Review::whereHas('idea', function ($query) use ($id) {
+            $query->where('id', $id);
+        })
+        ->with('idea', 'user')
+        ->get();
+
         $data = [
-            'reviewList' => $reviewList,
-            'theIdea'    => $ideas,
+            'reviewList' => $reviews
         ];
-    
+
         return response()->json($data);
     }
 

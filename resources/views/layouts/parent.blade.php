@@ -73,7 +73,7 @@
                   <a href="{{ route('boughts', Auth::id() ) }}" class="c-nav__link">購入したアイデア一覧</a>
                 </li>
                 <li class="c-nav__item">
-                  <a href="{{ route('prof.edit', Auth::id()) }}" class="c-nav__link">プロフィール編集</a>
+                  <a href="{{ route('reviews') }}" class="c-nav__link">レビュー一覧</a>
                 </li>
                 <li class="c-nav__item">
                   <a href="{{ route('logout') }}" class="c-nav__link">ログアウト</a>

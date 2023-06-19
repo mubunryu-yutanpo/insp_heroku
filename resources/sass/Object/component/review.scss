@@ -9,6 +9,14 @@
         width: 90%;
     }
 
+    &.mypage{
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 3px 0 #44749d;
+        margin: 0 0 $space_default;
+        width: 100%;
+    }
+
     &__user{
         align-items: center;
         display: flex;

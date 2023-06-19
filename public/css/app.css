@@ -1174,6 +1174,14 @@ img {
   }
 }
 
+.c-review.mypage {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 3px 0 #44749d;
+  margin: 0 0 15px;
+  width: 100%;
+}
+
 .c-review__user {
   align-items: center;
   display: flex;
