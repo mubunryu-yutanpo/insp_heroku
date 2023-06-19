@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth'], function(){
     // アイデア編集
     Route::post('/{id}/idea/edit', 'IdeasController@ideaUpdate')->name('idea.update');
     // アイデア削除
+    Route::post('/idea/{id}/delete', 'IdeasController@ideaDelete')->name('idea.delete');
     // プロフ更新
     Route::post('/{id}/profEdit', 'MypagesController@update')->name('prof.update');
     // 退会

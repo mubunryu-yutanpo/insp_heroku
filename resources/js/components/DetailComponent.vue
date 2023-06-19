@@ -71,6 +71,15 @@
                 </span>
               </button>
 
+              <form @submit="deleteIdea">
+                <button class="p-submit__button" type="submit">
+                  <span class="p-submit__button-text">
+                    このアイデアを削除する
+                    <i class="fa-solid fa-check"></i>
+                  </span>
+                </button>
+              </form>
+
             </div>              
           </div>
         </section>
@@ -145,6 +154,8 @@
             console.error(error);
           });
       },
+
+      // 気になるの状態入れ替え
       toggleCheck() {
         axios.post('/api/idea/' + this.idea_id + '/toggleCheck')
         .then(response => {
@@ -155,11 +166,26 @@
             console.error(error);
         });
        },
+
+       // アイデアの購入
        buy() {
         window.location.href = '/api/idea/' + this.idea_id + '/buy';
        },
+
+       // レビュー投稿へ
        doReview(){
         window.location.href = '/' + this.idea_id + '/review/create'; 
+       },
+
+       // アイデアの削除
+       deleteIdea(){
+        axios.post('/idea/' + this.idea_id + '/delete')
+          .then(() => {
+            console.log('削除成功');
+          })
+          .catch(() => {
+            console.log('しっぱい');
+          })
        }
 
     },
