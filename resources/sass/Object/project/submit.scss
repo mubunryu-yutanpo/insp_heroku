@@ -36,6 +36,18 @@
             transition: all .5s;
             transform: translateY(3px);
         }
+
+        &.submit-delete{
+            background-color: $gray;
+            border: 1px solid $brown;
+            box-shadow: 0 3px 0 3px $lightbrown;
+            color: $black;
+
+            &:hover{
+                background-color: $lightbrown;
+                box-shadow: 0 0 5px 1px $gray;
+            }
+        }
     }
 
     &__link{

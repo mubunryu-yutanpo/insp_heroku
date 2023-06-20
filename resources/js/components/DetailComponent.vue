@@ -70,16 +70,6 @@
                   <i class="fa-solid fa-check"></i>
                 </span>
               </button>
-
-              <form @submit="deleteIdea">
-                <button class="p-submit__button" type="submit">
-                  <span class="p-submit__button-text">
-                    このアイデアを削除する
-                    <i class="fa-solid fa-check"></i>
-                  </span>
-                </button>
-              </form>
-
             </div>              
           </div>
         </section>
@@ -176,17 +166,6 @@
        doReview(){
         window.location.href = '/' + this.idea_id + '/review/create'; 
        },
-
-       // アイデアの削除
-       deleteIdea(){
-        axios.post('/idea/' + this.idea_id + '/delete')
-          .then(() => {
-            console.log('削除成功');
-          })
-          .catch(() => {
-            console.log('しっぱい');
-          })
-       }
 
     },
 

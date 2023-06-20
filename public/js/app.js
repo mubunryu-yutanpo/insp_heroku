@@ -2310,16 +2310,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2373,14 +2363,6 @@ __webpack_require__.r(__webpack_exports__);
     // レビュー投稿へ
     doReview: function doReview() {
       window.location.href = '/' + this.idea_id + '/review/create';
-    },
-    // アイデアの削除
-    deleteIdea: function deleteIdea() {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/idea/' + this.idea_id + '/delete').then(function () {
-        console.log('削除成功');
-      })["catch"](function () {
-        console.log('しっぱい');
-      });
     }
   },
   filters: {
@@ -38884,8 +38866,6 @@ var render = function () {
                   [_vm._m(1)]
                 )
               : _vm._e(),
-            _vm._v(" "),
-            _c("form", { on: { submit: _vm.deleteIdea } }, [_vm._m(2)]),
           ]),
         ]),
       ]),
@@ -38972,21 +38952,6 @@ var staticRenderFns = [
       _vm._v("\n              購入する\n              "),
       _c("i", { staticClass: "fa-solid fa-check" }),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "p-submit__button", attrs: { type: "submit" } },
-      [
-        _c("span", { staticClass: "p-submit__button-text" }, [
-          _vm._v("\n                このアイデアを削除する\n                "),
-          _c("i", { staticClass: "fa-solid fa-check" }),
-        ]),
-      ]
-    )
   },
 ]
 render._withStripped = true

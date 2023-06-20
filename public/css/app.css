@@ -62,6 +62,23 @@ img {
   width: 100%;
 }
 
+.l-form {
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px #bdb8ad;
+  margin: 0 auto;
+  max-width: 980px;
+  padding: 20px 15px;
+  width: 60%;
+}
+
+@media screen and (max-width:767px) {
+  .l-form {
+    padding: 10px 5px;
+    width: 95%;
+  }
+}
+
 .p-chat {
   background-color: #ebe7e0;
   padding: 40px 0 0 0;
@@ -216,23 +233,6 @@ img {
   font-size: 18px;
   font-weight: bold;
   margin-left: 5px;
-}
-
-.p-form {
-  background: white;
-  border-radius: 5px;
-  box-shadow: 0 0 5px 1px #bdb8ad;
-  margin: 0 auto;
-  max-width: 980px;
-  padding: 20px 15px;
-  width: 60%;
-}
-
-@media screen and (max-width:767px) {
-  .p-form {
-    padding: 10px 5px;
-    width: 95%;
-  }
 }
 
 .p-header {
@@ -545,6 +545,18 @@ img {
   box-shadow: 0 0 5px 1px #ebe7e1;
   transition: all 0.5s;
   transform: translateY(3px);
+}
+
+.p-submit__button.submit-delete {
+  background-color: #ededec;
+  border: 1px solid #bdb8ad;
+  box-shadow: 0 3px 0 3px #ebe7e1;
+  color: #101010;
+}
+
+.p-submit__button.submit-delete:hover {
+  background-color: #ebe7e1;
+  box-shadow: 0 0 5px 1px #ededec;
 }
 
 .p-submit__link {

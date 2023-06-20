@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function(){
     // プロフ編集へ
     Route::get('/{id}/profEdit', 'HomeController@profEdit')->name('prof.edit');
     // 退会へ
-    // Route::get('/{id}/withdrow', 'HomeController@withdrow')->name('withdrow');
+    Route::get('/{id}/withdrow', 'HomeController@withdrow')->name('withdrow');
     // アイデア新規投稿へ
     Route::get('/new', 'HomeController@new')->name('new');
     // // アイデア詳細へ
@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function(){
     // プロフ更新
     Route::post('/{id}/profEdit', 'MypagesController@update')->name('prof.update');
     // 退会
-    // Route::post('/{id}/withdrow', 'MypagesController@destroy')->name('destroy');
+    Route::post('/{id}/withdrow', 'MypagesController@destroy')->name('destroy');
     // レビュー投稿
     Route::post('/{id}/review/create', 'IdeasController@postReview')->name('post.review');
 

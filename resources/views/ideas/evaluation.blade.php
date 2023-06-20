@@ -11,8 +11,9 @@
     <p class="">{{ $idea->title }}</p>
   </div>  
   
-  <form method="post" action="{{ route('post.review', $idea->id) }}" class="p-form">
-    @csrf
+  <div class="l-form">
+    <form method="post" action="{{ route('post.review', $idea->id) }}" class="p-form">
+      @csrf
 
         <evaluation-component></evaluation-component>
 
@@ -33,6 +34,7 @@
         </div>
 
     </form>
+  </div>
 @endsection
 
 @section('footer')

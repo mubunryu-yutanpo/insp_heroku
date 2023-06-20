@@ -92,8 +92,6 @@ class IdeasController extends Controller
     // ========アイデア削除処理========
     public function ideaDelete($id){
 
-        dd('はいはい。');
-
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
