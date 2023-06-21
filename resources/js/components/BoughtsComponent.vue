@@ -11,7 +11,7 @@
             <p class="c-card__title">{{ bought.idea.title }}</p>
             <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ bought.idea.price | numberWithCommas }}</p>
             <div class="c-card__review">
-              <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= bought.averageScore }"></i>
+              <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= bought.idea.averageScore }"></i>
               <a :href=" '/idea/' + bought.id + '/reviews' " class="c-card__review-link">({{ bought.idea.review.length }})</a>
             </div>
             <p class="c-card__text">{{ bought.idea.description }}</p>
@@ -40,32 +40,42 @@
         boughtList: [],
       };
     },
+
     mounted() {
       this.getBoughtIdeas();
     },
+
     methods: {
+
+      // 購入したアイデア情報を取得
       getBoughtIdeas() {
         axios.get('/api/' + this.user_id + '/boughts')
           .then(response => {
             this.boughtList = response.data.boughtList;
+            this.getAverageScore([...this.boughtList]);
           })
           .catch(error => {
             console.error(error);
           });
       },
-      getAverageScore() {
-        this.boughtList.forEach(idea => {
-          axios.get('/api/idea/' + idea.id + '/average')
-            .then(response => {
-              idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
-            })
-            .catch(error => {
-              console.error(error);
-            });
-        });
+
+      // 平均評価点を取得
+      async getAverageScore() {
+        for (const bought of this.boughtList) {
+          try {
+            const response = await axios.get('/api/idea/' + bought.idea.id + '/average');
+            const averageScore = response.data.averageScore;
+            bought.idea.averageScore = averageScore;
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        // 平均スコアを追加した後にデータを更新（評価点に対するクラス名が反映されないため）
+        this.$forceUpdate();
       },
 
     },
+
     filters: {
       // 値段の単位をカンマ区切りにする
       numberWithCommas(value) {

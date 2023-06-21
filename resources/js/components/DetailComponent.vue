@@ -24,7 +24,7 @@
             <img :src="idea.sumbnail" alt="" class="c-detail__sumbnail">
           </div>
 
-          <div class="c-detail">概要： 
+          <div class="c-detail">【 概要 】
             <p class="c-detail__summary">{{ idea.summary }}</p>
           </div>
 
@@ -34,12 +34,13 @@
 
           <div class="c-detail">
             <a :href="'/idea/' + idea.id + '/reviews'" v-if="reviews !== null" class="c-detail__reviews-link">
-              レビュー数: ({{ reviews.length }})
+               レビュー数: ({{ reviews.length }})
             </a>
             <span v-if="reviews === null" class="p-detail__reviews-text">レビュー数: (0)</span>
           </div>
 
-          <div class="c-detail">内容： 
+          <div class="c-detail">
+            <span>【 内容 】 </span>
             <p class="c-detail__discription" v-if="canBuy && !bought">※購入後に表示されます</p>
             <p class="c-detail__discription" v-else>{{ idea.description }}</p>
           </div>
@@ -86,16 +87,17 @@
 
             <div class="c-detail__reviews" v-for="review in reviews" :key="review.id">
 
-              <div class="c-detail__reviews-image">
-                <img :src="review.user.avatar" alt="" class="c-detail__reviews-image-item">
+              <div class="c-detail__reviews-wrap">
+                <div class="c-detail__reviews-image">
+                  <img :src="review.user.avatar" alt="" class="c-detail__reviews-image-item">
+                </div>
+                <div class="c-detail__reviews-score">
+                  <i v-for="n in 5" :key="n" class="c-detail__reviews-score-icon fa-solid fa-star" :class="{ 'active': n <= review.score }"></i>
+                  <span class="c-detail__reviews-score-text">{{ review.score }}</span>
+                </div>
               </div>
 
-              <div class="c-detail__reviews-score">
-                <i v-for="n in 5" :key="n" class="c-detail__reviews-score-icon fa-solid fa-star" :class="{ 'active': n <= review.score }"></i>
-                <span class="c-detail__reviews-score-text">{{ review.score }}</span>
-                <p class="p-detail__reivews-comment">{{ review.comment}}</p>
-              </div>
-
+              <p class="p-detail__reivews-comment">{{ review.comment}}</p>
             </div>
           </div>
         </section>

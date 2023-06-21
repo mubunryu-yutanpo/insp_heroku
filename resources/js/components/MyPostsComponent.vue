@@ -44,32 +44,37 @@
     },
     mounted() {
       this.getPosts();
-      console.log('これとおってる？' + this.user_id);
-
     },
+
     methods: {
       getPosts() {
         axios.get('/api/' + this.user_id + '/myPosts')
           .then(response => {
             this.postsList = response.data.postsList;
-            this.getAverageScore();
+            this.getAverageScore([...this.postsList]);
           })
           .catch(error => {
             console.error(error);
           });
       },
-      getAverageScore() {
-        this.postsList.forEach(idea => {
-          axios.get('/api/idea/' + idea.id + '/average')
-            .then(response => {
-              idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
-            })
-            .catch(error => {
-              console.error(error);
-            });
-        });
+
+      // 平均評価点を取得
+      async getAverageScore() {
+        for (const post of this.postsList) {
+          try {
+            const response = await axios.get('/api/idea/' + post.id + '/average');
+            const averageScore = response.data.averageScore;
+            post.averageScore = averageScore;
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        // 平均スコアを追加した後にデータを更新（評価点に対するクラス名が反映されないため）
+        this.$forceUpdate();
       },
+
     },
+
     filters: {
       // 値段の単位をカンマ区切りにする
       numberWithCommas(value) {

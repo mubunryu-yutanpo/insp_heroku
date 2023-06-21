@@ -49,12 +49,14 @@
         axios.get('/api/' + this.user_id + '/checks')
           .then(response => {
             this.checkIdeas = response.data.checkIdeas;
-            this.getAverageScore();
+            this.getAverageScore([...this.checkIdeas]);
           })
           .catch(error => {
             console.error(error);
           });
       },
+
+      // 気になる　のON/OFF
       toggleCheck(id) {
         axios.post('/api/idea/' + id + '/toggleCheck')
           .then(response => {
@@ -68,18 +70,25 @@
             console.error(error);
           });
       },
-      getAverageScore() {
-        this.checkIdeas.forEach(idea => {
-          axios.get('/api/idea/' + idea.id + '/average')
-            .then(response => {
-              idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
-            })
-            .catch(error => {
-              console.error(error);
-            });
-        });
+
+
+      // 平均評価点を取得
+      async getAverageScore() {
+        for (const check of this.checkIdeas) {
+          try {
+            const response = await axios.get('/api/idea/' + check.id + '/average');
+            const averageScore = response.data.averageScore;
+            check.averageScore = averageScore;
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        // 平均スコアを追加した後にデータを更新（評価点に対するクラス名が反映されないため）
+        this.$forceUpdate();
       },
+
     },
+
     filters: {
       // 値段の単位をカンマ区切りにする
       numberWithCommas(value) {

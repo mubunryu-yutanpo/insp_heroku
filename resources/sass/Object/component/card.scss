@@ -109,6 +109,16 @@
         }
     }
 
+    &__review{
+
+        &-icon{
+
+            &.active{
+                color: $yellow;
+            }
+        }
+    }
+
     &__container{
         margin: $space_default $space-10;
     }

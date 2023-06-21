@@ -32,6 +32,7 @@
             </div>
 
           </article>
+
           <p class="p-mypage__contents-text" v-if="postList === null">投稿がまだありません。</p>
 
         </div>
@@ -157,19 +158,23 @@
       };
     },
     methods: {
+
+      // 気になる　の状態のON/OFF
       toggleCheck(id) {
         axios.post('/api/idea/' + id + '/toggleCheck')
           .then(response => {
             console.log('チェックのトグル処理が成功しました');
-            this.isChecked = !this.isChecked; // チェックボックスの状態を反転させる
+            this.isChecked = !this.isChecked; 
             
-            // ページの状態を更新するためにデータを再取得
+            // ページの状態を更新
             this.getData();
           })
           .catch(error => {
             console.error(error);
           });
       },
+
+      // データの取得
       getData() {
         axios.get('/api/mypage')
           .then(response => {
@@ -179,24 +184,30 @@
             this.boughtList = response.data.boughtList;
             this.reviewList = response.data.reviewList;
             this.getAverageScore([...this.boughtList, ...this.checkList, ...this.postList]);
+
           })
           .catch(error => {
             console.log(error);
           });
       },
-      getAverageScore(ideas) {
-        ideas.forEach(idea => {
-          axios.get('/api/idea/' + idea.id + '/average')
-            .then(response => {
-              idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
-            })
-            .catch(error => {
-              console.error(error);
-            });
-        });
+
+      // 平均評価点の取得
+      async getAverageScore(ideas) {
+        for (const idea of ideas) {
+          try {
+            const response = await axios.get('/api/idea/' + idea.id + '/average');
+            idea.averageScore = response.data.averageScore;
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        // 平均スコアを追加した後にデータを更新（評価点に対するクラス名が反映されないため）
+        this.$forceUpdate();
       },
     },
+
     filters: {
+     
       // 値段の単位をカンマ区切りにする
       numberWithCommas(value) {
         if (value === 0) {
@@ -215,5 +226,3 @@
   };
   </script>
   
-
-  <!-- レビューのあたりは要修正かな。 -->

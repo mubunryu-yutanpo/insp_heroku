@@ -46,7 +46,7 @@
   <div class="c-form">
     <div class="c-form__wrap">
       <label for="description" class="c-form__label">内容:</label>
-      <textarea name="description" id="description" cols="30" rows="10" class="c-form__input input-description @error('description') valid-error @enderror" autocomplete="description" maxlength="2000" placeholder="アイデアについて2,000文字以内で入力してください">{{ old('description', $idea->description ?? '') }}</textarea>
+      <textarea name="description" id="description" cols="30" rows="10" class="c-form__input input-textarea @error('description') valid-error @enderror" autocomplete="description" maxlength="2000" placeholder="アイデアについて2,000文字以内で入力してください">{{ old('description', $idea->description ?? '') }}</textarea>
     </div>
     @error('description')
       <span class="c-form__error" role="alert">
@@ -56,7 +56,8 @@
   </div>
 
   <div class="c-form">
-      <preview-component :idea_id="{{ $idea->id ?? 'null' }}" ></preview-component>
+    
+      <thumbnailpreview-component :idea_id="{{ $idea->id ?? 'null' }}" ></thumbnailpreview-component>
 
       @error('sumbnail')
         <span class="c-form__error" role="alert">

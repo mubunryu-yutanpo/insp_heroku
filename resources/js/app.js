@@ -20,20 +20,22 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('header-component', require('./components/HeaderComponent.vue').default);
-Vue.component('footer-component', require('./components/FooterComponent.vue').default);
-Vue.component('mypage-component', require('./components/MypageComponent.vue').default);
-Vue.component('ideas-component', require('./components/IdeasComponent.vue').default);
-Vue.component('reviews-component', require('./components/ReviewsComponent.vue').default);
-Vue.component('myreviews-component', require('./components/MyReviewsComponent.vue').default);
-Vue.component('ideareviews-component', require('./components/IdeaReviewsComponent.vue').default);
-Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
+Vue.component('avatarpreview-component', require('./components/AvatarPreviewComponent.vue').default);
 Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
-Vue.component('myposts-component' , require('./components/MyPostsComponent.vue').default);
+Vue.component('chat-component' , require('./components/ChatComponent.vue').default);
+Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
 Vue.component('detail-component' , require('./components/DetailComponent.vue').default);
 Vue.component('evaluation-component' , require('./components/EvaluationComponent.vue').default);
-Vue.component('chat-component' , require('./components/ChatComponent.vue').default);
-Vue.component('preview-component' , require('./components/PreviewComponent.vue').default);
+Vue.component('footer-component', require('./components/FooterComponent.vue').default);
+Vue.component('header-component', require('./components/HeaderComponent.vue').default);
+Vue.component('ideas-component', require('./components/IdeasComponent.vue').default);
+Vue.component('ideareviews-component', require('./components/IdeaReviewsComponent.vue').default);
+Vue.component('mypage-component', require('./components/MypageComponent.vue').default);
+Vue.component('myposts-component' , require('./components/MyPostsComponent.vue').default);
+Vue.component('myreviews-component', require('./components/MyReviewsComponent.vue').default);
+Vue.component('reviews-component', require('./components/ReviewsComponent.vue').default);
+Vue.component('thumbnailpreview-component', require('./components/ThumbnailPreviewComponent.vue').default);
+
 
 
 

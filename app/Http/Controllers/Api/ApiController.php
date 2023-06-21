@@ -97,6 +97,25 @@ class ApiController extends Controller
     return response()->json($data);
     }        
     
+
+    /* ================================================================
+      アバター情報取得
+    ================================================================*/
+
+    public function avatar($id){
+        if(!ctype_digit($id)){
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+
+        $avatar = User::where('id', $id)->value('avatar');
+
+        $data = [
+            'avatar' => $avatar,
+        ];
+
+        return response()->json($data);
+    }
+
     
     /* ================================================================
       アイデア一覧取得

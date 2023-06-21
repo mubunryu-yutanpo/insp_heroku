@@ -15,16 +15,18 @@
         <div class="p-submit">
           <button type="submit" class="p-submit__button">編集を保存する</button>
         </div>
-      @else
-        <p class="u_text-right">※すでに購入されたアイデアは編集・削除できません</p>
       @endif
     </form>
 
+    @if($can_edit)
     <form method="post" action="{{ route('idea.delete', $idea->id) }}" class="p-form delete">
       @csrf
       <div class="p-submit">
         <button type="submit" class="p-submit__button submit-delete" onclick="return confirm('このアイデアを削除します。よろしいですか？')">アイデアを削除</button>
       </div>
+      @else
+        <p class="u-text-right">※すでに購入されたアイデアは編集・削除できません</p>
+      @endif
     </form>
   </div>  
 @endsection

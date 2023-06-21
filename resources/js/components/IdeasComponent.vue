@@ -84,7 +84,7 @@
                 <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
                 <div class="c-card__review">
                   <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.averageScore }"></i>
-                  <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.review.length }})</a>
+                  <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.reviewCount }})</a>
                 </div>
                 <p class="c-card__text">{{ idea.summary }}</p>
 
@@ -120,14 +120,17 @@ export default {
       isOpenSortSubmenu: '',  // 並び替えメニュー選択用
     };
   },
-  mounted() {
-    this.getIdeas();
+
+  async mounted() {
+    await this.getIdeas(); // getIdeasメソッドの完了を待つ
+    await this.getAverageScore(); // getAverageScoreメソッドの完了を待つ
   },
+
   computed: {
     ...mapState(['isLogin']),
 
     filteredIdeas() {
-      let filteredIdeas = this.ideas;
+      let filteredIdeas = this.ideas || []; // 初期値を配列に設定
 
       if (this.selectCategory !== '') {
         filteredIdeas = filteredIdeas.filter(
@@ -159,6 +162,15 @@ export default {
         });
       }
 
+      // レビュー数を取得し、アイデアオブジェクトに追加する処理
+      filteredIdeas.forEach((idea) => {
+        if (typeof idea.review === 'object') {
+          idea.reviewCount = Object.keys(idea.review).length;
+        } else {
+          idea.reviewCount = idea.review.length;
+        }
+      });
+
       return filteredIdeas;
     },
     
@@ -170,24 +182,25 @@ export default {
         .get('/api/ideas')
         .then((response) => {
           this.ideas = response.data.ideas;
+          this.getAverageScore([...this.ideas]);
         })
         .catch((error) => {
           console.error(error);
         });
     },
 
-    // 平均点を取得
-    getAverageScore() {
-      this.filteredIdeas.forEach(idea => {
-        axios.get('/api/idea/' + idea.id + '/average')
-          .then(response => {
-            idea.averageScore = response.data.averageScore; // 平均点をアイデアオブジェクトに追加
-          })
-          .catch(error => {
+    async getAverageScore(filteredIdeas = this.ideas) {
+        for (const idea of filteredIdeas) {
+          try {
+            const response = await axios.get('/api/idea/' + idea.id + '/average');
+            idea.averageScore = response.data.averageScore;
+          } catch (error) {
             console.error(error);
-          });
-      });
-    },
+          }
+        }
+        // 平均スコアを追加した後にデータを更新（評価点に対するクラス名が反映されないため）
+        this.$forceUpdate();
+      },
 
     // 「気になる」の状態をトグル
     toggleCheck(id) {

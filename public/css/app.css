@@ -158,6 +158,7 @@ img {
 @media screen and (max-width:767px) {
   .p-detail__container-sub {
     width: 100%;
+    margin: 0;
   }
 }
 
@@ -686,6 +687,10 @@ img {
   }
 }
 
+.c-card__review-icon.active {
+  color: #ffffe4;
+}
+
 .c-card__container {
   margin: 15px 10px;
 }
@@ -880,6 +885,10 @@ img {
   margin-bottom: 15px;
 }
 
+.c-detail__summary {
+  margin-top: 5px;
+}
+
 .c-detail__sumbnail {
   height: auto;
   max-width: 500px;
@@ -890,22 +899,30 @@ img {
   color: #FA7070;
   font-size: 24px;
   font-weight: bold;
+  margin: 0;
 }
 
 .c-detail__discription {
-  margin-bottom: 30px;
+  margin: 5px 0 30px;
 }
 
 .c-detail__reviews {
   display: flex;
+  flex-direction: column;
+}
+
+.c-detail__reviews-wrap {
+  align-items: center;
+  display: flex;
+  margin-bottom: 10px;
 }
 
 .c-detail__reviews-image {
   border: 1px solid #ededec;
   border-radius: 100%;
-  height: 50px;
+  height: 30px;
   margin-right: 10px;
-  width: 50px;
+  width: 30px;
 }
 
 .c-detail__reviews-image-item {
@@ -974,7 +991,7 @@ img {
   width: 100%;
 }
 
-.c-form__input.input-description {
+.c-form__input.input-textarea {
   resize: none;
   vertical-align: bottom;
 }
