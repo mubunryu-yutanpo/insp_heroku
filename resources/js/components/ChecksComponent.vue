@@ -44,7 +44,10 @@
     mounted() {
       this.getCheckIdeas();
     },
+
     methods: {
+    
+      // 情報取得
       getCheckIdeas() {
         axios.get('/api/' + this.user_id + '/checks')
           .then(response => {

@@ -12,7 +12,7 @@
             <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ bought.idea.price | numberWithCommas }}</p>
             <div class="c-card__review">
               <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= bought.idea.averageScore }"></i>
-              <a :href=" '/idea/' + bought.id + '/reviews' " class="c-card__review-link">({{ bought.idea.review.length }})</a>
+              <a :href=" '/idea/' + bought.idea.id + '/reviews' " class="c-card__review-link">({{ bought.idea.review.length }})</a>
             </div>
             <p class="c-card__text">{{ bought.idea.description }}</p>
           </div>

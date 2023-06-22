@@ -643,10 +643,6 @@ img {
   }
 }
 
-.c-card__title:hover {
-  color: #44749d;
-}
-
 .c-card__title.card-ideas-title {
   font-weight: bold;
   margin: 10px 0;

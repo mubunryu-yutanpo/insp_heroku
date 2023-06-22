@@ -34,7 +34,7 @@
 
           <div class="c-detail">
             <a :href="'/idea/' + idea.id + '/reviews'" v-if="reviews !== null" class="c-detail__reviews-link">
-               レビュー数: ({{ reviews.length }})
+               レビュー数: ({{ reviewsLength }})
             </a>
             <span v-if="reviews === null" class="p-detail__reviews-text">レビュー数: (0)</span>
           </div>
@@ -58,7 +58,7 @@
               </a>
 
 
-              <button class="p-submit__button" @click="doReview($id)" v-if="user_id !== seller_id && !canBuy && bought">
+              <button class="p-submit__button" @click="doReview()" v-if="user_id !== seller_id && !canBuy && bought">
                 <span class="p-submit__button-text">
                   レビューを付ける
                   <i class="fa-solid fa-check"></i>
@@ -116,6 +116,7 @@
         idea: [],
         canBuy: true,
         reviews: [],
+        reviewsLength: 0,
         averageScore: 0,
         isChecked: false,
         user_id: null,
@@ -134,6 +135,7 @@
             this.idea = response.data.idea;
             this.canBuy = response.data.canBuy;
             this.reviews = response.data.reviews;
+            this.reviewsLength = Object.values(response.data.reviews).length;
             this.averageScore = response.data.averageScore;
             this.isChecked = response.data.isChecked;
             this.user_id = response.data.user_id;

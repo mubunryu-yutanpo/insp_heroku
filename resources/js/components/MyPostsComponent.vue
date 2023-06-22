@@ -47,6 +47,8 @@
     },
 
     methods: {
+
+      // 投稿したアイデア情報取得
       getPosts() {
         axios.get('/api/' + this.user_id + '/myPosts')
           .then(response => {

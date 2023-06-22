@@ -30,7 +30,7 @@ class ApiController extends Controller
 
         // -- 気になるリスト取得 --
 
-        $checkList = null;
+        $checkList = [];
         // 気になるのデータを最新5件まで取得
         $checks = Check::where('user_id', $user_id)
                   ->orderBy('created_at', 'desc')
@@ -44,7 +44,7 @@ class ApiController extends Controller
 
         // -- 投稿したアイデア取得 --
 
-        $postList = null;
+        $postList = [];
         // 投稿したアイデアを最新の5件まで取得
         $posts = Idea::where('user_id', $user_id)
                  ->orderBy('created_at', 'desc')
@@ -57,7 +57,7 @@ class ApiController extends Controller
         
         // -- 購入したアイデア取得 --
         
-        $boughtList = null;
+        $boughtList = [];
         $purchases = Purchase::where('user_id', $user_id)
             ->orderBy('created_at', 'desc')
             ->limit(5)
@@ -71,7 +71,7 @@ class ApiController extends Controller
         }        
         // -- レビュー取得 --
         
-        $reviewList = null;
+        $reviewList = [];
 
         $reviews = Review::whereHas('idea', function ($query) use ($user) {
                 $query->where('user_id', $user->id); // ユーザーが所有するアイデアに関連するレビューを取得
@@ -389,28 +389,6 @@ class ApiController extends Controller
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
 
-        // $reviewList = null;
-        // $reviews = Review::whereIn('idea_id', function ($query) use ($id) {
-        //     $query->select('id')
-        //           ->from('ideas')
-        //           ->where('user_id', $id);
-        // })->get();
-    
-        // $ideaIds = $reviews->pluck('idea_id');
-        // $ideas = Idea::whereIn('id', $ideaIds)->get();
-
-        // if ($reviews->isNotEmpty()) {
-        //     $reviewList = $reviews->count() > 10 ? $reviews->paginate(10) : $reviews;
-        // }
-    
-        // $data = [
-        //     'reviewList' => $reviewList,
-        //     'theIdea'    => $ideas,
-        // ];
-    
-        // return response()->json($data);
-
-
         $reviewList = null;
 
         $reviews = Review::whereHas('idea', function ($query) use ($id) {
@@ -439,22 +417,6 @@ class ApiController extends Controller
         if (!ctype_digit($id)) {
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
         }
-
-        // $reviewList = null;
-        // $reviews = Review::where('idea_id', $id)->get();
-        // $ideaIds = $reviews->pluck('idea_id');
-        // $ideas = Idea::whereIn('id', $ideaIds)->get();
-    
-        // if($reviews->isNotEmpty()){
-        //     $reviewList = $reviews->count() > 10 ? $reviews->paginate(10) : $reviews;
-        // }
-    
-        // $data = [
-        //     'reviewList' => $reviewList,
-        //     'theIdea'    => $ideas,
-        // ];
-    
-        // return response()->json($data);
 
         $reviewList = null;
         $reviews = Review::whereHas('idea', function ($query) use ($id) {

@@ -176,6 +176,7 @@ export default {
     
   },
   methods: {
+
     // アイデア情報取得
     getIdeas() {
       axios
@@ -189,6 +190,7 @@ export default {
         });
     },
 
+    // 平均評価点を取得
     async getAverageScore(filteredIdeas = this.ideas) {
         for (const idea of filteredIdeas) {
           try {

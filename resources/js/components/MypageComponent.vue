@@ -22,6 +22,7 @@
                   <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= post.averageScore }"></i>
                   <a :href=" '/idea/' + post.id + '/reviews' " class="c-card__review-link">({{ post.review.length }})</a>
                 </div>
+                <p class="c-card__text">{{ post.summary }}</p>
               </div>
             </div>
             <div class="c-card__wrap">
@@ -33,10 +34,10 @@
 
           </article>
 
-          <p class="p-mypage__contents-text" v-if="postList === null">投稿がまだありません。</p>
+          <p class="p-mypage__contents-text" v-if="postList.length ===0">投稿がまだありません。</p>
 
         </div>
-        <a :href="'/' + user.id + '/mypostList'" class="p-mypage__contents-link" v-if="postList !== null">全件表示</a>
+        <a :href="'/' + user.id + '/mypostList'" class="p-mypage__contents-link" v-if="postList.length !== 0">全件表示</a>
       </section>
 
 
@@ -55,7 +56,7 @@
                   <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= check.averageScore }"></i>
                   <a :href=" '/idea/' + check.id + '/reviews' " class="c-card__review-link">({{ check.review.length }})</a>
                 </div>
-
+                <p class="c-card__text">{{ check.summary }}</p>
               </div>
             </div>
             <div class="c-card__wrap">
@@ -65,10 +66,10 @@
                 </button>
             </div>
           </article>
-          <p class="p-mypage__contents-text" v-if="checkList === null">気になるアイデアがまだありません。</p>
+          <p class="p-mypage__contents-text" v-if="checkList.length ===0">気になるアイデアがまだありません。</p>
         </div>
 
-        <a :href="'/' + user.id + '/checkList'" class="p-mypage__contents-link" v-if="checkList !== null">全件表示</a>
+        <a :href="'/' + user.id + '/checkList'" class="p-mypage__contents-link" v-if="checkList.length !== 0">全件表示</a>
       </section>
 
       <section class="p-mypage__contents">
@@ -86,7 +87,7 @@
                   <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= bought.averageScore }"></i>
                   <a :href=" '/idea/' + bought.id + '/reviews' " class="c-card__review-link">({{ bought.review.length }})</a>
                 </div>
-
+                <p class="c-card__text">{{ bought.summary }}</p>
               </div>
             </div>
             <div class="c-card__wrap">
@@ -97,9 +98,9 @@
             </div>
 
           </article>
-          <p class="p-mypage__contents-text" v-if="boughtList === null">購入したアイデアはありません。</p>
+          <p class="p-mypage__contents-text" v-if="boughtList.length ===0">購入したアイデアはありません。</p>
         </div>
-        <a :href="'/' + user.id + '/boughtList'" class="p-mypage__contents-link" v-if="boughtList !== null">全件表示</a>
+        <a :href="'/' + user.id + '/boughtList'" class="p-mypage__contents-link" v-if="boughtList.length !== 0">全件表示</a>
       </section>
 
 
@@ -135,10 +136,10 @@
           </article>
 
 
-          <p class="p-mypage__contents-text" v-if="reviewList === null">レビューがまだありません。</p>
+          <p class="p-mypage__contents-text" v-if="reviewList.length ===0">レビューがまだありません。</p>
 
         </div>
-        <a :href="'/' + user.id + '/reviews'" class="p-mypage__contents-link" v-if="reviewList !== null">全件表示</a>
+        <a :href="'/' + user.id + '/reviews'" class="p-mypage__contents-link" v-if="reviewList.length !== 0">全件表示</a>
       </section>
 
     </div>
@@ -175,7 +176,7 @@
       },
 
       // データの取得
-      getData() {
+      async getData() {
         axios.get('/api/mypage')
           .then(response => {
             this.user = response.data.user;
@@ -183,7 +184,7 @@
             this.postList = response.data.postList;
             this.boughtList = response.data.boughtList;
             this.reviewList = response.data.reviewList;
-            this.getAverageScore([...this.boughtList, ...this.checkList, ...this.postList]);
+            this.getAverageScore([...this.checkList, ...this.postList, ...this.boughtList]);
 
           })
           .catch(error => {
@@ -210,7 +211,7 @@
      
       // 値段の単位をカンマ区切りにする
       numberWithCommas(value) {
-        if (value === 0) {
+        if (value ===0) {
           return '0';
         }
         if (!value) {
