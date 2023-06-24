@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     //カラムに挿入するものを指定
-    protected $fillable = ['user_id', 'chat_id', 'idea_id', 'read', 'content'];
+    protected $fillable = ['receiver_id', 'sender_id', 'chat_id', 'idea_id', 'read', 'content'];
 
     //他のモデルとの関係
     public function user(){

@@ -6,6 +6,13 @@
         <img :src="user.avatar" class="p-mypage__user-image">
       </div>
 
+      <div class="">
+        <p class="" v-if="notificationList.length !== 0">未読のメッセージがあります</p>
+        <div class="" v-for="notification in notificationList" :key="notification.id">
+          <p class="">メッセージ送信者： {{ notification.sender_name }}さん</p>
+        </div>
+      </div>
+
 
       <section class="p-mypage__contents">
         <h2 class="p-mypage__contents-title">自分のアイデア</h2>
@@ -156,6 +163,7 @@
         postList: [],
         boughtList: [],
         reviewList: [],
+        notificationList: [],
       };
     },
     methods: {
@@ -184,6 +192,7 @@
             this.postList = response.data.postList;
             this.boughtList = response.data.boughtList;
             this.reviewList = response.data.reviewList;
+            this.notificationList = response.data.notificationList;
             this.getAverageScore([...this.checkList, ...this.postList, ...this.boughtList]);
 
           })

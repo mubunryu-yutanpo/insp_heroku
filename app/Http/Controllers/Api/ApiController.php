@@ -15,6 +15,7 @@ use App\Purchase;
 use App\Review;
 use App\Chat;
 use App\Message;
+use App\Notification;
 
 
 class ApiController extends Controller
@@ -85,17 +86,38 @@ class ApiController extends Controller
             $reviewList = $reviews;
         }
 
+
+        // 通知情報を取得        
+        $notifications = Notification::where('receiver_id', $user_id)
+                        ->where('read', false)
+                        ->get();
+
+        if ($notifications->isNotEmpty()) {
+            $senderIds = $notifications->pluck('sender_id')->toArray();
+            $senders = User::whereIn('id', $senderIds)->get();
+
+            // メッセージ送信者のnameを取得し、sender_nameとして追加
+            $notificationList = $notifications->map(function ($notification) use ($senders) {
+                $sender = $senders->firstWhere('id', $notification->sender_id);
+                if ($sender) {
+                    $notification->sender_name = $sender->name; 
+                }
+                return $notification;
+            });
+        }
+
+
+        $data = [
+            'user'             => $user,
+            'checkList'        => $checkList,
+            'postList'         => $postList,
+            'boughtList'       => $boughtList,
+            'reviewList'       => $reviewList,
+            'notificationList' => $notificationList,
+        ];
         
-    $data = [
-        'user'       => $user,
-        'checkList'  => $checkList,
-        'postList'   => $postList,
-        'boughtList' => $boughtList,
-        'reviewList' => $reviewList,
-    ];
-    
-    return response()->json($data);
-    }        
+        return response()->json($data);
+    }
     
 
     /* ================================================================
@@ -199,6 +221,7 @@ class ApiController extends Controller
             $idea->review = $review;
             return $idea;
         });
+
     
         $data = [
             'ideas' => $ideasWithReview,
@@ -566,17 +589,36 @@ class ApiController extends Controller
 
 
     /* ================================================================
-      メッセージ追加
+      メッセージと通知を追加
     ================================================================*/
 
     public function addMessage(ValidRequest $request, $chat_id, $user_id){
+        
+        // メッセージの追加
         $msg = new Message;
-
         $msg->fill([
             'user_id' => $user_id,
             'chat_id' => $chat_id,
             'content' => $request->content,
-        ])->save();
+        ])
+        ->save();
+
+        // 通知の追加
+        $notification = new Notification;
+        $chat = Chat::where('id', $chat_id)->first();
+        $reciever_id = ($user_id === $chat->seller_id) ? $chat->buyer_id : $chat->seller_id;
+        $idea_id = $chat->idea_id;
+
+        $notification->fill([
+            'receiver_id' => $reciever_id,
+            'sender_id'   => $user_id,
+            'chat_id'     => $chat_id,
+            'idea_id'     => $idea_id,
+            'read'        => false,
+            'content'     => $request->content,
+        ])
+        ->save();
+
 
         return redirect()->back()->with('flash_message', 'メッセージを送信しました!');
     }

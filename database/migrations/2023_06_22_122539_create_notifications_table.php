@@ -15,7 +15,8 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('receiver_id')->unsigned();
+            $table->bigInteger('sender_id')->unsigned();
             $table->bigInteger('chat_id')->unsigned();
             $table->bigInteger('idea_id')->unsigned();
             $table->boolean('read')->default(false);
@@ -23,7 +24,8 @@ class CreateNotificationsTable extends Migration
             $table->timestamps();
 
             // 外部キー
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('receiver_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('chat_id')->references('id')->on('chats')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('idea_id')->references('id')->on('ideas')->onDelete('cascade')->onUpdate('cascade');
         });

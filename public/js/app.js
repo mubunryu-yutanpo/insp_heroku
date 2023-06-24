@@ -3569,6 +3569,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3578,7 +3585,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       checkList: [],
       postList: [],
       boughtList: [],
-      reviewList: []
+      reviewList: [],
+      notificationList: []
     };
   },
   methods: {
@@ -3608,6 +3616,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this2.postList = response.data.postList;
                 _this2.boughtList = response.data.boughtList;
                 _this2.reviewList = response.data.reviewList;
+                _this2.notificationList = response.data.notificationList;
                 _this2.getAverageScore([].concat(_toConsumableArray(_this2.checkList), _toConsumableArray(_this2.postList), _toConsumableArray(_this2.boughtList)));
               })["catch"](function (error) {
                 console.log(error);
@@ -40362,6 +40371,29 @@ var render = function () {
         attrs: { src: _vm.user.avatar },
       }),
     ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {},
+      [
+        _vm.notificationList.length !== 0
+          ? _c("p", {}, [_vm._v("未読のメッセージがあります")])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.notificationList, function (notification) {
+          return _c("div", { key: notification.id }, [
+            _c("p", {}, [
+              _vm._v(
+                "メッセージ送信者： " +
+                  _vm._s(notification.sender_name) +
+                  "さん"
+              ),
+            ]),
+          ])
+        }),
+      ],
+      2
+    ),
     _vm._v(" "),
     _c("section", { staticClass: "p-mypage__contents" }, [
       _c("h2", { staticClass: "p-mypage__contents-title" }, [
