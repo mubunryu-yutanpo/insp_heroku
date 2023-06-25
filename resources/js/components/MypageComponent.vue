@@ -2,16 +2,32 @@
     <div class="p-mypage">
       
       <div class="p-mypage__user">
-        <p class="p-mypage__user-name">{{ user.name }} さん</p>
+        <a :href="'/' + user.id + '/profEdit'">
+          <p class="p-mypage__user-name">{{ user.name }} さん</p>
+        </a>
         <img :src="user.avatar" class="p-mypage__user-image">
       </div>
 
-      <div class="">
-        <p class="" v-if="notificationList.length !== 0">未読のメッセージがあります</p>
-        <div class="" v-for="notification in notificationList" :key="notification.id">
-          <p class="">メッセージ送信者： {{ notification.sender_name }}さん</p>
+      <section class="p-mypage__contents">
+        <h2 class="p-mypage__contents-title">お知らせ</h2>
+        
+        <div class="p-mypage__contents-container">
+          <p class="p-mypage__contents-text" v-if="notificationList.length === 0">お知らせはありません</p>
         </div>
-      </div>
+
+        <div class="p-news" v-if="notificationList.length !== 0">
+
+          <div class="c-news" v-for="notification in notificationList" :key="notification.id">
+            <p class="c-news__content">{{ formatDate(notification.chat.created_at) }}</p>
+            <p class="c-news__title"><span class="u-weight">{{ notification.sender_name }}</span>さんからメッセージが届いています！</p>
+            <a :href="'/chat/' + notification.chat.idea_id + '/' + notification.chat.seller_id + '/' + notification.chat.buyer_id"
+                class="c-news__link" @click="goChat(notification)">
+              メッセージボードへ
+            </a>
+          </div>
+
+        </div>
+      </section>
 
 
       <section class="p-mypage__contents">
@@ -168,6 +184,27 @@
     },
     methods: {
 
+      // メッセージの既読化とチャットへの遷移を発火
+      goChat(notification){
+
+        this.markAsRead(notification.id);
+
+        // チャットへ遷移
+        window.location.href = '/chat/' + notification.chat.idea_id + '/' + notification.chat.seller_id + '/' + notification.chat.buyer_id;
+      },
+
+      // メッセージを既読に
+      markAsRead(notificationId) {
+        // 既読処理を実行
+        axios.post('/api/' + notificationId + '/markAsRead')
+          .then(response => {
+            console.log('既読処理が成功しました');
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+
       // 気になる　の状態のON/OFF
       toggleCheck(id) {
         axios.post('/api/idea/' + id + '/toggleCheck')
@@ -214,6 +251,16 @@
         // 平均スコアを追加した後にデータを更新（評価点に対するクラス名が反映されないため）
         this.$forceUpdate();
       },
+
+      // 日付の表示を変更
+      formatDate(value) {
+        const date = new Date(value);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        return `${year}.${month}.${day}`;
+      },
+
     },
 
     filters: {

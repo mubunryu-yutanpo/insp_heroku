@@ -76,6 +76,9 @@
                   <a href="{{ route('reviews') }}" class="c-nav__link">レビュー一覧</a>
                 </li>
                 <li class="c-nav__item">
+                  <a href="{{ route('notifications', Auth::id() ) }}" class="c-nav__link">通知一覧</a>
+                </li>
+                <li class="c-nav__item">
                   <a href="{{ route('logout') }}" class="c-nav__link">ログアウト</a>
                 </li>
               @endauth

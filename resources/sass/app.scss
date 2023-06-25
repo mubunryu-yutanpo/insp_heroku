@@ -12,6 +12,8 @@
 @import 'Layouts/form.scss';
 
 // Object
+
+// - project -
 @import 'Object/project/chat.scss';
 @import 'Object/project/detail.scss';
 @import 'Object/project/form.scss';
@@ -19,23 +21,28 @@
 @import 'Object/project/list.scss';
 @import 'Object/project/mypage.scss';
 @import 'Object/project/message.scss';
+@import 'Object/project/news.scss';
 @import 'Object/project/sort.scss';
 @import 'Object/project/submit.scss';
 
 
+// - component -
 @import 'Object/component/card.scss';
 @import 'Object/component/chat.scss';
 @import 'Object/component/detail.scss';
 @import 'Object/component/form.scss';
 @import 'Object/component/menu.scss';
 @import 'Object/component/nav.scss';
+@import 'Object/component/news.scss';
 @import 'Object/component/sort.scss';
 @import 'Object/component/review.scss';
 
 
+// - utility -
 @import 'Object/utility/align-items.scss';
 @import 'Object/utility/background.scss';
 @import 'Object/utility/font-size.scss';
+@import 'Object/utility/font-weight.scss';
 @import 'Object/utility/margin.scss';
 @import 'Object/utility/text-align.scss';
 

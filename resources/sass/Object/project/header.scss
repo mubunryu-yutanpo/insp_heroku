@@ -42,6 +42,17 @@
                 color: $black;
             }
         }
+
+        &-news{
+            border: 2px solid $gray;
+            border-radius: 5px;
+            box-sizing: border-box;
+            height: 48px;
+            margin-right: $space-10;
+            padding: $space-5;
+            width: 48px;
+
+        }
     }
 
 }

@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/{id}/review/create', 'HomeController@evaluation')->name('evaluation');
     // チャットルームへ
     Route::get('/chat/{idea_id}/{seller_id}/{user_id}', 'HomeController@chat')->name('chat');
+    // 通知一覧へ
+    Route::get('/{id}/notifications', 'HomeController@notifications')->name('notifications');
 
   // =====================処理関連ルート===========================
     // アイデア投稿
@@ -111,5 +113,7 @@ Route::middleware('api')->group(function() {
     Route::get('api/message/{idea_id}/{seller_id}/{user_id}', 'Api\ApiController@message');
     // チャットメッセージ追加
     Route::post('api/message/{chat_id}/{user_id}', 'Api\ApiController@addMessage');
+    // メッセージの既読化
+    Route::post('api/{id}/markAsRead', 'Api\ApiController@markAsRead');
 });
     

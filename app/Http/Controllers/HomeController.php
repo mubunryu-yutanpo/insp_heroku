@@ -193,7 +193,6 @@ class HomeController extends Controller
 
     public function evaluation($id){
         $idea = Idea::find($id);
-        //dd($idea);
         return view('ideas/evaluation', compact('idea'));
     }
 
@@ -211,5 +210,16 @@ class HomeController extends Controller
         
         return view('mypage/chat', compact('idea_id', 'seller_id', 'user_id','chat_id'));
     }
+
+
+    /* ================================================================
+      通知一覧へ
+    ================================================================*/
+
+    public function notifications($id){
+
+        return view('mypage/notifications');
+    }
+
 
 }

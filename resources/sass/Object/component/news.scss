@@ -1,0 +1,15 @@
+.c-news{
+    background-color: $gray;
+    border-radius: 5px;
+    margin-bottom: $space_default;
+    padding: $space_default $space-10;
+
+    &__link{
+        display: block;
+        text-align: right;
+    }
+
+    &:last-child{
+        margin-bottom: none;
+    }
+}

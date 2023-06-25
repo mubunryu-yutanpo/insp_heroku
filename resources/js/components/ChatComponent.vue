@@ -28,7 +28,7 @@
         <p>メッセージはまだありません</p>
       </div>
   
-      <form @submit.prevent="sendMessage" class="p-message">
+      <form @submit.prevent="addMessage" class="p-message">
         <div class="p-message__wrap">
             <textarea class="p-message__input" v-model="newMessage" placeholder="メッセージを送信"></textarea>
             <button type="submit" class="p-message__send">
@@ -69,7 +69,7 @@
             console.error(error);
           });
       },
-      sendMessage() {
+      addMessage() {
         axios
           .post('/api/message/' + this.chat_id + '/' + this.user_id, { content: this.newMessage })
           .then((response) => {
@@ -82,11 +82,5 @@
           });
       },
     },
-    // computed: {
-    //   hasMessages() {
-    //     // まだメッセージがない場合の処理
-    //     return this.messages.length > 0;
-    //   },
-    // },
   };
   </script>

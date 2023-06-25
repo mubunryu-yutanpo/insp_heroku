@@ -33,6 +33,7 @@ Vue.component('ideareviews-component', require('./components/IdeaReviewsComponen
 Vue.component('mypage-component', require('./components/MypageComponent.vue').default);
 Vue.component('myposts-component' , require('./components/MyPostsComponent.vue').default);
 Vue.component('myreviews-component', require('./components/MyReviewsComponent.vue').default);
+Vue.component('notifications-component', require('./components/NotificationsComponent.vue').default);
 Vue.component('reviews-component', require('./components/ReviewsComponent.vue').default);
 Vue.component('thumbnailpreview-component', require('./components/ThumbnailPreviewComponent.vue').default);
 

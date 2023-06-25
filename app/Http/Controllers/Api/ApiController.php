@@ -87,25 +87,40 @@ class ApiController extends Controller
         }
 
 
-        // 通知情報を取得        
+        // 通知情報を取得
+        $notificationList = [];
         $notifications = Notification::where('receiver_id', $user_id)
-                        ->where('read', false)
-                        ->get();
+            ->where('read', false)
+            ->latest()
+            ->take(5)
+            ->get();
 
         if ($notifications->isNotEmpty()) {
+            // 送信者の情報を取得
             $senderIds = $notifications->pluck('sender_id')->toArray();
             $senders = User::whereIn('id', $senderIds)->get();
+            // メッセージのやりとりをしているチャットの情報を取得
+            $chatIds = $notifications->pluck('chat_id')->toArray();
+            $chats = Chat::whereIn('id', $chatIds)->get();
 
-            // メッセージ送信者のnameを取得し、sender_nameとして追加
-            $notificationList = $notifications->map(function ($notification) use ($senders) {
+            // 通知にチャット情報を追加
+            $notificationList = $notifications->map(function ($notification) use ($senders, $chats) {
+                
                 $sender = $senders->firstWhere('id', $notification->sender_id);
+                // 送信者の名前を追加
                 if ($sender) {
                     $notification->sender_name = $sender->name; 
                 }
+                
+                // 送信元のチャット情報を追加
+                $chat = $chats->firstWhere('id', $notification->chat_id);
+                if ($chat) {
+                    $notification->chat = $chat;
+                }
+                
                 return $notification;
             });
         }
-
 
         $data = [
             'user'             => $user,
@@ -573,10 +588,6 @@ class ApiController extends Controller
         // メッセージ情報を取得
         $messages = Message::where('chat_id', $chat->id)->orderBy('created_at')->get();
         
-        // 送信者ごとにソート
-        // $buyerMessages = $messages->where('user_id', $buyer_id)->sortBy('timestamp')->values();
-        // $sellerMessages = $messages->where('user_id', $seller_id)->sortBy('timestamp')->values();
-
         $data = [
             'seller'   => $seller,
             'buyer'    => $buyer,
@@ -594,9 +605,14 @@ class ApiController extends Controller
 
     public function addMessage(ValidRequest $request, $chat_id, $user_id){
         
+        $chat = Chat::where('id', $chat_id)->first();
+        // $user_idには固定で購入者のIDが飛んでくる
+        $user_id = ($user_id === Auth::id()) ? $chat->buyer_id : $chat->seller_id;
+
         // メッセージの追加
         $msg = new Message;
         $msg->fill([
+            // 送信者がどっちなのか判別して保存
             'user_id' => $user_id,
             'chat_id' => $chat_id,
             'content' => $request->content,
@@ -605,12 +621,12 @@ class ApiController extends Controller
 
         // 通知の追加
         $notification = new Notification;
-        $chat = Chat::where('id', $chat_id)->first();
-        $reciever_id = ($user_id === $chat->seller_id) ? $chat->buyer_id : $chat->seller_id;
+
+        $receiver_id = ($user_id === $chat->buyer_id) ? $chat->seller_id : $chat->buyer_id;
         $idea_id = $chat->idea_id;
 
         $notification->fill([
-            'receiver_id' => $reciever_id,
+            'receiver_id' => $receiver_id,
             'sender_id'   => $user_id,
             'chat_id'     => $chat_id,
             'idea_id'     => $idea_id,
@@ -619,9 +635,20 @@ class ApiController extends Controller
         ])
         ->save();
 
-
         return redirect()->back()->with('flash_message', 'メッセージを送信しました!');
     }
 
+
+    /* ================================================================
+      メッセージの既読化
+    ================================================================*/
+
+    public function markAsRead($id){
+
+        $notification = Notification::find($id);
+
+        $notification->read = true;
+        $notification->save();
+    }
 
 }
