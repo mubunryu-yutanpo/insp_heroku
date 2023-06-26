@@ -53,7 +53,7 @@
                 <i class="fa-regular fa-messages"></i>
               </a>
 
-              <a href="/login" class="p-submit__button" v-if="user_id === null">
+              <a href="/login" class="p-submit__button" v-if="!login">
                 ログインして購入する
               </a>
 
@@ -122,11 +122,15 @@
         user_id: null,
         seller_id: null,
         bought: false,
+        login: false,
       };
     },
+
     mounted() {
       this.getIdeaDetail();
+      this.checkAuth();
     },
+
     methods: {
       getIdeaDetail() {
         axios
@@ -135,7 +139,7 @@
             this.idea = response.data.idea;
             this.canBuy = response.data.canBuy;
             this.reviews = response.data.reviews;
-            this.reviewsLength = Object.values(response.data.reviews).length;
+            this.reviewsLength = response.data.reviews ? Object.values(response.data.reviews).length : 0;
             this.averageScore = response.data.averageScore;
             this.isChecked = response.data.isChecked;
             this.user_id = response.data.user_id;
@@ -170,6 +174,17 @@
        doReview(){
         window.location.href = '/' + this.idea_id + '/review/create'; 
        },
+
+       // ログインチェック
+       checkAuth(){
+        axios.get('/api/checkAuth')
+          .then(response => {
+            this.login = response.data.authenticated;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+       }
 
     },
 

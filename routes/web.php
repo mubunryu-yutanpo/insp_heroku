@@ -115,5 +115,7 @@ Route::middleware('api')->group(function() {
     Route::post('api/message/{chat_id}/{user_id}', 'Api\ApiController@addMessage');
     // メッセージの既読化
     Route::post('api/{id}/markAsRead', 'Api\ApiController@markAsRead');
+    // 通知情報の取得
+    Route::get('api/{id}/notifications', 'Api\ApiController@getNotification');
 });
     

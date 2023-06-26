@@ -116,6 +116,7 @@ img {
 @media screen and (max-width:767px) {
   .p-detail {
     padding: 40px 15px 100px;
+    width: calc(100% - 30px);
   }
 }
 
@@ -309,14 +310,14 @@ img {
   display: block;
   font-size: 20px;
   font-weight: bold;
-  margin: 30px 0 15px;
+  margin: 30px 15px 15px;
   padding: 15px 10px;
 }
 
 @media screen and (max-width:767px) {
   .p-list__title {
     font-size: 18px;
-    margin: 15px 0;
+    margin: 15px 10px;
   }
 }
 
@@ -339,6 +340,15 @@ img {
   min-height: 500px;
   padding: 40px 0;
   text-align: center;
+}
+
+.p-list__wrap {
+  padding: 25px 0;
+  text-align: center;
+}
+
+.p-list__wrap-text {
+  margin: 15px 0;
 }
 
 .p-mypage {
@@ -488,6 +498,7 @@ img {
 .p-sort {
   box-sizing: border-box;
   margin-left: auto;
+  padding-right: 15px;
   text-align: right;
   width: 40%;
 }
@@ -1156,6 +1167,27 @@ img {
   border-radius: 5px;
   margin-bottom: 15px;
   padding: 15px 10px;
+  position: relative;
+}
+
+.c-news__state {
+  background-color: #FA7070;
+  border-radius: 20px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px 10px;
+  position: absolute;
+  right: 20px;
+  top: 15px;
+}
+
+@media screen and (max-width:767px) {
+  .c-news__state {
+    padding: 5px 10px;
+    right: 10px;
+    top: 5px;
+  }
 }
 
 .c-news__link {
@@ -1327,6 +1359,10 @@ img {
 
 .u-margin-none {
   margin: 0;
+}
+
+.u-margin__default {
+  margin: 15px 0;
 }
 
 .u-text-center {

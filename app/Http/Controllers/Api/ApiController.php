@@ -607,7 +607,7 @@ class ApiController extends Controller
         
         $chat = Chat::where('id', $chat_id)->first();
         // $user_idには固定で購入者のIDが飛んでくる
-        $user_id = ($user_id === Auth::id()) ? $chat->buyer_id : $chat->seller_id;
+        $user_id = (Auth::id() === (int)$user_id) ? $chat->buyer_id : $chat->seller_id;
 
         // メッセージの追加
         $msg = new Message;
@@ -651,4 +651,44 @@ class ApiController extends Controller
         $notification->save();
     }
 
+    
+    /* ================================================================
+      通知一覧の取得
+    ================================================================*/
+
+    public function getNotification($id)
+    {
+        if (!ctype_digit($id)) {
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+    
+        $notificationList = [];
+    
+        // 通知情報をチャット情報をひも付けて全件取得
+        $notifications = Notification::
+                          with('chat')
+                          ->where('receiver_id', $id)
+                          ->orderBy('created_at', 'desc')
+                          ->get();
+    
+        if ($notifications->isNotEmpty()) {
+            $senderIds = $notifications->pluck('sender_id')->toArray();
+            $senders = User::whereIn('id', $senderIds)->get();
+    
+            // 通知情報に送信者の情報（名前のみ）をひもづけ
+            $notificationList = $notifications->map(function ($notification) use ($senders) {
+                $sender = $senders->firstWhere('id', $notification->sender_id);
+                $senderName = $sender ? $sender->name : '';
+                $notification->sender_name = $senderName;
+                return $notification;
+            });
+        }
+    
+        $data = [
+            'notificationList' => $notificationList,
+        ];
+    
+        return response()->json($data);
+    }
+    
 }

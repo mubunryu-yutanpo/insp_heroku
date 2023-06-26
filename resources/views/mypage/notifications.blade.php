@@ -5,8 +5,8 @@
 @section('header')
 
 @section('main')
-  <notification-component >
-  </notification-component>
+  <notifications-component :user_id = "'{{ Auth::id() }}'">
+  </notifications-component>
 @endsection
 
 @section('footer')

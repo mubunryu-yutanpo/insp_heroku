@@ -10,7 +10,7 @@
 
       <section class="p-mypage__contents">
         <h2 class="p-mypage__contents-title">お知らせ</h2>
-        
+
         <div class="p-mypage__contents-container">
           <p class="p-mypage__contents-text" v-if="notificationList.length === 0">お知らせはありません</p>
         </div>
@@ -18,7 +18,7 @@
         <div class="p-news" v-if="notificationList.length !== 0">
 
           <div class="c-news" v-for="notification in notificationList" :key="notification.id">
-            <p class="c-news__content">{{ formatDate(notification.chat.created_at) }}</p>
+            <p class="c-news__content">{{ formatDate(notification.created_at) }}</p>
             <p class="c-news__title"><span class="u-weight">{{ notification.sender_name }}</span>さんからメッセージが届いています！</p>
             <a :href="'/chat/' + notification.chat.idea_id + '/' + notification.chat.seller_id + '/' + notification.chat.buyer_id"
                 class="c-news__link" @click="goChat(notification)">

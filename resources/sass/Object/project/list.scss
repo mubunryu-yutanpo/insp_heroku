@@ -10,12 +10,12 @@
         display: block;
         font-size: $font-size_xl;
         font-weight: bold;
-        margin: $space_30 0 $space_default;
+        margin: $space_30 $space_default $space_default;
         padding: $space_default $space-10;
 
         @include mq(){
             font-size: $font-size_l;
-            margin: $space_default 0;
+            margin: $space_default $space-10;
         }
     }
 
@@ -36,5 +36,14 @@
         min-height: 500px;
         padding: $space_40 0;
         text-align: center;
+    }
+
+    &__wrap{
+        padding: $space_25 0;
+        text-align: center;
+
+        &-text{
+            margin: $space_default 0;
+        }
     }
 }

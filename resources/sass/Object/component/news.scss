@@ -3,6 +3,25 @@
     border-radius: 5px;
     margin-bottom: $space_default;
     padding: $space_default $space-10;
+    position: relative;
+
+    &__state{
+        background-color: $red;
+        border-radius: 20px;
+        color: $white;
+        font-size: $font-size_s;
+        font-weight: bold;
+        padding: $space-5 $space-10;
+        position: absolute;
+        right: $space-20;
+        top: $space_default;
+
+        @include mq(){
+            padding: $space-5 $space-10;
+            right: $space-10;
+            top: $space-5;
+        }
+    }
 
     &__link{
         display: block;

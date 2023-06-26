@@ -11,6 +11,7 @@
 
     @include mq(){
         padding: $space_40 $space_default 100px;
+        width: calc(100% - 30px);
     }
 
     @include mq(sm){

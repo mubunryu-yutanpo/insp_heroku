@@ -2539,11 +2539,13 @@ __webpack_require__.r(__webpack_exports__);
       isChecked: false,
       user_id: null,
       seller_id: null,
-      bought: false
+      bought: false,
+      login: false
     };
   },
   mounted: function mounted() {
     this.getIdeaDetail();
+    this.checkAuth();
   },
   methods: {
     getIdeaDetail: function getIdeaDetail() {
@@ -2552,7 +2554,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.idea = response.data.idea;
         _this.canBuy = response.data.canBuy;
         _this.reviews = response.data.reviews;
-        _this.reviewsLength = Object.values(response.data.reviews).length;
+        _this.reviewsLength = response.data.reviews ? Object.values(response.data.reviews).length : 0;
         _this.averageScore = response.data.averageScore;
         _this.isChecked = response.data.isChecked;
         _this.user_id = response.data.user_id;
@@ -2580,6 +2582,15 @@ __webpack_require__.r(__webpack_exports__);
     // レビュー投稿へ
     doReview: function doReview() {
       window.location.href = '/' + this.idea_id + '/review/create';
+    },
+    // ログインチェック
+    checkAuth: function checkAuth() {
+      var _this3 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/checkAuth').then(function (response) {
+        _this3.login = response.data.authenticated;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   filters: {
@@ -3716,38 +3727,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['idea_id'],
+  props: ['user_id'],
   data: function data() {
     return {
-      reviewList: []
+      notificationList: []
     };
   },
   mounted: function mounted() {
-    this.getReviews();
+    this.getData(); // コンポーネントがマウントされたら通知データを取得
   },
+
   methods: {
-    getReviews: function getReviews() {
+    // 通知を取得
+    getData: function getData() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/idea/' + this.idea_id + '/reviews').then(function (response) {
-        _this.reviewList = response.data.reviewList;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/' + this.user_id + '/notifications').then(function (response) {
+        _this.notificationList = response.data.notificationList;
+        console.log('通知情報取得OK');
       })["catch"](function (error) {
-        console.log(error);
+        console.error(error);
       });
+    },
+    // メッセージの既読化とチャットへの遷移を発火
+    goChat: function goChat(notification) {
+      this.markAsRead(notification.id);
+      // チャットへ遷移
+      window.location.href = '/chat/' + notification.chat.idea_id + '/' + notification.chat.seller_id + '/' + notification.chat.buyer_id;
+    },
+    // メッセージを既読に
+    markAsRead: function markAsRead(notificationId) {
+      // 既読処理を実行
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/' + notificationId + '/markAsRead').then(function (response) {
+        console.log('既読処理が成功しました');
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
+    // 日付の表示を変更
+    formatDate: function formatDate(value) {
+      var date = new Date(value);
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      return "".concat(year, ".").concat(month, ".").concat(day);
     }
   }
 });
@@ -39384,7 +39409,7 @@ var render = function () {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm.user_id === null
+            !_vm.login
               ? _c(
                   "a",
                   {
@@ -40450,9 +40475,7 @@ var render = function () {
                 { key: notification.id, staticClass: "c-news" },
                 [
                   _c("p", { staticClass: "c-news__content" }, [
-                    _vm._v(
-                      _vm._s(_vm.formatDate(notification.chat.created_at))
-                    ),
+                    _vm._v(_vm._s(_vm.formatDate(notification.created_at))),
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "c-news__title" }, [
@@ -40942,58 +40965,64 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "p-list" },
-    _vm._l(_vm.reviewList, function (review) {
-      return _c("article", { key: review.id, staticClass: "c-review" }, [
-        _c("div", { staticClass: "c-review__user" }, [
-          _c("div", { staticClass: "c-review__user-avatar" }, [
-            _c("img", {
-              staticClass: "c-review__user-avatar-image",
-              attrs: { src: review.user.avatar },
-            }),
+  return _c("section", { staticClass: "p-list" }, [
+    _c("h2", { staticClass: "p-list__title" }, [_vm._v("通知一覧")]),
+    _vm._v(" "),
+    _vm.notificationList.length === 0
+      ? _c("div", { staticClass: "p-list__wrap" }, [
+          _c("p", { staticClass: "p-list__wrap-text" }, [
+            _vm._v("まだメッセージがありません"),
           ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "c-review__user-name" }, [
-            _vm._v(_vm._s(review.user.name)),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-review__about" }, [
-          _c(
-            "div",
-            { staticClass: "c-review__about-score" },
-            _vm._l(5, function (n) {
-              return _c("i", {
-                key: n,
-                staticClass: "c-review__about-score-icon fa-solid fa-star",
-                class: { active: n <= review.score },
-              })
-            })
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-review__about-comment" }, [
-            _c("p", { staticClass: "c-review__about-comment-text" }, [
-              _vm._v(_vm._s(review.comment)),
-            ]),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-review__idea" }, [
-          _vm._v("\n      アイデア名： \n      "),
-          _c(
-            "a",
-            {
-              staticClass: "c-review__idea-link",
-              attrs: { href: "/" + review.idea.id + "/idea" },
-            },
-            [_vm._v(_vm._s(review.idea.title))]
-          ),
-        ]),
-      ])
-    })
-  )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.notificationList.length !== 0
+      ? _c(
+          "div",
+          { staticClass: "p-news" },
+          _vm._l(_vm.notificationList, function (notification) {
+            return _c("div", { key: notification.id, staticClass: "c-news" }, [
+              notification.read === 0
+                ? _c("span", { staticClass: "c-news__state" }, [_vm._v("未読")])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-news__content" }, [
+                _vm._v(_vm._s(_vm.formatDate(notification.created_at))),
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "c-news__title" }, [
+                _c("span", { staticClass: "u-weight" }, [
+                  _vm._v(_vm._s(notification.sender_name)),
+                ]),
+                _vm._v("さんからメッセージが届いています！"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "c-news__link",
+                  attrs: {
+                    href:
+                      "/chat/" +
+                      notification.chat.idea_id +
+                      "/" +
+                      notification.chat.seller_id +
+                      "/" +
+                      notification.chat.buyer_id,
+                  },
+                  on: {
+                    click: function ($event) {
+                      _vm.goChat(notification)
+                    },
+                  },
+                },
+                [_vm._v("\n        メッセージボードへ\n      ")]
+              ),
+            ])
+          })
+        )
+      : _vm._e(),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
