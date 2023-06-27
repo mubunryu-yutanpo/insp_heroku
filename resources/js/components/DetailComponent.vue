@@ -5,6 +5,14 @@
         <h3 class="p-detail__title-text">{{ idea.title }}</h3>
       </div>
 
+      <share-networks
+      class="p-detail__share-buttons"
+      :url="url"
+      :title="idea.title"
+      :description="idea.summary"
+      networks="twitter, facebook"
+    ></share-networks>
+
       <button class="p-detail__check" @click="toggleCheck()">
         <span class="p-detail__check-text" v-if="!isChecked">
           <i class="fa-regular fa-heart fa-fw p-detail__check-icon add"></i>
@@ -108,7 +116,10 @@
   
   <script>
   import axios from 'axios';
-  
+  import VueSocialSharing from 'vue-social-sharing';
+  Vue.use(VueSocialSharing);
+
+
   export default {
     props: ['idea_id'],
     data() {
@@ -123,6 +134,7 @@
         seller_id: null,
         bought: false,
         login: false,
+        url: '/',
       };
     },
 
