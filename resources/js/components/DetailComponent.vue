@@ -5,13 +5,21 @@
         <h3 class="p-detail__title-text">{{ idea.title }}</h3>
       </div>
 
-      <share-networks
-      class="p-detail__share-buttons"
-      :url="url"
-      :title="idea.title"
-      :description="idea.summary"
-      networks="twitter, facebook"
-    ></share-networks>
+      <social-sharing
+        url="/"
+        :title="idea.title"
+        :description="idea.description"
+        quote="Vue is a progressive framework for building user interfaces."
+        twitter-user="test"
+        inline-template
+      >
+        <div>
+          <network network="twitter">
+            <i class="fa-brands fa-twitter"></i>
+          </network>
+        </div>
+      </social-sharing>
+
 
       <button class="p-detail__check" @click="toggleCheck()">
         <span class="p-detail__check-text" v-if="!isChecked">
@@ -144,6 +152,8 @@
     },
 
     methods: {
+
+      // データの取得
       getIdeaDetail() {
         axios
           .get('/api/idea/' + this.idea_id + '/detail')

@@ -47,10 +47,10 @@ Vue.component('thumbnailpreview-component', require('./components/ThumbnailPrevi
  */
 
 import axios from 'axios';
-
-
-
+import VueSocialSharing from 'vue-social-sharing';
 import Vue from 'vue';
+
+
 // import ExampleComponent from './components/ExampleComponent.vue';
 // import TestComponent from './components/TestComponent.vue';
 
@@ -71,6 +71,9 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
+Vue.use(VueSocialSharing);
+
+
 
 const routes = [
   {
