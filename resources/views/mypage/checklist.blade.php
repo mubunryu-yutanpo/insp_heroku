@@ -1,8 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'checklist')
-
-@section('header')
+@section('title', '気になるアイデア一覧')
 
 @section('main')
   <checks-component :user_id="'{{ Auth::id() }}'"></checks-component>

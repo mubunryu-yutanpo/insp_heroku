@@ -5,7 +5,7 @@
     box-shadow: 0 0 5px 0 #bdb8ad;
     margin: 0 auto;
     max-width: 980px;
-    padding: 80px $space_default $space_20;
+    padding: 100px $space_default $space_20;
     position: relative;
     width: 100%;
 
@@ -16,6 +16,71 @@
 
     @include mq(sm){
         padding-bottom: 120px;
+    }
+
+
+    &__title{
+        margin-bottom: $space_40;
+        text-align: center;
+
+        @include mq(sm){
+            margin-bottom: $space-20;
+        }
+
+    }
+
+    &__contents{
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: $space-20;
+        position: absolute;
+        right: $space-20;
+        top: $space_20;
+
+        @include mq(){
+            position: static;
+
+        }
+
+        @include mq(sm){
+            justify-content: flex-end;
+        }
+    }
+
+    &__twitter{
+        background-color: $twitter;
+        border-radius: 20px;
+        box-shadow: 0 0 2px 0 $gray;
+        color: $white;
+        font-weight: bold;
+        font-size: 14px;
+        margin: 0 $space-10 $space-5;
+        padding: $space-10 $space_default;
+        width: 150px;
+
+        @include mq(sm){
+            margin-right: 0;
+        }
+    }
+
+    &__check{
+        background: $lightbrown;
+        border: 1px solid $gray;
+        border-radius: 20px;
+        box-shadow: 0 0 3px 0 $gray;
+        margin: 0 0 $space-5;
+        padding: $space-10 $space_default;
+        min-width: 180px;
+
+        @include mq(sm){
+            margin: 0 0 $space-5 $space-10;
+        }
+
+        &-icon{
+            color: $red;
+        }
     }
 
     &__container{
@@ -49,58 +114,6 @@
         }
     }
 
-    &__title{
-        align-items: center;
-        display: flex;
-        justify-content: center;
-        margin-bottom: $space_40;
-
-        @include mq(){
-            margin-bottom: 80px;
-        }
-
-        @include mq(sm){
-            margin-bottom: $space-20;
-        }
-
-        &-text{
-            margin: 0 $space_30 0 0;
-
-            @include mq(){
-                margin: 0;
-            }
-        }
-    }
-
-    &__check{
-        background: $lightbrown;
-        border: 1px solid $gray;
-        border-radius: 20px;
-        padding: $space-10 $space_default;
-        position: absolute;
-        right: $space-20;
-        top: $space_20;
-
-        @include mq(){
-            right: $space-20;
-            top: 85px;
-        }
-
-        @include mq(sm){
-            display: block;
-            margin-bottom: $space-20;
-            margin-left: auto;
-            max-width: 200px;
-            position: static;
-            right: 0;
-            top: 0;
-            width: 70%;
-        }
-
-        &-icon{
-            color: $red;
-        }
-    }
 
     &__score{
         margin-bottom: $space_20;

@@ -1,8 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'idea_edit')
-
-@section('header')
+@section('title', 'アイデア編集')
 
 @section('main')
   <h2>アイデア編集画面</h2>

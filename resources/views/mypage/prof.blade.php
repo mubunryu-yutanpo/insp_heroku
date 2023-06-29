@@ -2,8 +2,6 @@
 
 @section('title', 'プロフィール編集')
 
-@section('header')
-
 @section('main')
   <h2>プロフ編集ページ</h2>
   <div class="l-form">

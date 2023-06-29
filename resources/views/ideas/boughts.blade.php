@@ -1,8 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'bought')
-
-@section('header')
+@section('title', '購入したアイデア一覧')
 
 @section('main')
   <boughts-component :user_id="'{{ Auth::id() }}'"></boughts-component>  

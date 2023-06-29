@@ -2417,16 +2417,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_social_sharing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-social-sharing */ "./node_modules/vue-social-sharing/dist/vue-social-sharing.common.js");
-/* harmony import */ var vue_social_sharing__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_social_sharing__WEBPACK_IMPORTED_MODULE_1__);
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2545,8 +2535,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-
-Vue.use(vue_social_sharing__WEBPACK_IMPORTED_MODULE_1___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['idea_id'],
   data: function data() {
@@ -2560,7 +2548,7 @@ Vue.use(vue_social_sharing__WEBPACK_IMPORTED_MODULE_1___default.a);
       user_id: null,
       seller_id: null,
       bought: false,
-      login: false,
+      isLogin: false,
       url: '/'
     };
   },
@@ -2609,10 +2597,17 @@ Vue.use(vue_social_sharing__WEBPACK_IMPORTED_MODULE_1___default.a);
     checkAuth: function checkAuth() {
       var _this3 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/checkAuth').then(function (response) {
-        _this3.login = response.data.authenticated;
+        _this3.isLogin = response.data.authenticated;
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    // Twitterにシェア
+    twitterShare: function twitterShare() {
+      // サムネのリンクは変更しないとダメ
+      var imageURL = encodeURIComponent(this.idea.sumbnail);
+      var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://www.google.com") + '&media=' + imageURL;
+      window.open(shareURL, '_blank');
     }
   },
   filters: {
@@ -39307,276 +39302,257 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "p-detail" },
-    [
-      _c("div", { staticClass: "p-detail__title" }, [
-        _c("h3", { staticClass: "p-detail__title-text" }, [
-          _vm._v(_vm._s(_vm.idea.title)),
-        ]),
+  return _c("div", { staticClass: "p-detail" }, [
+    _c("div", { staticClass: "p-detail__title" }, [
+      _c("h2", { staticClass: "p-detail__title-text" }, [
+        _vm._v(_vm._s(_vm.idea.title)),
       ]),
-      _vm._v(" "),
-      _c("social-sharing", {
-        attrs: {
-          url: "/",
-          title: _vm.idea.title,
-          description: _vm.idea.description,
-          quote: "Vue is a progressive framework for building user interfaces.",
-          "twitter-user": "test",
-        },
-        inlineTemplate: {
-          render: function () {
-            var _vm = this
-            var _h = _vm.$createElement
-            var _c = _vm._self._c || _h
-            return _c(
-              "div",
-              [
-                _c("network", { attrs: { network: "twitter" } }, [
-                  _c("i", { staticClass: "fa-brands fa-twitter" }),
-                ]),
-              ],
-              1
-            )
-          },
-          staticRenderFns: [],
-        },
-      }),
-      _vm._v(" "),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-detail__contents" }, [
       _c(
         "button",
-        {
-          staticClass: "p-detail__check",
-          on: {
-            click: function ($event) {
-              _vm.toggleCheck()
-            },
-          },
-        },
+        { staticClass: "p-detail__twitter", on: { click: _vm.twitterShare } },
         [
-          !_vm.isChecked
-            ? _c("span", { staticClass: "p-detail__check-text" }, [
-                _c("i", {
-                  staticClass:
-                    "fa-regular fa-heart fa-fw p-detail__check-icon add",
-                }),
-                _vm._v("\n      気になる！に追加\n    "),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.isChecked
-            ? _c("span", { staticClass: "p-detail__check-text" }, [
-                _c("i", {
-                  staticClass:
-                    "fa-solid fa-heart fa-fw p-detail__check-icon remove",
-                }),
-                _vm._v("\n      気になる！から削除\n    "),
-              ])
-            : _vm._e(),
+          _c("i", {
+            staticClass: "fa-brands fa-twitter fa-fw p-detail__twitter-icon",
+          }),
+          _vm._v("\n      ツイートする\n    "),
         ]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "p-detail__container" }, [
-        _c("section", { staticClass: "p-detail__container-main" }, [
-          _c("div", { staticClass: "c-detail u-text-center" }, [
-            _c("img", {
-              staticClass: "c-detail__sumbnail",
-              attrs: { src: _vm.idea.sumbnail, alt: "" },
-            }),
+      _vm.isLogin
+        ? _c(
+            "button",
+            {
+              staticClass: "p-detail__check",
+              on: {
+                click: function ($event) {
+                  _vm.toggleCheck()
+                },
+              },
+            },
+            [
+              !_vm.isChecked
+                ? _c("span", { staticClass: "p-detail__check-text" }, [
+                    _c("i", {
+                      staticClass:
+                        "fa-regular fa-heart fa-fw p-detail__check-icon add",
+                    }),
+                    _vm._v("\n        気になる！に追加\n      "),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.isChecked
+                ? _c("span", { staticClass: "p-detail__check-text" }, [
+                    _c("i", {
+                      staticClass:
+                        "fa-solid fa-heart fa-fw p-detail__check-icon remove",
+                    }),
+                    _vm._v("\n        気になる！から削除\n      "),
+                  ])
+                : _vm._e(),
+            ]
+          )
+        : _vm._e(),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-detail__container" }, [
+      _c("section", { staticClass: "p-detail__container-main" }, [
+        _c("div", { staticClass: "c-detail u-text-center" }, [
+          _c("img", {
+            staticClass: "c-detail__sumbnail",
+            attrs: { src: _vm.idea.sumbnail, alt: "" },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-detail" }, [
+          _vm._v("【 概要 】\n        "),
+          _c("p", { staticClass: "c-detail__summary" }, [
+            _vm._v(_vm._s(_vm.idea.summary)),
           ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-detail" }, [
-            _vm._v("【 概要 】\n        "),
-            _c("p", { staticClass: "c-detail__summary" }, [
-              _vm._v(_vm._s(_vm.idea.summary)),
-            ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-detail u-margin-none" }, [
+          _c("p", { staticClass: "c-detail__price" }, [
+            _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
+            _vm._v(" " + _vm._s(_vm._f("numberWithCommas")(_vm.idea.price))),
           ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-detail" }, [
+          _vm.reviews !== null
+            ? _c(
+                "a",
+                {
+                  staticClass: "c-detail__reviews-link",
+                  attrs: { href: "/idea/" + _vm.idea.id + "/reviews" },
+                },
+                [
+                  _vm._v(
+                    "\n           レビュー数: (" +
+                      _vm._s(_vm.reviewsLength) +
+                      ")\n        "
+                  ),
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _c("div", { staticClass: "c-detail u-margin-none" }, [
-            _c("p", { staticClass: "c-detail__price" }, [
-              _c("span", { staticClass: "u-font__size-m" }, [_vm._v("¥")]),
-              _vm._v(" " + _vm._s(_vm._f("numberWithCommas")(_vm.idea.price))),
-            ]),
-          ]),
+          _vm.reviews === null
+            ? _c("span", { staticClass: "p-detail__reviews-text" }, [
+                _vm._v("レビュー数: (0)"),
+              ])
+            : _vm._e(),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-detail" }, [
+          _c("span", [_vm._v("【 内容 】 ")]),
           _vm._v(" "),
-          _c("div", { staticClass: "c-detail" }, [
-            _vm.reviews !== null
+          _vm.canBuy && !_vm.bought
+            ? _c("p", { staticClass: "c-detail__discription" }, [
+                _vm._v("※購入後に表示されます"),
+              ])
+            : _c("p", { staticClass: "c-detail__discription" }, [
+                _vm._v(_vm._s(_vm.idea.description)),
+              ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-detail__wrap" }, [
+          _c("div", { staticClass: "p-submit detail" }, [
+            _vm.seller_id !== _vm.user_id && !_vm.canBuy
               ? _c(
                   "a",
                   {
-                    staticClass: "c-detail__reviews-link",
-                    attrs: { href: "/idea/" + _vm.idea.id + "/reviews" },
+                    staticClass: "p-submit__link",
+                    attrs: {
+                      href:
+                        "/chat/" +
+                        _vm.idea_id +
+                        "/" +
+                        _vm.seller_id +
+                        "/" +
+                        _vm.user_id,
+                    },
                   },
                   [
-                    _vm._v(
-                      "\n           レビュー数: (" +
-                        _vm._s(_vm.reviewsLength) +
-                        ")\n        "
-                    ),
+                    _vm._v("\n            メッセージボードへ\n            "),
+                    _c("i", { staticClass: "fa-regular fa-messages" }),
                   ]
                 )
               : _vm._e(),
             _vm._v(" "),
-            _vm.reviews === null
-              ? _c("span", { staticClass: "p-detail__reviews-text" }, [
-                  _vm._v("レビュー数: (0)"),
-                ])
-              : _vm._e(),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-detail" }, [
-            _c("span", [_vm._v("【 内容 】 ")]),
-            _vm._v(" "),
-            _vm.canBuy && !_vm.bought
-              ? _c("p", { staticClass: "c-detail__discription" }, [
-                  _vm._v("※購入後に表示されます"),
-                ])
-              : _c("p", { staticClass: "c-detail__discription" }, [
-                  _vm._v(_vm._s(_vm.idea.description)),
-                ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-detail__wrap" }, [
-            _c("div", { staticClass: "p-submit detail" }, [
-              _vm.seller_id !== _vm.user_id && !_vm.canBuy
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "p-submit__link",
-                      attrs: {
-                        href:
-                          "/chat/" +
-                          _vm.idea_id +
-                          "/" +
-                          _vm.seller_id +
-                          "/" +
-                          _vm.user_id,
-                      },
-                    },
-                    [
-                      _vm._v("\n            メッセージボードへ\n            "),
-                      _c("i", { staticClass: "fa-regular fa-messages" }),
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.login
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "p-submit__button",
-                      attrs: { href: "/login" },
-                    },
-                    [_vm._v("\n            ログインして購入する\n          ")]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.user_id !== _vm.seller_id && !_vm.canBuy && _vm.bought
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "p-submit__button",
-                      on: {
-                        click: function ($event) {
-                          _vm.doReview()
-                        },
-                      },
-                    },
-                    [_vm._m(0)]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.user_id !== null &&
-              _vm.user_id !== _vm.seller_id &&
-              !_vm.bought &&
-              _vm.canBuy
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "p-submit__button",
-                      on: {
-                        click: function ($event) {
-                          _vm.buy()
-                        },
-                      },
-                    },
-                    [_vm._m(1)]
-                  )
-                : _vm._e(),
-            ]),
-          ]),
-        ]),
-        _vm._v(" "),
-        _c("section", { staticClass: "p-detail__container-sub" }, [
-          _c("p", { staticClass: "p-detail__score" }, [
-            _vm._v("平均評価: \n        "),
-            _vm.averageScore !== null
-              ? _c("span", { staticClass: "p-detail__score-text" }, [
-                  _vm._v(_vm._s(_vm.averageScore.toFixed(1)) + " / 5"),
-                ])
+            !_vm.isLogin
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "p-submit__button",
+                    attrs: { href: "/login" },
+                  },
+                  [_vm._v("\n            ログインして購入する\n          ")]
+                )
               : _vm._e(),
             _vm._v(" "),
-            _vm.averageScore === null
-              ? _c("span", { staticClass: "p-detail__score-text" }, [
-                  _vm._v("-"),
-                ])
+            _vm.user_id !== _vm.seller_id && !_vm.canBuy && _vm.bought
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "p-submit__button",
+                    on: {
+                      click: function ($event) {
+                        _vm.doReview()
+                      },
+                    },
+                  },
+                  [_vm._m(0)]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user_id !== null &&
+            _vm.user_id !== _vm.seller_id &&
+            !_vm.bought &&
+            _vm.canBuy
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "p-submit__button",
+                    on: {
+                      click: function ($event) {
+                        _vm.buy()
+                      },
+                    },
+                  },
+                  [_vm._m(1)]
+                )
               : _vm._e(),
           ]),
-          _vm._v(" "),
-          _vm.reviews !== null
-            ? _c(
-                "div",
-                { staticClass: "p-detail__reviews" },
-                _vm._l(_vm.reviews, function (review) {
-                  return _c(
-                    "div",
-                    { key: review.id, staticClass: "c-detail__reviews" },
-                    [
-                      _c("div", { staticClass: "c-detail__reviews-wrap" }, [
-                        _c("div", { staticClass: "c-detail__reviews-image" }, [
-                          _c("img", {
-                            staticClass: "c-detail__reviews-image-item",
-                            attrs: { src: review.user.avatar, alt: "" },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "c-detail__reviews-score" },
-                          [
-                            _vm._l(5, function (n) {
-                              return _c("i", {
-                                key: n,
-                                staticClass:
-                                  "c-detail__reviews-score-icon fa-solid fa-star",
-                                class: { active: n <= review.score },
-                              })
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              { staticClass: "c-detail__reviews-score-text" },
-                              [_vm._v(_vm._s(review.score))]
-                            ),
-                          ],
-                          2
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "p-detail__reivews-comment" }, [
-                        _vm._v(_vm._s(review.comment)),
-                      ]),
-                    ]
-                  )
-                })
-              )
-            : _vm._e(),
         ]),
       ]),
-    ],
-    1
-  )
+      _vm._v(" "),
+      _c("section", { staticClass: "p-detail__container-sub" }, [
+        _c("p", { staticClass: "p-detail__score" }, [
+          _vm._v("平均評価: \n        "),
+          _vm.averageScore !== null
+            ? _c("span", { staticClass: "p-detail__score-text" }, [
+                _vm._v(_vm._s(_vm.averageScore.toFixed(1)) + " / 5"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.averageScore === null
+            ? _c("span", { staticClass: "p-detail__score-text" }, [_vm._v("-")])
+            : _vm._e(),
+        ]),
+        _vm._v(" "),
+        _vm.reviews !== null
+          ? _c(
+              "div",
+              { staticClass: "p-detail__reviews" },
+              _vm._l(_vm.reviews, function (review) {
+                return _c(
+                  "div",
+                  { key: review.id, staticClass: "c-detail__reviews" },
+                  [
+                    _c("div", { staticClass: "c-detail__reviews-wrap" }, [
+                      _c("div", { staticClass: "c-detail__reviews-image" }, [
+                        _c("img", {
+                          staticClass: "c-detail__reviews-image-item",
+                          attrs: { src: review.user.avatar, alt: "" },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "c-detail__reviews-score" },
+                        [
+                          _vm._l(5, function (n) {
+                            return _c("i", {
+                              key: n,
+                              staticClass:
+                                "c-detail__reviews-score-icon fa-solid fa-star",
+                              class: { active: n <= review.score },
+                            })
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            { staticClass: "c-detail__reviews-score-text" },
+                            [_vm._v(_vm._s(review.score))]
+                          ),
+                        ],
+                        2
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "p-detail__reivews-comment" }, [
+                      _vm._v(_vm._s(review.comment)),
+                    ]),
+                  ]
+                )
+              })
+            )
+          : _vm._e(),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
@@ -44520,419 +44496,6 @@ var version = '3.6.5';
 
 
 
-
-/***/ }),
-
-/***/ "./node_modules/vue-social-sharing/dist/vue-social-sharing.common.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/vue-social-sharing/dist/vue-social-sharing.common.js ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * vue-social-sharing v2.4.7 
- * (c) 2019 nicolasbeauvais
- * Released under the MIT License.
- */
-
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var Vue = _interopDefault(__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"));
-
-var SocialSharingNetwork = {
-  functional: true,
-
-  props: {
-    network: {
-      type: String,
-      default: ''
-    }
-  },
-
-  render: function (createElement, context) {
-    var network = context.parent._data.baseNetworks[context.props.network];
-
-    if (!network) {
-      return console.warn(("Network " + (context.props.network) + " does not exist"));
-    }
-
-    return createElement(context.parent.networkTag, {
-      staticClass: context.data.staticClass || null,
-      staticStyle: context.data.staticStyle || null,
-      class: context.data.class || null,
-      style: context.data.style || null,
-      attrs: {
-        id: context.data.attrs.id || null,
-        tabindex: context.data.attrs.tabindex || 0,
-        'data-link': network.type === 'popup'
-          ? '#share-' + context.props.network
-          : context.parent.createSharingUrl(context.props.network),
-        'data-action': network.type === 'popup' ? null : network.action
-      },
-      on: {
-        click: network.type === 'popup' ? function () {
-          context.parent.share(context.props.network);
-        } : function () {
-          context.parent.touch(context.props.network);
-        }
-      }
-    }, context.children);
-  }
-};
-
-var email = {"sharer":"mailto:?subject=@title&body=@url%0D%0A%0D%0A@description","type":"direct"};
-var facebook = {"sharer":"https://www.facebook.com/sharer/sharer.php?u=@url&title=@title&description=@description&quote=@quote&hashtag=@hashtags","type":"popup"};
-var googleplus = {"sharer":"https://plus.google.com/share?url=@url","type":"popup"};
-var line = {"sharer":"http://line.me/R/msg/text/?@description%0D%0A@url","type":"popup"};
-var linkedin = {"sharer":"https://www.linkedin.com/shareArticle?mini=true&url=@url&title=@title&summary=@description","type":"popup"};
-var odnoklassniki = {"sharer":"https://connect.ok.ru/dk?st.cmd=WidgetSharePreview&st.shareUrl=@url&st.comments=@description","type":"popup"};
-var pinterest = {"sharer":"https://pinterest.com/pin/create/button/?url=@url&media=@media&description=@title","type":"popup"};
-var reddit = {"sharer":"https://www.reddit.com/submit?url=@url&title=@title","type":"popup"};
-var skype = {"sharer":"https://web.skype.com/share?url=@description%0D%0A@url","type":"popup"};
-var telegram = {"sharer":"https://t.me/share/url?url=@url&text=@description","type":"popup"};
-var twitter = {"sharer":"https://twitter.com/intent/tweet?text=@title&url=@url&hashtags=@hashtags@twitteruser","type":"popup"};
-var viber = {"sharer":"viber://forward?text=@url @description","type":"direct"};
-var vk = {"sharer":"https://vk.com/share.php?url=@url&title=@title&description=@description&image=@media&noparse=true","type":"popup"};
-var weibo = {"sharer":"http://service.weibo.com/share/share.php?url=@url&title=@title","type":"popup"};
-var whatsapp = {"sharer":"https://api.whatsapp.com/send?text=@description%0D%0A@url","type":"popup","action":"share/whatsapp/share"};
-var sms = {"sharer":"sms:?body=@url%20@description","type":"direct"};
-var sms_ios = {"sharer":"sms:;body=@url%20@description","type":"direct"};
-var BaseNetworks = {
-	email: email,
-	facebook: facebook,
-	googleplus: googleplus,
-	line: line,
-	linkedin: linkedin,
-	odnoklassniki: odnoklassniki,
-	pinterest: pinterest,
-	reddit: reddit,
-	skype: skype,
-	telegram: telegram,
-	twitter: twitter,
-	viber: viber,
-	vk: vk,
-	weibo: weibo,
-	whatsapp: whatsapp,
-	sms: sms,
-	sms_ios: sms_ios
-};
-
-var inBrowser = typeof window !== 'undefined';
-var $window = inBrowser ? window : null;
-
-var SocialSharing = {
-  props: {
-    /**
-     * URL to share.
-     * @var string
-     */
-    url: {
-      type: String,
-      default: inBrowser ? window.location.href : ''
-    },
-
-    /**
-     * Sharing title, if available by network.
-     * @var string
-     */
-    title: {
-      type: String,
-      default: ''
-    },
-
-    /**
-     * Sharing description, if available by network.
-     * @var string
-     */
-    description: {
-      type: String,
-      default: ''
-    },
-
-    /**
-     * Facebook quote
-     * @var string
-     */
-    quote: {
-      type: String,
-      default: ''
-    },
-
-    /**
-     * Twitter hashtags
-     * @var string
-     */
-    hashtags: {
-      type: String,
-      default: ''
-    },
-
-    /**
-     * Twitter user.
-     * @var string
-     */
-    twitterUser: {
-      type: String,
-      default: ''
-    },
-
-    /**
-     * Flag that indicates if counts should be retrieved.
-     * - NOT WORKING IN CURRENT VERSION
-     * @var mixed
-     */
-    withCounts: {
-      type: [String, Boolean],
-      default: false
-    },
-
-    /**
-     * Google plus key.
-     * @var string
-     */
-    googleKey: {
-      type: String,
-      default: undefined
-    },
-
-    /**
-     * Pinterest Media URL.
-     * Specifies the image/media to be used.
-     */
-    media: {
-      type: String,
-      default: ''
-    },
-
-    /**
-     * Network sub component tag.
-     * Default to span tag
-     */
-    networkTag: {
-      type: String,
-      default: 'span'
-    },
-
-    /**
-     * Additional or overridden networks.
-     * Default to BaseNetworks
-     */
-    networks: {
-      type: Object,
-      default: function () {
-        return {};
-      }
-    }
-  },
-
-  data: function data () {
-    return {
-      /**
-       * Available sharing networks.
-       * @param object
-       */
-      baseNetworks: BaseNetworks,
-
-      /**
-       * Popup settings.
-       * @param object
-       */
-      popup: {
-        status: false,
-        resizable: true,
-        toolbar: false,
-        menubar: false,
-        scrollbars: false,
-        location: false,
-        directories: false,
-        width: 626,
-        height: 436,
-        top: 0,
-        left: 0,
-        window: undefined,
-        interval: null
-      }
-    };
-  },
-
-  methods: {
-    /**
-     * Returns generated sharer url.
-     *
-     * @param network Social network key.
-     */
-    createSharingUrl: function createSharingUrl (network) {
-      var ua = navigator.userAgent.toLowerCase();
-
-      /**
-       * On IOS, SMS sharing link need a special formating
-       * Source: https://weblog.west-wind.com/posts/2013/Oct/09/Prefilling-an-SMS-on-Mobile-Devices-with-the-sms-Uri-Scheme#Body-only
-        */
-      if (network === 'sms' && (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1)) {
-        network += '_ios';
-      }
-
-      var url = this.baseNetworks[network].sharer;
-
-      /**
-       * On IOS, Twitter sharing shouldn't include a hashtag parameter if the hashtag value is empty
-       * Source: https://github.com/nicolasbeauvais/vue-social-sharing/issues/143
-        */
-      if (network === 'twitter' && this.hashtags.length === 0) {
-        url = url.replace('&hashtags=@hashtags', '');
-      }
-
-      return url
-        .replace(/@url/g, encodeURIComponent(this.url))
-        .replace(/@title/g, encodeURIComponent(this.title))
-        .replace(/@description/g, encodeURIComponent(this.description))
-        .replace(/@quote/g, encodeURIComponent(this.quote))
-        .replace(/@hashtags/g, this.generateHashtags(network, this.hashtags))
-        .replace(/@media/g, this.media)
-        .replace(/@twitteruser/g, this.twitterUser ? '&via=' + this.twitterUser : '');
-    },
-    /**
-     * Encode hashtags for the specified social network.
-     *
-     * @param  network Social network key
-     * @param  hashtags All hashtags specified
-     */
-    generateHashtags: function generateHashtags (network, hashtags) {
-      if (network === 'facebook' && hashtags.length > 0) {
-        return '%23' + hashtags.split(',')[0];
-      }
-
-      return hashtags;
-    },
-    /**
-     * Shares URL in specified network.
-     *
-     * @param network Social network key.
-     */
-    share: function share (network) {
-      this.openSharer(network, this.createSharingUrl(network));
-
-      this.$root.$emit('social_shares_open', network, this.url);
-      this.$emit('open', network, this.url);
-    },
-
-    /**
-     * Touches network and emits click event.
-     *
-     * @param network Social network key.
-     */
-    touch: function touch (network) {
-      window.open(this.createSharingUrl(network), '_self');
-
-      this.$root.$emit('social_shares_open', network, this.url);
-      this.$emit('open', network, this.url);
-    },
-
-    /**
-     * Opens sharer popup.
-     *
-     * @param network Social network key
-     * @param url Url to share.
-     */
-    openSharer: function openSharer (network, url) {
-      var this$1 = this;
-
-      // If a popup window already exist it will be replaced, trigger a close event.
-      var popupWindow = null;
-      if (popupWindow && this.popup.interval) {
-        clearInterval(this.popup.interval);
-
-        popupWindow.close();// Force close (for Facebook)
-
-        this.$root.$emit('social_shares_change', network, this.url);
-        this.$emit('change', network, this.url);
-      }
-
-      popupWindow = window.open(
-        url,
-        'sharer',
-        'status=' + (this.popup.status ? 'yes' : 'no') +
-        ',height=' + this.popup.height +
-        ',width=' + this.popup.width +
-        ',resizable=' + (this.popup.resizable ? 'yes' : 'no') +
-        ',left=' + this.popup.left +
-        ',top=' + this.popup.top +
-        ',screenX=' + this.popup.left +
-        ',screenY=' + this.popup.top +
-        ',toolbar=' + (this.popup.toolbar ? 'yes' : 'no') +
-        ',menubar=' + (this.popup.menubar ? 'yes' : 'no') +
-        ',scrollbars=' + (this.popup.scrollbars ? 'yes' : 'no') +
-        ',location=' + (this.popup.location ? 'yes' : 'no') +
-        ',directories=' + (this.popup.directories ? 'yes' : 'no')
-      );
-
-      popupWindow.focus();
-
-      // Create an interval to detect popup closing event
-      this.popup.interval = setInterval(function () {
-        if (!popupWindow || popupWindow.closed) {
-          clearInterval(this$1.popup.interval);
-
-          popupWindow = undefined;
-
-          this$1.$root.$emit('social_shares_close', network, this$1.url);
-          this$1.$emit('close', network, this$1.url);
-        }
-      }, 500);
-    }
-  },
-
-  /**
-   * Merge base networks list with user's list
-   */
-  beforeMount: function beforeMount () {
-    this.baseNetworks = Vue.util.extend(this.baseNetworks, this.networks);
-  },
-
-  /**
-   * Sets popup default dimensions.
-   */
-  mounted: function mounted () {
-    if (!inBrowser) {
-      return;
-    }
-
-    /**
-     * Center the popup on dual screens
-     * http://stackoverflow.com/questions/4068373/center-a-popup-window-on-screen/32261263
-     */
-    var dualScreenLeft = $window.screenLeft !== undefined ? $window.screenLeft : screen.left;
-    var dualScreenTop = $window.screenTop !== undefined ? $window.screenTop : screen.top;
-
-    var width = $window.innerWidth ? $window.innerWidth : (document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width);
-    var height = $window.innerHeight ? $window.innerHeight : (document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height);
-
-    this.popup.left = ((width / 2) - (this.popup.width / 2)) + dualScreenLeft;
-    this.popup.top = ((height / 2) - (this.popup.height / 2)) + dualScreenTop;
-  },
-
-  /**
-   * Set component aliases for buttons and links.
-   */
-  components: {
-    'network': SocialSharingNetwork
-  }
-};
-
-SocialSharing.version = '2.4.7';
-
-SocialSharing.install = function (Vue) {
-  Vue.component('social-sharing', SocialSharing);
-};
-
-if (typeof window !== 'undefined') {
-  window.SocialSharing = SocialSharing;
-}
-
-module.exports = SocialSharing;
 
 /***/ }),
 
@@ -56920,22 +56483,20 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_social_sharing__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-social-sharing */ "./node_modules/vue-social-sharing/dist/vue-social-sharing.common.js");
-/* harmony import */ var vue_social_sharing__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_social_sharing__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/HeaderComponent.vue */ "./resources/js/components/HeaderComponent.vue");
-/* harmony import */ var _components_FooterComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/FooterComponent.vue */ "./resources/js/components/FooterComponent.vue");
-/* harmony import */ var _components_MypageComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/MypageComponent.vue */ "./resources/js/components/MypageComponent.vue");
-/* harmony import */ var _components_IdeasComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/IdeasComponent.vue */ "./resources/js/components/IdeasComponent.vue");
-/* harmony import */ var _components_ReviewsComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/ReviewsComponent */ "./resources/js/components/ReviewsComponent.vue");
-/* harmony import */ var _components_MyReviewsComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/MyReviewsComponent */ "./resources/js/components/MyReviewsComponent.vue");
-/* harmony import */ var _components_IdeaReviewsComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/IdeaReviewsComponent */ "./resources/js/components/IdeaReviewsComponent.vue");
-/* harmony import */ var _components_MyPostsComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/MyPostsComponent */ "./resources/js/components/MyPostsComponent.vue");
-/* harmony import */ var _components_ChecksComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/ChecksComponent */ "./resources/js/components/ChecksComponent.vue");
-/* harmony import */ var _components_BoughtsComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/BoughtsComponent */ "./resources/js/components/BoughtsComponent.vue");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/HeaderComponent.vue */ "./resources/js/components/HeaderComponent.vue");
+/* harmony import */ var _components_FooterComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/FooterComponent.vue */ "./resources/js/components/FooterComponent.vue");
+/* harmony import */ var _components_MypageComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/MypageComponent.vue */ "./resources/js/components/MypageComponent.vue");
+/* harmony import */ var _components_IdeasComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/IdeasComponent.vue */ "./resources/js/components/IdeasComponent.vue");
+/* harmony import */ var _components_ReviewsComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/ReviewsComponent */ "./resources/js/components/ReviewsComponent.vue");
+/* harmony import */ var _components_MyReviewsComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/MyReviewsComponent */ "./resources/js/components/MyReviewsComponent.vue");
+/* harmony import */ var _components_IdeaReviewsComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/IdeaReviewsComponent */ "./resources/js/components/IdeaReviewsComponent.vue");
+/* harmony import */ var _components_MyPostsComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/MyPostsComponent */ "./resources/js/components/MyPostsComponent.vue");
+/* harmony import */ var _components_ChecksComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/ChecksComponent */ "./resources/js/components/ChecksComponent.vue");
+/* harmony import */ var _components_BoughtsComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/BoughtsComponent */ "./resources/js/components/BoughtsComponent.vue");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -56961,29 +56522,28 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('avatarpreview-component', __webpack_require__(/*! ./components/AvatarPreviewComponent.vue */ "./resources/js/components/AvatarPreviewComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('boughts-component', __webpack_require__(/*! ./components/BoughtsComponent.vue */ "./resources/js/components/BoughtsComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('chat-component', __webpack_require__(/*! ./components/ChatComponent.vue */ "./resources/js/components/ChatComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('checks-component', __webpack_require__(/*! ./components/ChecksComponent.vue */ "./resources/js/components/ChecksComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('detail-component', __webpack_require__(/*! ./components/DetailComponent.vue */ "./resources/js/components/DetailComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('evaluation-component', __webpack_require__(/*! ./components/EvaluationComponent.vue */ "./resources/js/components/EvaluationComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('footer-component', __webpack_require__(/*! ./components/FooterComponent.vue */ "./resources/js/components/FooterComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('header-component', __webpack_require__(/*! ./components/HeaderComponent.vue */ "./resources/js/components/HeaderComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('ideas-component', __webpack_require__(/*! ./components/IdeasComponent.vue */ "./resources/js/components/IdeasComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('ideareviews-component', __webpack_require__(/*! ./components/IdeaReviewsComponent.vue */ "./resources/js/components/IdeaReviewsComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('mypage-component', __webpack_require__(/*! ./components/MypageComponent.vue */ "./resources/js/components/MypageComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('myposts-component', __webpack_require__(/*! ./components/MyPostsComponent.vue */ "./resources/js/components/MyPostsComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('myreviews-component', __webpack_require__(/*! ./components/MyReviewsComponent.vue */ "./resources/js/components/MyReviewsComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('notifications-component', __webpack_require__(/*! ./components/NotificationsComponent.vue */ "./resources/js/components/NotificationsComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('reviews-component', __webpack_require__(/*! ./components/ReviewsComponent.vue */ "./resources/js/components/ReviewsComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('thumbnailpreview-component', __webpack_require__(/*! ./components/ThumbnailPreviewComponent.vue */ "./resources/js/components/ThumbnailPreviewComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('avatarpreview-component', __webpack_require__(/*! ./components/AvatarPreviewComponent.vue */ "./resources/js/components/AvatarPreviewComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('boughts-component', __webpack_require__(/*! ./components/BoughtsComponent.vue */ "./resources/js/components/BoughtsComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('chat-component', __webpack_require__(/*! ./components/ChatComponent.vue */ "./resources/js/components/ChatComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('checks-component', __webpack_require__(/*! ./components/ChecksComponent.vue */ "./resources/js/components/ChecksComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('detail-component', __webpack_require__(/*! ./components/DetailComponent.vue */ "./resources/js/components/DetailComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('evaluation-component', __webpack_require__(/*! ./components/EvaluationComponent.vue */ "./resources/js/components/EvaluationComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('footer-component', __webpack_require__(/*! ./components/FooterComponent.vue */ "./resources/js/components/FooterComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('header-component', __webpack_require__(/*! ./components/HeaderComponent.vue */ "./resources/js/components/HeaderComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('ideas-component', __webpack_require__(/*! ./components/IdeasComponent.vue */ "./resources/js/components/IdeasComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('ideareviews-component', __webpack_require__(/*! ./components/IdeaReviewsComponent.vue */ "./resources/js/components/IdeaReviewsComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('mypage-component', __webpack_require__(/*! ./components/MypageComponent.vue */ "./resources/js/components/MypageComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('myposts-component', __webpack_require__(/*! ./components/MyPostsComponent.vue */ "./resources/js/components/MyPostsComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('myreviews-component', __webpack_require__(/*! ./components/MyReviewsComponent.vue */ "./resources/js/components/MyReviewsComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('notifications-component', __webpack_require__(/*! ./components/NotificationsComponent.vue */ "./resources/js/components/NotificationsComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('reviews-component', __webpack_require__(/*! ./components/ReviewsComponent.vue */ "./resources/js/components/ReviewsComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.component('thumbnailpreview-component', __webpack_require__(/*! ./components/ThumbnailPreviewComponent.vue */ "./resources/js/components/ThumbnailPreviewComponent.vue")["default"]);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
 
 
 
@@ -57003,45 +56563,44 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.component('thumbnailpreview-component
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_14__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_13__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_social_sharing__WEBPACK_IMPORTED_MODULE_1___default.a);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_13__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_12__["default"]);
 var routes = [{
   // マイページ
   path: '/api/mypage',
   name: 'api.mypage',
-  component: _components_MypageComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_MypageComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
 }, {
   // アイデアの一覧
   path: '/api/ideas',
   name: 'api.ideas',
-  component: _components_IdeasComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _components_IdeasComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   // レビュー一覧
   path: '/api/reviews',
   name: 'api.reviews',
-  component: _components_ReviewsComponent__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _components_ReviewsComponent__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
   // 投稿したアイデア一覧
   path: '/api/myposts',
   name: 'api.myposts',
-  component: _components_MyPostsComponent__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_MyPostsComponent__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   // 気になる一覧
   path: '/api/checks',
   name: 'api.checks',
-  component: _components_ChecksComponent__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_ChecksComponent__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   // 購入したアイデア一覧
   path: '/api/boughts',
   name: 'api.boughts',
-  component: _components_BoughtsComponent__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_BoughtsComponent__WEBPACK_IMPORTED_MODULE_11__["default"]
 }];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_13__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_12__["default"]({
   mode: 'history',
   routes: routes
 });
-var store = new vuex__WEBPACK_IMPORTED_MODULE_14__["default"].Store({
+var store = new vuex__WEBPACK_IMPORTED_MODULE_13__["default"].Store({
   state: {
     isLogin: false
   },
@@ -57091,30 +56650,30 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_14__["default"].Store({
     }
   }
 });
-var mypage = new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
+var mypage = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: '#main',
   router: router,
   store: store,
   components: {
-    MypageComponent: _components_MypageComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    MypageComponent: _components_MypageComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
-var header = new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
+var header = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: '#header',
   router: router,
   store: store,
   components: {
-    HeaderComponent: _components_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    HeaderComponent: _components_HeaderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   mounted: function mounted() {
     this.$store.dispatch('checkLoginStatus');
   }
 });
-var footer = new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
+var footer = new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
   el: '#footer',
   router: router,
   components: {
-    FooterComponent: _components_FooterComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    FooterComponent: _components_FooterComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 

@@ -2,36 +2,28 @@
     <div class="p-detail">
 
       <div class="p-detail__title">
-        <h3 class="p-detail__title-text">{{ idea.title }}</h3>
+        <h2 class="p-detail__title-text">{{ idea.title }}</h2>
       </div>
 
-      <social-sharing
-        url="/"
-        :title="idea.title"
-        :description="idea.description"
-        quote="Vue is a progressive framework for building user interfaces."
-        twitter-user="test"
-        inline-template
-      >
-        <div>
-          <network network="twitter">
-            <i class="fa-brands fa-twitter"></i>
-          </network>
-        </div>
-      </social-sharing>
+      <div class="p-detail__contents">
 
+        <button class="p-detail__twitter" @click="twitterShare">
+          <i class="fa-brands fa-twitter fa-fw p-detail__twitter-icon"></i>
+          ツイートする
+        </button>
 
-      <button class="p-detail__check" @click="toggleCheck()">
-        <span class="p-detail__check-text" v-if="!isChecked">
-          <i class="fa-regular fa-heart fa-fw p-detail__check-icon add"></i>
-          気になる！に追加
-        </span>
-        <span class="p-detail__check-text" v-if="isChecked">
-          <i class="fa-solid fa-heart fa-fw p-detail__check-icon remove"></i>
-          気になる！から削除
-        </span>
-      </button>
+        <button class="p-detail__check" @click="toggleCheck()" v-if="isLogin">
+          <span class="p-detail__check-text" v-if="!isChecked">
+            <i class="fa-regular fa-heart fa-fw p-detail__check-icon add"></i>
+            気になる！に追加
+          </span>
+          <span class="p-detail__check-text" v-if="isChecked">
+            <i class="fa-solid fa-heart fa-fw p-detail__check-icon remove"></i>
+            気になる！から削除
+          </span>
+        </button>
 
+      </div>
 
       <div class="p-detail__container">
         <!-- アイデアの中身 -->
@@ -69,7 +61,7 @@
                 <i class="fa-regular fa-messages"></i>
               </a>
 
-              <a href="/login" class="p-submit__button" v-if="!login">
+              <a href="/login" class="p-submit__button" v-if="!isLogin">
                 ログインして購入する
               </a>
 
@@ -124,9 +116,6 @@
   
   <script>
   import axios from 'axios';
-  import VueSocialSharing from 'vue-social-sharing';
-  Vue.use(VueSocialSharing);
-
 
   export default {
     props: ['idea_id'],
@@ -141,7 +130,7 @@
         user_id: null,
         seller_id: null,
         bought: false,
-        login: false,
+        isLogin: false,
         url: '/',
       };
     },
@@ -201,12 +190,20 @@
        checkAuth(){
         axios.get('/api/checkAuth')
           .then(response => {
-            this.login = response.data.authenticated;
+            this.isLogin = response.data.authenticated;
           })
           .catch(error => {
             console.log(error);
           });
-       }
+       },
+
+       // Twitterにシェア
+        twitterShare() {
+          // サムネのリンクは変更しないとダメ
+          const imageURL = encodeURIComponent(this.idea.sumbnail);
+          const shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://www.google.com") + '&media=' + imageURL;
+          window.open(shareURL, '_blank');
+        },
 
     },
 

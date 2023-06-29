@@ -5,22 +5,43 @@ body,a,button,li,ul,p{
     padding: 0;
     text-decoration: none;
 }
+
 body{
     background-color: $lightbrown;
     box-sizing: border-box;
     color: $black;
     position: relative;
 }
+
 a,button{
     cursor: pointer;
 }
+
 a:focus{
     outline: none;
 }
+
 button:focus{
     outline: none;
 }
+
 img{
     vertical-align: bottom;
     width: 100%;
+}
+
+h1,h2,h3,h4{
+    margin-bottom: 0.5rem;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    color: inherit;
+}
+
+h2{
+    font-size: 1.8rem;
+}
+
+h3{
+    font-size: 1.575rem;
 }

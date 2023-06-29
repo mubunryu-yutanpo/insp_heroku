@@ -2,8 +2,6 @@
 
 @section('title', 'レビュー投稿')
 
-@section('header')
-
 @section('main')
   <h2>レビュー投稿ページ</h2>
   
@@ -38,6 +36,3 @@
 @endsection
 
 @section('footer')
-
-
-<!-- View & Vueのクラス設計・要素の整理しようかな -->

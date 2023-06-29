@@ -2,8 +2,6 @@
 
 @section('title', 'マイページ')
 
-@section('header')
-
 @section('main')
   <h2>マイページだわ</h2>
   <mypage-component />

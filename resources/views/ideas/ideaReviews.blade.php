@@ -1,8 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'review')
-
-@section('header')
+@section('title', 'アイデアへのレビュー一覧')
 
 @section('main')
   <h2>アイデアのレビュー一覧ページ</h2>

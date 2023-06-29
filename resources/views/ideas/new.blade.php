@@ -2,8 +2,6 @@
 
 @section('title', '新規アイデア投稿')
 
-@section('header')
-
 @section('main')
   <h2>アイデア新規投稿ページ</h2>
 
