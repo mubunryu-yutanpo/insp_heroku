@@ -35,12 +35,15 @@
   
   <script>
   export default {
+
     props: ['user_id'],
+
     data() {
       return {
         checkIdeas: [],
       };
     },
+    
     mounted() {
       this.getCheckIdeas();
     },

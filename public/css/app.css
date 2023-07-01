@@ -745,8 +745,12 @@ h3 {
   }
 }
 
+.c-card__review-icon {
+  color: #ededec;
+}
+
 .c-card__review-icon.active {
-  color: #ffffe4;
+  color: gold;
 }
 
 .c-card__container {
@@ -987,6 +991,14 @@ h3 {
   width: 100%;
 }
 
+.c-detail__reviews-score-icon {
+  color: #ededec;
+}
+
+.c-detail__reviews-score-icon.active {
+  color: gold;
+}
+
 .c-detail__reviews-comment {
   margin: 5px 0 0;
 }
@@ -1029,14 +1041,23 @@ h3 {
 }
 
 .c-form__wrap.wrap-remember {
+  align-items: center;
   display: flex;
   margin: 5px auto;
-  width: auto;
 }
 
 .c-form__wrap.wrap-forgot {
   margin: 5px auto;
-  width: auto;
+}
+
+.c-form__container {
+  display: flex;
+}
+
+@media screen and (max-width:767px) {
+  .c-form__container {
+    flex-wrap: wrap;
+  }
 }
 
 .c-form__label {
@@ -1137,15 +1158,28 @@ h3 {
   bottom: 0;
 }
 
+.c-form__review {
+  align-items: center;
+  display: flex;
+}
+
+.c-form__review-icon {
+  color: #ededec;
+  font-size: 24px;
+}
+
+.c-form__review-icon.active {
+  color: gold;
+}
+
+.c-form__review-score {
+  margin: 0 0 0 10px;
+}
+
 .c-form__error {
   color: #FA7070;
   display: block;
   margin: 5px 0;
-}
-
-.c-form__container {
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .c-menu {
@@ -1306,6 +1340,14 @@ h3 {
   margin-bottom: 10px;
 }
 
+.c-review__about-score-icon {
+  color: #ededec;
+}
+
+.c-review__about-score-icon.active {
+  color: gold;
+}
+
 .c-review__about-comment {
   max-height: 150px;
   overflow-y: auto;
@@ -1437,7 +1479,13 @@ h3 {
 }
 
 .u-margin__small-contents {
-  margin: 150px 0;
+  margin: 120px 0;
+}
+
+@media screen and (max-width:767px) {
+  .u-margin__small-contents {
+    margin: 40px 0 80px;
+  }
 }
 
 .u-text-center {

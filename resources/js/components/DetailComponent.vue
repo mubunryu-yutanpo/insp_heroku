@@ -131,7 +131,7 @@
         seller_id: null,
         bought: false,
         isLogin: false,
-        url: '/',
+        url: '/', // ここまだ。
       };
     },
 

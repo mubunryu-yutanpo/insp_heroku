@@ -129,15 +129,18 @@ export default {
   computed: {
     ...mapState(['isLogin']),
 
+    // ソート
     filteredIdeas() {
       let filteredIdeas = this.ideas || []; // 初期値を配列に設定
 
+      // カテゴリーでソート
       if (this.selectCategory !== '') {
         filteredIdeas = filteredIdeas.filter(
           (idea) => idea.category_id === this.selectCategory // カテゴリーIDと選択の値が同じものだけ抽出
         );
       }
 
+      // 値段でソート
       if (this.selectPrice !== null) {
         const priceOrder = this.selectPrice;
         filteredIdeas = filteredIdeas.slice().sort((a, b) => {
@@ -150,6 +153,7 @@ export default {
         });
       }
 
+      // 作成日でソート
       if (this.selectDate !== null) {
         const dateOrder = this.selectDate;
         filteredIdeas = filteredIdeas.slice().sort((a, b) => {

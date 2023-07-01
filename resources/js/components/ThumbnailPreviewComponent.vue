@@ -24,9 +24,9 @@
   import axios from 'axios';
   
   export default {
-    props: {
-      idea_id: null,
-    },
+
+    props: {idea_id: null,}, // 新規投稿の場合はnullになる
+
     data() {
       return {
         ideaData: [],
@@ -35,7 +35,9 @@
         isDragover: false
       };
     },
+
     mounted() {
+
       // APIからアイデアの詳細データを取得して、sumbnailを表示する
       if(this.idea_id !== null){
         axios.get('/api/idea/' + this.idea_id + '/detail')
@@ -48,11 +50,14 @@
           });
       }
     },
+
     methods: {
+
+      // 画像プレビュー処理
       handleFileChange() {
         const file = this.$refs.fileInput.files[0];
   
-        // ファイル形式のバリデーション
+        // ファイル形式をバリデーション
         const allowedFormats = ['image/jpeg', 'image/png', 'image/gif'];
         if (!allowedFormats.includes(file.type)) {
           this.validError = '画像の形式が無効です。JPEG、PNG、GIF形式の画像を選択してください。';
@@ -69,11 +74,13 @@
         this.validError = null;
         this.previewImage = URL.createObjectURL(file);
       },
+
       // ドラッグ時
       handleDragover(event) {
         event.preventDefault();
         this.isDragover = true;
       },
+      
       // ドロップ時
       handleDragleave() {
         this.isDragover = false;

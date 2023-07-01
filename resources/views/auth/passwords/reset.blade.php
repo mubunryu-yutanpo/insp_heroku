@@ -82,8 +82,33 @@
             </div>
         </div>
 
+        <div class="c-form">
+            <div class="c-form__wrap wrap-password">
+            <label for="password" class="c-form__label">パスワード:</label>
+            <input id="password" type="password" class="c-form__input @error('password') valid-error @enderror" name="password" required autocomplete="current-password">
+            @error('password')
+            <span class="c-form__error" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            </div>
+        </div>
+
+        <div class="c-form">
+            <div class="c-form__wrap wrap-password">
+            <label for="password-confirm" class="c-form__label">パスワード(再入力):</label>
+            <input id="password-confirm" type="password" class="c-form__input @error('password-confirm') valid-error @enderror" name="password_confirmation" required autocomplete="new-password">
+            @error('password-confirm')
+            <span class="c-form__error" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            </div>
+        </div>
+
+
         <div class="p-submit">
-          <button type="submit" class="p-submit__button">再発行する</button>
+          <button type="submit" class="p-submit__button">パスワードを変更して登録</button>
         </div>
 
     </form>

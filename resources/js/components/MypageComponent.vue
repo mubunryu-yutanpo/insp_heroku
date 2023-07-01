@@ -172,6 +172,7 @@
   import axios from 'axios';
   
   export default {
+
     data() {
       return {
         user: {},
@@ -182,6 +183,7 @@
         notificationList: [],
       };
     },
+
     methods: {
 
       // メッセージの既読化とチャットへの遷移を発火
@@ -198,7 +200,7 @@
         // 既読処理を実行
         axios.post('/api/' + notificationId + '/markAsRead')
           .then(response => {
-            console.log('既読処理が成功しました');
+            console.log('既読処理OK');
           })
           .catch(error => {
             console.error(error);

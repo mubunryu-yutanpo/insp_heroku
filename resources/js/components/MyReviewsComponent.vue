@@ -36,9 +36,9 @@
 import axios from 'axios';
 
 export default{
-  props: [
-    'user_id'
-  ],
+
+  props: ['user_id'],
+
   data(){
     return {
       reviewList: [],
@@ -51,6 +51,7 @@ export default{
 
   methods: {
 
+    // レビュー情報取得
     getReviews(){
       axios.get('/api/' + this.user_id + '/reviews')
         .then(response => {

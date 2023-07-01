@@ -109,8 +109,10 @@
 
         &-icon{
 
+            color: $gray;
+
             &.active{
-                color: $yellow;
+                color: gold;
             }
         }
     }

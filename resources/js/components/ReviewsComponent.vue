@@ -37,6 +37,7 @@
 import axios from 'axios';
 
 export default{
+
   data(){
     return {
       reviewList: [],
@@ -49,6 +50,7 @@ export default{
 
   methods: {
 
+    // レビュー情報取得
     getReviews(){
       axios.get('/api/idea/reviews')
         .then(response => {

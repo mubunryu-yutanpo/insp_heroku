@@ -29,16 +29,23 @@
         }
 
         &.wrap-remember{
+            align-items: center;
             display: flex;
             margin: $space-5 auto;
-            width: auto;
         }
 
         &.wrap-forgot{
             margin: $space-5 auto;
-            width: auto;
         }
-    }    
+    }
+
+    &__container{
+        display: flex;
+
+        @include mq(){
+            flex-wrap: wrap;
+        }
+    }
 
     &__label{
         //border-bottom: 1px solid $brown;
@@ -135,15 +142,29 @@
         }
     }
 
+    &__review{
+        align-items: center;
+        display: flex;
+
+        &-icon{
+            color: $gray;
+            font-size: $font-size_xxl;
+
+            &.active{
+                color: gold;
+            }
+        }
+
+        &-score{
+            margin: 0 0 0 $space-10;
+        }
+    }
+
     &__error{
         color: $red;
         display: block;
         margin: $space-5 0;
     }
 
-    &__container{
-        display: flex;
-        flex-wrap: wrap;
-    }
 
   }

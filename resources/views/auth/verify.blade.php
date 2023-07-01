@@ -1,6 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'パスワード再発行通知')
+@section('title', 'メールアドレス認証')
 
 @section('main')
 <div class="container">
@@ -23,4 +23,5 @@
         </div>
     </div>
 </div>
+<!-- 現状の設定ではこのViewは使わない -->
 @endsection

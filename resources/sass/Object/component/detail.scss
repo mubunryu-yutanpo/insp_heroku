@@ -44,6 +44,14 @@
             }
         }
 
+        &-score-icon{
+            color: $gray;
+
+            &.active{
+                color: gold;
+            }
+        }
+
         &-comment{
             margin: $space-5 0 0;
         }

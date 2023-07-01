@@ -23,9 +23,9 @@
   import axios from 'axios';
   
   export default {
-    props: {
-      user_id: null,
-    },
+
+    props: {user_id: null,},
+
     data() {
       return {
         avatarData: '',
@@ -34,8 +34,10 @@
         isDragover: false
       };
     },
+
     mounted() {
-      // APIからアイデアの詳細データを取得して、avatarを表示する
+
+      // ユーザーデータを取得して、avatarを表示する
       axios.get('/api/' + this.user_id + '/avatar')
         .then(response => {
           this.avatarData = response.data.avatar;
@@ -45,7 +47,10 @@
           console.error(error);
         });
     },
+
     methods: {
+
+      // 画像プレビュー
       handleFileChange() {
         const file = this.$refs.fileInput.files[0];
   
@@ -66,11 +71,13 @@
         this.validError = null;
         this.previewImage = URL.createObjectURL(file);
       },
+
       // ドラッグ時
       handleDragover(event) {
         event.preventDefault();
         this.isDragover = true;
       },
+      
       // ドロップ時
       handleDragleave() {
         this.isDragover = false;

@@ -9,6 +9,10 @@
     }
 
     &__small-contents{
-        margin: 150px 0;
+        margin: 120px 0;
+
+        @include mq(){
+            margin: 40px 0 80px;
+        }
     }
 }

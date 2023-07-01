@@ -41,6 +41,14 @@
 
         &-score{
             margin-bottom: $space-10;
+
+            &-icon{
+                color: $gray;
+
+                &.active{
+                    color: gold;
+                }
+            }
         }
 
         &-comment{

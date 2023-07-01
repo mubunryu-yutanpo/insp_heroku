@@ -3,11 +3,12 @@
       <h2 class="p-list__title">通知一覧</h2>
       
       <div class="p-list__wrap" v-if="notificationList.length === 0">
-        <p class="p-list__wrap-text">まだメッセージがありません</p>
+        <p class="p-list__wrap-text">メッセージはありません</p>
       </div>
   
       <div class="p-news" v-if="notificationList.length !== 0">
         <div class="c-news" v-for="notification in notificationList" :key="notification.id">
+
           <span class="c-news__state" v-if="notification.read === 0">未読</span>
           <p class="c-news__content">{{ formatDate(notification.created_at) }}</p>
           <p class="c-news__title"><span class="u-weight">{{ notification.sender_name }}</span>さんからメッセージが届いています！</p>
@@ -24,7 +25,9 @@
   import axios from 'axios';
   
   export default {
+
     props: ['user_id'],
+
     data() {
       return {
         notificationList: [],
@@ -32,12 +35,12 @@
     },
 
     mounted() {
-      this.getData(); // コンポーネントがマウントされたら通知データを取得
+      this.getData();
     },
 
     methods: {
       
-        // 通知を取得
+      // 通知を取得
       getData() {
         axios
           .get('/api/' + this.user_id + '/notifications')

@@ -34,7 +34,9 @@
   
   <script>
   export default {
+    
     props: ['user_id'],
+
     data() {
       return {
         boughtList: [],

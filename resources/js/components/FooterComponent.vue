@@ -1,29 +1,35 @@
 <template>
-    <footer class="l-footer" :style="{position: isFixed ? 'fixed' : 'static'}">
-      <p>© 2023 Inspiration. All rights reserved.</p>
-    </footer>
+  <div :class="{'l-footer': true, 'small-contents': isSmallContents}">
+    <p>© 2023 Inspiration. All rights reserved.</p>
+  </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      isSmallContents: false
+    };
+  },
   
-  <script>
-  export default {
-    data() {
-      return {
-        isFixed: false
-      };
-    },
-    mounted() {
-      // サイズが変更されてもイベントが発火するように設定
-      window.addEventListener('resize', this.heightCheck);
-      this.heightCheck();
-    },
-    methods: {
-      heightCheck() {
-        const footer = document.querySelector('.l-footer');
-        // コンテンツの高さがウィンドウの高さより大きいか判定
-        const result = window.innerHeight > footer.offsetTop + footer.offsetHeight;
-        this.isFixed = result;
+  mounted() {
+    this.judgeContentHeight();
+    window.addEventListener('resize', this.judgeContentHeight);
+  },
+  methods: {
+
+    // ウィンドウの高さよりコンテンツの高さが小さい場合はクラス名を追加
+    judgeContentHeight() {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.offsetHeight;
+      const footer = document.querySelector('.l-footer');
+
+      if (documentHeight < windowHeight) {
+        this.isSmallContents = true;
+      } else {
+        this.isSmallContents = false;
       }
     }
-  };
-  </script>
-  
+  }
+}
+</script>

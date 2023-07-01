@@ -36,12 +36,15 @@
   
   <script>
   export default {
+
     props: ['user_id'],
+
     data() {
       return {
         postsList: [],
       };
     },
+    
     mounted() {
       this.getPosts();
     },

@@ -44,7 +44,9 @@
   import axios from 'axios';
   
   export default {
+
     props: ['chat_id', 'idea_id', 'seller_id', 'user_id'],
+    
     data() {
       return {
         seller: [],
@@ -53,10 +55,14 @@
         newMessage: '',
       };
     },
+
     mounted() {
       this.getMessages();
     },
+
     methods: {
+
+      // メッセージ情報取得
       getMessages() {
         axios
           .get('/api/message/' + this.idea_id + '/' + this.seller_id + '/' + this.user_id)
@@ -69,6 +75,8 @@
             console.error(error);
           });
       },
+
+      // メッセージ追加
       addMessage() {
         axios
           .post('/api/message/' + this.chat_id + '/' + this.user_id, { content: this.newMessage })
