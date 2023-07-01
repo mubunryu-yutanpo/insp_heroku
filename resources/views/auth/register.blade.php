@@ -1,7 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.parent')
 
-@section('content')
-<div class="container">
+@section('title', 'ユーザー登録')
+
+@section('main')
+<!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -73,5 +75,58 @@
             </div>
         </div>
     </div>
+</div> -->
+
+
+<div class="l-form">
+    <div class="c-title">新規ユーザー登録</div>
+
+    <form action="{{ route('register') }}" method="post" class="p-form">
+        @csrf
+
+        <div class="c-form">
+            <div class="c-form__wrap wrap-email">
+            <label for="email" class="c-form__label">メールアドレス:</label>
+            <input id="email" type="email" class="c-form__input @error('email') valid-error @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+            @error('email')
+            <span class="c-form__error" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            </div>
+        </div>
+
+        <div class="c-form">
+            <div class="c-form__wrap wrap-password">
+            <label for="password" class="c-form__label">パスワード:</label>
+            <input id="password" type="password" class="c-form__input @error('password') valid-error @enderror" name="password" required autocomplete="current-password">
+            @error('password')
+            <span class="c-form__error" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
+            </div>
+        </div>
+
+
+        <div class="c-form">
+          <div class="c-form__container">
+            <div class="c-form__wrap wrap-remember">
+                <input class="c-form__input input-remember" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                <label class="c-form__label label-remember" for="remember">
+                    ログインを保持する
+                </label>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="p-submit">
+          <button type="submit" class="p-submit__button">新規登録する</button>
+        </div>
+
+    </form>
+
 </div>
+
 @endsection

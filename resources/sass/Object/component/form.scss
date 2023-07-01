@@ -27,6 +27,17 @@
                 width: 50%;
             }
         }
+
+        &.wrap-remember{
+            display: flex;
+            margin: $space-5 auto;
+            width: auto;
+        }
+
+        &.wrap-forgot{
+            margin: $space-5 auto;
+            width: auto;
+        }
     }    
 
     &__label{
@@ -37,6 +48,10 @@
 
         @include mq(){
             margin-bottom: $space-5;
+        }
+
+        &.label-remember{
+            margin: 0 0 0 $space-10;
         }
     }
 
@@ -51,6 +66,12 @@
         &.input-textarea{
             resize: none;
             vertical-align: bottom;
+        }
+
+        &.input-remember{
+            background: none;
+            box-shadow: none;
+            width: auto;
         }
 
         &.valid-error{
@@ -118,6 +139,11 @@
         color: $red;
         display: block;
         margin: $space-5 0;
+    }
+
+    &__container{
+        display: flex;
+        flex-wrap: wrap;
     }
 
   }

@@ -1,6 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.parent')
 
-@section('content')
+@section('title', 'パスワード再発行通知')
+
+@section('main')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

@@ -74,7 +74,9 @@
 </div> -->
 
 
-<div class="">
+<div class="l-form">
+    <div class="c-title">パスワードリセット</div>
+
     <form action="{{ route('login') }}" method="post" class="p-form">
         @csrf
 
@@ -108,7 +110,7 @@
             <div class="c-form__wrap wrap-remember">
                 <input class="c-form__input input-remember" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                 <label class="c-form__label label-remember" for="remember">
-                    ログインを保持するログインする
+                    ログインを保持する
                 </label>
             </div>
             @if (Route::has('password.request'))
