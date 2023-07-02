@@ -12,6 +12,7 @@
 
 <script>
 export default {
+
   data() {
     return {
       selectedScore: this.value,
@@ -20,7 +21,7 @@ export default {
 
   methods: {
 
-    // 
+    // 評価点、星何番目を選択されたかを検知してデータに
     selectScore(score) {
       this.selectedScore = score;
       this.$emit('input', score);

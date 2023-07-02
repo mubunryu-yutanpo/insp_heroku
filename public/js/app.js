@@ -2658,7 +2658,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // 
+    // 評価点、星何番目を選択されたかを検知してデータに
     selectScore: function selectScore(score) {
       this.selectedScore = score;
       this.$emit('input', score);

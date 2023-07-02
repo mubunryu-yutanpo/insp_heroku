@@ -1,13 +1,15 @@
 
 @extends('layouts/parent')
         
-    @section('title', 'welcome')
+    @section('title', 'HOME')
         
     @section('header')
 
     @section('main')
-      <router-view></router-view>
-      <!-- rooter-viewを書いていないからルートに対応するあれが出てこないんだと思う -->
+      <div class="">
+        <img src="/images/hero.png" alt="" class="">
+        <img src="/images/hero_sp.png" alt="" class="">
+      </div>
     @endsection
 
     @section('footer')
