@@ -51,9 +51,7 @@
 
       <div class="c-form">
         <label for="introduction" class="c-form__label">自己紹介文:</label>
-        <textarea name="introduction" id="introduction" cols="30" rows="10" class="c-form__input input-textarea @error('introduction') valid-error @enderror" autocomplete="introduction">
-          {{ old('introduction', $user->introduction) }}
-        </textarea>
+        <textarea name="introduction" id="introduction" cols="30" rows="10" class="c-form__input input-textarea @error('introduction') valid-error @enderror" autocomplete="introduction">{{ old('introduction', $user->introduction) }}</textarea>
         @error('introduction')
           <span class="c-form__error" role="alert">
             <strong>{{ $message }}</strong>
@@ -72,13 +70,15 @@
         @enderror
       </div>
 
-      <div class="p-submit">
-        <button type="submit" class="p-submit__button">登録する</button>
+      <div class="p-button">
+        <button type="submit" class="c-button">変更を保存</button>
       </div>
 
     </form>
 
-    <a href="{{ route('withdrow', $user->id) }}" class="">退会はこちら</a>
+    <div class="u-padding__default">
+    <a href="{{ route('withdrow', $user->id) }}" class="u-padding__default">退会はこちら</a>
+    </div>
 
   </div>
 

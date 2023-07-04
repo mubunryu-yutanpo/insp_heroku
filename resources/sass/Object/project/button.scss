@@ -1,0 +1,23 @@
+.p-button{
+    margin: $space_20 3% 0 0;
+    text-align: right;
+
+    &.detail{
+        @include mq(){
+            align-items: center;
+            bottom: $space-20;
+            display: flex;
+            justify-content: space-around;
+            left: 0;
+            margin: 0;
+            position: absolute;
+            right: 0;
+        }
+        
+        @include mq(sm){
+            align-items: flex-end;
+            flex-direction: column;
+            margin-right: $space_default;
+        }
+    }
+}

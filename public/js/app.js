@@ -1970,7 +1970,7 @@ __webpack_require__.r(__webpack_exports__);
       // ファイルサイズのバリデーション
       var maxSizeInBytes = 3145728; // 3MB
       if (file.size > maxSizeInBytes) {
-        this.validError = '画像のファイルサイズが大きすぎます。3MB以下の画像を選択してください。';
+        this.validError = 'ファイルサイズが3MB以下の画像を選択してください。';
         return;
       }
       this.validError = null;
@@ -38792,12 +38792,12 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "p-detail__wrap" }, [
-          _c("div", { staticClass: "p-submit detail" }, [
+          _c("div", { staticClass: "p-button detail" }, [
             _vm.seller_id !== _vm.user_id && !_vm.canBuy
               ? _c(
                   "a",
                   {
-                    staticClass: "p-submit__link",
+                    staticClass: "u-padding__default",
                     attrs: {
                       href:
                         "/chat/" +
@@ -38818,10 +38818,7 @@ var render = function () {
             !_vm.isLogin
               ? _c(
                   "a",
-                  {
-                    staticClass: "p-submit__button",
-                    attrs: { href: "/login" },
-                  },
+                  { staticClass: "c-button", attrs: { href: "/login" } },
                   [_vm._v("\n            ログインして購入する\n          ")]
                 )
               : _vm._e(),
@@ -38830,7 +38827,7 @@ var render = function () {
               ? _c(
                   "button",
                   {
-                    staticClass: "p-submit__button",
+                    staticClass: "c-button",
                     on: {
                       click: function ($event) {
                         _vm.doReview()
@@ -38848,7 +38845,7 @@ var render = function () {
               ? _c(
                   "button",
                   {
-                    staticClass: "p-submit__button",
+                    staticClass: "c-button",
                     on: {
                       click: function ($event) {
                         _vm.buy()
@@ -38933,7 +38930,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "p-submit__button-text" }, [
+    return _c("span", { staticClass: "c-button-text" }, [
       _vm._v("\n              レビューを付ける\n              "),
       _c("i", { staticClass: "fa-solid fa-check" }),
     ])
@@ -38942,7 +38939,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "p-submit__button-text" }, [
+    return _c("span", { staticClass: "c-button-text" }, [
       _vm._v("\n              購入する\n              "),
       _c("i", { staticClass: "fa-solid fa-check" }),
     ])
@@ -39197,7 +39194,7 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-sort__title",
+                staticClass: "c-sort__trigger",
                 on: {
                   click: function ($event) {
                     _vm.sortSubmenuToggle("category")
@@ -39311,7 +39308,7 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-sort__title",
+                staticClass: "c-sort__trigger",
                 on: {
                   click: function ($event) {
                     _vm.sortSubmenuToggle("date")
@@ -39416,7 +39413,7 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-sort__title",
+                staticClass: "c-sort__trigger",
                 on: {
                   click: function ($event) {
                     _vm.sortSubmenuToggle("price")
@@ -39586,7 +39583,7 @@ var render = function () {
               _c(
                 "a",
                 {
-                  staticClass: "c-card__wrap-link",
+                  staticClass: "c-card__button",
                   attrs: { href: "/" + idea.id + "/idea" },
                 },
                 [_vm._v("詳細を見る")]
@@ -39596,7 +39593,7 @@ var render = function () {
                 ? _c(
                     "button",
                     {
-                      staticClass: "c-card__wrap-link",
+                      staticClass: "c-card__button",
                       on: {
                         click: function ($event) {
                           _vm.toggleCheck(idea.id)
@@ -39988,7 +39985,7 @@ var render = function () {
                   _c(
                     "a",
                     {
-                      staticClass: "c-card__wrap-link",
+                      staticClass: "c-card__button",
                       attrs: { href: "/" + post.id + "/idea" },
                     },
                     [_vm._v("詳細を見る")]
@@ -39997,7 +39994,7 @@ var render = function () {
                   _c(
                     "a",
                     {
-                      staticClass: "c-card__wrap-link",
+                      staticClass: "c-card__button",
                       attrs: { href: "/" + post.id + "/idea/edit" },
                     },
                     [
@@ -40103,7 +40100,7 @@ var render = function () {
                   _c(
                     "a",
                     {
-                      staticClass: "c-card__wrap-link",
+                      staticClass: "c-card__button",
                       attrs: { href: "/" + check.id + "/idea" },
                     },
                     [_vm._v("詳細を見る")]
@@ -40112,7 +40109,7 @@ var render = function () {
                   _c(
                     "button",
                     {
-                      staticClass: "c-card__wrap-link",
+                      staticClass: "c-card__button",
                       on: {
                         click: function ($event) {
                           _vm.toggleCheck(check.id)
@@ -40219,7 +40216,7 @@ var render = function () {
                 _c(
                   "a",
                   {
-                    staticClass: "c-card__wrap-link",
+                    staticClass: "c-card__button",
                     attrs: { href: "/" + bought.id + "/idea" },
                   },
                   [_vm._v("詳細を見る")]
@@ -40228,7 +40225,7 @@ var render = function () {
                 _c(
                   "a",
                   {
-                    staticClass: "c-card__wrap-link",
+                    staticClass: "c-card__button",
                     attrs: { href: "/" + bought.id + "/review/create" },
                   },
                   [

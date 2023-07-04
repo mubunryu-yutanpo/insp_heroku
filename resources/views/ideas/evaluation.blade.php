@@ -25,8 +25,8 @@
           @enderror
         </div>
 
-        <div class="p-submit">
-        <button type="submit" class="p-submit__button">登録する</button>
+        <div class="p-button">
+        <button type="submit" class="c-button">登録する</button>
         </div>
 
     </form>

@@ -54,27 +54,27 @@
           </div>
           
           <div class="p-detail__wrap">
-            <div class="p-submit detail">
+            <div class="p-button detail">
 
-              <a :href="'/chat/' + idea_id + '/' + seller_id + '/' + user_id" class="p-submit__link" v-if="seller_id !== user_id && !canBuy">
+              <a :href="'/chat/' + idea_id + '/' + seller_id + '/' + user_id" class="u-padding__default" v-if="seller_id !== user_id && !canBuy">
                 メッセージボードへ
                 <i class="fa-regular fa-messages"></i>
               </a>
 
-              <a href="/login" class="p-submit__button" v-if="!isLogin">
+              <a href="/login" class="c-button" v-if="!isLogin">
                 ログインして購入する
               </a>
 
 
-              <button class="p-submit__button" @click="doReview()" v-if="user_id !== seller_id && !canBuy && bought">
-                <span class="p-submit__button-text">
+              <button class="c-button" @click="doReview()" v-if="user_id !== seller_id && !canBuy && bought">
+                <span class="c-button-text">
                   レビューを付ける
                   <i class="fa-solid fa-check"></i>
                 </span>
               </button>
 
-              <button class="p-submit__button" @click="buy()" v-if="user_id !== null && user_id !== seller_id && !bought && canBuy">
-                <span class="p-submit__button-text">
+              <button class="c-button" @click="buy()" v-if="user_id !== null && user_id !== seller_id && !bought && canBuy">
+                <span class="c-button-text">
                   購入する
                   <i class="fa-solid fa-check"></i>
                 </span>

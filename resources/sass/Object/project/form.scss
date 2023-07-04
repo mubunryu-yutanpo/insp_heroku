@@ -1,3 +1,7 @@
 .p-form{
     padding: $space_20 $space_default;
+
+    &.delete{
+        margin-top: -25px;
+    }
 }

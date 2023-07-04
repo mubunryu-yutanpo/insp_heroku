@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-
+        
       </div>
       <div v-else class="p-chat__container">
         <p>メッセージはまだありません</p>

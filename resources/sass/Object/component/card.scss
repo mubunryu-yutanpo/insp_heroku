@@ -153,36 +153,36 @@
             flex-direction: row;
             margin: $space-5;
         }
+    }
 
-        &-link{    //
-            background-color: $brown;
-            border-radius: 5px;
-            color: $white;
-            display: block;
-            font-size: $font-size_default;
-            font-weight: bold;
-            margin: $space-10 auto;
-            padding: $space_default $space-10;
-            text-align: center;
-            width: 100%;
+    &__button{
+        background-color: $brown;
+        border-radius: 5px;
+        color: $white;
+        display: block;
+        font-size: $font-size_default;
+        font-weight: bold;
+        margin: $space-10 auto;
+        padding: $space_default $space-10;
+        text-align: center;
+        width: 100%;
 
-            &:hover{
-                background-color: $lightblue;
-            }
+        &:hover{
+            background-color: $lightblue;
+        }
 
-            @include mq(){   //
-                margin: $space-5 auto;
-                padding: $space-10 $space-5;
-            }
+        @include mq(){   //
+            margin: $space-5 auto;
+            padding: $space-10 $space-5;
+        }
 
-            @include mq(sm){    //
-                font-size: $font-size_m;
-                margin: $space-5;
-                padding: $space-10 $space-5;
+        @include mq(sm){    //
+            font-size: $font-size_m;
+            margin: $space-5;
+            padding: $space-10 $space-5;
 
-                &:first-child{
-                    margin-right: $space-5;
-                }
+            &:first-child{
+                margin-right: $space-5;
             }
         }
     }

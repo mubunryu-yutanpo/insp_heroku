@@ -49,8 +49,8 @@
               </div>
             </div>
             <div class="c-card__wrap">
-              <a :href="'/' + post.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-              <a :href="'/' + post.id + '/idea/edit'" class="c-card__wrap-link">
+              <a :href="'/' + post.id + '/idea'" class="c-card__button">詳細を見る</a>
+              <a :href="'/' + post.id + '/idea/edit'" class="c-card__button">
                 <i class="fa-solid fa-pencil fa-fw"></i>編集する
               </a>
             </div>
@@ -83,8 +83,8 @@
               </div>
             </div>
             <div class="c-card__wrap">
-                <a :href="'/' + check.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-                <button class="c-card__wrap-link" @click="toggleCheck(check.id)">
+                <a :href="'/' + check.id + '/idea'" class="c-card__button">詳細を見る</a>
+                <button class="c-card__button" @click="toggleCheck(check.id)">
                   <i class="fa-solid fa-heart fa-fw"></i>気になるを解除
                 </button>
             </div>
@@ -114,8 +114,8 @@
               </div>
             </div>
             <div class="c-card__wrap">
-              <a :href="'/' + bought.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-              <a :href=" '/' + bought.id + '/review/create'" class="c-card__wrap-link">
+              <a :href="'/' + bought.id + '/idea'" class="c-card__button">詳細を見る</a>
+              <a :href=" '/' + bought.id + '/review/create'" class="c-card__button">
                 <i class="fa-solid fa-check fa-fw"></i>レビューする
               </a>
             </div>

@@ -64,7 +64,7 @@
         // ファイルサイズのバリデーション
         const maxSizeInBytes = 3145728; // 3MB
         if (file.size > maxSizeInBytes) {
-          this.validError = '画像のファイルサイズが大きすぎます。3MB以下の画像を選択してください。';
+          this.validError = 'ファイルサイズが3MB以下の画像を選択してください。';
           return;
         }
   

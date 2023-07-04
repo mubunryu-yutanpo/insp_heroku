@@ -10,7 +10,7 @@
       <div class="p-sort__wrap" :class="{open : isOpenSortMenu}">
         
         <div class="c-sort">
-          <button class="c-sort__title" @click="sortSubmenuToggle('category')">
+          <button class="c-sort__trigger" @click="sortSubmenuToggle('category')">
             カテゴリー 
             <i class="fa-solid fa-chevron-down fa-fw" v-if="!isSortSubmenuopen('category')"></i>
             <i class="fa-solid fa-chevron-up fa-fw" v-if="isSortSubmenuopen('category')"></i>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="c-sort">
-          <button class="c-sort__title" @click="sortSubmenuToggle('date')">
+          <button class="c-sort__trigger" @click="sortSubmenuToggle('date')">
             投稿日 
             <i class="fa-solid fa-chevron-down fa-fw" v-if="!isSortSubmenuopen('date')"></i>
             <i class="fa-solid fa-chevron-up fa-fw" v-if="isSortSubmenuopen('date')"></i>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="c-sort">
-          <button class="c-sort__title" @click="sortSubmenuToggle('price')">
+          <button class="c-sort__trigger" @click="sortSubmenuToggle('price')">
             値段 
             <i class="fa-solid fa-chevron-down fa-fw" v-if="!isSortSubmenuopen('price')"></i>
             <i class="fa-solid fa-chevron-up fa-fw" v-if="isSortSubmenuopen('price')"></i>
@@ -91,8 +91,8 @@
               </div>
             </div>
             <div class="c-card__wrap">
-              <a :href="'/' + idea.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-              <button class="c-card__wrap-link" @click="toggleCheck(idea.id)" v-if="isLogin">
+              <a :href="'/' + idea.id + '/idea'" class="c-card__button">詳細を見る</a>
+              <button class="c-card__button" @click="toggleCheck(idea.id)" v-if="isLogin">
                 <span v-if="idea.isChecked"><i class="fa-solid fa-heart fa-fw"></i>気になるを解除</span>
                 <span v-if="!idea.isChecked"><i class="fa-regular fa-heart fa-fw"></i>気になるに追加</span>
               </button>

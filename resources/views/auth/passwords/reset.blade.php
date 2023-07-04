@@ -107,8 +107,8 @@
         </div>
 
 
-        <div class="p-submit">
-          <button type="submit" class="p-submit__button">パスワードを変更して登録</button>
+        <div class="p-button">
+          <button type="submit" class="c-button">パスワードを変更して登録</button>
         </div>
 
     </form>

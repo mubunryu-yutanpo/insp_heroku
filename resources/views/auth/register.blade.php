@@ -59,8 +59,8 @@
             </div>
 
 
-            <div class="p-submit">
-              <button type="submit" class="p-submit__button">新規登録する</button>
+            <div class="p-button">
+              <button type="submit" class="c-button">新規登録する</button>
             </div>
 
         </form>

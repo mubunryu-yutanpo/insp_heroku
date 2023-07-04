@@ -8,7 +8,3 @@
 @endsection
 
 @section('footer')
-
-
-
-<!-- クラス振ってデザイン入れてってもいいかも -->

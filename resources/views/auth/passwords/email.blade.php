@@ -26,8 +26,8 @@
                 </div>
             </div>
 
-            <div class="p-submit">
-            <button type="submit" class="p-submit__button">リンクを受け取る</button>
+            <div class="p-button">
+            <button type="submit" class="c-button">リンクを受け取る</button>
             </div>
 
         </form>
