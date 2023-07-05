@@ -1,0 +1,22 @@
+.p-about{
+    background-color: $lightblue;
+    padding: $space_40 $space-30;
+
+    &__title{
+        font-weight: bold;
+        margin: $space-20 0 $space-10;
+        text-align: center;
+
+        &-sub{
+            color: $blue;
+            display: block;
+            font-size: $font-size_l;
+            text-align: center;
+            margin-bottom: $space-20;
+        }
+    }
+
+    &__container{
+        display: flex;
+    }
+}

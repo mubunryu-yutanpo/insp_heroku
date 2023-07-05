@@ -22,6 +22,30 @@ class ApiController extends Controller
 {
 
     /* ================================================================
+      アイデア一覧取得（TOPページ用）
+    ================================================================*/
+
+    public function topIdeas(){
+
+        $ideaList = [];
+        // レビューのあるアイデアをランダムに最大10件取得
+        $ideas = Idea::has('review')
+                 ->with('review', 'category')
+                 ->inRandomOrder()
+                 ->limit(10)
+                 ->get();
+
+        if($ideas->isNotEmpty()){
+            $ideaList = $ideas;
+        }
+
+        $data = ['ideaList' => $ideaList];
+
+        return response()->json($data);
+    }
+
+
+    /* ================================================================
       マイページ情報取得
     ================================================================*/
 
@@ -155,7 +179,7 @@ class ApiController extends Controller
 
     
     /* ================================================================
-      アイデア一覧取得
+      アイデア一覧取得（アイデア一覧ページ用）
     ================================================================*/
 
     public function ideas(Request $request)

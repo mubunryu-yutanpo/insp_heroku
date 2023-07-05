@@ -36,6 +36,7 @@ Vue.component('myreviews-component', require('./components/MyReviewsComponent.vu
 Vue.component('notifications-component', require('./components/NotificationsComponent.vue').default);
 Vue.component('reviews-component', require('./components/ReviewsComponent.vue').default);
 Vue.component('thumbnailpreview-component', require('./components/ThumbnailPreviewComponent.vue').default);
+Vue.component('welcome-component', require('./components/WelcomeComponent.vue').default);
 
 
 

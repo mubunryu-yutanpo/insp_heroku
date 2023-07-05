@@ -83,6 +83,8 @@ Route::middleware('api')->group(function() {
 
     // Authの認証
     Route::get('/api/checkAuth', 'HomeController@checkAuth');
+    // トップページのアイデア一覧取得
+    Route::get('/api/home/ideas', 'Api\ApiController@topIdeas');
     //アバター情報取得（画像プレビュー用）
     Route::get('/api/{id}/avatar', 'Api\ApiController@avatar');
     // マイページ情報取得

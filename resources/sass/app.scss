@@ -14,11 +14,16 @@
 // Object
 
 // - project -
+@import 'Object/project/about.scss';
 @import 'Object/project/button.scss';
+@import 'Object/project/catch.scss';
 @import 'Object/project/chat.scss';
+@import 'Object/project/closing.scss';
 @import 'Object/project/detail.scss';
 @import 'Object/project/form.scss';
 @import 'Object/project/header.scss';
+@import 'Object/project/hero.scss';
+@import 'Object/project/index.scss';
 @import 'Object/project/list.scss';
 @import 'Object/project/mypage.scss';
 @import 'Object/project/message.scss';
@@ -27,6 +32,7 @@
 
 
 // - component -
+@import 'Object/component/about.scss';
 @import 'Object/component/button.scss';
 @import 'Object/component/card.scss';
 @import 'Object/component/chat.scss';

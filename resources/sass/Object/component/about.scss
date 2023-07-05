@@ -1,0 +1,39 @@
+.c-about{
+    box-sizing: border-box;
+    margin: $space_default $space-5;
+    padding: $space_default $space-20;
+    width:calc( 33% - 5px );
+
+    &__image{
+        padding: $space_default;
+
+        &-item{
+            border: 5px solid $white;
+            border-radius: 100%;
+            width: 100%;
+        }
+
+        &-shadow{
+            background-color: $blue;
+            border-radius: 50%;
+            height: 50px;
+            margin-top: -40px;
+            width: 100%;
+        }
+    }
+
+    &__contents{
+        margin: $space-20 0;
+
+        &-title{
+            display: block;
+            font-size: $font-size_xl;
+            text-align: center;
+            margin-bottom: $space_default;
+        }
+
+        &-text{
+            text-align: center;
+        }
+    }
+}
