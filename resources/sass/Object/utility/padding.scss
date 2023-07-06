@@ -4,4 +4,10 @@
         padding: $space-10 $space_default;
     }
 
+    &__bottom{
+
+        &-d{
+            padding-bottom: $space_default;
+        }
+    }
 }

@@ -71,6 +71,9 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 Vue.use(VueRouter);
+const VueAwesomeSwiper = window.VueAwesomeSwiper;
+Vue.use(VueAwesomeSwiper);
+
 
 
 

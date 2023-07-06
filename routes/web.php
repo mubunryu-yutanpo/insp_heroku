@@ -47,8 +47,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/{id}/withdrow', 'HomeController@withdrow')->name('withdrow');
     // アイデア新規投稿へ
     Route::get('/new', 'HomeController@new')->name('new');
-    // // アイデア詳細へ
-    // Route::get('/{id}/idea', 'HomeController@show')->name('ideas.show');
     // アイデア編集へ
     Route::get('/{id}/idea/edit', 'HomeController@edit')->name('idea.edit');
     // レビュー投稿へ

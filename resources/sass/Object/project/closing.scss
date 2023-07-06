@@ -1,0 +1,19 @@
+.p-closing{
+
+    &__container{
+        position: relative;
+    }
+
+    &__wrap{
+        left: 40%;
+        position: absolute;
+        text-align: center;
+        top: 55%;
+        width: 50%;
+    }
+
+    &__text{
+        font-size: $font-size_default;
+        margin-bottom: $space_40;
+    }
+}
