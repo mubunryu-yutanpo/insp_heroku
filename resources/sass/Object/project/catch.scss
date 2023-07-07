@@ -1,2 +1,17 @@
 .p-catch{
+
+    &__image{
+
+        @include mq(){
+            display:none;
+        }
+
+        &.catch-sp{
+            display: none;
+
+            @include mq(){
+                display: block;
+            }
+        }
+    }
 }

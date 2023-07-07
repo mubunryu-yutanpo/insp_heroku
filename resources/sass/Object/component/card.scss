@@ -34,6 +34,14 @@
             flex-direction: row;
             height: 150px;
         }
+
+        &.card-toppage{
+
+            @include mq(sm){
+                flex-direction: column;
+                height: auto;
+            }
+        }
     }
 
     &__category{
@@ -53,6 +61,7 @@
         @include mq(sm){
             font-size: $font-size_s;
         }
+
     }
 
     &__title{
@@ -91,17 +100,23 @@
         height: 220px;
 
         @include mq(){
-            min-height: 160px;
             width: 100%;
             max-height: 220px;
             min-height: 200px;    
         }
 
-        @include mq(sm){     //
+        @include mq(sm){
             border-radius: 5px 0 0 5px;
             height: 150px;
             min-height: 0;
             width: 150px;
+        }
+
+        &.card-toppage-thumbnail{
+            
+            @include mq(sm){
+                width: 100%;
+            }
         }
     }
 
@@ -135,6 +150,13 @@
             margin: 0 $space-5;
             padding: $space-10 0;
             width: 100%;
+        }
+
+        &.card-toppage-about{
+
+            @include mq(){
+                padding: $space-10;
+            }
         }
     }
     

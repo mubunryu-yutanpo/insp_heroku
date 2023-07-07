@@ -6,12 +6,21 @@
         margin: $space-20 0 $space-10;
         text-align: center;
 
+        @include mq(){
+            font-size: $font-size_xxl;
+        }
+
         &-sub{
             color: $blue;
             display: block;
             font-size: $font-size_l;
             text-align: center;
             margin-bottom: $space-20;
+
+            @include mq(){
+                font-size: $font-size_m;
+                margin-bottom: $space-30;
+            }
         }
     }
 
@@ -22,16 +31,24 @@
         display: flex;
         margin: 0 auto;
         overflow-x: auto;
-        padding: $space_30 $space-20;
+        padding: $space_30 $space-20 $space-20
     }
 
     &__wrap{
         margin: 80px auto $space_40;
         text-align: center;
+
+        @include mq(){
+            margin-top: 60px;
+        }
     }
 
     &__link{
         color: $white;
-        padding: $space_default $space-10;
+        padding: $space-10 $space_default;
+
+        @include mq(){
+            font-size: 17px;
+        }
     }
 }

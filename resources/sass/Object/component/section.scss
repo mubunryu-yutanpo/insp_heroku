@@ -1,3 +1,7 @@
 .c-section{
     padding: $space_40 $space-30;
+
+    @include mq(){
+        padding: $space-30 $space-20 $space-20;
+    }
 }

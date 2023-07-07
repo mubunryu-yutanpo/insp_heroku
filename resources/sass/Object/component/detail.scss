@@ -1,6 +1,18 @@
 .c-detail{
     margin-bottom: $space_default;
 
+    &__avatar{
+        border: 1px solid $gray;
+        border-radius: 100%;
+        height: 30px;
+        padding: 2px;
+        width: 30px;
+    }
+
+    &__user{
+        margin-left: $space-5;
+    }
+
     &__summary{
         margin-top: $space-5;
     }

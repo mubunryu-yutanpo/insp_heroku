@@ -10,6 +10,7 @@
       <section class="p-catch" v-if="showSections.catch">
         <div class="p-catch__container">
           <img src="images/top_catch01.png" alt="" class="p-catch__image">
+          <img src="images/top_catch_sp02.png" alt="" class="p-catch__image catch-sp">
         </div>
       </section>
 
@@ -30,7 +31,7 @@
 
             <div class="c-about__contents">
               <strong class="c-about__contents-title">アイデアの投稿</strong>
-              <p class="c-about__contents-text">あなたのアイデアをカタチに！</p>
+              <p class="c-about__contents-text">スキルは不要。あなたのアイデアをカタチに！</p>
             </div>
           </div>
 
@@ -44,7 +45,7 @@
 
             <div class="c-about__contents">
               <strong class="c-about__contents-title">アイデアの購入</strong>
-              <p class="c-about__contents-text">「投稿のネタがない...。」という方も</p>
+              <p class="c-about__contents-text">「投稿のネタがない...。」ときでもアイデアが見つかる</p>
             </div>
           </div>
 
@@ -75,11 +76,11 @@
         <div class="p-index__container">
           <!-- スライダー -->
           <swiper :options="swiperOptions">
-            <swiper-slide class="c-card u-padding__bottom-d" v-for="idea in ideaList" :key="idea.id" style="height:auto;">
-              <div class="c-card__main">
-                <img :src="idea.sumbnail" alt="" class="c-card__sumbnail">
-                <div class="c-card__about">
-                  <p class="c-card__category">{{ idea.category.name }}</p>
+            <swiper-slide class="c-card" v-for="idea in ideaList" :key="idea.id" style="height:auto;">
+              <div class="c-card__main card-toppage">
+                <img :src="idea.sumbnail" alt="" class="c-card__sumbnail card-toppage-thumbnail">
+                <div class="c-card__about card-toppage-about">
+                  <p class="c-card__category card-category-toppage">{{ idea.category.name }}</p>
                   <p class="c-card__title">{{ idea.title }}</p>
                   <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
                   <div class="c-card__review">
@@ -95,8 +96,8 @@
         </div>
 
         <div class="p-index__wrap ">
-          <button class="c-button u-font__size-xl">
-            <a href="/index" class="u-padding__default u-color__white">すべてのアイデアを見る</a>
+          <button class="c-button">
+            <a href="/index" class="p-index__link">すべてのアイデアを見る</a>
           </button>
         </div>
 
@@ -107,11 +108,12 @@
 
         <div class="p-closing__container">
           <img src="images/closing.png" alt="" class="p-closing__image">
+          <img src="images/closing_sp.png" alt="" class="p-closing__image closing-sp">    
 
           <div class="p-closing__wrap">
             <p class="p-closing__text">アイデアの購入以外はすべて無料でご利用いただけます</p>
-            <button class="c-button u-font__size-xxl">
-              <a href="/login" class="u-padding__default u-color__white">アイデアを投稿してみる！</a>
+            <button class="c-button">
+              <a href="/login" class="p-closing__link">アイデアを投稿してみる！</a>
             </button>
           </div>
 
@@ -137,13 +139,28 @@ export default {
         index: false,
         closing: false
       },
+
+      // swiperの設定たち
       swiperOptions: {
         autoplay: {
           delay: 3000,
         },
         loop: true,
-        slidesPerView: 3,
+        slidesPerView: 1,
+        
+        breakpoints: {
+          
+          420:{
+            slidesPerView: 2,
+            spaceBetween: 15
+          },
+
+          768:{
+            slidesPerView: 3
+          }
+        },
       },
+
     }
   },
 
@@ -167,41 +184,45 @@ export default {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
 
-// デバイスの種類を判別する関数
-function getDeviceType() {
-  const userAgent = navigator.userAgent;
-  if (/Android/i.test(userAgent)) {
-    return 'android';
-  } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-    return 'ios';
-  } else {
-    return 'other';
-  }
-}
+      // デバイスの種類を判別
+      function getDeviceType() {
+        const userAgent = navigator.userAgent;
+        if (/Android/i.test(userAgent)) {
+          return 'android';
+        } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+          return 'ios';
+        } else {
+          return 'other';
+        }
+      }
 
       // デバイスの種類に応じて表示位置を設定
       const deviceType = getDeviceType();
       let sections = {};
 
       if (deviceType === 'android' || deviceType === 'ios') {
+
+        // スマホ用の表示位置.
         sections = {
           hero: 0,
-          catch: 20, // スマートフォン用の表示位置
-          about: 30, // スマートフォン用の表示位置
-          index: 40, // スマートフォン用の表示位置
-          closing: 50 // スマートフォン用の表示位置
+          catch: 20, 
+          about: 30, 
+          index: 40, 
+          closing: 50 
         };
+
       } else {
+        // デスクトップ用の表示位置
         sections = {
           hero: 0,
-          catch: 200, // デスクトップ用の表示位置
-          about: 400, // デスクトップ用の表示位置
-          index: 600, // デスクトップ用の表示位置
-          closing: 800 // デスクトップ用の表示位置
+          catch: 200, 
+          about: 400, 
+          index: 600, 
+          closing: 800 
         };
       }
 
-      // スクロール位置に応じて各セクションの表示を切り替える
+      // スクロール位置に応じて各セクションのフラグを切り替え
       for (const section in this.showSections) {
         if (scrollPosition >= sections[section]) {
           this.showSections[section] = true;
@@ -210,7 +231,6 @@ function getDeviceType() {
         }
       }
     },
-
 
     // 平均評価点の取得
     async getAverageScore(ideas) {
@@ -261,4 +281,10 @@ function getDeviceType() {
 
   };
 </script>
+
+<style>
+  .swiper-container{
+    border-radius: 5px;
+  }
+</style>
 

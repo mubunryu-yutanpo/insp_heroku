@@ -280,8 +280,18 @@ class ApiController extends Controller
         $canBuy = true;
         $isChecked = false;
         $idea = Idea::find($id);
-        $seller_id = $idea->user_id;
-        $seller = User::find($seller_id);
+
+        $seller = Idea::where('id', $id)->with('user')->first();
+        $seller_id = null;
+        $seller_name = '';
+        $seller_avatar = '';
+
+        // アイデアの投稿者情報を変数に
+        if($seller !== null){
+            $seller_id = $seller->user->id;
+            $seller_name = $seller->user->name;
+            $seller_avatar = $seller->user->avatar;
+        }
 
         // 購入状態を取得
         $boughtIdea = Purchase::where('user_id', $user_id)->where('idea_id', $id)->first();
@@ -317,6 +327,8 @@ class ApiController extends Controller
             'isChecked'    => $isChecked,
             'user_id'      => $user_id,
             'seller_id'    => $seller_id,
+            'seller_name'  => $seller_name,
+            'seller_avatar'=> $seller_avatar,
             'bought'       => $boughtIdea,
         ];
         

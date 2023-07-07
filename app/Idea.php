@@ -10,6 +10,10 @@ class Idea extends Model
     protected $fillable = ['user_id', 'category_id', 'title', 'sumbnail', 'summary', 'description', 'price'];
 
     //他のモデルとの関係
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
     public function check(){
         return $this->hasMany('App\Check');
     }

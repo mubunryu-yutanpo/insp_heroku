@@ -32,6 +32,15 @@
             <img :src="idea.sumbnail" alt="" class="c-detail__sumbnail">
           </div>
 
+          <div class="c-detail"> 【 出品者 】
+            <div class="u-flex u-margin__10">
+              <div class="c-detail__avatar">
+                <img :src="seller_avatar" alt="" class="c-detail__avatar-image">
+              </div>
+              <a :href="'/' + seller_id + '/infomation'" class="c-detail__user">{{ seller_name }}</a>
+            </div>
+          </div>
+
           <div class="c-detail">【 概要 】
             <p class="c-detail__summary">{{ idea.summary }}</p>
           </div>
@@ -129,6 +138,8 @@
         isChecked: false,
         user_id: null,
         seller_id: null,
+        seller_name: '',
+        seller_avatar: '',
         bought: false,
         isLogin: false,
         url: '/', // ここまだ。
@@ -155,6 +166,8 @@
             this.isChecked = response.data.isChecked;
             this.user_id = response.data.user_id;
             this.seller_id = response.data.seller_id;
+            this.seller_name = response.data.seller_name;
+            this.seller_avatar = response.data.seller_avatar;
             this.bought = response.data.bought;
             console.log(this.idea_id, this.seller_id, this.user_id);
 

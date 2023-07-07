@@ -10,10 +10,52 @@
         text-align: center;
         top: 55%;
         width: 50%;
+
+        @include mq(){
+            left: 0;
+            padding: $space-10 $space_default;
+            right: 0;
+            top: 35%;
+            width: 100%;
+        }
+
+        @include mq(sm){
+            top: 27%;
+        }
     }
 
     &__text{
         font-size: $font-size_default;
         margin-bottom: $space_40;
+
+        @include mq(){
+            font-size: $font-size_m;
+            margin-bottom: $space_20;
+        }
+    }
+
+    &__image{
+
+        @include mq(){
+            display: none;
+        }
+
+        &.closing-sp{
+            display: none;
+
+            @include mq(){
+                display: block;
+            }
+        }
+    }
+
+    &__link{
+        color: $white;
+        font-size: $font-size_xxl;
+        padding: $space-10 $space_default;
+
+        @include mq(){
+            font-size: 17px;
+        }
     }
 }
