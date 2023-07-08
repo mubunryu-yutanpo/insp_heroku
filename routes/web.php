@@ -55,6 +55,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/chat/{idea_id}/{seller_id}/{user_id}', 'HomeController@chat')->name('chat');
     // 通知一覧へ
     Route::get('/{id}/notifications', 'HomeController@notifications')->name('notifications');
+    // ユーザー情報ページへ
+    Route::get('/{user_id}/infomation', 'HomeController@userInfo')->name('user.info');
+
 
   // =====================処理関連ルート===========================
     // アイデア投稿
@@ -75,6 +78,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/logout', 'HomeController@logout')->name('logout');
 
 });
+
 
 // =================API関連=====================
 Route::middleware('api')->group(function() {
@@ -117,5 +121,7 @@ Route::middleware('api')->group(function() {
     Route::post('api/{id}/markAsRead', 'Api\ApiController@markAsRead');
     // 通知情報の取得
     Route::get('api/{id}/notifications', 'Api\ApiController@getNotification');
+    // ユーザーにひもづくアイデア一覧取得
+    Route::get('api/{user_id}/userInfo', 'Api\ApiController@userIdeas');
 });
     

@@ -18,8 +18,8 @@
           </div>
         </div>
         <div class="c-card__wrap">
-          <a :href="'/' + idea.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-          <button class="c-card__wrap-link" @click="toggleCheck(check.id)">
+          <a :href="'/' + idea.id + '/idea'" class="c-card__button">詳細を見る</a>
+          <button class="c-card__button" @click="toggleCheck(check.id)">
             <i class="fa-solid fa-heart fa-fw"></i>気になるを解除
           </button>
         </div>
@@ -55,6 +55,9 @@
         axios.get('/api/' + this.user_id + '/checks')
           .then(response => {
             this.checkIdeas = response.data.checkIdeas;
+            if(this.checkIdeas === null){
+              return;
+            }
             this.getAverageScore([...this.checkIdeas]);
           })
           .catch(error => {

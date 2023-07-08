@@ -351,11 +351,11 @@ class ApiController extends Controller
         if ($checks->isNotEmpty()) {
             $idea_ids = $checks->pluck('idea_id')->toArray();
             // 気になるアイデアが10件以上の場合は1ページ10件まで表示
-            if($checks->count() > 10){
-                $ideas = Idea::whereIn('id', $idea_ids)->with('category', 'review')->paginate(10);
-            }else{
-                $ideas = Idea::whereIn('id', $idea_ids)->with('category', 'review')->get();
-            }
+            // if($checks->count() > 10){
+            //     $ideas = Idea::whereIn('id', $idea_ids)->with('category', 'review')->paginate(10);
+            // }else{
+            $ideas = Idea::whereIn('id', $idea_ids)->with('category', 'review')->get();
+            // }
             $checkIdeas = $ideas;
         }
 
@@ -387,11 +387,11 @@ class ApiController extends Controller
         $boughts = $user->purchase()
             ->with('idea.category', 'idea.review')
             ->get();
-    
-        if ($boughts->isNotEmpty()) {
-            $boughtList = $boughts->count() > 10 ? $boughts->paginate(10) : $boughts;
+
+        if($boughts->isNotEmpty()){
+            $boughtList = $boughts;
         }
-    
+        
         $data = [
             'boughtList' => $boughtList,
         ];
@@ -412,14 +412,8 @@ class ApiController extends Controller
 
         $postsList = null;
     
-        $posts = Idea::with('category','review')->where('user_id', $id);
-    
-        if ($posts->count() >= 10) {
-            $posts = $posts->paginate(10);
-        } else {
-            $posts = $posts->get();
-        }
-    
+        $posts = Idea::with('category','review')->where('user_id', $id)->get();
+        
         if ($posts->isNotEmpty()) {
             $postsList = $posts;
         }
@@ -439,7 +433,7 @@ class ApiController extends Controller
     public function reviews(){
         $reviewList = null;
 
-        $reviews = Review::with('idea', 'user')->paginate(20);
+        $reviews = Review::with('idea', 'user')->get();
 
         if($reviews->isNotEmpty()){
             $reviewList = $reviews;
@@ -469,7 +463,8 @@ class ApiController extends Controller
                 $query->where('user_id', $id);
             })
             ->with('idea','user')
-            ->paginate(20);
+            ->limit(20)
+            ->get();
 
         if($reviews->isNotEmpty()){
             $reviewList = $reviews;
@@ -725,6 +720,33 @@ class ApiController extends Controller
         ];
     
         return response()->json($data);
+    }
+
+
+    /* ================================================================
+      指定のユーザーのアイデア一覧取得（ユーザーインフォページ用）
+    ================================================================*/
+
+
+    public function userIdeas($user_id){
+        
+        // そのユーザーの投稿しているアイデアリスト作成
+        $ideaList = null;
+        $ideas = Idea::with('category', 'review')->where('user_id', $user_id)->get();
+    
+        if ($ideas->isNotEmpty()) {
+            $ideaList = $ideas;
+        }
+
+        $data = [
+            'ideaList' => $ideaList,
+        ];
+
+        return response()->json($data);
+
+
+        
+
     }
     
 }

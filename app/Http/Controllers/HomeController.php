@@ -222,4 +222,19 @@ class HomeController extends Controller
     }
 
 
+    /* ================================================================
+      ユーザー情報ページへ
+    ================================================================*/
+
+    public function userInfo($user_id)
+    {
+        if (!ctype_digit($user_id)) {
+            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+        }
+    
+        $user = User::find($user_id);
+        
+        return view('user', compact('user'));
+    }
+    
 }

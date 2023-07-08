@@ -19,8 +19,8 @@
             </div>
           </div>
           <div class="c-card__wrap">
-            <a :href="'/' + post.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-            <a :href=" '/' + post.id + '/idea/edit'" class="c-card__wrap-link">
+            <a :href="'/' + post.id + '/idea'" class="c-card__button">詳細を見る</a>
+            <a :href=" '/' + post.id + '/idea/edit'" class="c-card__button">
               <i class="fa-solid fa-pencil fa-fw"></i>編集する
             </a>
           </div>
@@ -56,6 +56,9 @@
         axios.get('/api/' + this.user_id + '/myPosts')
           .then(response => {
             this.postsList = response.data.postsList;
+            if(this.postsList === null){
+              return;
+            }
             this.getAverageScore([...this.postsList]);
           })
           .catch(error => {

@@ -18,8 +18,8 @@
           </div>
         </div>
         <div class="c-card__wrap">
-          <a :href="'/' + bought.idea.id + '/idea'" class="c-card__wrap-link">詳細を見る</a>
-          <a :href=" '/' + bought.idea.id + '/review/create'" class="c-card__wrap-link">
+          <a :href="'/' + bought.idea.id + '/idea'" class="c-card__button">詳細を見る</a>
+          <a :href=" '/' + bought.idea.id + '/review/create'" class="c-card__button">
             <i class="fa-solid fa-check fa-fw"></i>レビューする
           </a>
         </div>
@@ -54,6 +54,9 @@
         axios.get('/api/' + this.user_id + '/boughts')
           .then(response => {
             this.boughtList = response.data.boughtList;
+            if(this.boughtList === null){
+              return;
+            }
             this.getAverageScore([...this.boughtList]);
           })
           .catch(error => {
