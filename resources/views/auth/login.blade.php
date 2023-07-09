@@ -1,6 +1,6 @@
 @extends('layouts.parent')
 
-@section('title', 'ログインフォーム')
+@section('title', 'ログイン')
 
 @section('main')
 

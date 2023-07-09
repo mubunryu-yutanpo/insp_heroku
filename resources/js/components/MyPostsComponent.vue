@@ -6,7 +6,7 @@
         <div class="c-card" v-for="post in postsList" :key="post.id">
           
           <div class="c-card__main">
-            <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
+            <img :src="post.thumbnail" alt="" class="c-card__thumbnail">
             <div class="c-card__about">
               <p class="c-card__category">{{ post.category.name }}</p>
               <p class="c-card__title">{{ post.title }}</p>

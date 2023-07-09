@@ -29,7 +29,7 @@
         <!-- アイデアの中身 -->
         <section class="p-detail__container-main">
           <div class="c-detail u-text-center">
-            <img :src="idea.sumbnail" alt="" class="c-detail__sumbnail">
+            <img :src="idea.thumbnail" alt="" class="c-detail__thumbnail">
           </div>
 
           <div class="c-detail"> 【 出品者 】
@@ -213,8 +213,7 @@
        // Twitterにシェア
         twitterShare() {
           // サムネのリンクは変更しないとダメ
-          const imageURL = encodeURIComponent(this.idea.sumbnail);
-          const shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://www.google.com") + '&media=' + imageURL;
+          const shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://inspiration-yutanpo.com");
           window.open(shareURL, '_blank');
         },
 

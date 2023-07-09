@@ -4,6 +4,13 @@
         margin: 0;
     }
 
+    &__left{
+
+        &-10{
+            margin-left: $space-10;
+        }
+    }
+
     &__10{
         margin: $space-10 0;
     }

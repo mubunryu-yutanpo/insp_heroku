@@ -76,7 +76,7 @@
 
           <div class="c-card card-ideas" v-for="idea in filteredIdeas" :key="idea.id">
             <div class="c-card__main">
-              <img :src="idea.sumbnail" alt="" class="c-card__sumbnail">
+              <img :src="idea.thumbnail" alt="" class="c-card__thumbnail">
               <div class="c-card__about">
                 <p class="c-card__category">{{ idea.category.name }}</p>
                 <h3 class="c-card__title">{{ idea.title }}</h3>

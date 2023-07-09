@@ -59,7 +59,7 @@
     
       <thumbnailpreview-component :idea_id="{{ $idea->id ?? 'null' }}" ></thumbnailpreview-component>
 
-      @error('sumbnail')
+      @error('thumbnail')
         <span class="c-form__error" role="alert">
           <strong>{{ $message }}</strong>
         </span>

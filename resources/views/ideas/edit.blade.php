@@ -3,9 +3,10 @@
 @section('title', 'アイデア編集')
 
 @section('main')
-  <h2>アイデア編集画面</h2>
 
   <div class="l-form">
+    <div class="c-title">アイデア編集</div>
+
     <form method="post" action="{{ route('idea.update', $idea->id) }}" class="p-form" enctype="multipart/form-data">
       @include('layouts.form')
 

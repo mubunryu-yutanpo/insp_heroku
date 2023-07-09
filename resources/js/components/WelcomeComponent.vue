@@ -78,7 +78,7 @@
           <swiper :options="swiperOptions">
             <swiper-slide class="c-card" v-for="idea in ideaList" :key="idea.id" style="height:auto;">
               <div class="c-card__main card-toppage">
-                <img :src="idea.sumbnail" alt="" class="c-card__sumbnail card-toppage-thumbnail">
+                <img :src="idea.thumbnail" alt="" class="c-card__thumbnail card-toppage-thumbnail">
                 <div class="c-card__about card-toppage-about">
                   <p class="c-card__category card-category-toppage">{{ idea.category.name }}</p>
                   <p class="c-card__title">{{ idea.title }}</p>

@@ -36,7 +36,7 @@
           
           <article class="c-card card-mypage" v-for="post in postList" :key="post.id">
             <div class="c-card__main">
-              <img :src="post.sumbnail" alt="" class="c-card__sumbnail">
+              <img :src="post.thumbnail" alt="" class="c-card__thumbnail">
               <div class="c-card__about">
                 <p class="c-card__category">{{ post.category.name }}</p>
                 <p class="c-card__title">{{ post.title }}</p>
@@ -70,7 +70,7 @@
           
           <article class="c-card card-mypage" v-for="check in checkList" :key="check.id">
             <div class="c-card__main">
-              <img :src="check.sumbnail" alt="" class="c-card__sumbnail">
+              <img :src="check.thumbnail" alt="" class="c-card__thumbnail">
               <div class="c-card__about">
                 <p class="c-card__category">{{ check.category.name }}</p>
                 <p class="c-card__title">{{ check.title }}</p>
@@ -101,7 +101,7 @@
           
           <article class="c-card" v-for="bought in boughtList" :key="bought.id">
             <div class="c-card__main">
-              <img :src="bought.sumbnail" alt="" class="c-card__sumbnail">
+              <img :src="bought.thumbnail" alt="" class="c-card__thumbnail">
               <div class="c-card__about">
                 <p class="c-card__category">{{ bought.category.name }}</p>
                 <p class="c-card__title">{{ bought.title }}</p>

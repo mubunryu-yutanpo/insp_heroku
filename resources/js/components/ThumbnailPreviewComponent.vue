@@ -1,6 +1,6 @@
 <template>
     <div class="c-form__wrap u-align__stretch">
-      <label for="sumbnail" class="c-form__label">サムネイル画像:</label>
+      <label for="thumbnail" class="c-form__label">サムネイル画像:</label>
       <div
         class="c-form__file-label"
         :class="{ 'preview': previewImage, 'dragover': isDragover }"
@@ -10,7 +10,7 @@
         @click="handleFileClick"
       >
         <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
-        <input type="file" class="c-form__file-input" name="sumbnail" ref="fileInput" @change="handleFileChange">
+        <input type="file" class="c-form__file-input" name="thumbnail" ref="fileInput" @change="handleFileChange">
         <img :src="previewImage" alt="" class="c-form__file-image">
         タップ（クリック）で画像を挿入
       </div>
@@ -38,12 +38,12 @@
 
     mounted() {
 
-      // APIからアイデアの詳細データを取得して、sumbnailを表示する
+      // APIからアイデアの詳細データを取得して、thumbnailを表示する
       if(this.idea_id !== null){
         axios.get('/api/idea/' + this.idea_id + '/detail')
           .then(response => {
             this.ideaData = response.data;
-            this.previewImage = this.ideaData.idea.sumbnail;
+            this.previewImage = this.ideaData.idea.thumbnail;
           })
           .catch(error => {
             console.error(error);

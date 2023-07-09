@@ -2627,8 +2627,7 @@ __webpack_require__.r(__webpack_exports__);
     // Twitterにシェア
     twitterShare: function twitterShare() {
       // サムネのリンクは変更しないとダメ
-      var imageURL = encodeURIComponent(this.idea.sumbnail);
-      var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://www.google.com") + '&media=' + imageURL;
+      var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://inspiration-yutanpo.com");
       window.open(shareURL, '_blank');
     }
   },
@@ -3957,11 +3956,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var _this = this;
-    // APIからアイデアの詳細データを取得して、sumbnailを表示する
+    // APIからアイデアの詳細データを取得して、thumbnailを表示する
     if (this.idea_id !== null) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/idea/' + this.idea_id + '/detail').then(function (response) {
         _this.ideaData = response.data;
-        _this.previewImage = _this.ideaData.idea.sumbnail;
+        _this.previewImage = _this.ideaData.idea.thumbnail;
       })["catch"](function (error) {
         console.error(error);
       });
@@ -4037,6 +4036,21 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39485,8 +39499,8 @@ var render = function () {
         return _c("div", { key: bought.id, staticClass: "c-card" }, [
           _c("div", { staticClass: "c-card__main" }, [
             _c("img", {
-              staticClass: "c-card__sumbnail",
-              attrs: { src: bought.idea.sumbnail, alt: "" },
+              staticClass: "c-card__thumbnail",
+              attrs: { src: bought.idea.thumbnail, alt: "" },
             }),
             _vm._v(" "),
             _c("div", { staticClass: "c-card__about" }, [
@@ -39727,8 +39741,8 @@ var render = function () {
         return _c("div", { key: idea.id, staticClass: "c-card" }, [
           _c("div", { staticClass: "c-card__main" }, [
             _c("img", {
-              staticClass: "c-card__sumbnail",
-              attrs: { src: idea.sumbnail, alt: "" },
+              staticClass: "c-card__thumbnail",
+              attrs: { src: idea.thumbnail, alt: "" },
             }),
             _vm._v(" "),
             _c("div", { staticClass: "c-card__about" }, [
@@ -39893,8 +39907,8 @@ var render = function () {
       _c("section", { staticClass: "p-detail__container-main" }, [
         _c("div", { staticClass: "c-detail u-text-center" }, [
           _c("img", {
-            staticClass: "c-detail__sumbnail",
-            attrs: { src: _vm.idea.sumbnail, alt: "" },
+            staticClass: "c-detail__thumbnail",
+            attrs: { src: _vm.idea.thumbnail, alt: "" },
           }),
         ]),
         _vm._v(" "),
@@ -40706,8 +40720,8 @@ var render = function () {
           return _c("div", { key: idea.id, staticClass: "c-card card-ideas" }, [
             _c("div", { staticClass: "c-card__main" }, [
               _c("img", {
-                staticClass: "c-card__sumbnail",
-                attrs: { src: idea.sumbnail, alt: "" },
+                staticClass: "c-card__thumbnail",
+                attrs: { src: idea.thumbnail, alt: "" },
               }),
               _vm._v(" "),
               _c("div", { staticClass: "c-card__about" }, [
@@ -40839,8 +40853,8 @@ var render = function () {
         return _c("div", { key: post.id, staticClass: "c-card" }, [
           _c("div", { staticClass: "c-card__main" }, [
             _c("img", {
-              staticClass: "c-card__sumbnail",
-              attrs: { src: post.sumbnail, alt: "" },
+              staticClass: "c-card__thumbnail",
+              attrs: { src: post.thumbnail, alt: "" },
             }),
             _vm._v(" "),
             _c("div", { staticClass: "c-card__about" }, [
@@ -41108,8 +41122,8 @@ var render = function () {
               [
                 _c("div", { staticClass: "c-card__main" }, [
                   _c("img", {
-                    staticClass: "c-card__sumbnail",
-                    attrs: { src: post.sumbnail, alt: "" },
+                    staticClass: "c-card__thumbnail",
+                    attrs: { src: post.thumbnail, alt: "" },
                   }),
                   _vm._v(" "),
                   _c("div", { staticClass: "c-card__about" }, [
@@ -41223,8 +41237,8 @@ var render = function () {
               [
                 _c("div", { staticClass: "c-card__main" }, [
                   _c("img", {
-                    staticClass: "c-card__sumbnail",
-                    attrs: { src: check.sumbnail, alt: "" },
+                    staticClass: "c-card__thumbnail",
+                    attrs: { src: check.thumbnail, alt: "" },
                   }),
                   _vm._v(" "),
                   _c("div", { staticClass: "c-card__about" }, [
@@ -41339,8 +41353,8 @@ var render = function () {
             return _c("article", { key: bought.id, staticClass: "c-card" }, [
               _c("div", { staticClass: "c-card__main" }, [
                 _c("img", {
-                  staticClass: "c-card__sumbnail",
-                  attrs: { src: bought.sumbnail, alt: "" },
+                  staticClass: "c-card__thumbnail",
+                  attrs: { src: bought.thumbnail, alt: "" },
                 }),
                 _vm._v(" "),
                 _c("div", { staticClass: "c-card__about" }, [
@@ -41701,7 +41715,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "c-form__wrap u-align__stretch" }, [
-    _c("label", { staticClass: "c-form__label", attrs: { for: "sumbnail" } }, [
+    _c("label", { staticClass: "c-form__label", attrs: { for: "thumbnail" } }, [
       _vm._v("サムネイル画像:"),
     ]),
     _vm._v(" "),
@@ -41731,7 +41745,7 @@ var render = function () {
         _c("input", {
           ref: "fileInput",
           staticClass: "c-form__file-input",
-          attrs: { type: "file", name: "sumbnail" },
+          attrs: { type: "file", name: "thumbnail" },
           on: { change: _vm.handleFileChange },
         }),
         _vm._v(" "),
@@ -41773,6 +41787,33 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "p-list" }, [
+    _c("div", { staticClass: "c-user" }, [
+      _c("div", { staticClass: "c-user__wrap" }, [
+        _c("img", {
+          staticClass: "c-user__avatar",
+          attrs: { src: _vm.user.avatar, alt: "" },
+        }),
+        _vm._v(" "),
+        _c("p", { staticClass: "c-user__name" }, [
+          _vm._v(_vm._s(_vm.user.name)),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-user__container" }, [
+        _vm._v("\n          【 アイデア数 】\n          "),
+        _c("p", { staticClass: "c-user__post u-margin__left-10" }, [
+          _vm._v(_vm._s(_vm.ideaList.length)),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-user__container" }, [
+        _vm._v("\n          【 自己紹介文 】\n          "),
+        _c("p", { staticClass: "c-user__introduction u-margin__left-10" }, [
+          _vm._v(_vm._s(_vm.user.introduction)),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
     _c("strong", { staticClass: "p-list__title" }, [
       _vm._v(_vm._s(_vm.user.name) + "さんのアイデア一覧"),
     ]),
@@ -41784,8 +41825,8 @@ var render = function () {
         return _c("div", { key: idea.id, staticClass: "c-card" }, [
           _c("div", { staticClass: "c-card__main" }, [
             _c("img", {
-              staticClass: "c-card__sumbnail",
-              attrs: { src: idea.sumbnail, alt: "" },
+              staticClass: "c-card__thumbnail",
+              attrs: { src: idea.thumbnail, alt: "" },
             }),
             _vm._v(" "),
             _c("div", { staticClass: "c-card__about" }, [
@@ -41925,8 +41966,8 @@ var render = function () {
                       _c("div", { staticClass: "c-card__main card-toppage" }, [
                         _c("img", {
                           staticClass:
-                            "c-card__sumbnail card-toppage-thumbnail",
-                          attrs: { src: idea.sumbnail, alt: "" },
+                            "c-card__thumbnail card-toppage-thumbnail",
+                          attrs: { src: idea.thumbnail, alt: "" },
                         }),
                         _vm._v(" "),
                         _c(

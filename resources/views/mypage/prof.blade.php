@@ -5,6 +5,7 @@
 @section('main')
   <h2>プロフ編集ページ</h2>
   <div class="l-form">
+    <div class="c-title">プロフィール編集</div>
 
     <form method="post" action="{{ route('prof.update' , $user->id ) }}" class="p-form" enctype="multipart/form-data">
     @csrf

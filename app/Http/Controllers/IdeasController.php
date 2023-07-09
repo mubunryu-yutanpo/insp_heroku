@@ -24,12 +24,12 @@ class IdeasController extends Controller
         $idea = new Idea;
 
         // サムネ画像のパス名を変数に
-        if($request->sumbnail !== null){
-            $avatar = $request->file('sumbnail');
+        if($request->thumbnail !== null){
+            $avatar = $request->file('thumbnail');
             $filename = $avatar->getClientOriginalName();
             $avatar->move(public_path('uploads'), $filename);
         }else{
-            $filename = 'sumbnail-default.png';
+            $filename = 'thumbnail-default.png';
         }
 
         // DBに保存
@@ -37,7 +37,7 @@ class IdeasController extends Controller
             'user_id'     => $user_id,
             'category_id' => $request->category,
             'title'       => $request->title,
-            'sumbnail'    => '/uploads/'.$filename,
+            'thumbnail'    => '/uploads/'.$filename,
             'summary'     => $request->summary,
             'description' => $request->description,
             'price'       => $request->price,
@@ -57,16 +57,16 @@ class IdeasController extends Controller
         $idea = Idea::find($id);
 
         // サムネ画像のパス名を変数に
-        if($request->sumbnail !== null){
-            $sumbnail = $request->file('sumbnail');
-            $filename = $sumbnail->getClientOriginalName();
-            $sumbnail->move(public_path('uploads'), $filename);
+        if($request->thumbnail !== null){
+            $thumbnail = $request->file('thumbnail');
+            $filename = $thumbnail->getClientOriginalName();
+            $thumbnail->move(public_path('uploads'), $filename);
        
-        }elseif($idea->sumbnail !== null){
-            $filename = basename($idea->sumbnail);
+        }elseif($idea->thumbnail !== null){
+            $filename = basename($idea->thumbnail);
        
         }else{
-            $filename = 'sumbnail-default.png';
+            $filename = 'thumbnail-default.png';
         }
 
         // アイデアの所持者とアクセスしているユーザーが異なる場合、リダイレクトする
@@ -79,7 +79,7 @@ class IdeasController extends Controller
             'user_id'     => $user_id,
             'category_id' => $request->category,
             'title'       => $request->title,
-            'sumbnail'    => '/uploads/'.$filename,
+            'thumbnail'    => '/uploads/'.$filename,
             'summary'     => $request->summary,
             'description' => $request->description,
             'price'       => $request->price,

@@ -3,9 +3,10 @@
 @section('title', 'レビュー投稿')
 
 @section('main')
-  <h2>レビュー投稿ページ</h2>
     
   <div class="l-form">
+    <div class="c-title">レビュー投稿</div>
+
     <div class="c-title">アイデア名：{{ $idea->title }}</div>
 
     <form method="post" action="{{ route('post.review', $idea->id) }}" class="p-form">

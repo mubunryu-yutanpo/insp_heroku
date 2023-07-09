@@ -16,6 +16,8 @@ use App\Review;
 use App\Chat;
 use App\Message;
 use App\Notification;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PurchaseNotification;
 
 
 class ApiController extends Controller
@@ -546,6 +548,19 @@ class ApiController extends Controller
         $purchase = new Purchase;
         $sell_user = Idea::where('id', $id)->value('user_id');
 
+
+        // メール送信処理
+        $idea = Idea::findOrFail($id);
+        $seller = User::findOrFail($sell_user);
+        $buyer = Auth::user();
+
+        try {
+            Mail::to($seller->email)->send(new PurchaseNotification($idea, $seller, $buyer));
+            Mail::to($buyer->email)->send(new PurchaseNotification($idea, $seller, $buyer));
+        } catch (\Exception $e) {
+            dd($e); // 例外を表示
+        }
+                
         $purchase->fill([
             'user_id'  => $user_id,
             'idea_id'  => $id,
@@ -559,9 +574,8 @@ class ApiController extends Controller
             'idea_id'   => $id,
         ])->save();
 
-        return redirect()->back()->with('flash_message', '購入しました！');
 
-        // 購入者・販売者にメール送る処理まだ。
+        return redirect()->back()->with('flash_message', '購入しました！');
 
     }
 

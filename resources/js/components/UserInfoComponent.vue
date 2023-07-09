@@ -1,13 +1,28 @@
 
 <template>
     <div class="p-list">
+
+      <div class="c-user">
+        <div class="c-user__wrap">
+            <img :src="user.avatar" alt="" class="c-user__avatar">
+            <p class="c-user__name">{{ user.name }}</p>
+        </div>
+        <div class="c-user__container">
+            【 アイデア数 】
+            <p class="c-user__post u-margin__left-10">{{ ideaList.length }}</p>
+        </div>
+        <div class="c-user__container">
+            【 自己紹介文 】
+            <p class="c-user__introduction u-margin__left-10">{{ user.introduction }}</p>
+        </div>
+      </div>
       
       <strong class="p-list__title">{{ user.name }}さんのアイデア一覧</strong>
       <div class="p-list__container">
         <div class="c-card" v-for="idea in ideaList" :key="idea.id">
           
           <div class="c-card__main">
-            <img :src="idea.sumbnail" alt="" class="c-card__sumbnail">
+            <img :src="idea.thumbnail" alt="" class="c-card__thumbnail">
             <div class="c-card__about">
               <p class="c-card__category">{{ idea.category.name }}</p>
               <p class="c-card__title">{{ idea.title }}</p>

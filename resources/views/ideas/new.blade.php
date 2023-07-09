@@ -3,9 +3,10 @@
 @section('title', '新規アイデア投稿')
 
 @section('main')
-  <h2>アイデア新規投稿ページ</h2>
 
   <div class="l-form">
+    <div class="c-title">アイデア投稿</div>
+
     <form method="post" action="{{ route('create') }}" class="p-form" enctype="multipart/form-data">
 
       @include('layouts.form')

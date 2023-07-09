@@ -5,7 +5,7 @@
     <div class="p-list__container">
       <div class="c-card" v-for="bought in boughtList" :key="bought.id">
         <div class="c-card__main">
-          <img :src="bought.idea.sumbnail" alt="" class="c-card__sumbnail">
+          <img :src="bought.idea.thumbnail" alt="" class="c-card__thumbnail">
           <div class="c-card__about">
             <p class="c-card__category">{{ bought.idea.category.name }}</p>
             <p class="c-card__title">{{ bought.idea.title }}</p>

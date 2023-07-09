@@ -18,7 +18,7 @@ class CreateIdeasTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();
             $table->string('title');
-            $table->string('sumbnail')->nullable()->default('/uploads/sumbnail-default.png');
+            $table->string('thumbnail')->nullable()->default('/uploads/thumbnail-default.png');
             $table->string('summary');
             $table->text('description');
             $table->bigInteger('price');

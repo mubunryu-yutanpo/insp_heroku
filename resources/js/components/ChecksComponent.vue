@@ -5,7 +5,7 @@
     <div class="p-list__container">
       <div class="c-card" v-for="idea in checkIdeas" :key="idea.id">
         <div class="c-card__main">
-          <img :src="idea.sumbnail" alt="" class="c-card__sumbnail">
+          <img :src="idea.thumbnail" alt="" class="c-card__thumbnail">
           <div class="c-card__about">
             <p class="c-card__category">{{ idea.category.name }}</p>
             <p class="c-card__title">{{ idea.title }}</p>
