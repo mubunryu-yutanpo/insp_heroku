@@ -1,7 +1,11 @@
 <template>
   <div class="p-list">
     
-    <strong class="p-list__title">購入したアイデア一覧</strong>
+    <h2 class="p-title">
+      <i class="fa-regular fa-lightbulb fa-fw p-title-icon"></i>
+      購入したアイデア一覧
+    </h2>
+
     <div class="p-list__container">
       <div class="c-card" v-for="bought in boughtList" :key="bought.id">
         <div class="c-card__main">

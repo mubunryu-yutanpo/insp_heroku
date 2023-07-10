@@ -71,34 +71,38 @@
 
     <section class="p-list">
 
-        <h2 class="p-list__title">アイデア一覧</h2>
-        <div class="p-list__container">
+      <h2 class="p-title">
+        <i class="fa-regular fa-lightbulb fa-fw p-title-icon"></i>
+        アイデア一覧
+      </h2>
 
-          <div class="c-card card-ideas" v-for="idea in filteredIdeas" :key="idea.id">
-            <div class="c-card__main">
-              <img :src="idea.thumbnail" alt="" class="c-card__thumbnail">
-              <div class="c-card__about">
-                <p class="c-card__category">{{ idea.category.name }}</p>
-                <h3 class="c-card__title">{{ idea.title }}</h3>
-                <p class="c-card__date">{{ formatDate(idea.created_at) }}</p>
-                <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
-                <div class="c-card__review">
-                  <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.averageScore }"></i>
-                  <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.reviewCount }})</a>
-                </div>
-                <p class="c-card__text">{{ idea.summary }}</p>
+      <div class="p-list__container">
 
+        <div class="c-card card-ideas" v-for="idea in filteredIdeas" :key="idea.id">
+          <div class="c-card__main">
+            <img :src="idea.thumbnail" alt="" class="c-card__thumbnail">
+            <div class="c-card__about">
+              <p class="c-card__category">{{ idea.category.name }}</p>
+              <h3 class="c-card__title">{{ idea.title }}</h3>
+              <p class="c-card__date">{{ formatDate(idea.created_at) }}</p>
+              <p class="c-card__price"><span class="u-font__size-m">¥</span> {{ idea.price | numberWithCommas }}</p>
+              <div class="c-card__review">
+                <i v-for="n in 5" :key="n" class="c-card__review-icon fa-solid fa-star" :class="{ 'active': n <= idea.averageScore }"></i>
+                <a :href=" '/idea/' + idea.id + '/reviews' " class="c-card__review-link">({{ idea.reviewCount }})</a>
               </div>
-            </div>
-            <div class="c-card__wrap">
-              <a :href="'/' + idea.id + '/idea'" class="c-card__button">詳細を見る</a>
-              <button class="c-card__button" @click="toggleCheck(idea.id)" v-if="isLogin">
-                <span v-if="idea.isChecked"><i class="fa-solid fa-heart fa-fw"></i>気になるを解除</span>
-                <span v-if="!idea.isChecked"><i class="fa-regular fa-heart fa-fw"></i>気になるに追加</span>
-              </button>
+              <p class="c-card__text">{{ idea.summary }}</p>
+
             </div>
           </div>
+          <div class="c-card__wrap">
+            <a :href="'/' + idea.id + '/idea'" class="c-card__button">詳細を見る</a>
+            <button class="c-card__button" @click="toggleCheck(idea.id)" v-if="isLogin">
+              <span v-if="idea.isChecked"><i class="fa-solid fa-heart fa-fw"></i>気になるを解除</span>
+              <span v-if="!idea.isChecked"><i class="fa-regular fa-heart fa-fw"></i>気になるに追加</span>
+            </button>
+          </div>
         </div>
+      </div>
 
     </section>
   </div>

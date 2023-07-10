@@ -1,5 +1,10 @@
  <template>
   <div class="p-list">
+    <h2 class="p-title">
+      <i class="fa-regular fa-lightbulb fa-fw p-title-icon"></i>
+      アイデアのレビュー一覧
+    </h2>
+
 
     <article class="c-review" v-for="review in reviewList" :key="review.id">
 

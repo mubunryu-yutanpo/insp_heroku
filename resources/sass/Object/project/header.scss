@@ -1,58 +1,24 @@
 .p-header{
+    align-items: center;
+    background-color: none;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    padding: $space_default $space-10;
+    height: 80px;
+    padding-left: $space_default;
+    padding-right: $space_default;
+    position: fixed;
+    transition: 1s;
+    width: 100vw;
+    z-index: 2;
 
-    &__logo{
-        height: 50px;
-        width: 50px;
-        &-image{
-            width: 100%;
-        }
+    @include mq(){
+      height: 60px;
+      padding-left: $space-5;
+      padding-right: $space-5;
     }
 
-    &__contents{
-        align-items: center;
-        display: flex;
-
-        &-login{
-            color: $blue;
-            font-size: 14px;
-            padding: $space-5 $space-10;
-            transition: all .4s;
-            &:hover{
-                color: $brown;
-                transition: all .4s;
-            }
-        }
-
-        &-register, &-profile{
-            background-color: #44749d;
-            border-radius: 5px;
-            box-sizing: border-box;
-            color: $white;
-            font-size: 14px;
-            margin-right: 10px;
-            padding: 10px 15px;
-            transition: all 0.4s;
-            
-            &:hover{
-                background-color: $brown;
-                transition: all .4s;
-                color: $black;
-            }
-        }
-
-        &-news{
-            border: 2px solid $gray;
-            border-radius: 5px;
-            box-sizing: border-box;
-            height: 48px;
-            margin-right: $space-10;
-            padding: $space-5;
-            width: 48px;
-
-        }
+    &__title{
+        margin: 0;
     }
-
 }

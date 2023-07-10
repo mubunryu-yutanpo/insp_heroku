@@ -17,7 +17,7 @@
         </div>
       </div>
       
-      <strong class="p-list__title">{{ user.name }}さんのアイデア一覧</strong>
+      <h2 class="p-title">{{ user.name }}さんのアイデア一覧</h2>
       <div class="p-list__container">
         <div class="c-card" v-for="idea in ideaList" :key="idea.id">
           

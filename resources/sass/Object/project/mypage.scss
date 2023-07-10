@@ -21,21 +21,6 @@
 
     &__contents{
 
-        &-title{
-            background-color: $blue;
-            color: $white;
-            display: block;
-            font-size: $font-size_xl;
-            font-weight: bold;
-            margin: $space_30 0 $space_default;
-            padding: $space_default $space-10;
-
-            @include mq(){
-                font-size: $font-size_l;
-                margin: $space_default 0;
-            }
-        }
-
         &-container{
             display: flex;
             flex-wrap: wrap;

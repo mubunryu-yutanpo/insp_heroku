@@ -1,0 +1,21 @@
+.p-title{
+    background-color: $gray;
+    border-left: solid 2em $lightblue;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 #44749d;
+    font-size: $font-size_xl;
+    margin: $space_30 $space_default;
+    padding: $space_default $space-10;
+
+
+    @include mq(){
+        font-size: 17px;
+    }
+
+    &-icon {
+        color: $blue;
+        font-size: $font-size_xl;
+        font-weight: 900;
+      }    
+    
+}

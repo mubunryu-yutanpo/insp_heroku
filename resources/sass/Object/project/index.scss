@@ -45,6 +45,7 @@
 
     &__link{
         color: $white;
+        font-size: $font-size_xl;
         padding: $space-10 $space_default;
 
         @include mq(){

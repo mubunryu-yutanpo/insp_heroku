@@ -1,7 +1,11 @@
 <template>
   <div class="p-list">
+    <h2 class="p-title">
+      <i class="fa-regular fa-lightbulb fa-fw p-title-icon"></i>
+      すべてのレビュー
+    </h2>
 
-    <article class="c-review" v-for="review in reviewList.data" :key="review.id">
+    <article class="c-review" v-for="review in reviewList" :key="review.id">
 
       <!-- user -->
       <div class="c-review__user">
@@ -30,6 +34,8 @@
       </div>
     </article>
 
+    <div class="" v-if="reviewList === null || reviewList.length === 0">レビューがまだありません</div>
+
   </div>
 </template>
 
@@ -40,7 +46,7 @@ export default{
 
   data(){
     return {
-      reviewList: [],
+      reviewList: null,
     }
   },
 

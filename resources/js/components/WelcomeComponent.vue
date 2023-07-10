@@ -7,7 +7,7 @@
       </section>
 
       <!-- こんなお悩みありませんか？的な部分 -->
-      <section class="p-catch" v-if="showSections.catch">
+      <section class="p-catch">
         <div class="p-catch__container">
           <img src="images/top_catch01.png" alt="" class="p-catch__image">
           <img src="images/top_catch_sp02.png" alt="" class="p-catch__image catch-sp">
@@ -15,7 +15,7 @@
       </section>
 
       <!-- 説明的な部分 -->
-      <section class="p-about c-section" v-if="showSections.about">
+      <section class="p-about c-section">
         <h2 class="p-about__title">アイデアの「欲しい」をやり取り</h2>
         <strong class="p-about__title-sub">ABOUT</strong>
 
@@ -67,7 +67,7 @@
       </section>
 
       <!-- 実績的な部分。 -->
-      <section class="p-index c-section" v-if="showSections.index">
+      <section class="p-index c-section">
 
         <h2 class="p-index__title">アイデアの一例</h2>
         <strong class="p-index__title-sub">IDEAS</strong>
@@ -104,7 +104,7 @@
       </section>
 
       <!-- クロージング -->
-      <section class="p-closing" v-if="showSections.closing">
+      <section class="p-closing">
 
         <div class="p-closing__container">
           <img src="images/closing.png" alt="" class="p-closing__image">
@@ -269,7 +269,7 @@ export default {
       this.getIdeas();
 
       // スクロールイベントを監視し、セクションの表示を切り替える
-      window.addEventListener('scroll', this.handleScroll);
+      //window.addEventListener('scroll', this.handleScroll);
 
     },
 

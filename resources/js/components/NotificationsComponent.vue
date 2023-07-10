@@ -1,6 +1,9 @@
 <template>
     <section class="p-list">
-      <h2 class="p-list__title">通知一覧</h2>
+      <h2 class="p-title">
+        <i class="fa-regular fa-lightbulb fa-fw p-title-icon"></i>
+        通知メッセージ一覧
+      </h2>
       
       <div class="p-list__wrap" v-if="notificationList.length === 0">
         <p class="p-list__wrap-text">メッセージはありません</p>

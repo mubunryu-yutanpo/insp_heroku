@@ -14,7 +14,7 @@
     @section('header')
       <!-- フラッシュメッセージ -->
       @if (session('flash_message'))
-      <div class="alert alert-primary text-center" role="alert">
+      <div id="flash-message" class="alert alert-primary u-margin-none u-text-center" role="alert">
         {{ session('flash_message') }}
       </div>
       @endif
@@ -23,67 +23,80 @@
 
         <div class="p-header">
 
-          <div class="p-header__logo">
-            <a href="/">
-            <img src="/images/logo.png" alt="" class="p-header__logo-image">
-            </a>
-          </div>
-
-          <div class="p-header__contents">
+          <h1 class="p-header__title">
+            <a href="/">Inspiration</a>
+          </h1>
             
-            @if(!Auth::check())
-              <a href="{{ route('login') }}" class="p-header__contents-login">ログイン</a>
-              @if(Route::has('register'))
-                <a href="{{ route('register') }}" class="p-header__contents-register">会員登録</a>
-              @endif
-            @endif
-
-            @if(Route::currentRouteName() == 'mypage')
-              <a href="{{ route('prof.edit', Auth::id() ) }}" class="p-header__contents-profile">プロフィール編集</a>
-            @endif
-
-            <header-component></header-component>
-
-          </div>
-        </div>
-
+          <header-component></header-component>
 
           <nav class="c-nav">
             <ul class="c-nav__list">
-              <li class="c-nav__item">
-                <a href="/" class="c-nav__link">HOME</a>
-              </li>
-              <li class="c-nav__item">
-                <a href="{{ route('ideas.index') }}" class="c-nav__link">アイデア一覧</a>
-              </li>
+
+              @if(!Auth::check())
+                <li class="c-nav__list-item">
+                  <a href="/" class="c-nav__list-link">HOME</a>
+                </li>
+                <li class="c-nav__list-item">
+                  <a href="{{ route('ideas.index') }}" class="c-nav__list-link">すべてのアイデア</a>
+                </li>
+                <li class="c-nav__list-item">
+                  <a href="/login" class="c-nav__list-link">ログイン</a>
+                </li>
+                @if(Route::has('register'))
+                  <li class="c-nav__list-item">
+                    <a href="/register" class="c-nav__list-link">会員登録</a>
+                  </li>
+                @endif
+              @endif
+
               @auth
-                <li class="c-nav__item">
-                  <a href="{{ route('mypage') }}" class="c-nav__link">マイページ</a>
+                <li class="c-nav__list-item">
+                  <a href="{{ route('mypage') }}" class="c-nav__list-link">マイページ</a>
                 </li>
-                <li class="c-nav__item">
-                  <a href="{{ route('new') }}" class="c-nav__link">アイデア投稿</a>
+                
+                <li class="c-nav__list-item">
+                  <a href="{{ route('ideas.index') }}" class="c-nav__list-link">すべてのアイデア</a>
                 </li>
-                <li class="c-nav__item">
-                  <a href="{{ route('checks', Auth::id() ) }}" class="c-nav__link">気になるリスト</a>
+
+                <li class="c-nav__list-item">
+                  <a href="{{ route('new') }}" class="c-nav__list-link">アイデア投稿</a>
                 </li>
-                <li class="c-nav__item">
-                  <a href="{{ route('myposts', Auth::id() ) }}" class="c-nav__link">投稿したアイデア一覧</a>
-                </li>
-                <li class="c-nav__item">
-                  <a href="{{ route('boughts', Auth::id() ) }}" class="c-nav__link">購入したアイデア一覧</a>
-                </li>
-                <li class="c-nav__item">
-                  <a href="{{ route('reviews') }}" class="c-nav__link">レビュー一覧</a>
-                </li>
-                <li class="c-nav__item">
-                  <a href="{{ route('notifications', Auth::id() ) }}" class="c-nav__link">通知一覧</a>
-                </li>
-                <li class="c-nav__item">
-                  <a href="{{ route('logout') }}" class="c-nav__link">ログアウト</a>
+
+                <div class="c-nav__submenu">
+
+                  <p class="c-nav__submenu-title js-submenu-trigger">
+                    一覧ページ
+                    <i class="c-nav__submenu-icon open fa-solid fa-chevron-down u-color__white  js-submenu-open-icon active"></i>
+                    <i class="c-nav__submenu-icon close fa-solid fa-chevron-up u-color__white js-submenu-close-icon"></i>
+                  </p>
+
+                  <div class="c-nav__submenu-wrap js-submenu">
+                    <li class="c-nav__list-item sub-list">
+                      <a href="{{ route('checks', Auth::id() ) }}" class="c-nav__list-link">気になるアイデア</a>
+                    </li>
+                    <li class="c-nav__list-item sub-list">
+                      <a href="{{ route('myposts', Auth::id() ) }}" class="c-nav__list-link">投稿したアイデア</a>
+                    </li>
+                    <li class="c-nav__list-item sub-list">
+                      <a href="{{ route('boughts', Auth::id() ) }}" class="c-nav__list-link">購入したアイデア</a>
+                    </li>
+                    <li class="c-nav__list-item sub-list">
+                      <a href="{{ route('reviews') }}" class="c-nav__list-link">すべてのレビュー</a>
+                    </li>
+                    <li class="c-nav__list-item sub-list">
+                      <a href="{{ route('notifications', Auth::id() ) }}" class="c-nav__list-link">メッセージ一覧</a>
+                    </li>
+
+                  </div>
+                </div>
+
+                <li class="c-nav__list-item">
+                  <a href="{{ route('logout') }}" class="c-nav__list-link">ログアウト</a>
                 </li>
               @endauth
             </ul>
           </nav>
+        </div>
       </header>
     @show
     
@@ -95,12 +108,40 @@
     
 
     @section('footer')
-      <div id="footer">
+      <footer id="footer">
         <footer-component></footer-component>
-      </div>
+      </footer>
     @show
 
+<script>
+  // フラッシュメッセージを3秒後に消す
+  document.addEventListener('DOMContentLoaded', function () {
+      var flashMessage = document.getElementById('flash-message');
+      if (flashMessage) {
+          setTimeout(function () {
+              flashMessage.remove();
+          }, 1500); // 3秒後にメッセージを削除
+      }
+  });
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // サブメニューのドロップダウン
+    function dropdownMenu() {
+        document.querySelector('.js-submenu').classList.toggle('is-open');
+        document.querySelector('.js-submenu-trigger').classList.toggle('active');
+        document.querySelector('.js-submenu-open-icon').classList.toggle('active');
+        document.querySelector('.js-submenu-close-icon').classList.toggle('active');
+    }
+
+    // クリックイベントを追加
+    const submenuTrigger = document.querySelector('.js-submenu-trigger');
+    submenuTrigger.addEventListener('click', dropdownMenu);
+    });
+
+</script>
+
 <script src="{{ asset('js/app.js') }}"></script>
+
 </body>
 </html>
 

@@ -9,7 +9,11 @@
       </div>
 
       <section class="p-mypage__contents">
-        <h2 class="p-mypage__contents-title">お知らせ</h2>
+        <h2 class="p-title">
+          <i class="fa-solid fa-newspaper fa-fw p-title-icon"></i>
+          お知らせ
+        </h2>
+
 
         <div class="p-mypage__contents-container">
           <p class="p-mypage__contents-text" v-if="notificationList.length === 0">お知らせはありません</p>
@@ -31,7 +35,12 @@
 
 
       <section class="p-mypage__contents">
-        <h2 class="p-mypage__contents-title">自分のアイデア</h2>
+
+        <h2 class="p-title">
+          <i class="fa-solid fa-box-open fa-fw p-title-icon"></i>
+          投稿したアイデア
+        </h2>
+
         <div class="p-mypage__contents-container">
           
           <article class="c-card card-mypage" v-for="post in postList" :key="post.id">
@@ -65,7 +74,12 @@
 
 
       <section class="p-mypage__contents">
-        <h2 class="p-mypage__contents-title">気になるリスト</h2>
+
+        <h2 class="p-title">
+          <i class="fa-solid fa-hand-holding-heart fa-fw p-title-icon"></i>
+          気になるアイデア
+        </h2>
+
         <div class="p-mypage__contents-container">
           
           <article class="c-card card-mypage" v-for="check in checkList" :key="check.id">
@@ -96,7 +110,12 @@
       </section>
 
       <section class="p-mypage__contents">
-        <h2 class="p-mypage__contents-title">購入したアイデア</h2>
+
+        <h2 class="p-title">
+          <i class="fa-solid fa-bag-shopping fa-fw p-title-icon"></i>
+          購入したアイデア
+        </h2>
+        
         <div class="p-mypage__contents-container">
           
           <article class="c-card" v-for="bought in boughtList" :key="bought.id">
@@ -128,7 +147,12 @@
 
 
       <section class="p-mypage__contents">
-        <h2 class="p-mypage__contents-title">自分のアイデアへのレビュー</h2>
+
+        <h2 class="p-title">
+          <i class="fa-solid fa-comments fa-fw p-title-icon"></i>
+          自分へのレビュー
+        </h2>
+
         <div class="p-mypage__contents-container">
           
           <article class="c-review mypage" v-for="review in reviewList" :key="review.id">

@@ -4,46 +4,160 @@
         background: $blue;
         display: none;
         font-size: $font-size_l;
-        padding: 75px 0 $space_40;
+        height: 100vh;
+        padding: $space-20 0 ;
         position: absolute;
         text-align: center;
         width: 100%;
 
         &.is-open{
             display: block;
-            overflow-y: auto;
+            left: 0;
             top: 0;
             transition: all .8s;
             z-index: 5;
         }
 
-        &__item{
-            margin-bottom: $space_20;
-        }
     }
 
     &__list{
-        background: #44749d;
         box-sizing: border-box;
         display: flex;
+        height: 45px;
         justify-content: space-around;
         margin: 0;
         padding: 10px 0;
 
         @include mq(){
+            background-color: $blue;
             flex-direction: column;
+            height: 100%;
         }
+
+        &-item{
+            margin: 0 $space-5;
+
+            @include mq(){
+                margin: 0 0 $space_30 0;
+            }
+
+
+            &.sub-list{
+                margin-bottom: $space_default;
+
+                @include mq(){
+                    margin-bottom: $space_30;
+                }
+    
+            }
+
+        }
+
+        &-link{
+            padding: $space_default $space_10;
+
+            @include mq(){
+                color: $white;
+            }
+    
+            &:hover{
+                color: $brown;
+                font-weight: bold;
+                text-decoration-style: dashed;
+                text-decoration-color: $white;
+
+            }
+        }
+    
     }
 
-    &__link{
-        color: $white;
-        padding: $space-10 $space_default;
+    &__submenu{
+        display: flex;
+        flex-direction: column;
+        margin: 0 $space_default 0 0;
 
-        &:hover{
-            color: $brown;
-            font-weight: bold;
-            text-decoration-style: dashed;
-            text-decoration-color: $white;
+        &-wrap{
+            display: none;
+    
+            &.is-open{
+                background-color: $lightblue;
+                display: block;
+                margin-top: 12px;
+                padding: $space-10 $space_default 0;
+
+    
+                @include mq(){
+                    border: 3px solid $white;
+                    box-sizing: border-box;
+                    font-weight: bold;
+                    margin-bottom: $space-10;
+                    margin-top: 0;
+                    padding: $space_30 0 0;
+                    width: 100vw;    
+                }
+            }    
         }
+
+        &-title{
+            color: $blue;
+            cursor: pointer;
+            position: relative;
+            white-space: nowrap;
+
+            @include mq(){
+                color: $white;
+            }
+
+            &.active{
+                color: $brown;
+                margin-left: $space_40;
+
+                @include mq(){
+                    margin-left: 0;
+                    text-align: center;
+                }
+            }    
+
+
+            @include mq(){
+                padding: $space-10 $space_default;
+                margin: -10px 0 $space_20;
+    
+                &.active{
+                    font-weight: bold;
+                    margin-bottom: 0;
+                }
+            }
+        }
+
+        &-icon{
+            opacity: 0;
+            margin-left: $space_5;
+            position: absolute;
+            top: 15%;
+
+            @include mq(){
+                top: 30%;
+            }
+
+            &.open{
+
+                &.active{
+                    opacity: 1;
+                }
+    
+            }
+
+            &.close{
+
+                &.active{
+                    opacity: 1;
+                }
+    
+            }
+
+        }
+
+    
     }
 }
