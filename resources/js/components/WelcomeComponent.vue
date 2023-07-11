@@ -132,13 +132,6 @@ export default {
   data() {
     return {
       ideaList: [],
-      showSections: {
-        hero: false,
-        catch: false,
-        about: false,
-        index: false,
-        closing: false
-      },
 
       // swiperの設定たち
       swiperOptions: {
@@ -179,59 +172,6 @@ export default {
       }
     },
 
-    // スクロール位置に応じたセクションの表示
-    handleScroll() {
-      const scrollPosition = window.scrollY;
-      const windowHeight = window.innerHeight;
-
-      // デバイスの種類を判別
-      function getDeviceType() {
-        const userAgent = navigator.userAgent;
-        if (/Android/i.test(userAgent)) {
-          return 'android';
-        } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-          return 'ios';
-        } else {
-          return 'other';
-        }
-      }
-
-      // デバイスの種類に応じて表示位置を設定
-      const deviceType = getDeviceType();
-      let sections = {};
-
-      if (deviceType === 'android' || deviceType === 'ios') {
-
-        // スマホ用の表示位置.
-        sections = {
-          hero: 0,
-          catch: 20, 
-          about: 30, 
-          index: 40, 
-          closing: 50 
-        };
-
-      } else {
-        // デスクトップ用の表示位置
-        sections = {
-          hero: 0,
-          catch: 200, 
-          about: 400, 
-          index: 600, 
-          closing: 800 
-        };
-      }
-
-      // スクロール位置に応じて各セクションのフラグを切り替え
-      for (const section in this.showSections) {
-        if (scrollPosition >= sections[section]) {
-          this.showSections[section] = true;
-        } else {
-          this.showSections[section] = false;
-        }
-      }
-    },
-
     // 平均評価点の取得
     async getAverageScore(ideas) {
       for (const idea of ideas) {
@@ -245,6 +185,26 @@ export default {
       // 平均スコアを追加した後にデータを更新（評価点に対するクラス名が反映されないため）
       this.$forceUpdate();
     },
+
+
+    // ヘッダーの背景色をスクロール中に変更する
+    handleScroll() {
+    const heroElement = document.querySelector('.p-hero');
+    const headerElement = document.querySelector('.p-header');
+
+    // スクロール位置と要素の位置を比較
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    const heroBottom = heroElement.offsetTop + heroElement.offsetHeight;
+
+    if (scrollPosition >= heroBottom) {
+      // スクロール位置が要素を超えた場合、クラス名を追加
+      headerElement.classList.add('bg-change');
+    } else {
+      // スクロール位置が要素内にある場合、クラス名を削除
+      headerElement.classList.remove('bg-change');
+    }
+  }
+
 
   },
 
@@ -263,21 +223,20 @@ export default {
      },
    },
 
-
    mounted() {
       // APIからアイデアデータを取得
       this.getIdeas();
 
-      // スクロールイベントを監視し、セクションの表示を切り替える
-      //window.addEventListener('scroll', this.handleScroll);
-
+      // スクロールイベントを取得
+      window.addEventListener('scroll', this.handleScroll);
     },
 
-    beforeDestroy() {
-      // コンポーネントが破棄される前にイベントリスナーを解除
-      window.removeEventListener('scroll', this.handleScroll);
 
-    }
+    // スクロールイベントを削除
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+
 
   };
 </script>

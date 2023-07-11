@@ -24,7 +24,7 @@
         <button type="submit" class="c-button button-delete" onclick="return confirm('このアイデアを削除します。よろしいですか？')">アイデアを削除</button>
       </div>
       @else
-        <p class="u-text-right">※すでに購入されたアイデアは編集・削除できません</p>
+        <p class="u-text-right u-padding__default">※すでに購入されたアイデアは編集・削除できません</p>
       @endif
     </form>
   </div>  

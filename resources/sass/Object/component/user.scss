@@ -4,6 +4,10 @@
     padding: $space-10 $space_default;
     margin: $space-30 $space_default;
 
+    @include mq(){
+        margin: $space-30 auto;
+    }
+
     &__wrap{
         align-items: center;
         display: flex;

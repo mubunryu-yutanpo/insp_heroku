@@ -5,4 +5,8 @@
     box-shadow: 0 0 5px 0 $brown;
     margin: 0 $space_default;
     padding: $space-20 $space_default;
+
+    @include mq(){
+        margin: 0;
+    }
 }

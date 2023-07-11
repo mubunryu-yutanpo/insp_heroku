@@ -1,4 +1,11 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);body,
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+
+html {
+  font-size: 16px;
+  font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "\30D2\30E9\30AE\30CE\89D2\30B4\30B7\30C3\30AF   Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "\FF2D\FF33   \FF30\30B4\30B7\30C3\30AF", "MS PGothic", sans-serif;
+}
+
+body,
 a,
 button,
 li,
@@ -52,6 +59,10 @@ h4 {
   font-weight: 500;
   line-height: 1.2;
   color: inherit;
+}
+
+h1 {
+  font-family: "Lobster", cursive;
 }
 
 h2 {
@@ -212,15 +223,12 @@ label {
 }
 
 .l-header {
-  background: white;
   width: 100%;
-  position: fixed;
-  z-index: 3;
 }
 
 .l-main {
   background-color: #ebe7e1;
-  padding: 80px 0 40px;
+  padding: 80px 0;
 }
 
 .l-main.toppage {
@@ -236,6 +244,8 @@ label {
 .l-footer {
   background-color: #44749d;
   color: #fff;
+  font-size: 14px;
+  font-family: "Lobster", cursive;
   padding: 10px 0;
   text-align: center;
   width: 100%;
@@ -277,6 +287,7 @@ label {
 .p-about__title-sub {
   color: #44749d;
   display: block;
+  font-family: "Lobster", cursive;
   font-size: 18px;
   text-align: center;
   margin-bottom: 20px;
@@ -438,7 +449,7 @@ label {
   box-shadow: 0 0 5px 0 #bdb8ad;
   margin: 0 auto;
   max-width: 980px;
-  padding: 100px 15px 20px;
+  padding: 100px 15px 40px;
   position: relative;
   width: 100%;
 }
@@ -607,7 +618,13 @@ label {
   }
 }
 
+.p-header.bg-change {
+  background: white;
+  background: linear-gradient(to bottom right, #ebe7e0 0%, white 100%);
+}
+
 .p-header__title {
+  font-size: 24px;
   margin: 0;
 }
 
@@ -650,6 +667,7 @@ label {
 .p-index__title-sub {
   color: #44749d;
   display: block;
+  font-family: "Lobster", cursive;
   font-size: 18px;
   text-align: center;
   margin-bottom: 20px;
@@ -701,6 +719,12 @@ label {
   width: 100%;
 }
 
+@media screen and (max-width:767px) {
+  .p-list {
+    width: calc(100% - 30px);
+  }
+}
+
 .p-list__container {
   display: flex;
   flex-wrap: wrap;
@@ -712,7 +736,7 @@ label {
   .p-list__container {
     align-items: center;
     flex-direction: column;
-    padding: 20px 15px;
+    padding: 0;
   }
 }
 
@@ -858,6 +882,12 @@ label {
   padding: 20px 15px;
 }
 
+@media screen and (max-width:767px) {
+  .p-news {
+    margin: 0;
+  }
+}
+
 .p-sort {
   box-sizing: border-box;
   margin-left: auto;
@@ -911,6 +941,7 @@ label {
 @media screen and (max-width:767px) {
   .p-title {
     font-size: 17px;
+    margin: 30px auto;
   }
 }
 
@@ -1597,13 +1628,19 @@ label {
 
 .c-menu {
   background: none;
+  display: none;
   height: 45px;
   width: 45px;
   z-index: 10;
 }
 
+@media screen and (max-width:767px) {
+  .c-menu {
+    display: block;
+  }
+}
+
 .c-menu__button {
-  display: none;
   background: none;
 }
 
@@ -1988,6 +2025,12 @@ label {
   border-radius: 5px;
   padding: 10px 15px;
   margin: 30px 15px;
+}
+
+@media screen and (max-width:767px) {
+  .c-user {
+    margin: 30px auto;
+  }
 }
 
 .c-user__wrap {

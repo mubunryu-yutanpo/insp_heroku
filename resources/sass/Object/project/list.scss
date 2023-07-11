@@ -3,6 +3,10 @@
     max-width: 980px;
     width: 100%;
 
+    @include mq(){
+        width: calc(100% - 30px);
+    }
+
 
     &__container{
         display: flex;
@@ -13,7 +17,7 @@
         @include mq(sm){
             align-items: center;
             flex-direction: column;
-            padding: $space_20 $space_default;
+            padding: 0;
         }
     }
 

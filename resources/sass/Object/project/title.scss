@@ -10,6 +10,7 @@
 
     @include mq(){
         font-size: 17px;
+        margin: $space-30 auto;
     }
 
     &-icon {

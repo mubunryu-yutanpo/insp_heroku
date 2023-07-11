@@ -4404,13 +4404,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       ideaList: [],
-      showSections: {
-        hero: false,
-        "catch": false,
-        about: false,
-        index: false,
-        closing: false
-      },
       // swiperの設定たち
       swiperOptions: {
         autoplay: {
@@ -4459,55 +4452,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee, null, [[0, 9]]);
       }))();
-    },
-    // スクロール位置に応じたセクションの表示
-    handleScroll: function handleScroll() {
-      var scrollPosition = window.scrollY;
-      var windowHeight = window.innerHeight;
-
-      // デバイスの種類を判別
-      function getDeviceType() {
-        var userAgent = navigator.userAgent;
-        if (/Android/i.test(userAgent)) {
-          return 'android';
-        } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
-          return 'ios';
-        } else {
-          return 'other';
-        }
-      }
-
-      // デバイスの種類に応じて表示位置を設定
-      var deviceType = getDeviceType();
-      var sections = {};
-      if (deviceType === 'android' || deviceType === 'ios') {
-        // スマホ用の表示位置.
-        sections = {
-          hero: 0,
-          "catch": 20,
-          about: 30,
-          index: 40,
-          closing: 50
-        };
-      } else {
-        // デスクトップ用の表示位置
-        sections = {
-          hero: 0,
-          "catch": 200,
-          about: 400,
-          index: 600,
-          closing: 800
-        };
-      }
-
-      // スクロール位置に応じて各セクションのフラグを切り替え
-      for (var section in this.showSections) {
-        if (scrollPosition >= sections[section]) {
-          this.showSections[section] = true;
-        } else {
-          this.showSections[section] = false;
-        }
-      }
     },
     // 平均評価点の取得
     getAverageScore: function getAverageScore(ideas) {
@@ -4561,6 +4505,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2, null, [[1, 19, 22, 25], [5, 12]]);
       }))();
+    },
+    // ヘッダーの背景色をスクロール中に変更する
+    handleScroll: function handleScroll() {
+      var heroElement = document.querySelector('.p-hero');
+      var headerElement = document.querySelector('.p-header');
+
+      // スクロール位置と要素の位置を比較
+      var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+      var heroBottom = heroElement.offsetTop + heroElement.offsetHeight;
+      if (scrollPosition >= heroBottom) {
+        // スクロール位置が要素を超えた場合、クラス名を追加
+        headerElement.classList.add('bg-change');
+      } else {
+        // スクロール位置が要素内にある場合、クラス名を削除
+        headerElement.classList.remove('bg-change');
+      }
     }
   },
   filters: {
@@ -4579,11 +4539,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // APIからアイデアデータを取得
     this.getIdeas();
 
-    // スクロールイベントを監視し、セクションの表示を切り替える
-    //window.addEventListener('scroll', this.handleScroll);
+    // スクロールイベントを取得
+    window.addEventListener('scroll', this.handleScroll);
   },
+  // スクロールイベントを削除
   beforeDestroy: function beforeDestroy() {
-    // コンポーネントが破棄される前にイベントリスナーを解除
     window.removeEventListener('scroll', this.handleScroll);
   }
 });

@@ -1,11 +1,15 @@
 .c-menu{
     background: none;
+    display: none;
     height: 45px;
     width: 45px;
     z-index: 10;
 
+    @include mq(){
+        display: block;
+    }
+
     &__button{
-        display: none;
         background: none;
 
         @include mq(){
