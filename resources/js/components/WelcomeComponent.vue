@@ -186,26 +186,6 @@ export default {
       this.$forceUpdate();
     },
 
-
-    // ヘッダーの背景色をスクロール中に変更する
-    handleScroll() {
-    const heroElement = document.querySelector('.p-hero');
-    const headerElement = document.querySelector('.p-header');
-
-    // スクロール位置と要素の位置を比較
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-    const heroBottom = heroElement.offsetTop + heroElement.offsetHeight;
-
-    if (scrollPosition >= heroBottom) {
-      // スクロール位置が要素を超えた場合、クラス名を追加
-      headerElement.classList.add('bg-change');
-    } else {
-      // スクロール位置が要素内にある場合、クラス名を削除
-      headerElement.classList.remove('bg-change');
-    }
-  }
-
-
   },
 
 
@@ -227,16 +207,7 @@ export default {
       // APIからアイデアデータを取得
       this.getIdeas();
 
-      // スクロールイベントを取得
-      window.addEventListener('scroll', this.handleScroll);
     },
-
-
-    // スクロールイベントを削除
-    beforeDestroy() {
-      window.removeEventListener('scroll', this.handleScroll);
-    },
-
 
   };
 </script>

@@ -28,6 +28,10 @@
     }
 
     &__minus{
-        margin: -80px 0;
+        margin: -120px 0;
+
+        @include mq(){
+            margin: -100px 0;
+        }
     }
 }

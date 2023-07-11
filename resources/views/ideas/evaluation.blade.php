@@ -3,12 +3,9 @@
 @section('title', 'レビュー投稿')
 
 @section('main')
+
     
   <div class="l-form">
-    <h2 class="p-title">
-      <i class="fa-regular fa-lightbulb fa-fw p-title-icon"></i>
-      レビュー投稿
-    </h2>
 
     <div class="c-title">アイデア名：{{ $idea->title }}</div>
 

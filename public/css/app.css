@@ -228,11 +228,13 @@ label {
 
 .l-main {
   background-color: #ebe7e1;
-  padding: 80px 0;
+  padding: 120px 0;
 }
 
-.l-main.toppage {
-  padding: 0;
+@media screen and (max-width:767px) {
+  .l-main {
+    padding: 100px 0;
+  }
 }
 
 .l-main__container {
@@ -1115,7 +1117,6 @@ label {
   color: #101010;
   font-size: 17px;
   margin-bottom: 15px;
-  text-decoration: underline;
 }
 
 @media screen and (max-width:479px) {
@@ -1176,6 +1177,11 @@ label {
 
 .c-card__review-icon.active {
   color: gold;
+}
+
+.c-card__date {
+  font-size: 14px;
+  text-align: right;
 }
 
 .c-card__container {
@@ -1981,7 +1987,7 @@ label {
 }
 
 .c-sort__item {
-  margin-right: 5px;
+  margin: 10px 5px;
 }
 
 .c-sort__item:last-child {
@@ -2122,7 +2128,13 @@ label {
 }
 
 .u-margin__minus {
-  margin: -80px 0;
+  margin: -120px 0;
+}
+
+@media screen and (max-width:767px) {
+  .u-margin__minus {
+    margin: -100px 0;
+  }
 }
 
 .u-padding__default {

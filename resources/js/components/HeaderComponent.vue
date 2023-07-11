@@ -33,11 +33,39 @@
         this.imageSrc = this.isOpen ? this.closeImageSrc : '/images/menu.png';
       },
 
+      // ヘッダーの背景色をスクロール中に変更する
+      handleScroll() {
+        const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+        const headerElement = document.querySelector('.p-header');
+
+        if (scrollPosition > 500) {
+          // スクロール位置が500pxを超えた場合、クラス名を追加
+          headerElement.classList.add('bg-change');
+        } else {
+          // スクロール位置が500px以内にある場合、クラス名を削除
+          headerElement.classList.remove('bg-change');
+        }
+      }
+
     },
+
+
+    mounted() {
+      // スクロールイベントを取得
+      window.addEventListener('scroll', this.handleScroll);
+
+    },
+
 
     computed: {
     ...mapState(['isLogin']),
-  }
+    },
+
+    // スクロールイベントを削除
+    beforeDestroy() {
+      window.removeEventListener('scroll', this.handleScroll);
+    },
+
 
   };
 </script>

@@ -2786,9 +2786,29 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       // メニューボタンのアイコン画像パスを切り替え
       this.isOpen = !this.isOpen;
       this.imageSrc = this.isOpen ? this.closeImageSrc : '/images/menu.png';
+    },
+    // ヘッダーの背景色をスクロール中に変更する
+    handleScroll: function handleScroll() {
+      var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+      var headerElement = document.querySelector('.p-header');
+      if (scrollPosition > 500) {
+        // スクロール位置が500pxを超えた場合、クラス名を追加
+        headerElement.classList.add('bg-change');
+      } else {
+        // スクロール位置が500px以内にある場合、クラス名を削除
+        headerElement.classList.remove('bg-change');
+      }
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['isLogin']))
+  mounted: function mounted() {
+    // スクロールイベントを取得
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['isLogin'])),
+  // スクロールイベントを削除
+  beforeDestroy: function beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
 });
 
 /***/ }),
@@ -4505,22 +4525,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2, null, [[1, 19, 22, 25], [5, 12]]);
       }))();
-    },
-    // ヘッダーの背景色をスクロール中に変更する
-    handleScroll: function handleScroll() {
-      var heroElement = document.querySelector('.p-hero');
-      var headerElement = document.querySelector('.p-header');
-
-      // スクロール位置と要素の位置を比較
-      var scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
-      var heroBottom = heroElement.offsetTop + heroElement.offsetHeight;
-      if (scrollPosition >= heroBottom) {
-        // スクロール位置が要素を超えた場合、クラス名を追加
-        headerElement.classList.add('bg-change');
-      } else {
-        // スクロール位置が要素内にある場合、クラス名を削除
-        headerElement.classList.remove('bg-change');
-      }
     }
   },
   filters: {
@@ -4538,13 +4542,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     // APIからアイデアデータを取得
     this.getIdeas();
-
-    // スクロールイベントを取得
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  // スクロールイベントを削除
-  beforeDestroy: function beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
   }
 });
 

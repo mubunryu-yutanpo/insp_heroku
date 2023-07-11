@@ -68,8 +68,6 @@
         color: $black;
         font-size: 17px;
         margin-bottom: $space_default;
-        text-decoration: underline;
-
 
         @include mq(sm){
             font-size: $font-size_default;
@@ -130,6 +128,11 @@
                 color: gold;
             }
         }
+    }
+
+    &__date{
+        font-size: $font-size_m;
+        text-align: right;
     }
 
     &__container{

@@ -35,7 +35,7 @@ class PurchaseNotification extends Mailable
     public function build()
     {
     return $this->view('email.purchase_notification')
-                ->subject('アイデアが購入されました')
+                ->subject('アイデア購入のお知らせ')
                 ->with([
                     'idea' => $this->idea,
                     'seller' => $this->seller,
