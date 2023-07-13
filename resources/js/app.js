@@ -19,15 +19,17 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('footer-component', require('./components/FooterComponent.vue').default);
+// Vue.component('header-component', require('./components/HeaderComponent.vue').default);
+
 Vue.component('avatarpreview-component', require('./components/AvatarPreviewComponent.vue').default);
 Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
 Vue.component('chat-component' , require('./components/ChatComponent.vue').default);
 Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
 Vue.component('detail-component' , require('./components/DetailComponent.vue').default);
 Vue.component('evaluation-component' , require('./components/EvaluationComponent.vue').default);
-Vue.component('footer-component', require('./components/FooterComponent.vue').default);
-Vue.component('header-component', require('./components/HeaderComponent.vue').default);
 Vue.component('ideas-component', require('./components/IdeasComponent.vue').default);
 Vue.component('ideareviews-component', require('./components/IdeaReviewsComponent.vue').default);
 Vue.component('mypage-component', require('./components/MypageComponent.vue').default);
@@ -39,7 +41,8 @@ Vue.component('thumbnailpreview-component', require('./components/ThumbnailPrevi
 Vue.component('userinfo-component', require('./components/UserInfoComponent.vue').default);
 Vue.component('welcome-component', require('./components/WelcomeComponent.vue').default);
 
-
+import HeaderComponent from './components/HeaderComponent.vue';
+import FooterComponent from './components/FooterComponent.vue';
 
 
 /**
@@ -50,79 +53,80 @@ Vue.component('welcome-component', require('./components/WelcomeComponent.vue').
 
 import axios from 'axios';
 import Vue from 'vue';
-
-
-// import ExampleComponent from './components/ExampleComponent.vue';
-// import TestComponent from './components/TestComponent.vue';
-
-import HeaderComponent from './components/HeaderComponent.vue';
-import FooterComponent from './components/FooterComponent.vue';
-import MypageComponent from './components/MypageComponent.vue';
-import IdeasComponent from './components/IdeasComponent.vue';
-import ReviewsComponent from './components/ReviewsComponent';
-import MyReviewsComponent from './components/MyReviewsComponent';
-import IdeaReviewsComponent from './components/IdeaReviewsComponent';
-import MyPostsComponent from './components/MyPostsComponent';
-import ChecksComponent from './components/ChecksComponent';
-import BoughtsComponent from './components/BoughtsComponent';
-
-
-import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
-Vue.use(VueRouter);
 const VueAwesomeSwiper = window.VueAwesomeSwiper;
 Vue.use(VueAwesomeSwiper);
 
 
 
+// ======== たぶんいらない =========
 
-const routes = [
-  {
-    // マイページ
-    path: '/api/mypage',
-    name: 'api.mypage',
-    component: MypageComponent
-  },
-  {
-    // アイデアの一覧
-    path: '/api/ideas',
-    name: 'api.ideas',
-    component: IdeasComponent
-  },
-  {
-    // レビュー一覧
-    path: '/api/reviews',
-    name: 'api.reviews',
-    component: ReviewsComponent
-  },
-  {
-    // 投稿したアイデア一覧
-    path: '/api/myposts',
-    name: 'api.myposts',
-    component: MyPostsComponent
-  },
-  {
-    // 気になる一覧
-    path: '/api/checks',
-    name: 'api.checks',
-    component: ChecksComponent
-  },
-  {
-    // 購入したアイデア一覧
-    path: '/api/boughts',
-    name: 'api.boughts',
-    component: BoughtsComponent
-  },
+// import ExampleComponent from './components/ExampleComponent.vue';
+// import TestComponent from './components/TestComponent.vue';
+// import MypageComponent from './components/MypageComponent.vue';
+// import IdeasComponent from './components/IdeasComponent.vue';
+// import ReviewsComponent from './components/ReviewsComponent';
+// import MyReviewsComponent from './components/MyReviewsComponent';
+// import IdeaReviewsComponent from './components/IdeaReviewsComponent';
+// import MyPostsComponent from './components/MyPostsComponent';
+// import ChecksComponent from './components/ChecksComponent';
+// import BoughtsComponent from './components/BoughtsComponent';
 
-];
+//import VueRouter from 'vue-router';
+//Vue.use(VueRouter);
 
-const router = new VueRouter({
-  mode: 'history',
-  routes
-});
 
+// const routes = [
+//   {
+//     // マイページ
+//     path: '/api/mypage',
+//     name: 'api.mypage',
+//     component: MypageComponent
+//   },
+//   {
+//     // アイデアの一覧
+//     path: '/api/ideas',
+//     name: 'api.ideas',
+//     component: IdeasComponent
+//   },
+//   {
+//     // レビュー一覧
+//     path: '/api/reviews',
+//     name: 'api.reviews',
+//     component: ReviewsComponent
+//   },
+//   {
+//     // 投稿したアイデア一覧
+//     path: '/api/myposts',
+//     name: 'api.myposts',
+//     component: MyPostsComponent
+//   },
+//   {
+//     // 気になる一覧
+//     path: '/api/checks',
+//     name: 'api.checks',
+//     component: ChecksComponent
+//   },
+//   {
+//     // 購入したアイデア一覧
+//     path: '/api/boughts',
+//     name: 'api.boughts',
+//     component: BoughtsComponent
+//   },
+
+// ];
+
+// const router = new VueRouter({
+//   mode: 'history',
+//   routes
+// });
+
+// ==========================================
+
+
+// Vuexでログイン状態をチェックできるように
 const store = new Vuex.Store({
   state: {
     isLogin: false,
@@ -138,7 +142,7 @@ const store = new Vuex.Store({
         const response = await axios.get('/api/checkAuth');
 
         if (response.data.authenticated) {
-          console.log('ログインしてるらしい');
+          console.log('ログインしてる');
           commit('SET_LOGIN_STATUS', true);
         } else {
           console.log('ログインしてない');
@@ -146,7 +150,6 @@ const store = new Vuex.Store({
         }
       } catch (error) {
         console.error('ログイン状態の取得に失敗しました', error);
-        console.log('ログインしているかどうか:', state.isLogin);
       }
     },      
   },
@@ -155,18 +158,15 @@ const store = new Vuex.Store({
   },
 });
 
+
 const mypage = new Vue({
   el: '#main',
-  router,
   store,
-  components: {
-    MypageComponent,
-  },
+  components: {},
 });
 
 const header = new Vue({
   el: '#header',
-  router,
   store,
   components: {
     HeaderComponent,
@@ -178,7 +178,6 @@ const header = new Vue({
 
 const footer = new Vue({
     el: '#footer',
-    router,
     components: {
         FooterComponent,
     },
