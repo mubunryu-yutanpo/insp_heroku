@@ -74,7 +74,11 @@
     &__submenu{
         display: flex;
         flex-direction: column;
-        margin: 0 $space_default 0 0;
+        margin: 0 $space_default;
+
+        @include mq(){
+            margin: 0;
+        }
 
         &-wrap{
             display: none;
@@ -131,8 +135,9 @@
         }
 
         &-icon{
-            opacity: 0;
+            color: $lightblue;
             margin-left: $space_5;
+            opacity: 0;
             position: absolute;
             top: 15%;
 

@@ -213,7 +213,7 @@
        // Twitterにシェア
         twitterShare() {
           // サムネのリンクは変更しないとダメ
-          const shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://inspiration-yutanpo.com");
+          const shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://yutanpo-output2.com/" + this.idea_id + "/idea");
           window.open(shareURL, '_blank');
         },
 

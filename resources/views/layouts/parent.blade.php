@@ -68,8 +68,8 @@
 
                   <p class="c-nav__submenu-title js-submenu-trigger">
                     一覧ページ
-                    <i class="c-nav__submenu-icon open fa-solid fa-chevron-down u-color__white  js-submenu-open-icon active"></i>
-                    <i class="c-nav__submenu-icon close fa-solid fa-chevron-up u-color__white js-submenu-close-icon"></i>
+                    <i class="c-nav__submenu-icon open fa-solid fa-chevron-down js-submenu-open-icon active"></i>
+                    <i class="c-nav__submenu-icon close fa-solid fa-chevron-up js-submenu-close-icon"></i>
                   </p>
 
                   <div class="c-nav__submenu-wrap js-submenu">

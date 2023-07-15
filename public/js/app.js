@@ -2635,7 +2635,7 @@ __webpack_require__.r(__webpack_exports__);
     // Twitterにシェア
     twitterShare: function twitterShare() {
       // サムネのリンクは変更しないとダメ
-      var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://inspiration-yutanpo.com");
+      var shareURL = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent("アイデア名：" + this.idea.title + " #Inspiration") + '&url=' + encodeURIComponent("https://yutanpo-output2.com/" + this.idea_id + "/idea");
       window.open(shareURL, '_blank');
     }
   },
