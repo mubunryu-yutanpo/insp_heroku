@@ -565,6 +565,7 @@ class ApiController extends Controller
             'user_id'  => $user_id,
             'idea_id'  => $id,
         ])->save();
+        
 
         // チャットのデータを作成
         $chat = new Chat;
