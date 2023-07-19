@@ -135,11 +135,12 @@ export default {
 
       // swiperの設定たち
       swiperOptions: {
+        loop: true, // ループ有効
+        //speed: 6000, // ループの時間
         autoplay: {
-          delay: 3000,
-        },
-        loop: true,
-        slidesPerView: 1,
+          delay: 3000, // 途切れなくループ
+        },        
+        slidesPerView: 1,// 一度に表示する枚数
         
         breakpoints: {
           
@@ -216,5 +217,8 @@ export default {
   .swiper-container{
     border-radius: 5px;
   }
+  /* .swiper-wrapper {
+    transition-timing-function: linear;
+  } */
 </style>
 

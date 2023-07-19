@@ -4426,11 +4426,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       ideaList: [],
       // swiperの設定たち
       swiperOptions: {
-        autoplay: {
-          delay: 3000
-        },
         loop: true,
+        // ループ有効
+        //speed: 6000, // ループの時間
+        autoplay: {
+          delay: 3000 // 途切れなくループ
+        },
+
         slidesPerView: 1,
+        // 一度に表示する枚数
+
         breakpoints: {
           420: {
             slidesPerView: 2,
@@ -8494,7 +8499,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.swiper-container{\n  border-radius: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.swiper-container{\n  border-radius: 5px;\n}\n/* .swiper-wrapper {\n  transition-timing-function: linear;\n} */\n", ""]);
 
 // exports
 
