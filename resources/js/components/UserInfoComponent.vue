@@ -112,4 +112,3 @@ import { mapState } from 'vuex';
   };
   </script>
   
-<!-- ページネーションの数減らしてエラーでないか確認 -->
