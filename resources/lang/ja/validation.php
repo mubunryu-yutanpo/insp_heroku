@@ -78,7 +78,7 @@ return [
     ],
     'max' => [
         'numeric' => 'The :attribute may not be greater than :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
+        'file' => ':attribute は、300MB以内のものを選択してください。',
         'string' => ':max以内で入力してください',
         'array' => 'The :attribute may not have more than :max items.',
     ],
@@ -112,8 +112,8 @@ return [
     'starts_with' => 'The :attribute must start with one of the following: :values',
     'string' => 'The :attribute must be a string.',
     'timezone' => 'The :attribute must be a valid zone.',
-    'unique' => 'The :attribute has already been taken.',
-    'uploaded' => 'The :attribute failed to upload.',
+    'unique' => ':attribute はすでに使用されています。',
+    'uploaded' => ':attribute のアップロードに失敗しました。',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
 

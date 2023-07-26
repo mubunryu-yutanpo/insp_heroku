@@ -55,3 +55,6 @@ class ValidRequest extends FormRequest
         ];
     }
 }
+
+// iPhoneの画像形式（HEIC形式）を保存できるように
+// ファイルサイズが小さすぎる。大きくするか、自動で圧縮かけるように。
