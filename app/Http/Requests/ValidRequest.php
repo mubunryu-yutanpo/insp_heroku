@@ -25,15 +25,15 @@ class ValidRequest extends FormRequest
     {
         return [
             //viewで設定している各フォームのname属性の名前になるよ
-            'name'         => 'sometimes|required|string|max:255',
+            'name'         => 'sometimes|required|string|max:20',
             'email'        => 'sometimes|required|string|max:255',
             'password'     => 'sometimes|required|string|max:255|min:8',
             'password_re'  => 'sometimes|required|same:password',
-            'introduction' => 'sometimes|nullable|string|max:255',
-            'avatar'       => 'sometimes|nullable|mimes:jpg,jpeg,png,gif|max:3072',
+            'introduction' => 'sometimes|nullable|string|max:300',
+            'avatar'       => 'sometimes|nullable|mimes:jpg,jpeg,png,gif,heic,heif|max:512000', // 500MBまで
             'title'        => 'sometimes|required|string|max:255',
             'category'     => 'sometimes|required|',
-            'thumbnail'     => 'sometimes|nullable|mimes:jpg,jpeg,png,gif|max:3072',
+            'thumbnail'     => 'sometimes|nullable|mimes:jpg,jpeg,png,gif,heic,heif|max:512000',
             'summary'      => 'sometimes|required|string|max:255',
             'description'  => 'sometimes|required|string|max:2000',
             'price'        => 'sometimes|required|integer|min:0|max:999999999|regex:/^[0-9]+$/',
@@ -47,10 +47,10 @@ class ValidRequest extends FormRequest
         return[
             //フォームリクエスト（バリデーション）のエラーメッセージ設定
             'category.required' => '選択してください',
-            'avatar.mimes' => 'ファイル形式はjpeg(jpg)、png、gifが利用可能です',
-            'avatar.max'   => 'ファイルサイズは3MB以下にしてください',
-            'thumbnail.mimes' => 'ファイル形式はjpeg(jpg)、png、gifが利用可能です',
-            'thumbnail.max'   => 'ファイルサイズは3MB以下にしてください',
+            'avatar.mimes' => 'ファイル形式はjpeg(jpg)、png、gif、heic（heif）が利用可能です',
+            'avatar.max'   => 'ファイルサイズは500MB以下にしてください',
+            'thumbnail.mimes' => 'ファイル形式はjpeg(jpg)、png、gif、heic（heif）が利用可能です',
+            'thumbnail.max'   => 'ファイルサイズは500MB以下にしてください',
 
         ];
     }

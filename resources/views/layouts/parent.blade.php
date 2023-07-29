@@ -6,7 +6,8 @@
     <title>@yield('title', 'home')</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@5.0.2/css/swiper.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@5.0.2/js/swiper.min.js"></script>

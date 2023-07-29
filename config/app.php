@@ -160,7 +160,7 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
-	Illuminate\View\ViewServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
 	//Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         /*
@@ -176,6 +176,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Intervention\Image\ImageServiceProvider::class,  // HEIC形式許可の部分で追記
     ],
 
     /*
@@ -226,7 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Image' => Intervention\Image\Facades\Image::class,  // HEIC形式許可の部分で追記
     ],
 
 ];

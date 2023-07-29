@@ -37,7 +37,7 @@
             <div class="c-form">
                 <div class="c-form__wrap wrap-password">
                 <label for="password" class="c-form__label">パスワード:</label>
-                <input id="password" type="password" class="c-form__input @error('password') valid-error @enderror" name="password" required autocomplete="current-password">
+                <input id="password" type="password" class="c-form__input @error('password') valid-error @enderror" name="password" required autocomplete="current-password" placeholder="半角英数字8文字以上">
                 @error('password')
                 <span class="c-form__error" role="alert">
                     <strong>{{ $message }}</strong>
@@ -49,7 +49,7 @@
             <div class="c-form">
                 <div class="c-form__wrap wrap-password">
                 <label for="password-confirm" class="c-form__label">パスワード(再入力):</label>
-                <input id="password-confirm" type="password" class="c-form__input @error('password-confirm') valid-error @enderror" name="password_confirmation" required autocomplete="new-password">
+                <input id="password-confirm" type="password" class="c-form__input @error('password-confirm') valid-error @enderror" name="password_confirmation" required autocomplete="new-password" placeholder="半角英数字8文字以上">
                 @error('password-confirm')
                 <span class="c-form__error" role="alert">
                     <strong>{{ $message }}</strong>

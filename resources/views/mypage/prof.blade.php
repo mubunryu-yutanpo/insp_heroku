@@ -3,7 +3,6 @@
 @section('title', 'プロフィール編集')
 
 @section('main')
-  <h2>プロフ編集ページ</h2>
   <div class="l-form">
     <div class="c-title">プロフィール編集</div>
 
@@ -12,7 +11,7 @@
 
       <div class="c-form">
         <label for="name" class="c-form__label">ユーザー名:</label>
-        <input type="text" name="name" id="name" class="c-form__input @error('name') valid-error @enderror" autocomplete="name" value="{{ old('name', $user->name) }}">
+        <input type="text" name="name" id="name" class="c-form__input @error('name') valid-error @enderror" autocomplete="name" value="{{ old('name', $user->name) }}" placeholder="20文字以内で入力してください">
         @error('name')
           <span class="c-form__error" role="alert">
             <strong>{{ $message }}</strong>
@@ -32,7 +31,7 @@
 
       <div class="c-form">
         <label for="password" class="c-form__label">パスワード:</label>
-        <input type="password" name="password" id="password" class="c-form__input @error('password') valid-error @enderror" autocomplete="password" value="{{ old('password') }}">
+        <input type="password" name="password" id="password" class="c-form__input @error('password') valid-error @enderror" autocomplete="password" value="{{ old('password') }}" placeholder="半角英数字8文字以上">
         @error('password')
           <span class="c-form__error" role="alert">
             <strong>{{ $message }}</strong>
@@ -52,7 +51,7 @@
 
       <div class="c-form">
         <label for="introduction" class="c-form__label">自己紹介文:</label>
-        <textarea name="introduction" id="introduction" cols="30" rows="10" class="c-form__input input-textarea @error('introduction') valid-error @enderror" autocomplete="introduction">{{ old('introduction', $user->introduction) }}</textarea>
+        <textarea name="introduction" id="introduction" cols="30" rows="10" class="c-form__input input-textarea @error('introduction') valid-error @enderror" autocomplete="introduction" placeholder="300文字以内で入力してください">{{ old('introduction', $user->introduction) }}</textarea>
         @error('introduction')
           <span class="c-form__error" role="alert">
             <strong>{{ $message }}</strong>
@@ -86,5 +85,37 @@
 @endsection
 
 @section('footer')
+
+<!-- 以下の部分をVueに直して、自己紹介部分にはVueコンポーネントを差し込む形がキレイかな。 -->
+
+<script>
+    // textareaの要素を取得します
+    const introductionTextarea = document.getElementById('introduction');
+
+    // 文字数カウントを表示する要素を作成します
+    const characterCountElement = document.createElement('span');
+    characterCountElement.classList.add('character-count');
+    characterCountElement.innerText = `${introductionTextarea.value.length}/300`;
+
+    // textareaの後ろに文字数カウント要素を挿入します
+    introductionTextarea.parentNode.appendChild(characterCountElement);
+
+    // 入力時に文字数カウントを更新します
+    introductionTextarea.addEventListener('input', () => {
+      const currentLength = introductionTextarea.value.length;
+      characterCountElement.innerText = `${currentLength}/300`;
+      console.log(currentLength);
+    });
+
+  </script>
+
+<style>
+  .character-count {
+    font-size: 12px;
+    color: #888;
+    margin-top: 5px;
+  }
+</style>
+
 
 
