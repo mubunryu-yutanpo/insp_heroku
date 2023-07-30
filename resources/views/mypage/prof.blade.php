@@ -51,7 +51,8 @@
 
       <div class="c-form">
         <label for="introduction" class="c-form__label">自己紹介文:</label>
-        <textarea name="introduction" id="introduction" cols="30" rows="10" class="c-form__input input-textarea @error('introduction') valid-error @enderror" autocomplete="introduction" placeholder="300文字以内で入力してください">{{ old('introduction', $user->introduction) }}</textarea>
+        <introduction-counter-component :errors="{{ $errors->has('introduction') ? 'true' : 'false' }}" :introduction="{{ $user->introduction ? json_encode($user->introduction) : " '' " }}">
+        </introduction-counter-component>
         @error('introduction')
           <span class="c-form__error" role="alert">
             <strong>{{ $message }}</strong>
@@ -85,37 +86,5 @@
 @endsection
 
 @section('footer')
-
-<!-- 以下の部分をVueに直して、自己紹介部分にはVueコンポーネントを差し込む形がキレイかな。 -->
-
-<script>
-    // textareaの要素を取得します
-    const introductionTextarea = document.getElementById('introduction');
-
-    // 文字数カウントを表示する要素を作成します
-    const characterCountElement = document.createElement('span');
-    characterCountElement.classList.add('character-count');
-    characterCountElement.innerText = `${introductionTextarea.value.length}/300`;
-
-    // textareaの後ろに文字数カウント要素を挿入します
-    introductionTextarea.parentNode.appendChild(characterCountElement);
-
-    // 入力時に文字数カウントを更新します
-    introductionTextarea.addEventListener('input', () => {
-      const currentLength = introductionTextarea.value.length;
-      characterCountElement.innerText = `${currentLength}/300`;
-      console.log(currentLength);
-    });
-
-  </script>
-
-<style>
-  .character-count {
-    font-size: 12px;
-    color: #888;
-    margin-top: 5px;
-  }
-</style>
-
 
 

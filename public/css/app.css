@@ -472,6 +472,7 @@ label {
 .p-detail__title {
   margin-bottom: 40px;
   text-align: center;
+  word-wrap: break-word;
 }
 
 @media screen and (max-width:479px) {
@@ -1117,6 +1118,7 @@ label {
   color: #101010;
   font-size: 17px;
   margin-bottom: 15px;
+  word-wrap: break-word;
 }
 
 @media screen and (max-width:479px) {

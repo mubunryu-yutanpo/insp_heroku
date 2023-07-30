@@ -16,9 +16,8 @@
 
         <div class="c-form">
           <label for="comment" class="c-form__label">コメント:</label>
-          <textarea name="comment" id="comment" cols="30" rows="10" class="c-form__input input-textarea @error('comment') valid-error @enderror">
-              {{ old('comment') }}
-          </textarea>
+          <comment-counter-component :errors="{{ $errors->has('comment') ? 'true' : 'false' }}">
+          </comment-counter-component>
           @error('comment')
               <span class="c-form__error" role="alert">
               <strong>{{ $message }}</strong>

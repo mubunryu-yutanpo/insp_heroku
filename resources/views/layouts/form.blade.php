@@ -46,8 +46,8 @@
   <div class="c-form">
     <div class="c-form__wrap">
       <label for="description" class="c-form__label">内容:</label>
-      <textarea name="description" id="description" cols="30" rows="10" class="c-form__input input-textarea @error('description') valid-error @enderror" autocomplete="description" maxlength="2000" placeholder="アイデアについて2,000文字以内で入力してください">{{ old('description', $idea->description ?? '') }}</textarea>
-    </div>
+      <description-counter-component :errors="{{ $errors->has('description') ? 'true' : 'false' }}" :description="'{{ isset($idea) ? json_encode($idea->description) : '' }}'">
+      </description-counter-component>
     @error('description')
       <span class="c-form__error" role="alert">
         <strong>{{ $message }}</strong>

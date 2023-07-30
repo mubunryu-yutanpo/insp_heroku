@@ -22,6 +22,7 @@
     &__title{
         margin-bottom: $space_40;
         text-align: center;
+        word-wrap: break-word;
 
         @include mq(sm){
             margin-bottom: $space-20;

@@ -28,10 +28,13 @@ Vue.component('avatarpreview-component', require('./components/AvatarPreviewComp
 Vue.component('boughts-component' , require('./components/BoughtsComponent.vue').default);
 Vue.component('chat-component' , require('./components/ChatComponent.vue').default);
 Vue.component('checks-component' , require('./components/ChecksComponent.vue').default);
+Vue.component('comment-counter-component', require('./components/CommentCounterComponent.vue').default);
+Vue.component('description-counter-component' , require('./components/DescriptionCounterComponent.vue').default);
 Vue.component('detail-component' , require('./components/DetailComponent.vue').default);
 Vue.component('evaluation-component' , require('./components/EvaluationComponent.vue').default);
 Vue.component('ideas-component', require('./components/IdeasComponent.vue').default);
 Vue.component('ideareviews-component', require('./components/IdeaReviewsComponent.vue').default);
+Vue.component('introduction-counter-component', require('./components/IntroductionCounterComponent.vue').default);
 Vue.component('mypage-component', require('./components/MypageComponent.vue').default);
 Vue.component('myposts-component' , require('./components/MyPostsComponent.vue').default);
 Vue.component('myreviews-component', require('./components/MyReviewsComponent.vue').default);
