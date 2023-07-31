@@ -28,11 +28,6 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/mypage';
 
-    // protected function redirectTo()
-    // {
-    //     $this->guard()->logout(); // ログアウト
-    //     return action('MypagesController@mypage'); // mypage()メソッドを呼び出す
-    // }
 
     /**
      * Create a new controller instance.
@@ -44,13 +39,4 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // protected function authenticated(Request $request, $user)
-    // {
-    //     // ログインが成功したら、APIトークンを生成して返す
-    //     $apiToken = $user->createToken('api_token')->plainTextToken;
-    //     return response()->json([
-    //         'access_token' => $apiToken,
-    //         'token_type' => 'Bearer',
-    //     ]);
-    // }
 }

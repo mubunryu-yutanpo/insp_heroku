@@ -112,8 +112,10 @@
         }
 
         &.card-toppage-thumbnail{
-            
+            height: 220px;
+
             @include mq(sm){
+                border-radius: 5px 0 0 0;
                 width: 100%;
             }
         }

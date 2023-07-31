@@ -98,7 +98,8 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
-        ],
-    ],
+            'throttle' => 60,
+            'emails' => 'App\Mail\CustomResetPassword', // カスタムメールクラス名に変更する
+        ],    ],
 
 ];

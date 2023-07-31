@@ -558,7 +558,8 @@ class ApiController extends Controller
             Mail::to($seller->email)->send(new PurchaseNotification($idea, $seller, $buyer));
             Mail::to($buyer->email)->send(new PurchaseNotification($idea, $seller, $buyer));
         } catch (\Exception $e) {
-            dd($e); // 例外を表示
+            // dd($e);
+            return redirect()->back()->with('flash_message', 'エラーが発生しました。購入に失敗しました。');
         }
                 
         $purchase->fill([

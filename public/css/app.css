@@ -835,11 +835,12 @@ label {
 .p-message__input {
   border: none;
   border-radius: 10px;
-  font-size: 18px;
+  color: #101010;
+  font-size: 16px;
   height: 50px;
   overflow-y: hidden;
   resize: none;
-  padding: 10px 0 10px 15px;
+  padding: 15px 0 10px 15px;
   vertical-align: middle;
   width: 100%;
 }
@@ -1167,8 +1168,13 @@ label {
   }
 }
 
+.c-card__thumbnail.card-toppage-thumbnail {
+  height: 220px;
+}
+
 @media screen and (max-width:479px) {
   .c-card__thumbnail.card-toppage-thumbnail {
+    border-radius: 5px 0 0 0;
     width: 100%;
   }
 }
@@ -1330,6 +1336,8 @@ label {
 }
 
 .c-chat__user-avatar {
+  border-radius: 100%;
+  height: 100%;
   vertical-align: bottom;
   width: 100%;
 }
@@ -1422,6 +1430,7 @@ label {
 .c-detail__reviews {
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .c-detail__reviews-wrap {
@@ -1439,6 +1448,8 @@ label {
 }
 
 .c-detail__reviews-image-item {
+  border-radius: 100%;
+  height: 100%;
   width: 100%;
 }
 
@@ -1731,7 +1742,7 @@ label {
 }
 
 .c-nav__list-link:hover {
-  color: #bdb8ad;
+  color: #FA7070;
   font-weight: bold;
   -webkit-text-decoration-style: dashed;
           text-decoration-style: dashed;
