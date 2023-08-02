@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -61,5 +62,17 @@ class User extends Authenticatable implements JWTSubject
     }
     public function review(){
         return $this->hasMany('App\Review');
+    }
+
+
+    /**
+     * パスワードリセット通知の送信をオーバーライド
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+      $this->notify(new ResetPasswordNotification($token));
     }
 }
