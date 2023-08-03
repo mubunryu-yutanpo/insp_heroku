@@ -1,0 +1,22 @@
+  .p-pagination{
+    padding-left: $space-10;
+
+    &__button{
+        background-color: $white;
+        border: none;
+        border-radius: 4px;
+        box-shadow: 0 1px 2px 0 $lightblue;
+        margin: $space-10 $space-5;
+        padding: $space_default $space-20;
+        
+        &.active{
+            background: $blue;
+            color: $white;      
+        }
+
+        &:hover{
+            background: $lightblue;
+            color: $black;        
+        }
+    }
+  }

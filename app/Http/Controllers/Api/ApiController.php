@@ -18,6 +18,9 @@ use App\Message;
 use App\Notification;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PurchaseNotification;
+use GuzzleHttp\Psr7\Query;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 
 
 class ApiController extends Controller
@@ -517,15 +520,23 @@ class ApiController extends Controller
         // 既にチェックされているかを判別し登録or解除
         $checked = Check::where('user_id', $user_id)->where('idea_id', $id)->first();
 
-        if($checked !== null){
-            $checked->delete();
-        }else{
-            $check = new Check;
-            $check->fill([
-                'user_id' => $user_id,
-                'idea_id' => $id,
-            ])->save();
+        try{
+
+            if($checked !== null){
+                $checked->delete();
+            }else{
+                $check = new Check;
+                $check->fill([
+                    'user_id' => $user_id,
+                    'idea_id' => $id,
+                ])->save();
+            }
+    
+        }catch(QueryException $e){
+            Log::error('気になるトグルSQLエラー：'. $e->getMessage());
+            return redirect()->back()->with('flash_messge', 'エラーが発生しました');
         }
+
     }
 
 
@@ -555,12 +566,9 @@ class ApiController extends Controller
         $buyer = Auth::user();
 
         try {
+
             Mail::to($seller->email)->send(new PurchaseNotification($idea, $seller, $buyer));
             Mail::to($buyer->email)->send(new PurchaseNotification($idea, $seller, $buyer));
-        } catch (\Exception $e) {
-            // dd($e);
-            return redirect()->back()->with('flash_message', 'エラーが発生しました。購入に失敗しました。');
-        }
                 
         $purchase->fill([
             'user_id'  => $user_id,
@@ -576,8 +584,16 @@ class ApiController extends Controller
             'idea_id'   => $id,
         ])->save();
 
-
         return redirect()->back()->with('flash_message', '購入しました！');
+
+        // エラー時
+        } catch (QueryException $e) {
+            // エラーをログに記録
+            Log::error('アイデア購入SQLエラー：' . $e->getMessage());
+            
+            return redirect()->back()->with('flash_message', 'エラーが発生しました。購入に失敗しました。');
+        }
+
 
     }
 
@@ -656,33 +672,50 @@ class ApiController extends Controller
         // $user_idには固定で購入者のIDが飛んでくる
         $user_id = (Auth::id() === (int)$user_id) ? $chat->buyer_id : $chat->seller_id;
 
-        // メッセージの追加
-        $msg = new Message;
-        $msg->fill([
-            // 送信者がどっちなのか判別して保存
-            'user_id' => $user_id,
-            'chat_id' => $chat_id,
-            'content' => $request->content,
-        ])
-        ->save();
 
-        // 通知の追加
-        $notification = new Notification;
+        try{
 
-        $receiver_id = ($user_id === $chat->buyer_id) ? $chat->seller_id : $chat->buyer_id;
-        $idea_id = $chat->idea_id;
+            // メッセージの追加
+            $msg = new Message;
+            $msgSaved = $msg->fill([
+                // 送信者がどっちなのか判別して保存
+                'user_id' => $user_id,
+                'chat_id' => $chat_id,
+                'content' => $request->content,
+            ])
+            ->save();
 
-        $notification->fill([
-            'receiver_id' => $receiver_id,
-            'sender_id'   => $user_id,
-            'chat_id'     => $chat_id,
-            'idea_id'     => $idea_id,
-            'read'        => false,
-            'content'     => $request->content,
-        ])
-        ->save();
+            // 通知の追加
+            $notification = new Notification;
 
-        return redirect()->back()->with('flash_message', 'メッセージを送信しました!');
+            $receiver_id = ($user_id === $chat->buyer_id) ? $chat->seller_id : $chat->buyer_id;
+            $idea_id = $chat->idea_id;
+
+            $notifySaved = $notification->fill([
+                'receiver_id' => $receiver_id,
+                'sender_id'   => $user_id,
+                'chat_id'     => $chat_id,
+                'idea_id'     => $idea_id,
+                'read'        => false,
+                'content'     => $request->content,
+            ])
+            ->save();
+
+            if($msgSaved && $notifySaved){
+                // メッセージと通知の処理がどちらも成功した場合
+                return redirect()->back()->with('flash_message', 'メッセージを送信しました!');
+
+            }else{
+                // 失敗時
+                return redirect()->back()->with('flase_messge', 'メッセージの送信に失敗しました');
+            }
+
+
+        }catch(QueryException $e){
+            Log::error('メッセージ送信SQLエラー：'. $e->getMessage());
+            return back()->with('flash_message', 'エラーが発生しました');
+        }
+
     }
 
 
@@ -759,9 +792,6 @@ class ApiController extends Controller
         ];
 
         return response()->json($data);
-
-
-        
 
     }
     

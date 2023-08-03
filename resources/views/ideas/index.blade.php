@@ -4,6 +4,7 @@
 
 @section('main')
   <ideas-component :category="{{ $category }}"></ideas-component>
+
 @endsection
 
 @section('footer')

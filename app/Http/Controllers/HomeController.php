@@ -87,7 +87,9 @@ class HomeController extends Controller
     public function index(){
         $category = Category::all();
 
-        return view('ideas/index', compact('category'));
+        $ideas = Idea::paginate(1);
+
+        return view('ideas/index', compact('category', 'ideas'));
     }
 
 

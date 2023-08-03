@@ -78,7 +78,7 @@
 
       <div class="p-list__container">
 
-        <div class="c-card card-ideas" v-for="idea in filteredIdeas" :key="idea.id">
+        <div class="c-card card-ideas" v-for="idea in paginatedIdeas" :key="idea.id">
           <div class="c-card__main">
             <img :src="idea.thumbnail" alt="" class="c-card__thumbnail">
             <div class="c-card__about">
@@ -103,8 +103,61 @@
           </div>
         </div>
       </div>
-
     </section>
+
+
+    <!-- ページネーションの追加 -->
+
+
+    <!-- 最初のページへ -->
+    <div class="p-pagination">
+      <button
+        v-if="currentPage > 1"
+        class="p-pagination__button"
+        @click="changePage(1)"
+      >
+        ＜
+      </button>
+
+      <!-- 前のページボタン -->
+      <button
+        v-if="currentPage > 2"
+        class="p-pagination__button"
+        @click="changePage(currentPage - 1)"
+      >
+        prev
+      </button>
+
+      <!-- 動的に変化するページボタン -->
+      <button
+        v-for="pageNumber in visiblePageNumbers"
+        :key="pageNumber"
+        class="p-pagination__button"
+        :class="{ active: currentPage === pageNumber }"
+        @click="changePage(pageNumber)"
+      >
+        {{ pageNumber }}
+      </button>
+
+      <!-- 次のページボタン -->
+      <button
+        v-if="currentPage < totalPages - 1"
+        class="p-pagination__button"
+        @click="changePage(currentPage + 1)"
+      >
+        next
+      </button>
+
+      <!-- 最終ページ -->
+      <button
+        v-if="currentPage < totalPages"
+        class="p-pagination__button"
+        @click="changePage(totalPages)"
+      >
+        ＞
+      </button>
+    </div>
+
   </div>
 </template>
 
@@ -122,6 +175,9 @@ export default {
       selectDate: null,
       isOpenSortMenu: false,  // 並び替えメニュー表示切り替え用
       isOpenSortSubmenu: '',  // 並び替えメニュー選択用
+
+      currentPage: 1,
+      itemsPerPage: 6,
     };
   },
 
@@ -181,7 +237,51 @@ export default {
 
       return filteredIdeas;
     },
-    
+
+
+    // フィルタリングされたアイデアの長さとitemsPerPageを元に、総ページ数を計算する
+    totalPages() {
+      return Math.ceil(this.filteredIdeas.length / this.itemsPerPage);
+    },
+
+    // 現在のページの開始インデックスと終了インデックスを計算する
+    startIndex() {
+      return (this.currentPage - 1) * this.itemsPerPage;
+    },
+    endIndex() {
+      return this.startIndex + this.itemsPerPage;
+    },
+
+    // 現在のページのアイデアを取得する
+    paginatedIdeas() {
+      return this.filteredIdeas.slice(this.startIndex, this.endIndex);
+    },
+
+
+    // ページネーションで表示するページ番号のリストを取得
+    visiblePageNumbers() {
+      const totalPages = this.totalPages;
+      const currentPage = this.currentPage;
+
+      const maxVisiblePages = 3; // 表示する最大のページ数
+
+      if (totalPages <= maxVisiblePages) {
+        return Array.from({ length: totalPages }, (_, i) => i + 1);
+
+      } else {
+        // 真ん中のボタン
+        const middlePage = Math.floor(maxVisiblePages / 2) + 1;
+
+        if (currentPage <= middlePage) {
+          return Array.from({ length: maxVisiblePages }, (_, i) => i + 1);
+        } else if (currentPage >= totalPages - middlePage + 1) {
+          return Array.from({ length: maxVisiblePages }, (_, i) => totalPages - maxVisiblePages + i + 1);
+        } else {
+          return Array.from({ length: maxVisiblePages }, (_, i) => currentPage - middlePage + i);
+        }
+      }
+    },
+
   },
   methods: {
 
@@ -248,6 +348,13 @@ export default {
       const day = date.getDate();
       return `${year}.${month}.${day}`;
     },
+
+
+    // ページネーションのページ変更を処理する
+    changePage(pageNumber) {
+      this.currentPage = pageNumber;
+    },
+
   },
 
   filters: {

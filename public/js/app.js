@@ -3161,6 +3161,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3174,7 +3227,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selectDate: null,
       isOpenSortMenu: false,
       // 並び替えメニュー表示切り替え用
-      isOpenSortSubmenu: '' // 並び替えメニュー選択用
+      isOpenSortSubmenu: '',
+      // 並び替えメニュー選択用
+
+      currentPage: 1,
+      itemsPerPage: 6
     };
   },
   mounted: function mounted() {
@@ -3246,6 +3303,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       });
       return filteredIdeas;
+    },
+    // フィルタリングされたアイデアの長さとitemsPerPageを元に、総ページ数を計算する
+    totalPages: function totalPages() {
+      return Math.ceil(this.filteredIdeas.length / this.itemsPerPage);
+    },
+    // 現在のページの開始インデックスと終了インデックスを計算する
+    startIndex: function startIndex() {
+      return (this.currentPage - 1) * this.itemsPerPage;
+    },
+    endIndex: function endIndex() {
+      return this.startIndex + this.itemsPerPage;
+    },
+    // 現在のページのアイデアを取得する
+    paginatedIdeas: function paginatedIdeas() {
+      return this.filteredIdeas.slice(this.startIndex, this.endIndex);
+    },
+    // ページネーションで表示するページ番号のリストを取得
+    visiblePageNumbers: function visiblePageNumbers() {
+      var totalPages = this.totalPages;
+      var currentPage = this.currentPage;
+      var maxVisiblePages = 3; // 表示する最大のページ数
+
+      if (totalPages <= maxVisiblePages) {
+        return Array.from({
+          length: totalPages
+        }, function (_, i) {
+          return i + 1;
+        });
+      } else {
+        // 真ん中のボタン
+        var middlePage = Math.floor(maxVisiblePages / 2) + 1;
+        if (currentPage <= middlePage) {
+          return Array.from({
+            length: maxVisiblePages
+          }, function (_, i) {
+            return i + 1;
+          });
+        } else if (currentPage >= totalPages - middlePage + 1) {
+          return Array.from({
+            length: maxVisiblePages
+          }, function (_, i) {
+            return totalPages - maxVisiblePages + i + 1;
+          });
+        } else {
+          return Array.from({
+            length: maxVisiblePages
+          }, function (_, i) {
+            return currentPage - middlePage + i;
+          });
+        }
+      }
     }
   }),
   methods: {
@@ -3344,6 +3452,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var month = date.getMonth() + 1;
       var day = date.getDate();
       return "".concat(year, ".").concat(month, ".").concat(day);
+    },
+    // ページネーションのページ変更を処理する
+    changePage: function changePage(pageNumber) {
+      this.currentPage = pageNumber;
     }
   },
   filters: {
@@ -41103,7 +41215,7 @@ var render = function () {
       _c(
         "div",
         { staticClass: "p-list__container" },
-        _vm._l(_vm.filteredIdeas, function (idea) {
+        _vm._l(_vm.paginatedIdeas, function (idea) {
           return _c("div", { key: idea.id, staticClass: "c-card card-ideas" }, [
             _c("div", { staticClass: "c-card__main" }, [
               _c("img", {
@@ -41204,6 +41316,90 @@ var render = function () {
         })
       ),
     ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "p-pagination" },
+      [
+        _vm.currentPage > 1
+          ? _c(
+              "button",
+              {
+                staticClass: "p-pagination__button",
+                on: {
+                  click: function ($event) {
+                    _vm.changePage(1)
+                  },
+                },
+              },
+              [_vm._v("\n      ＜\n    ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.currentPage > 2
+          ? _c(
+              "button",
+              {
+                staticClass: "p-pagination__button",
+                on: {
+                  click: function ($event) {
+                    _vm.changePage(_vm.currentPage - 1)
+                  },
+                },
+              },
+              [_vm._v("\n      prev\n    ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.visiblePageNumbers, function (pageNumber) {
+          return _c(
+            "button",
+            {
+              key: pageNumber,
+              staticClass: "p-pagination__button",
+              class: { active: _vm.currentPage === pageNumber },
+              on: {
+                click: function ($event) {
+                  _vm.changePage(pageNumber)
+                },
+              },
+            },
+            [_vm._v("\n      " + _vm._s(pageNumber) + "\n    ")]
+          )
+        }),
+        _vm._v(" "),
+        _vm.currentPage < _vm.totalPages - 1
+          ? _c(
+              "button",
+              {
+                staticClass: "p-pagination__button",
+                on: {
+                  click: function ($event) {
+                    _vm.changePage(_vm.currentPage + 1)
+                  },
+                },
+              },
+              [_vm._v("\n      next\n    ")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.currentPage < _vm.totalPages
+          ? _c(
+              "button",
+              {
+                staticClass: "p-pagination__button",
+                on: {
+                  click: function ($event) {
+                    _vm.changePage(_vm.totalPages)
+                  },
+                },
+              },
+              [_vm._v("\n      ＞\n    ")]
+            )
+          : _vm._e(),
+      ],
+      2
+    ),
   ])
 }
 var staticRenderFns = [

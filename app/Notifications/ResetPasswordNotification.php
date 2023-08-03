@@ -49,7 +49,7 @@ class ResetPasswordNotification extends Notification
         return (new MailMessage)
           ->subject($this->title)
           ->view(
-            'emails.reset-password',
+            'email.reset-password',
             [
               'reset_url' => url('password/reset', $this->token),
             ]);

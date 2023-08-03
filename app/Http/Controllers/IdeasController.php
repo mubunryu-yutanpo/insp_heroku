@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Events\QueryExecuted;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ValidRequest;
 use App\User;
 use App\Category;
@@ -17,7 +20,10 @@ use App\Review;
 class IdeasController extends Controller
 {
 
-    // ========アイデア新規投稿処理========
+    /* ================================================================
+      アイデア新規投稿処理
+    ================================================================*/
+
     public function ideaCreate(ValidRequest $request)
     {        
         $user_id = Auth::id();
@@ -32,22 +38,41 @@ class IdeasController extends Controller
             $filename = 'thumbnail-default.png';
         }
 
-        // DBに保存
-        $idea->fill([
-            'user_id'     => $user_id,
-            'category_id' => $request->category,
-            'title'       => $request->title,
-            'thumbnail'    => '/uploads/'.$filename,
-            'summary'     => $request->summary,
-            'description' => $request->description,
-            'price'       => $request->price,
-        ])->save();
-    
-        return redirect('mypage')->with('flash_message', __('registered!'));
+        try{
+            // DBに保存
+            $saved = $idea->fill([
+                'user_id'     => $user_id,
+                'category_id' => $request->category,
+                'title'       => $request->title,
+                'thumbnail'    => '/uploads/'.$filename,
+                'summary'     => $request->summary,
+                'description' => $request->description,
+                'price'       => $request->price,
+            ])->save();
+        
+            // DBの更新を確認
+            if ($saved) {
+                // 更新が成功した場合
+                return redirect('mypage')->with('flash_message', 'アイデアを投稿しました！');
+
+            }else{
+                // 更新が行われなかった場合の処理
+                return redirect('mypage')->with('flash_message', __('データの保存に失敗しました'));
+            }
+
+
+        }catch(QueryException $e){
+            // ログを出力
+            Log::error('アイデア新規投稿SQLエラー：' . $e->getMessage());
+            return redirect()->back()->with('flash_message', 'データの保存中にエラーが発生しました。');
+        }
     }
 
 
-    // ========アイデア編集（更新）処理========
+    /* ================================================================
+      アイデア編集（更新）処理
+    ================================================================*/
+
     public function ideaUpdate(ValidRequest $request, $id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -74,22 +99,41 @@ class IdeasController extends Controller
             return redirect('/')->with('flash_message', '失敗しました');
         }
 
-        // DB情報更新
-        $idea->update([
-            'user_id'     => $user_id,
-            'category_id' => $request->category,
-            'title'       => $request->title,
-            'thumbnail'    => '/uploads/'.$filename,
-            'summary'     => $request->summary,
-            'description' => $request->description,
-            'price'       => $request->price,
-        ]);
+        try{
 
-        return redirect('/mypage')->with('flash_message', __('updated!') );
+            // DB情報更新
+            $idea->update([
+                'user_id'     => $user_id,
+                'category_id' => $request->category,
+                'title'       => $request->title,
+                'thumbnail'    => '/uploads/'.$filename,
+                'summary'     => $request->summary,
+                'description' => $request->description,
+                'price'       => $request->price,
+            ]);
+
+            if($idea->wasChanged()){
+                // 成功した場合
+                return redirect('/mypage')->with('flash_message', '更新しました！' );
+
+            }else{
+                // 失敗
+                return redirect()->back()->with('flash_message', 'データの更新に失敗しました');
+            }
+
+
+        }catch(QueryException $e){
+            // エラー時
+            Log::error('アイデア編集SQLエラー：'. $e->getMessage());
+            return redirect()->back()->with('flash_message', 'エラーが発生しました。');
+
+        }
     }
 
+    /* ================================================================
+      アイデア削除処理
+    ================================================================*/
 
-    // ========アイデア削除処理========
     public function ideaDelete($id){
 
         if(!ctype_digit($id)){
@@ -102,45 +146,39 @@ class IdeasController extends Controller
 
         // アイデアが存在しない場合
         if (!$idea) {
-            return redirect('/')->with('flash_message', '失敗しました');
+            return redirect('/')->with('flash_message', 'アイデアが存在しません');
         }
 
         // アイデアの所持者とアクセスしているユーザーが異なる場合
         if ($owner_id !== $user_id) {
-            return redirect('/')->with('flash_message', '失敗しました');
+            return redirect('/')->with('flash_message', '権限がありません');
         }
 
-        $idea->delete();
+        try{
 
-        return redirect('/mypage')->with('flash_message', __('deleted!') );
-    }
+            $deleted = $idea->delete();
 
-        
-    // ========気になるリストへ========
-    public function checkIdeas($id){
-        if(!ctype_digit($id)){
-            return redirect('/')->with('flash_message', __('不正な操作が行われました'));
+            if($deleted){
+                // 成功時
+                return redirect('/mypage')->with('flash_message', __('deleted!') );
+
+            }else{
+                // 失敗時
+                return redirect()->back()->with('flash_message', 'データ更新時にエラーが発生しました。');
+            }
+
+        }catch(QueryException $e){
+            // エラー時
+            Log::error('アイデア削除SQLエラー：'. $e->getMessage());
+            return redirect()->back()->with('flash_message', 'エラーが発生しました');
         }
-
-        $checkIdeas = null;
-        $checks = Check::where('user_id', $id)->get();
-
-        if ($checks->isNotEmpty()) {
-            $idea_ids = $checks->pluck('idea_id')->toArray();
-            $ideas = Idea::whereIn('id', $ideaI_ids)->paginate(10);
-            $checkIdeas = $ideas;
-        }
-
-        $data = [
-            'checkIdeas' => $checkIdeas,
-        ];
-
-        return response()->json($data);
     }
 
 
+    /* ================================================================
+      レビュー投稿
+    ================================================================*/
 
-    // ========レビュー投稿========
     public function postReview(ValidRequest $request, $id){
         if(!ctype_digit($id)){
             return redirect('/')->with('flash_message', __('不正な操作が行われました'));
@@ -149,14 +187,32 @@ class IdeasController extends Controller
         $user_id = Auth::id();
         $review = new Review;
 
-        $review->fill([
-            'user_id' => $user_id,
-            'idea_id' => $id,
-            'comment' => $request->comment,
-            'score'   => $request->score,
-        ])->save();
 
-        return redirect('mypage')->with('flash_message', 'レビューを投稿しました！');
+        try{
+            // 投稿を保存
+            $saved = $review->fill([
+                'user_id' => $user_id,
+                'idea_id' => $id,
+                'comment' => $request->comment,
+                'score'   => $request->score,
+            ])->save();
+
+            if($saved){
+                // 成功時
+                return redirect('mypage')->with('flash_message', 'レビューを投稿しました！');
+
+            }else{
+                // 失敗時
+                return redirect()->back()->with('flash_message', 'データの保存中にエラーが発生しました');
+            }
+    
+
+        }catch(QueryException $e){
+            // エラー時
+            Log::error('レビュー投稿SQLエラー：'. $e->getMessage());
+            return redirect()->back()->with('flash_message', 'エラーが発生しました');
+        }
+
 
     }
 
