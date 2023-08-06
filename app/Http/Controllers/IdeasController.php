@@ -49,9 +49,11 @@ class IdeasController extends Controller
                 'description' => $request->description,
                 'price'       => $request->price,
             ])->save();
+
         
             // DBの更新を確認
             if ($saved) {
+
                 // 更新が成功した場合
                 return redirect('mypage')->with('flash_message', 'アイデアを投稿しました！');
 

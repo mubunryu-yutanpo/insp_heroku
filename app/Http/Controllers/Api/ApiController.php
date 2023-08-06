@@ -569,30 +569,30 @@ class ApiController extends Controller
 
             Mail::to($seller->email)->send(new PurchaseNotification($idea, $seller, $buyer));
             Mail::to($buyer->email)->send(new PurchaseNotification($idea, $seller, $buyer));
-                
-        $purchase->fill([
-            'user_id'  => $user_id,
-            'idea_id'  => $id,
-        ])->save();
-        
-
-        // チャットのデータを作成
-        $chat = new Chat;
-        $chat->fill([
-            'buyer_id'  => $user_id,
-            'seller_id' => $sell_user,
-            'idea_id'   => $id,
-        ])->save();
-
-        return redirect()->back()->with('flash_message', '購入しました！');
-
-        // エラー時
-        } catch (QueryException $e) {
-            // エラーをログに記録
-            Log::error('アイデア購入SQLエラー：' . $e->getMessage());
             
-            return redirect()->back()->with('flash_message', 'エラーが発生しました。購入に失敗しました。');
-        }
+            $purchase->fill([
+                'user_id'  => $user_id,
+                'idea_id'  => $id,
+            ])->save();
+            
+
+            // チャットのデータを作成
+            $chat = new Chat;
+            $chat->fill([
+                'buyer_id'  => $user_id,
+                'seller_id' => $sell_user,
+                'idea_id'   => $id,
+            ])->save();
+
+            return redirect()->back()->with('flash_message', '購入しました！');
+
+            // エラー時
+            } catch (QueryException $e) {
+                // エラーをログに記録
+                Log::error('アイデア購入SQLエラー：' . $e->getMessage());
+                
+                return redirect()->back()->with('flash_message', 'エラーが発生しました。購入に失敗しました。');
+            }
 
 
     }
@@ -701,6 +701,7 @@ class ApiController extends Controller
             ])
             ->save();
 
+
             if($msgSaved && $notifySaved){
                 // メッセージと通知の処理がどちらも成功した場合
                 return redirect()->back()->with('flash_message', 'メッセージを送信しました!');
@@ -713,7 +714,7 @@ class ApiController extends Controller
 
         }catch(QueryException $e){
             Log::error('メッセージ送信SQLエラー：'. $e->getMessage());
-            return back()->with('flash_message', 'エラーが発生しました');
+            return redirect('/mypage')->with('flash_message', 'エラーが発生しました');
         }
 
     }

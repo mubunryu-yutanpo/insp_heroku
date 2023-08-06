@@ -1,22 +1,28 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\Chat;
+use App\Notification;
 use App\User;
+use App\Chat;
 use App\Idea;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
-$factory->define(Chat::class, function (Faker $faker) {
+$factory->define(Notification::class, function (Faker $faker) {
     return [
-        'buyer_id' => function () {
+        'receiver_id' => function () {
             return factory(User::class)->create()->id;
         },
-        'seller_id' => function () {
+        'sender_id' => function () {
             return factory(User::class)->create()->id;
+        },
+        'chat_id' => function () {
+            return factory(Chat::class)->create()->id;
         },
         'idea_id' => function () {
             return factory(Idea::class)->create()->id;
         },
+        'read' => false,
+        'content' => $faker->sentence,
     ];
 });
