@@ -48,7 +48,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ topIdeasメソッド
+    // テスト：topIdeas（TOPページのアイデア一覧取得）
     // =================================================================
 
     public function testTopIdeas()
@@ -68,7 +68,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ mypageメソッド
+    // テスト： mypage
     // =================================================================
 
     public function testMypage(){
@@ -95,7 +95,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ avatar($id)メソッド
+    // テスト： avatar（アバター情報取得）
     // =================================================================
 
     public function testAvatar(){
@@ -118,7 +118,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ ideaDetail($id)メソッド
+    // テスト： ideaDetail(アイデア詳細）
     // =================================================================
 
     public function testIdeaDetail(){
@@ -149,7 +149,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ checks($id)メソッド
+    // テスト： checks(気になる一覧）
     // =================================================================
 
     public function testChecks()
@@ -176,7 +176,7 @@ class ApiControllerTest extends TestCase
 
 
     // =================================================================
-    // テスト：ApiController/ boughts($id)メソッド
+    // テスト： boughts(購入済み一覧)
     // =================================================================
 
     public function testBoughts()
@@ -201,7 +201,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ myPosts($id)メソッド
+    // テスト： myPosts(投稿済み一覧)
     // =================================================================
 
     public function testMyPosts()
@@ -226,7 +226,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ reviewsメソッド
+    // テスト： reviews（全てのレビュー）
     // =================================================================
 
     public function testReviews()
@@ -251,7 +251,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ myReviews($id)メソッド
+    // テスト： myReviews(自分のアイデアに対するレビュー一覧）
     // =================================================================
 
     public function testMyReviews()
@@ -280,7 +280,7 @@ class ApiControllerTest extends TestCase
 
 
     // =================================================================
-    // テスト：ApiController/ ideaReviews($id)メソッド
+    // テスト： ideaReviews(特定のアイデアに対するレビュー一覧）
     // =================================================================
 
 
@@ -311,7 +311,7 @@ class ApiControllerTest extends TestCase
     }
     
     // =================================================================
-    // テスト：ApiController/ ideaReviews($id)メソッド
+    // テスト： toggleCheck(気になるの状態チェンジ)
     // =================================================================
 
 
@@ -357,7 +357,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ getAverage($id)メソッド
+    // テスト： getAverage（平均点取得）
     // =================================================================
 
     public function testGetAverage()
@@ -380,7 +380,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ buy($id)メソッド
+    // テスト： buy(アイデア購入）
     // =================================================================
 
     public function testBuyIdea()
@@ -416,7 +416,7 @@ class ApiControllerTest extends TestCase
 
 
     // =================================================================
-    // テスト：ApiController/ messageメソッド
+    // テスト： message（メッセージ情報取得）
     // =================================================================
 
     public function testMessage()
@@ -456,7 +456,7 @@ class ApiControllerTest extends TestCase
     }
     
     // =================================================================
-    // テスト：ApiController/ addMessageメソッド
+    // テスト： addMessage（メッセージ＆通知追加）
     // =================================================================
 
     public function testAddMessage()
@@ -502,7 +502,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ markAsRead($id)メソッド
+    // テスト： markAsRead(通知の既読化）
     // =================================================================
 
     public function testMarkAsRead()
@@ -528,7 +528,7 @@ class ApiControllerTest extends TestCase
     }
 
     // =================================================================
-    // テスト：ApiController/ getNotification($id)メソッド
+    // テスト： getNotification(通知情報取得）
     // =================================================================
 
 
@@ -558,7 +558,7 @@ class ApiControllerTest extends TestCase
 
 
     // =================================================================
-    // テスト：ApiController/ getNotification($id)メソッド
+    // テスト： userInfo(ユーザーに紐づくアイデア一覧)
     // =================================================================
 
     public function testUserIdeas()

@@ -54,7 +54,7 @@ class IdeasControllerTest extends TestCase
 
 
     // =================================================================
-    // テスト：ApiController/ ideaCreateメソッド
+    // テスト：ideaCreate(アイデア新規投稿)
     // =================================================================
 
     public function testIdeaCreate()
@@ -77,26 +77,106 @@ class IdeasControllerTest extends TestCase
         // APIエンドポイントを呼び出す
         $response = $this->post('/new', $data); // 第二引数にリクエストデータを渡す
     
-        // 期待されるリダイレクトが返ってきたかを確認
-        //$response->assertRedirect('mypage');
     
         // データベースにデータが保存されたかを確認
         $createdIdea = Idea::where([
             'user_id' => $user->id,
-            // 'category_id' => $data['category'],
-            // 'title' => $data['title'],
-            // 'thumbnail' => '/uploads/thumbnail-default.png', // デフォルトのサムネイル
-            // 'summary' => $data['summary'],
-            // 'description' => $data['description'],
-            // 'price' => $data['price'],
+            'category_id' => $data['category'],
+            'title' => $data['title'],
+            'thumbnail' => '/uploads/thumbnail-default.png', // デフォルトのサムネイル
+            'summary' => $data['summary'],
+            'description' => $data['description'],
+            'price' => $data['price'],
         ])->first();
 
-        //dd($data);
-
         $this->assertNotNull($createdIdea);
-    
     }
     
-    
+    // =================================================================
+    // テスト：ideaUpdate(アイデア更新)
+    // =================================================================
+
+    public function testIdeaUpdate()
+    {
+        // テスト用のユーザーを作成（認証済みの状態をシミュレート）
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        // テスト用のリクエストデータを作成
+        $data = [
+            'category' => 1,
+            'title' => '更新されたタイトル',
+            'thumbnail' => null, // サムネイルをアップロードしない場合
+            'summary' => '更新されたサマリー',
+            'description' => '更新された詳細説明',
+            'price' => 7000,
+        ];
+
+        // アイデアを作成してデータベースに保存
+        $idea = factory(Idea::class)->create(['user_id' => $user->id]);
+
+        // APIエンドポイントを呼び出す
+        $response = $this->post('/' .$idea->id. '/idea/edit', $data); 
+
+        // データベースにデータが更新されたかを確認
+        $updatedIdea = Idea::find($idea->id);
+
+        $this->assertEquals($data['category'], $updatedIdea->category_id);
+        $this->assertEquals($data['title'], $updatedIdea->title);
+        $this->assertEquals('/uploads/thumbnail-default.png', $updatedIdea->thumbnail); // サムネイルは更新されない
+        $this->assertEquals($data['summary'], $updatedIdea->summary);
+        $this->assertEquals($data['description'], $updatedIdea->description);
+        $this->assertEquals($data['price'], $updatedIdea->price);
+        
+        // 成功時のリダイレクトを確認
+        $response->assertRedirect('/mypage');
+        $response->assertSessionHas('flash_message', '更新しました！');
+    }
+
+    // =================================================================
+    // テスト：ideaDelete(アイデア削除)
+    // =================================================================
+
+    public function testIdeaDelete()
+    {
+        // テスト用のユーザーを作成（認証済みの状態をシミュレート）
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        // アイデアを作成してデータベースに保存
+        $idea = factory(Idea::class)->create(['user_id' => $user->id]);
+
+        // 削除されるか
+        $response = $this->post('/idea/' . $idea->id. '/delete');
+        $response->assertRedirect('/mypage');
+        $response->assertSessionHas('flash_message', '削除しました！');
+
+    }
+
+    // =================================================================
+    // テスト：postReview(レビュー投稿)
+    // =================================================================
+
+    public function testPostReview()
+    {
+        // テスト用のユーザーを作成（認証済みの状態をシミュレート）
+        $user = factory(User::class)->create();
+        $this->actingAs($user);
+
+        // テスト用のアイデアを作成してデータベースに保存
+        $idea = factory(Idea::class)->create();
+
+        // レビューのテストデータ
+        $data = [
+            'comment' => 'テストコメント',
+            'score' => 5,
+        ];
+
+        // 正常に保存されることを確認
+        $response = $this->post('/'. $idea->id. '/review/create' , $data);
+        $response->assertRedirect('mypage');
+        $response->assertSessionHas('flash_message', 'レビューを投稿しました！');
+
+    }
 
 }

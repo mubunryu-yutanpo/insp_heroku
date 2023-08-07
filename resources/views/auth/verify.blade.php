@@ -1,27 +1,30 @@
+
 @extends('layouts.parent')
 
-@section('title', 'メールアドレス認証')
+@section('title', 'メール認証発行')
 
 @section('main')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+<div class="u-margin__small-contents">
+    <div class="l-form">
+        <div class="c-title" style="font-weight: bold;">メールアドレスを確認してください。</div>
+        
+        <div style="padding: 20px 15px;">
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+            @if (session('resent'))
+                <div class="alert alert-success" role="alert">
+                    メールを送信しました！
                 </div>
-            </div>
+            @endif
+
+            <p style="margin-bottom: 15px;">メールを送信しました。メール内のリンクをクリックし、本登録をお願いします。</p>
+            <p>メールが届いていない場合は、
+                <a href="{{ route('verification.resend') }}">ここをクリックしてください。</a>
+                再送いたします。
+            </p>
         </div>
     </div>
+
 </div>
-<!-- 現状の設定ではこのViewは使わない -->
+
 @endsection
+

@@ -162,7 +162,7 @@ class IdeasController extends Controller
 
             if($deleted){
                 // 成功時
-                return redirect('/mypage')->with('flash_message', __('deleted!') );
+                return redirect('/mypage')->with('flash_message', '削除しました！' );
 
             }else{
                 // 失敗時

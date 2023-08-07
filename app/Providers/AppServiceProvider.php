@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\Notifications\VerifyEmail;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,5 +30,10 @@ class AppServiceProvider extends ServiceProvider
                 \Log::info("Query Time:{$query->time}s] $query->sql");
             });
         }
+
+        // メール認証用
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
+            return (new VerifyEmailJapanese($url))->to($notifiable);
+        });
     }
 }

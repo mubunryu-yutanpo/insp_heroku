@@ -6,9 +6,9 @@ use Illuminate\Notifications\Notifiable;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+// use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
@@ -74,5 +74,13 @@ class User extends Authenticatable implements JWTSubject
     public function sendPasswordResetNotification($token)
     {
       $this->notify(new ResetPasswordNotification($token));
+    }
+
+
+    // メール認証用の確認メールの内容を自作（日本語版）のものに
+    public function sendEmailVerificationNotification()
+    {
+        // 日本語化したメールを送信
+        $this->notify(new \App\Notifications\VerifyEmailJapanese);
     }
 }

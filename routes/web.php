@@ -15,7 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// Auth::routes();
+Auth::routes(['verify' => true]);
+
 
 //全ユーザーのアイデア一覧画面
 Route::get('/index', 'HomeController@index')->name('ideas.index');
@@ -27,8 +29,9 @@ Route::get('/reviews', 'HomeController@reviews')->name('reviews');
 Route::get('/idea/{id}/reviews', 'HomeController@ideaReviews')->name('idea.reviews');
 
 
-Route::group(['middleware' => 'auth'], function(){
- 
+//Route::group(['middleware' => 'auth'], function(){
+  Route::middleware('verified')->group(function () {
+    Route::group(['middleware' => 'auth'], function () {
   // ======================Viewを返すルート============================
     // マイページへ
     Route::get('/mypage', 'HomeController@mypage')->name('mypage');
@@ -75,7 +78,7 @@ Route::group(['middleware' => 'auth'], function(){
 
   // ======================ログアウト============================
     Route::get('/logout', 'HomeController@logout')->name('logout');
-
+  });
 });
 
 

@@ -76,9 +76,11 @@ class MypagesController extends Controller
         if ($request->password && Hash::check($request->password, $user->password)) {
             $password = Hash::make($request->password);
         } else {
+
             // 入力されたパスワードとDBに保存されているパスワードが異なる場合、バリデーションエラーを返す
             return redirect()->back()->withErrors(['password' => '現在のパスワードと一致しません']);
         }
+
 
         // メールアドレスの変更を検出
         $isEmailUpdated = $user->email !== $request->email;
@@ -107,7 +109,6 @@ class MypagesController extends Controller
                     Mail::to($user->email)->send(new ProfileUpdatedMail($isEmailUpdated, $user, $oldEmail));
                     Mail::to($oldEmail)->send(new ProfileUpdatedMail($isEmailUpdated, $user, $oldEmail));
                 }
-                
                 return redirect('/mypage')->with('flash_message', '情報を更新しました');
 
             }else{
