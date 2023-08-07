@@ -35,5 +35,8 @@ class AppServiceProvider extends ServiceProvider
         VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new VerifyEmailJapanese($url))->to($notifiable);
         });
+
+        // herokuのマイグレーションエラー対策
+        Schema::defaultStringLength(191);
     }
 }
