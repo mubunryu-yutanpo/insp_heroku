@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ValidRequest;
 use App\User;
 use App\Category;
@@ -16,6 +17,7 @@ use App\Check;
 use App\Idea;
 use App\Purchase;
 use App\Review;
+use Image;
 
 class IdeasController extends Controller
 {
@@ -30,11 +32,20 @@ class IdeasController extends Controller
         $idea = new Idea;
 
         // サムネ画像のパス名を変数に
-        if($request->thumbnail !== null){
+        if ($request->hasFile('thumbnail')) {
             $avatar = $request->file('thumbnail');
             $filename = $avatar->getClientOriginalName();
-            $avatar->move(public_path('uploads'), $filename);
-        }else{
+
+            // 画像を圧縮して保存
+            $compressedImage = Image::make($avatar)->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            
+            $path = 'uploads/'.$filename;
+            Storage::put($path, (string)$compressedImage->encode());
+        
+        } else {
             $filename = 'thumbnail-default.png';
         }
 
@@ -84,15 +95,20 @@ class IdeasController extends Controller
         $idea = Idea::find($id);
 
         // サムネ画像のパス名を変数に
-        if($request->thumbnail !== null){
-            $thumbnail = $request->file('thumbnail');
-            $filename = $thumbnail->getClientOriginalName();
-            $thumbnail->move(public_path('uploads'), $filename);
-       
-        }elseif($idea->thumbnail !== null){
-            $filename = basename($idea->thumbnail);
-       
-        }else{
+        if ($request->hasFile('thumbnail')) {
+            $avatar = $request->file('thumbnail');
+            $filename = $avatar->getClientOriginalName();
+
+            // 画像を圧縮して保存
+            $compressedImage = Image::make($avatar)->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            
+            $path = 'uploads/'.$filename;
+            Storage::put($path, (string)$compressedImage->encode());
+        
+        } else {
             $filename = 'thumbnail-default.png';
         }
 

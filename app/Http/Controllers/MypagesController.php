@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -22,6 +21,8 @@ use App\Purchase;
 use App\Review;
 use App\Chat;
 use App\Message;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class MypagesController extends Controller
 {
@@ -39,7 +40,7 @@ class MypagesController extends Controller
         // ユーザー情報を取得
         $user = User::find($id);
 
-        // アバター画像のパス名を変数に
+           // アバター画像のパス名を変数に
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
 
@@ -48,26 +49,25 @@ class MypagesController extends Controller
                 $filename = $avatar->getClientOriginalName() . '.jpg';
                 $image = Image::make($avatar->getRealPath());
 
-                // 変換に成功した場合のみ保存
-                if ($image->save(public_path('uploads') . '/' . $filename, 75)) {
-                    // 保存に成功した場合
-                } else {
-                    // 保存に失敗した場合
-                    return redirect()->back()->withErrors(['avatar' => '画像の保存中にエラーが発生しました']);
-                }
+                // 画像のリサイズと圧縮
+                $compressedImage = $image->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })->encode('jpg', 75);
+                
+                $path = 'uploads/'.$filename;
+                Storage::put($path, (string)$compressedImage);
             } else {
                 $filename = $avatar->getClientOriginalName();
-                if (!$avatar->move(public_path('uploads'), $filename)) {
-                    // 保存に失敗した場合
-                    return redirect()->back()->withErrors(['avatar' => '画像の保存中にエラーが発生しました']);
-                }
-            }
 
+                // 通常の画像の保存
+                $path = 'uploads/'.$filename;
+                Storage::putFileAs('uploads', $avatar, $filename);
+            }
         } else if ($user->avatar !== 'default-avatar.png') {
-            // 画像を変更しない場合、/uploads/を除去して保存
+            // 画像を変更しない場合
             $filename = $user->avatar;
             $filename = str_replace('/uploads/', '', $filename);
-
         } else {
             $filename = 'default-avatar.png';
         }
