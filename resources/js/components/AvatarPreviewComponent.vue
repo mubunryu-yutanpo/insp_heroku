@@ -55,16 +55,16 @@
         const file = this.$refs.fileInput.files[0];
   
         // ファイル形式のバリデーション
-        const allowedFormats = ['image/jpeg', 'image/png', 'image/gif'];
+        const allowedFormats = ['image/jpeg', 'image/png', 'image/gif', 'image/heic', 'image/heif'];
         if (!allowedFormats.includes(file.type)) {
           this.validError = '画像の形式が無効です。JPEG、PNG、GIF形式の画像を選択してください。';
           return;
         }
   
         // ファイルサイズのバリデーション
-        const maxSizeInBytes = 3145728; // 3MB
+        const maxSizeInBytes = 500 * 1024 * 1024; // 500MB
         if (file.size > maxSizeInBytes) {
-          this.validError = 'ファイルサイズが3MB以下の画像を選択してください。';
+          this.validError = 'ファイルサイズが500MB以下の画像を選択してください。';
           return;
         }
   
