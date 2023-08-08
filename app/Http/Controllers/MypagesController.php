@@ -40,6 +40,7 @@ class MypagesController extends Controller
         // ユーザー情報を取得
         $user = User::find($id);
 
+        
            // アバター画像のパス名を変数に
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
