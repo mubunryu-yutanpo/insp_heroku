@@ -28,7 +28,7 @@ class IdeasTableSeeder extends Seeder
                 'user_id' => 1,
                 'category_id' => 2,
                 'title' => '第3回　夏の大運動会についてのご連絡',
-                'thumbnail' => '/uploads/img24.png',
+                'thumbnail' => '/uploads/img24.jpg',
                 'summary' => 'さぁ、いこう。',
                 'description' => 'この夏、君たちはどこへ向かうのか。共に行こう、あの高みへ。',
                 'price' => 0,
