@@ -30,22 +30,31 @@ class ApiController extends Controller
       アイデア一覧取得（TOPページ用）
     ================================================================*/
 
-    public function topIdeas(){
-
+    public function topIdeas() {
         $ideaList = [];
-        // レビューのあるアイデアをランダムに最大10件取得
-        $ideas = Idea::has('review')
-                 ->with('review', 'category')
-                 ->inRandomOrder()
-                 ->limit(10)
-                 ->get();
-
-        if($ideas->isNotEmpty()){
-            $ideaList = $ideas;
+    
+        // レビューのあるアイデアを最大10件取得
+        $reviewedIdeas = Idea::has('review')
+                         ->with('review', 'category')
+                         ->inRandomOrder()
+                         ->limit(10)
+                         ->get();
+    
+        // レビューのないアイデアを最大で不足分だけランダムに取得
+        $remainingCount = 10 - $reviewedIdeas->count();
+        if ($remainingCount > 0) {
+            $remainingIdeas = Idea::whereDoesntHave('review')
+                              ->with('category')
+                              ->inRandomOrder()
+                              ->limit($remainingCount)
+                              ->get();
+            $ideaList = $reviewedIdeas->concat($remainingIdeas);
+        } else {
+            $ideaList = $reviewedIdeas;
         }
-
+    
         $data = ['ideaList' => $ideaList];
-
+    
         return response()->json($data);
     }
 

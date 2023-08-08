@@ -52,6 +52,7 @@ class VerifyEmailJapanese extends VerifyEmail
         return (new MailMessage)
             ->subject('メールアドレスの確認') // メールのタイトル
             ->action('メールアドレスの確認', $this->verificationUrl($notifiable)) // 修正：$this->verificationUrl()を使用
+            ->line('このボタンを押して本登録を完了させてください。')
             ->line('よろしくお願いいたします。');
     }    
     
