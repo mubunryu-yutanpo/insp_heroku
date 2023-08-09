@@ -45,7 +45,7 @@ class IdeasController extends Controller
             $path = '/uploads/'.$filename;
             Storage::put($path, (string)$compressedImage->encode());
 
-            dd('kokomadehaok,$path='.$path);
+            Log::info('kokomadehaok,$path='.$path);
         
         } else {
             $filename = 'thumbnail-default.png';
@@ -53,7 +53,7 @@ class IdeasController extends Controller
 
         try{
 
-            dd('try');
+            Log::info('try');
 
             // DBに保存
             $saved = $idea->fill([
@@ -66,7 +66,7 @@ class IdeasController extends Controller
                 'price'       => $request->price,
             ])->save();
 
-            dd('saved');
+            Log::info('saved');
         
             // DBの更新を確認
             if ($saved) {
@@ -76,13 +76,13 @@ class IdeasController extends Controller
 
             }else{
                 // 更新が行われなかった場合の処理
-                dd('ファイル名：/uploads/'.$filename);
+                Log::info('ファイル名：/uploads/'.$filename);
                 return redirect('mypage')->with('flash_message', __('データの保存に失敗しました'));
             }
 
 
         }catch(QueryException $e){
-            dd('catch'.$e);
+            Log::info('catch'.$e);
             // ログを出力
             Log::error('アイデア新規投稿SQLエラー：' . $e->getMessage());
             return redirect()->back()->with('flash_message', 'データの保存中にエラーが発生しました。');
