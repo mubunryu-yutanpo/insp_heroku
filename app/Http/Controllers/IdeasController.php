@@ -42,14 +42,19 @@ class IdeasController extends Controller
                 $constraint->upsize();
             });
             
-            $path = 'uploads/'.$filename;
+            $path = '/uploads/'.$filename;
             Storage::put($path, (string)$compressedImage->encode());
+
+            dd('kokomadehaok,$path='.$path);
         
         } else {
             $filename = 'thumbnail-default.png';
         }
 
         try{
+
+            dd('try');
+
             // DBに保存
             $saved = $idea->fill([
                 'user_id'     => $user_id,
@@ -61,6 +66,7 @@ class IdeasController extends Controller
                 'price'       => $request->price,
             ])->save();
 
+            dd('saved');
         
             // DBの更新を確認
             if ($saved) {
@@ -70,11 +76,13 @@ class IdeasController extends Controller
 
             }else{
                 // 更新が行われなかった場合の処理
+                dd('ファイル名：/uploads/'.$filename);
                 return redirect('mypage')->with('flash_message', __('データの保存に失敗しました'));
             }
 
 
         }catch(QueryException $e){
+            dd('catch'.$e);
             // ログを出力
             Log::error('アイデア新規投稿SQLエラー：' . $e->getMessage());
             return redirect()->back()->with('flash_message', 'データの保存中にエラーが発生しました。');
