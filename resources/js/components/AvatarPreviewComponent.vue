@@ -62,7 +62,7 @@
         }
   
         // ファイルサイズのバリデーション
-        const maxSizeInBytes = 8192; // 8MB
+        const maxSizeInBytes = 8388608; // 8MB
         if (file.size > maxSizeInBytes) {
           this.validError = 'ファイルサイズが8MB以下の画像を選択してください。';
           return;
