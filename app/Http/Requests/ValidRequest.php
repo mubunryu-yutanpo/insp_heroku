@@ -30,10 +30,10 @@ class ValidRequest extends FormRequest
             'password'     => 'sometimes|required|string|max:255|min:8',
             'password_re'  => 'sometimes|required|same:password',
             'introduction' => 'sometimes|nullable|string|max:300',
-            'avatar'       => 'sometimes|nullable|mimes:jpg,jpeg,png,gif,heic,heif|max:500000000', // 500MBまで
+            'avatar'       => 'sometimes|nullable|mimes:jpg,jpeg,png,gif,heic,heif|max:8192', // 8MBまで
             'title'        => 'sometimes|required|string|max:255',
             'category'     => 'sometimes|required|',
-            'thumbnail'     => 'sometimes|nullable|mimes:jpg,jpeg,png,gif,heic,heif|max:500000000',
+            'thumbnail'     => 'sometimes|nullable|mimes:jpg,jpeg,png,gif,heic,heif|max:8192',
             'summary'      => 'sometimes|required|string|max:255',
             'description'  => 'sometimes|required|string|max:2000',
             'price'        => 'sometimes|required|integer|min:0|max:999999999|regex:/^[0-9]+$/',
@@ -48,9 +48,9 @@ class ValidRequest extends FormRequest
             //フォームリクエスト（バリデーション）のエラーメッセージ設定
             'category.required' => '選択してください',
             'avatar.mimes' => 'ファイル形式はjpeg(jpg)、png、gif、heic（heif）が利用可能です',
-            'avatar.max'   => 'ファイルサイズは500MB以下にしてください',
+            'avatar.max'   => 'ファイルサイズは8MB以下にしてください',
             'thumbnail.mimes' => 'ファイル形式はjpeg(jpg)、png、gif、heic（heif）が利用可能です',
-            'thumbnail.max'   => 'ファイルサイズは500MB以下にしてください',
+            'thumbnail.max'   => 'ファイルサイズは8MB以下にしてください',
 
         ];
     }
