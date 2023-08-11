@@ -36,7 +36,7 @@ class IdeasController extends Controller
             $avatar = $request->file('thumbnail');
             $filename = $avatar->getClientOriginalName();
 
-            // 画像を圧縮して保存
+            // 画像を圧縮して保存 
             $compressedImage = Image::make($avatar)->resize(300, null, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
