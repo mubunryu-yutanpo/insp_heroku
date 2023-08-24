@@ -177,7 +177,7 @@ export default {
       isOpenSortSubmenu: '',  // 並び替えメニュー選択用
 
       currentPage: 1,
-      itemsPerPage: 6,
+      itemsPerPage: 1,
     };
   },
 
